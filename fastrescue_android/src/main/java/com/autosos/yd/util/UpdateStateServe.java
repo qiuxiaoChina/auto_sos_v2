@@ -138,8 +138,6 @@ public class UpdateStateServe extends Service implements BDLocationListener {
         if ( UpdateStateServeActive ) {
             if(UpdateChangeTime == 1 || UpdateChangeTime == 2){
                 changeClientTime();
-//                PushManager.getInstance().turnOnPush(SplashActivity.splashActivity);
-//                Log.e("getui ", "======================   getui serve turnon     =====================");
             }
             Log.e(TAG, "BDLocation  " + bdLocation.toString() + "***********************" + "la:"
                     + bdLocation.getLatitude() + "**log" + bdLocation.getLongitude() + "****address :" + bdLocation.getAddrStr() +"jiange :"+UpdateChangeTime +
