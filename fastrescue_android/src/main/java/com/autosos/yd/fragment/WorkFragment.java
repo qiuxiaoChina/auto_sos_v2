@@ -220,6 +220,9 @@ public class WorkFragment extends Fragment implements View.OnClickListener,
         }catch (Exception e ){
             e.printStackTrace();
         }
+
+
+
         if(Constants.DEBUG){
             addressView.setOnClickListener(new View.OnClickListener() {
                 @Override

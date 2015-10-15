@@ -245,7 +245,7 @@ public class UpdateStateServe extends Service implements BDLocationListener {
     }
     private void cherkGetuiServe(){
         if(!PushManager.getInstance().isPushTurnedOn(SplashActivity.splashActivity)){
-            PushManager.getInstance().initialize(SplashActivity.splashActivity);
+//            PushManager.getInstance().initialize(SplashActivity.splashActivity);
             PushManager.getInstance().turnOnPush(SplashActivity.splashActivity);
             Log.e("getui ","======================   getui serve turnon     =====================");
         }

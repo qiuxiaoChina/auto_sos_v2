@@ -12,6 +12,7 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -182,8 +183,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                         client.stop();
                         client.unRegisterLocationListener(this);
                         progressBar.setVisibility(View.GONE);
-                    }
-                    else if(point < 5){
+                    }else if(point < 5){
                         Log.e(TAG,"point <3 ,dont suan!");
                         last_longitude = lo;
                         last_latitude = la;
@@ -192,12 +192,11 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                         LatLng lastpt = new LatLng(last_latitude, last_longitude);
                         LatLng nowpt = new LatLng(latitude, longitude);
                         if(DistanceUtil.getDistance(lastpt,nowpt) == -1||DistanceUtil.getDistance(lastpt,nowpt) < 5.00
-                        ||DistanceUtil.getDistance(lastpt,nowpt) > 200){
-                         Log.e(TAG, DistanceUtil.getDistance(lastpt,nowpt)+"< 5m or > 200m dont utils distance!!!");
-                         last_longitude = lo;
-                         last_latitude = la;
-                        }
-                        else {
+                        || DistanceUtil.getDistance(lastpt,nowpt) > 200){
+                             Log.e(TAG, DistanceUtil.getDistance(lastpt,nowpt)+"< 5m or > 200m dont utils distance!!!");
+                             last_longitude = lo;
+                             last_latitude = la;
+                        }else {
                             //5 * 12s = 60s update the address
                             if(point % 12 == 0){
                                     if (latitude > 0 && longitude > 0) {

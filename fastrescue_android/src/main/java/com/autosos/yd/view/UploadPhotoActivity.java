@@ -231,11 +231,12 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
                         new NewHttpPostTask(com.autosos.yd.view.UploadPhotoActivity.this, new OnHttpRequestListener() {
                             @Override
                             public void onRequestCompleted(Object obj) {
-                                Log.e(TAG, obj.toString());
+                                Log.e("photo", obj.toString());
                                 try {
                                     JSONObject jsonObject = new JSONObject(obj.toString());
                                     if (!jsonObject.isNull("result")) {
                                         int result = jsonObject.optInt("result");
+                                        Log.e("photo",result + "");
                                         if (result == 1) {
                                             progressBar.setVisibility(View.GONE);
                                             submitBtn.setEnabled(true);
@@ -256,6 +257,7 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
 
                             @Override
                             public void onRequestFailed(Object obj) {
+                                Log.e(TAG,"qingqiushibai");
                             }
                         }).execute(String.format(Constants.UPLOAD_PICS_URL, id), map);
 
