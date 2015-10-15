@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.autosos.yd"
+    android:versionCode="108"
+    android:versionName="1.1.7">
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="getui.permission.GetuiService.com.autosos.yd" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_GPS" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <!-- 使用导航功能所需权限 -->
+    <uses-permission android:name="android.permission.ACCES_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+
+    <permission
+        android:name="getui.permission.GetuiService.com.autosos.yd"
+        android:protectionLevel="normal"/>
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <application
+        android:persistent="true"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/MyAppTheme">
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="VNkywbNrEAHwbkPzoG0u6N4x" />
+
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+
+        <activity
+            android:name=".view.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/FullScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.LoginActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/ChooserTheme" />
+
+        <activity
+            android:name=".view.testActivity"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/ChooserTheme" />
+        <activity
+            android:name=".view.MainActivity"
+            android:label=""
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/ChooserTheme" />
+
+        <activity
+            android:name=".view.OrderInfoActivity"
+            android:label="@string/label_order_info"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.SetingActivity"
+            android:label="@string/label_seting"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.PasswordActivity"
+            android:label="@string/label_seting_password"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+        <activity
+            android:name=".view.MapDragActivity"
+            android:label=""
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/ChooserTheme" />
+
+        <activity
+            android:name=".view.DragActivity"
+            android:label="@string/label_drag"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.PayActivity"
+            android:label="@string/label_pay"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+        <activity
+            android:name=".view.PayInfoActivity"
+            android:label="@string/label_pay"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.RecordInfoActivity"
+            android:label="@string/label_record_info"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.UploadPhotoActivity"
+            android:label="@string/label_upload_photo"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.ChoosePhotoActivity"
+            android:label="@string/label_choose_photo"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.PhotosActivity"
+            android:label="@string/label_view_photos"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.WatchPhotoActivity"
+            android:label="@string/label_photo_list"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.NoticeView"
+            android:label="@string/label_notice"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+        <activity
+            android:name=".view.NoticeInfoActivity"
+            android:label="@string/label_notice_info"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.FinishActivity"
+            android:label="@string/label_order_finished"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/CustomTitleTheme" />
+        <activity
+            android:name=".view.AddressActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            android:theme="@style/ChooserTheme" />
+        <!--gexin push-->
+
+        <meta-data
+            android:name="PUSH_APPID"
+            android:value="3gcCKQHtdt9JMY0IQ4zQn" />
+        <meta-data
+            android:name="PUSH_APPKEY"
+            android:value="rzRA7jHKOq5bkmeP1YiiL3" />
+        <meta-data
+            android:name="PUSH_APPSECRET"
+            android:value="4nOGoqnh5u8c2S79RmFQ69" />
+        <meta-data
+            android:name="PUSH_GROUPID"
+            android:value="" />
+
+        <!-- 配置SDK核心服务 -->
+        <service
+            android:name="com.igexin.sdk.PushService"
+            android:exported="true"
+            android:label="NotificationCenter"
+            android:process=":pushservice"></service>
+        <service
+            android:name=".util.UpdateStateServe"
+            android:persistent = "true"
+            android:enabled="true"
+            android:priority = "1000">
+        </service>
+
+        <receiver
+            android:name=".util.CherkNetWorkReceiver">
+        </receiver>
+
+        <receiver android:name="com.igexin.sdk.PushReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="com.igexin.sdk.action.refreshls" />
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="com.igexin.sdk.PushServiceUser"
+            android:exported="true"
+            android:label="NotificationCenterUser" >
+        </service>
+        <receiver
+            android:name="com.igexin.sdk.PushManagerReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.pushmanager" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name="com.igexin.sdk.PushActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="com.igexin.sdk.PushActivityTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+        <service
+            android:name="com.igexin.download.DownloadService"
+            android:process=":pushservice" />
+        <receiver android:name="com.igexin.download.DownloadReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        <provider
+            android:name="com.igexin.download.DownloadProvider"
+            android:exported="true"
+            android:authorities="downloads.com.autosos.yd"
+            android:process=":pushservice" />
+        <!-- android:authorities="downloads.第三方包名" -->
+
+        <activity
+            android:name="com.igexin.getuiext.activity.GetuiExtActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:process=":pushservice"
+            android:taskAffinity="android.task.myServicetask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <receiver
+            android:name="com.igexin.getuiext.service.PayloadReceiver"
+            android:exported="false">
+            <intent-filter>
+                <!-- 这个com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4固定，不能修改  -->
+                <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
+                <!-- android:name="com.igexin.sdk.action.第三方的appId" -->
+                <action android:name="com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 配置第三方Receiver -->
+        <receiver
+            android:name=".util.GetuiSdkMsgReceiver"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn" />
+            </intent-filter>
+        </receiver>
+
+
+
+
+        <service
+            android:name="com.igexin.getuiext.service.GetuiExtService"
+            android:process=":pushservice" />
+
+        <activity
+            android:name="com.pingplusplus.android.PaymentActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity
+            android:name="com.alipay.sdk.auth.AuthActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:exported="false"
+            android:screenOrientation="behind" >
+        </activity>
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:targetActivity="com.pingplusplus.android.PaymentActivity"
+            android:exported="true" />
+
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5594de5767e58e3f2b0058c5" >
+        </meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="nbyidao" >
+        </meta-data>
+
+    </application>
+
+</manifest>

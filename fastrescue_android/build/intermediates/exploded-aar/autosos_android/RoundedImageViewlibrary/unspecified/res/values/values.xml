@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundedImageView"><attr format="dimension" name="corner_radius"/><attr format="dimension" name="border_width"/><attr format="color" name="border_color"/><attr format="boolean" name="round_background"/><attr format="boolean" name="is_oval"/><attr format="boolean" name="top_qualified"/><attr format="boolean" name="bottom_qualified"/><attr format="boolean" name="top_left_qualified"/><attr format="boolean" name="top_right_qualified"/><attr format="boolean" name="bottom_left_qualified"/><attr format="boolean" name="bottom_right_qualified"/><attr format="boolean" name="left_qualified"/><attr format="boolean" name="right_qualified"/><attr name="android:scaleType"/></declare-styleable>
+</resources>

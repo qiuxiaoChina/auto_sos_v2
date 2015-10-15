@@ -1,0 +1,668 @@
+-- Merging decision tree log ---
+manifest
+ADDED from AndroidManifest.xml:2:1
+	package
+		ADDED from AndroidManifest.xml:3:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:versionName
+		ADDED from AndroidManifest.xml:5:5
+	android:versionCode
+		ADDED from AndroidManifest.xml:4:5
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	xmlns:android
+		ADDED from AndroidManifest.xml:2:11
+uses-permission#android.permission.INTERACT_ACROSS_USERS_FULL
+ADDED from AndroidManifest.xml:6:5
+	android:name
+		ADDED from AndroidManifest.xml:6:22
+uses-permission#android.permission.INTERNET
+ADDED from AndroidManifest.xml:7:5
+	android:name
+		ADDED from AndroidManifest.xml:7:22
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from AndroidManifest.xml:8:5
+	android:name
+		ADDED from AndroidManifest.xml:8:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:9:5
+	android:name
+		ADDED from AndroidManifest.xml:9:22
+uses-permission#android.permission.READ_PHONE_STATE
+ADDED from AndroidManifest.xml:10:5
+	android:name
+		ADDED from AndroidManifest.xml:10:22
+uses-permission#android.permission.WAKE_LOCK
+ADDED from AndroidManifest.xml:11:5
+	android:name
+		ADDED from AndroidManifest.xml:11:22
+uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
+ADDED from AndroidManifest.xml:12:5
+	android:name
+		ADDED from AndroidManifest.xml:12:22
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:13:5
+	android:name
+		ADDED from AndroidManifest.xml:13:22
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from AndroidManifest.xml:14:5
+	android:name
+		ADDED from AndroidManifest.xml:14:22
+uses-permission#android.permission.CHANGE_WIFI_STATE
+ADDED from AndroidManifest.xml:15:5
+	android:name
+		ADDED from AndroidManifest.xml:15:22
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from AndroidManifest.xml:16:5
+	android:name
+		ADDED from AndroidManifest.xml:16:22
+uses-permission#android.permission.VIBRATE
+ADDED from AndroidManifest.xml:17:5
+	android:name
+		ADDED from AndroidManifest.xml:17:22
+uses-permission#android.permission.GET_TASKS
+ADDED from AndroidManifest.xml:18:5
+	android:name
+		ADDED from AndroidManifest.xml:18:22
+uses-permission#getui.permission.GetuiService.com.autosos.yd
+ADDED from AndroidManifest.xml:19:5
+	android:name
+		ADDED from AndroidManifest.xml:19:22
+uses-permission#android.permission.GET_ACCOUNTS
+ADDED from AndroidManifest.xml:20:5
+	android:name
+		ADDED from AndroidManifest.xml:20:22
+uses-permission#android.permission.USE_CREDENTIALS
+ADDED from AndroidManifest.xml:21:5
+	android:name
+		ADDED from AndroidManifest.xml:21:22
+uses-permission#android.permission.MANAGE_ACCOUNTS
+ADDED from AndroidManifest.xml:22:5
+	android:name
+		ADDED from AndroidManifest.xml:22:22
+uses-permission#android.permission.AUTHENTICATE_ACCOUNTS
+ADDED from AndroidManifest.xml:23:5
+	android:name
+		ADDED from AndroidManifest.xml:23:22
+uses-permission#com.android.launcher.permission.READ_SETTINGS
+ADDED from AndroidManifest.xml:24:5
+	android:name
+		ADDED from AndroidManifest.xml:24:22
+uses-permission#android.permission.BROADCAST_STICKY
+ADDED from AndroidManifest.xml:25:5
+	android:name
+		ADDED from AndroidManifest.xml:25:22
+uses-permission#android.permission.WRITE_SETTINGS
+ADDED from AndroidManifest.xml:26:5
+	android:name
+		ADDED from AndroidManifest.xml:26:22
+uses-permission#android.permission.BAIDU_LOCATION_SERVICE
+ADDED from AndroidManifest.xml:30:5
+	android:name
+		ADDED from AndroidManifest.xml:30:22
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from AndroidManifest.xml:31:5
+	android:name
+		ADDED from AndroidManifest.xml:31:22
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from AndroidManifest.xml:32:5
+	android:name
+		ADDED from AndroidManifest.xml:32:22
+uses-permission#android.permission.ACCESS_GPS
+ADDED from AndroidManifest.xml:34:5
+	android:name
+		ADDED from AndroidManifest.xml:34:22
+uses-permission#android.permission.PROCESS_OUTGOING_CALLS
+ADDED from AndroidManifest.xml:35:5
+	android:name
+		ADDED from AndroidManifest.xml:35:22
+uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
+ADDED from AndroidManifest.xml:36:5
+	android:name
+		ADDED from AndroidManifest.xml:36:22
+uses-permission#android.permission.ACCES_MOCK_LOCATION
+ADDED from AndroidManifest.xml:39:5
+	android:name
+		ADDED from AndroidManifest.xml:39:22
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from AndroidManifest.xml:40:5
+	android:name
+		ADDED from AndroidManifest.xml:40:22
+permission#getui.permission.GetuiService.com.autosos.yd
+ADDED from AndroidManifest.xml:43:5
+	android:protectionLevel
+		ADDED from AndroidManifest.xml:45:9
+	android:name
+		ADDED from AndroidManifest.xml:44:9
+uses-permission#android.permission.SEND_SMS
+ADDED from AndroidManifest.xml:47:5
+	android:name
+		ADDED from AndroidManifest.xml:47:22
+uses-permission#android.permission.SYSTEM_ALERT_WINDOW
+ADDED from AndroidManifest.xml:48:5
+	android:name
+		ADDED from AndroidManifest.xml:48:22
+uses-permission#android.permission.READ_SMS
+ADDED from AndroidManifest.xml:49:5
+	android:name
+		ADDED from AndroidManifest.xml:49:22
+application
+ADDED from AndroidManifest.xml:51:5
+MERGED from com.android.support:appcompat-v7:22.0.0:22:5
+MERGED from com.android.support:support-v4:22.0.0:22:5
+MERGED from autosos_android:PullToRefreshlibrary:unspecified:9:5
+MERGED from com.android.support:support-v4:22.0.0:22:5
+MERGED from autosos_android:PhotoViewlibrary:unspecified:9:5
+	android:label
+		ADDED from AndroidManifest.xml:55:9
+	android:allowBackup
+		ADDED from AndroidManifest.xml:53:9
+	android:icon
+		ADDED from AndroidManifest.xml:54:9
+	android:persistent
+		ADDED from AndroidManifest.xml:52:9
+	android:theme
+		ADDED from AndroidManifest.xml:56:9
+meta-data#com.baidu.lbsapi.API_KEY
+ADDED from AndroidManifest.xml:57:9
+	android:value
+		ADDED from AndroidManifest.xml:59:13
+	android:name
+		ADDED from AndroidManifest.xml:58:13
+service#com.baidu.location.f
+ADDED from AndroidManifest.xml:61:9
+	android:enabled
+		ADDED from AndroidManifest.xml:63:13
+	android:process
+		ADDED from AndroidManifest.xml:64:13
+	android:name
+		ADDED from AndroidManifest.xml:62:13
+activity#com.autosos.yd.view.SplashActivity
+ADDED from AndroidManifest.xml:67:9
+	android:label
+		ADDED from AndroidManifest.xml:69:13
+	android:theme
+		ADDED from AndroidManifest.xml:70:13
+	android:name
+		ADDED from AndroidManifest.xml:68:13
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:71:13
+action#android.intent.action.MAIN
+ADDED from AndroidManifest.xml:72:17
+	android:name
+		ADDED from AndroidManifest.xml:72:25
+category#android.intent.category.LAUNCHER
+ADDED from AndroidManifest.xml:74:17
+	android:name
+		ADDED from AndroidManifest.xml:74:27
+activity#com.autosos.yd.view.LoginActivity
+ADDED from AndroidManifest.xml:78:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:81:13
+	android:label
+		ADDED from AndroidManifest.xml:80:13
+	android:theme
+		ADDED from AndroidManifest.xml:82:13
+	android:name
+		ADDED from AndroidManifest.xml:79:13
+activity#com.autosos.yd.view.testActivity
+ADDED from AndroidManifest.xml:84:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:87:13
+	android:label
+		ADDED from AndroidManifest.xml:86:13
+	android:theme
+		ADDED from AndroidManifest.xml:88:13
+	android:name
+		ADDED from AndroidManifest.xml:85:13
+activity#com.autosos.yd.view.MainActivity
+ADDED from AndroidManifest.xml:89:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:93:13
+	android:label
+		ADDED from AndroidManifest.xml:91:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:92:13
+	android:theme
+		ADDED from AndroidManifest.xml:94:13
+	android:name
+		ADDED from AndroidManifest.xml:90:13
+activity#com.autosos.yd.view.OrderInfoActivity
+ADDED from AndroidManifest.xml:96:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:100:13
+	android:label
+		ADDED from AndroidManifest.xml:98:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:99:13
+	android:theme
+		ADDED from AndroidManifest.xml:101:13
+	android:name
+		ADDED from AndroidManifest.xml:97:13
+activity#com.autosos.yd.view.SetingActivity
+ADDED from AndroidManifest.xml:103:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:107:13
+	android:label
+		ADDED from AndroidManifest.xml:105:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:106:13
+	android:theme
+		ADDED from AndroidManifest.xml:108:13
+	android:name
+		ADDED from AndroidManifest.xml:104:13
+activity#com.autosos.yd.view.PasswordActivity
+ADDED from AndroidManifest.xml:110:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:114:13
+	android:label
+		ADDED from AndroidManifest.xml:112:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:113:13
+	android:theme
+		ADDED from AndroidManifest.xml:115:13
+	android:name
+		ADDED from AndroidManifest.xml:111:13
+activity#com.autosos.yd.view.MapDragActivity
+ADDED from AndroidManifest.xml:116:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:120:13
+	android:label
+		ADDED from AndroidManifest.xml:118:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:119:13
+	android:theme
+		ADDED from AndroidManifest.xml:121:13
+	android:name
+		ADDED from AndroidManifest.xml:117:13
+activity#com.autosos.yd.view.DragActivity
+ADDED from AndroidManifest.xml:123:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:126:13
+	android:label
+		ADDED from AndroidManifest.xml:125:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:127:13
+	android:theme
+		ADDED from AndroidManifest.xml:128:13
+	android:name
+		ADDED from AndroidManifest.xml:124:13
+activity#com.autosos.yd.view.PayActivity
+ADDED from AndroidManifest.xml:130:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:133:13
+	android:label
+		ADDED from AndroidManifest.xml:132:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:134:13
+	android:theme
+		ADDED from AndroidManifest.xml:135:13
+	android:name
+		ADDED from AndroidManifest.xml:131:13
+activity#com.autosos.yd.view.PayInfoActivity
+ADDED from AndroidManifest.xml:136:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:139:13
+	android:label
+		ADDED from AndroidManifest.xml:138:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:140:13
+	android:theme
+		ADDED from AndroidManifest.xml:141:13
+	android:name
+		ADDED from AndroidManifest.xml:137:13
+activity#com.autosos.yd.view.RecordInfoActivity
+ADDED from AndroidManifest.xml:143:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:146:13
+	android:label
+		ADDED from AndroidManifest.xml:145:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:147:13
+	android:theme
+		ADDED from AndroidManifest.xml:148:13
+	android:name
+		ADDED from AndroidManifest.xml:144:13
+activity#com.autosos.yd.view.UploadPhotoActivity
+ADDED from AndroidManifest.xml:150:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:153:13
+	android:label
+		ADDED from AndroidManifest.xml:152:13
+	android:theme
+		ADDED from AndroidManifest.xml:154:13
+	android:name
+		ADDED from AndroidManifest.xml:151:13
+activity#com.autosos.yd.view.ChoosePhotoActivity
+ADDED from AndroidManifest.xml:156:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:159:13
+	android:label
+		ADDED from AndroidManifest.xml:158:13
+	android:theme
+		ADDED from AndroidManifest.xml:160:13
+	android:name
+		ADDED from AndroidManifest.xml:157:13
+activity#com.autosos.yd.view.PhotosActivity
+ADDED from AndroidManifest.xml:162:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:165:13
+	android:label
+		ADDED from AndroidManifest.xml:164:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:166:13
+	android:theme
+		ADDED from AndroidManifest.xml:167:13
+	android:name
+		ADDED from AndroidManifest.xml:163:13
+activity#com.autosos.yd.view.WatchPhotoActivity
+ADDED from AndroidManifest.xml:169:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:172:13
+	android:label
+		ADDED from AndroidManifest.xml:171:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:173:13
+	android:theme
+		ADDED from AndroidManifest.xml:174:13
+	android:name
+		ADDED from AndroidManifest.xml:170:13
+activity#com.autosos.yd.view.NoticeView
+ADDED from AndroidManifest.xml:176:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:179:13
+	android:label
+		ADDED from AndroidManifest.xml:178:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:180:13
+	android:theme
+		ADDED from AndroidManifest.xml:181:13
+	android:name
+		ADDED from AndroidManifest.xml:177:13
+activity#com.autosos.yd.view.NoticeInfoActivity
+ADDED from AndroidManifest.xml:182:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:185:13
+	android:label
+		ADDED from AndroidManifest.xml:184:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:186:13
+	android:theme
+		ADDED from AndroidManifest.xml:187:13
+	android:name
+		ADDED from AndroidManifest.xml:183:13
+activity#com.autosos.yd.view.FinishActivity
+ADDED from AndroidManifest.xml:189:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:192:13
+	android:label
+		ADDED from AndroidManifest.xml:191:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:193:13
+	android:theme
+		ADDED from AndroidManifest.xml:194:13
+	android:name
+		ADDED from AndroidManifest.xml:190:13
+activity#com.autosos.yd.view.AddressActivity
+ADDED from AndroidManifest.xml:195:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:197:13
+	android:launchMode
+		ADDED from AndroidManifest.xml:198:13
+	android:theme
+		ADDED from AndroidManifest.xml:199:13
+	android:name
+		ADDED from AndroidManifest.xml:196:13
+meta-data#PUSH_APPID
+ADDED from AndroidManifest.xml:202:9
+	android:value
+		ADDED from AndroidManifest.xml:204:13
+	android:name
+		ADDED from AndroidManifest.xml:203:13
+meta-data#PUSH_APPKEY
+ADDED from AndroidManifest.xml:205:9
+	android:value
+		ADDED from AndroidManifest.xml:207:13
+	android:name
+		ADDED from AndroidManifest.xml:206:13
+meta-data#PUSH_APPSECRET
+ADDED from AndroidManifest.xml:208:9
+	android:value
+		ADDED from AndroidManifest.xml:210:13
+	android:name
+		ADDED from AndroidManifest.xml:209:13
+meta-data#PUSH_GROUPID
+ADDED from AndroidManifest.xml:211:9
+	android:value
+		ADDED from AndroidManifest.xml:213:13
+	android:name
+		ADDED from AndroidManifest.xml:212:13
+service#com.igexin.sdk.PushService
+ADDED from AndroidManifest.xml:216:9
+	android:process
+		ADDED from AndroidManifest.xml:220:13
+	android:label
+		ADDED from AndroidManifest.xml:219:13
+	android:exported
+		ADDED from AndroidManifest.xml:218:13
+	android:name
+		ADDED from AndroidManifest.xml:217:13
+service#com.autosos.yd.util.UpdateStateServe
+ADDED from AndroidManifest.xml:221:9
+	android:enabled
+		ADDED from AndroidManifest.xml:224:13
+	android:priority
+		ADDED from AndroidManifest.xml:225:13
+	android:persistent
+		ADDED from AndroidManifest.xml:223:13
+	android:name
+		ADDED from AndroidManifest.xml:222:13
+receiver#com.autosos.yd.util.CherkNetWorkReceiver
+ADDED from AndroidManifest.xml:228:9
+	android:name
+		ADDED from AndroidManifest.xml:229:13
+receiver#com.igexin.sdk.PushReceiver
+ADDED from AndroidManifest.xml:232:9
+	android:name
+		ADDED from AndroidManifest.xml:232:19
+intent-filter#android.intent.action.ACTION_POWER_CONNECTED+android.intent.action.ACTION_POWER_DISCONNECTED+android.intent.action.BOOT_COMPLETED+android.intent.action.MEDIA_MOUNTED+android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE+com.igexin.sdk.action.refreshls
+ADDED from AndroidManifest.xml:233:13
+action#android.intent.action.BOOT_COMPLETED
+ADDED from AndroidManifest.xml:234:17
+	android:name
+		ADDED from AndroidManifest.xml:234:25
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from AndroidManifest.xml:235:17
+	android:name
+		ADDED from AndroidManifest.xml:235:25
+action#android.intent.action.USER_PRESENT
+ADDED from AndroidManifest.xml:236:17
+	android:name
+		ADDED from AndroidManifest.xml:236:25
+action#com.igexin.sdk.action.refreshls
+ADDED from AndroidManifest.xml:237:17
+	android:name
+		ADDED from AndroidManifest.xml:237:25
+action#android.intent.action.MEDIA_MOUNTED
+ADDED from AndroidManifest.xml:238:17
+	android:name
+		ADDED from AndroidManifest.xml:238:25
+action#android.intent.action.ACTION_POWER_CONNECTED
+ADDED from AndroidManifest.xml:239:17
+	android:name
+		ADDED from AndroidManifest.xml:239:25
+action#android.intent.action.ACTION_POWER_DISCONNECTED
+ADDED from AndroidManifest.xml:240:17
+	android:name
+		ADDED from AndroidManifest.xml:240:25
+service#com.igexin.sdk.PushServiceUser
+ADDED from AndroidManifest.xml:243:9
+	android:label
+		ADDED from AndroidManifest.xml:246:13
+	android:exported
+		ADDED from AndroidManifest.xml:245:13
+	android:name
+		ADDED from AndroidManifest.xml:244:13
+receiver#com.igexin.sdk.PushManagerReceiver
+ADDED from AndroidManifest.xml:248:9
+	android:exported
+		ADDED from AndroidManifest.xml:250:13
+	android:name
+		ADDED from AndroidManifest.xml:249:13
+intent-filter#com.igexin.sdk.action.pushmanager
+ADDED from AndroidManifest.xml:251:13
+action#com.igexin.sdk.action.pushmanager
+ADDED from AndroidManifest.xml:252:17
+	android:name
+		ADDED from AndroidManifest.xml:252:25
+activity#com.igexin.sdk.PushActivity
+ADDED from AndroidManifest.xml:256:9
+	android:process
+		ADDED from AndroidManifest.xml:260:13
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:258:13
+	android:exported
+		ADDED from AndroidManifest.xml:259:13
+	android:theme
+		ADDED from AndroidManifest.xml:262:13
+	android:taskAffinity
+		ADDED from AndroidManifest.xml:261:13
+	android:name
+		ADDED from AndroidManifest.xml:257:13
+service#com.igexin.download.DownloadService
+ADDED from AndroidManifest.xml:264:9
+	android:process
+		ADDED from AndroidManifest.xml:266:13
+	android:name
+		ADDED from AndroidManifest.xml:265:13
+receiver#com.igexin.download.DownloadReceiver
+ADDED from AndroidManifest.xml:267:9
+	android:name
+		ADDED from AndroidManifest.xml:267:19
+intent-filter#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from AndroidManifest.xml:268:13
+provider#com.igexin.download.DownloadProvider
+ADDED from AndroidManifest.xml:272:9
+	android:authorities
+		ADDED from AndroidManifest.xml:275:13
+	android:process
+		ADDED from AndroidManifest.xml:276:13
+	android:exported
+		ADDED from AndroidManifest.xml:274:13
+	android:name
+		ADDED from AndroidManifest.xml:273:13
+activity#com.igexin.getuiext.activity.GetuiExtActivity
+ADDED from AndroidManifest.xml:279:9
+	android:process
+		ADDED from AndroidManifest.xml:284:13
+	android:excludeFromRecents
+		ADDED from AndroidManifest.xml:282:13
+	android:exported
+		ADDED from AndroidManifest.xml:283:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:281:13
+	android:theme
+		ADDED from AndroidManifest.xml:286:13
+	android:taskAffinity
+		ADDED from AndroidManifest.xml:285:13
+	android:name
+		ADDED from AndroidManifest.xml:280:13
+receiver#com.igexin.getuiext.service.PayloadReceiver
+ADDED from AndroidManifest.xml:288:9
+	android:exported
+		ADDED from AndroidManifest.xml:290:13
+	android:name
+		ADDED from AndroidManifest.xml:289:13
+intent-filter#com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn+com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4
+ADDED from AndroidManifest.xml:291:13
+action#com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4
+ADDED from AndroidManifest.xml:293:17
+	android:name
+		ADDED from AndroidManifest.xml:293:25
+action#com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn
+ADDED from AndroidManifest.xml:295:17
+	android:name
+		ADDED from AndroidManifest.xml:295:25
+receiver#com.autosos.yd.util.GetuiSdkMsgReceiver
+ADDED from AndroidManifest.xml:300:9
+	android:exported
+		ADDED from AndroidManifest.xml:302:13
+	android:name
+		ADDED from AndroidManifest.xml:301:13
+intent-filter#com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn
+ADDED from AndroidManifest.xml:303:13
+service#com.igexin.getuiext.service.GetuiExtService
+ADDED from AndroidManifest.xml:311:9
+	android:process
+		ADDED from AndroidManifest.xml:313:13
+	android:name
+		ADDED from AndroidManifest.xml:312:13
+activity#com.pingplusplus.android.PaymentActivity
+ADDED from AndroidManifest.xml:315:9
+	android:launchMode
+		ADDED from AndroidManifest.xml:317:13
+	android:theme
+		ADDED from AndroidManifest.xml:318:13
+	android:name
+		ADDED from AndroidManifest.xml:316:13
+activity#com.alipay.sdk.app.H5PayActivity
+ADDED from AndroidManifest.xml:320:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:324:13
+	android:exported
+		ADDED from AndroidManifest.xml:323:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:322:13
+	android:name
+		ADDED from AndroidManifest.xml:321:13
+activity#com.alipay.sdk.auth.AuthActivity
+ADDED from AndroidManifest.xml:326:9
+	android:screenOrientation
+		ADDED from AndroidManifest.xml:330:13
+	android:exported
+		ADDED from AndroidManifest.xml:329:13
+	android:configChanges
+		ADDED from AndroidManifest.xml:328:13
+	android:name
+		ADDED from AndroidManifest.xml:327:13
+activity-alias#com.autosos.yd.wxapi.WXPayEntryActivity
+ADDED from AndroidManifest.xml:332:9
+	android:exported
+		ADDED from AndroidManifest.xml:335:13
+	android:targetActivity
+		ADDED from AndroidManifest.xml:334:13
+	android:name
+		ADDED from AndroidManifest.xml:333:13
+activity#com.umeng.update.UpdateDialogActivity
+ADDED from AndroidManifest.xml:337:9
+	android:theme
+		ADDED from AndroidManifest.xml:339:13
+	android:name
+		ADDED from AndroidManifest.xml:338:13
+meta-data#UMENG_APPKEY
+ADDED from AndroidManifest.xml:342:9
+	android:value
+		ADDED from AndroidManifest.xml:344:13
+	android:name
+		ADDED from AndroidManifest.xml:343:13
+meta-data#UMENG_CHANNEL
+ADDED from AndroidManifest.xml:346:9
+	android:value
+		ADDED from AndroidManifest.xml:348:13
+	android:name
+		ADDED from AndroidManifest.xml:347:13
+uses-sdk
+INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
+MERGED from com.android.support:appcompat-v7:22.0.0:20:5
+MERGED from com.android.support:support-v4:22.0.0:20:5
+MERGED from autosos_android:PullToRefreshlibrary:unspecified:7:5
+MERGED from com.android.support:support-v4:22.0.0:20:5
+MERGED from autosos_android:PhotoViewlibrary:unspecified:7:5
+MERGED from autosos_android:RoundedImageViewlibrary:unspecified:7:5
+	android:targetSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0
+	android:minSdkVersion
+		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from AndroidManifest.xml:0:0

@@ -1,0 +1,304 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+    -->
+
+    <style name="MyAppBaseTheme" parent="android:Theme.Holo.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="MyAppTheme" parent="MyAppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarStyle">@style/Actionbar</item>
+        <item name="android:actionButtonStyle">@style/ActionButton</item>
+        <item name="android:tabWidgetStyle">@style/TabWidget</item>
+        <item name="android:windowBackground">@color/activityBackground</item>
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+    </style>
+
+    <style name="FullScreenTheme" parent="@android:style/Theme.NoTitleBar.Fullscreen">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="TranslucentFullTheme" parent="MyAppBaseTheme">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/activityBackground</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="PopupActivity" parent="@android:style/Theme.Dialog">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="CustomTitleTheme" parent="MyAppTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">45dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/TitleBarBackground</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+    </style>
+
+    <style name="TranslucentBarTheme" parent="MyAppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:actionBarTabStyle">
+            @android:style/Widget.DeviceDefault.Light.ActionBar.TabView
+        </item>
+        <item name="android:actionBarStyle">@style/TranslucentActionbar</item>
+        <item name="android:windowBackground">@color/activityBackground</item>
+        <item name="android:actionBarTabBarStyle">
+            @android:style/Widget.DeviceDefault.Light.ActionBar.TabBar
+        </item>
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="android:windowActionBar">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+    </style>
+
+    <style name="yellowRatingBar2" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/bg_ratingbar_progress2</item>
+        <item name="android:indeterminateDrawable">@drawable/bg_ratingbar_progress2</item>
+        <item name="android:minHeight">14dp</item>
+        <item name="android:maxHeight">14dp</item>
+    </style>
+
+
+    <style name="TranslucentTitleTheme" parent="MyAppTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowTitleSize">45dp</item>
+        <item name="android:windowTitleBackgroundStyle">@style/TitleBarBackground</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+    </style>
+
+    <style name="LoginTheme" parent="@android:style/Theme.Translucent">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+    </style>
+
+    <style name="DialogActivityTheme" parent="@android:style/Theme.Translucent">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+    </style>
+
+    <style name="TitleBarBackground">
+        <item name="android:background">@color/color_white</item>
+        <item name="android:padding">0dp</item>
+    </style>
+
+    <style name="ChooserTheme" parent="MyAppBaseTheme">
+
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/activityBackground</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="Actionbar" parent="@android:style/Widget.Holo.ActionBar">
+        <item name="android:background">@color/color_red</item>
+        <item name="android:displayOptions">useLogo|showHome</item>
+    </style>
+
+
+    <style name="TranslucentActionbar" parent="@android:style/Widget.DeviceDefault.Light.ActionBar">
+        <item name="android:background">@color/transparent</item>
+        <item name="android:backgroundSplit">@color/transparent</item>
+        <item name="android:height">0.5dp</item>
+        <item name="android:displayOptions">none</item>
+    </style>
+
+
+    <style name="CenterWindowTitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title.Inverse">
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="ActionButton" parent="@android:style/Widget.ActionButton">
+        <item name="android:minWidth">46dip</item>
+        <item name="android:background">@drawable/bg_action_item</item>
+    </style>
+
+    <style name="ActionImageItem">
+        <item name="android:minWidth">45dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@drawable/bg_action_item</item>
+    </style>
+
+    <style name="ActionImageItemTransparent">
+        <item name="android:minWidth">45dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:scaleType">centerInside</item>
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="TabWidget" parent="@android:style/Widget.Holo.Tab">
+        <item name="android:divider">@null</item>
+    </style>
+
+    <style name="TabItem" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:textAppearance">@style/TextAppearanceMedium</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:textColor">@color/tab_text_color</item>
+    </style>
+
+    <style name="OtherTabItem" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:textSize">@dimen/medium_text_size1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:height">30dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:textColor">@color/other_tab_text_color</item>
+    </style>
+
+    <style name="TabWidgetStyle" parent="@android:style/Widget.Holo.TabWidget">
+        <item name="android:background">@drawable/bg_tab_widget</item>
+    </style>
+
+    <style name="CardTabItem" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:button">@null</item>
+        <item name="android:textAppearance">@style/TextAppearanceMedium</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">6dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textColor">@color/tab_text_color</item>
+    </style>
+
+    <style name="TextAppearanceSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#aca195</item>
+    </style>
+
+    <style name="TextAppearanceMedium" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#aca195</item>
+    </style>
+
+    <style name="TextAppearanceMediumInverse" parent="@android:style/TextAppearance.Medium.Inverse">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="ActionBarTitleStyle" parent="TextAppearanceMediumInverse">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="TextAppearanceSmallInverse" parent="@android:style/TextAppearance.Small.Inverse">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="TableCellStyle">
+        <item name="android:padding">10dp</item>
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="Widget.Holo.TabText" parent="@android:style/Widget.Holo.ActionBar.TabText">
+        <item name="android:maxWidth">180dip</item>
+    </style>
+
+    <style name="bubble_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="popwin_anim_style">
+         <item name="android:windowEnterAnimation">@anim/popwindow_enter</item>
+         <item name="android:windowExitAnimation">@anim/popwindow_exit</item>
+    </style>
+
+    <style name="popWindow_slide_in_out">
+        <item name="android:windowEnterAnimation">@anim/popwindow_slide_in</item>
+        <item name="android:windowExitAnimation">@anim/popwindow_slide_out</item>
+    </style>
+
+    <style name="bubble_transparent_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
+
+    <style name="dialog_anin_style" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_enter</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_exit</item>
+    </style>
+
+    <style name="dialog_anin_rise_style" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_up</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_down</item>
+    </style>
+
+    <style name="dialog_anin_right_fly_style" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_enter_right</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_exit_right</item>
+    </style>
+
+    <style name="dialog_anin_style2" parent="android:Animation">
+        <item name="@android:windowEnterAnimation">@anim/dialog_enter_l_b</item>
+        <item name="@android:windowExitAnimation">@anim/dialog_exit_l_b</item>
+    </style>
+
+    <style name="yellowRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/bg_ratingbar_progress</item>
+        <item name="android:indeterminateDrawable">@drawable/bg_ratingbar_progress</item>
+        <item name="android:minHeight">31dp</item>
+        <item name="android:maxHeight">31dp</item>
+    </style>
+
+    <style name="web_progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
+        <item name="android:maxHeight">50dip</item>
+        <item name="android:minHeight">8dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:indeterminateDrawable">
+            @android:drawable/progress_indeterminate_horizontal
+        </item>
+        <item name="android:progressDrawable">@drawable/bg_web_progress</item>
+    </style>
+    <style name="runcar" parent="@android:style/Widget.ProgressBar.Large">
+        <item name="android:indeterminateDrawable">@anim/run_car</item>
+    </style>
+</resources>

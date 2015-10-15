@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <solid android:color="#Efeff0" />
+
+            <stroke
+                android:width="0.5dp"
+                android:color="#d0d0d0" />
+            <corners android:radius="20dp" />
+        </shape>
+    </item>
+
+</layer-list><!-- From: file:/F:/autosos/autosos_android/fastrescue_android/src/main/res/drawable/bg_second_shape_white_pressed2.xml -->

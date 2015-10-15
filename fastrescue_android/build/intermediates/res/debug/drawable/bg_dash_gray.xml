@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+
+            <stroke
+                android:width="2dp"
+                android:color="@color/color_gray1"
+                android:dashGap="4dp"
+                android:dashWidth="8dp"/>
+
+        </shape>
+    </item>
+
+</layer-list><!-- From: file:/F:/autosos/autosos_android/fastrescue_android/src/main/res/drawable/bg_dash_gray.xml -->

@@ -1,0 +1,88 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:text="@string/label_owner_payed"
+        android:textColor="@color/color_black1"
+        android:textSize="@dimen/large_text_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/color_line" />
+
+        <TextView
+            android:id="@+id/type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:text="@string/label_service_type1"
+            android:textColor="@color/color_gray"
+            android:textSize="@dimen/medium_text_size2" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_weight="1"
+            android:background="@color/color_line" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/cost_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/cost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0"
+            android:textColor="@color/color_orange"
+            android:textSize="@dimen/xxxx_huge_text_size" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_rmb"
+            android:layout_toRightOf="@+id/cost"
+            android:layout_alignBottom="@+id/cost"
+            android:layout_marginLeft="3dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/color_black1"
+            android:textSize="@dimen/medium_text_size3" />
+    </RelativeLayout>
+    <Button
+        android:visibility="visible"
+        android:id="@+id/take_photo"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_second_btn_white2"
+        android:gravity="center"
+        android:onClick="takePhoto"
+        android:text="@string/label_upload_photo2"
+        android:textColor="@color/color_gray5"
+        android:textSize="@dimen/medium_text_size1" />
+</LinearLayout>
+<!-- From: file:/F:/autosos/autosos_android/fastrescue_android/src/main/res/layout/activity_pay_info.xml -->

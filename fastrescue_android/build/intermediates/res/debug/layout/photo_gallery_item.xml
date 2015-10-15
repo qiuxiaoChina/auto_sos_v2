@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:background="@color/bg_image_default"
+        android:scaleType="centerCrop" />
+
+    <com.autosos.yd.widget.CheckableLinearLayout
+        android:id="@+id/selected_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="right"
+        android:padding="4dp"
+        android:background="@drawable/bg_gallery_selected">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:duplicateParentState="true"
+            android:layout_alignBottom="@+id/image"
+            android:contentDescription="@string/app_name"
+            android:layout_alignTop="@+id/image"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_gallery_selected" />
+
+    </com.autosos.yd.widget.CheckableLinearLayout>
+
+    <ImageView
+        android:id="@+id/take_photo_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:padding="30dp"
+        android:visibility="gone"
+        android:background="#f0f0f0"
+        android:contentDescription="@string/app_name"
+        android:scaleType="centerInside"
+        android:src="@drawable/icon_photograph" />
+</RelativeLayout><!-- From: file:/F:/autosos/autosos_android/fastrescue_android/src/main/res/layout/photo_gallery_item.xml -->

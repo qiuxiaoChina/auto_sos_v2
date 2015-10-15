@@ -1,0 +1,7 @@
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fromXDelta="00"
+    android:toXDelta="-10"
+    android:fromYDelta="00"
+    android:toYDelta="-5"
+    android:duration="5000"
+    android:interpolator="@anim/view_second2" /><!-- From: file:/F:/autosos/autosos_android/fastrescue_android/src/main/res/anim/view_shake2.xml -->
