@@ -299,6 +299,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
             lol = Double.parseDouble(los[i]);
         }
        // progressBar.setVisibility(View.GONE);
+        //TEST from gongsi
         //TEST from bijiben2
         ((TextView)findViewById(R.id.repain)).setVisibility(View.GONE);
     }
