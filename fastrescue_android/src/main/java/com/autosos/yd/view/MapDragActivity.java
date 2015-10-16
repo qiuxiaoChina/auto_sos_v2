@@ -194,8 +194,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                         Log.e(TAG,"point <3 ,dont suan!");
                         last_longitude = lo;
                         last_latitude = la;
-                    }
-                    else if (cherkGPSandNetWork()) {
+                    }else if (cherkGPSandNetWork()) {
                         LatLng lastpt = new LatLng(last_latitude, last_longitude);
                         LatLng nowpt = new LatLng(latitude, longitude);
                         if(DistanceUtil.getDistance(lastpt,nowpt) == -1||DistanceUtil.getDistance(lastpt,nowpt) < 5.00
@@ -376,8 +375,8 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    if(Constants.DEBUG)
-                        tot_distance = 95300;
+//                    if(Constants.DEBUG)
+//                        tot_distance = 95300;
                     if(tot_distance == 0){
                         DialogView dialogView =new DialogView();
                         dialogView.dialog(R.string.msg_type_distance,R.string.label_ok2,MapDragActivity.this);
