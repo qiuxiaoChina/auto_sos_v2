@@ -108,7 +108,7 @@ public class OrderInfoActivity extends AutososBackActivity{
         empty = findViewById(R.id.empty);
         telphoneView = (ImageView)findViewById(R.id.telephone);
         nameView = (TextView) findViewById(R.id.name);
-        phoneView = (TextView) findViewById(R.id.phone);
+//        phoneView = (TextView) findViewById(R.id.phone);
         carNumberView = (TextView) findViewById(R.id.carNumber);
         typeView = (TextView) findViewById(R.id.type);
         typeImgView = (ImageView) findViewById(R.id.type_img);
@@ -201,7 +201,7 @@ public class OrderInfoActivity extends AutososBackActivity{
                     showCancelView();
                     return;
                 }
-                phoneView.setText(String.format(getString(R.string.label_phone_number), orderInfo.getOwner_mobile()));
+//                phoneView.setText(String.format(getString(R.string.label_phone_number), orderInfo.getOwner_mobile()));
                 carNumberView.setText(orderInfo.getCar_number());
                 if(orderInfo.getOwner_realname() != null && orderInfo.getOwner_realname().length()>0){
                     carNumberView.setText(orderInfo.getOwner_realname());

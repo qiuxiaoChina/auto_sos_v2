@@ -73,6 +73,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_USER_PRESENT);
+
         registerReceiver(cherkNetWorkReceiver, filter);
             //设置音量为多媒体
        // AudioManager am = (AudioManager)getSystemService(Context.AUDIO_SERVICE);
