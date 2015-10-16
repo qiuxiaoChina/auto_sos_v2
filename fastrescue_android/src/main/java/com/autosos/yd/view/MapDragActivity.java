@@ -71,6 +71,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
     private OrderInfo orderInfo =null;
     public static Location locationdrag;
     public static int isfirst;
+    public static int isfirst_drag;
     private MapView mMapView = null;
     private TextView drap_distanceView;
     private double latitude;
@@ -87,6 +88,8 @@ public class MapDragActivity extends Activity implements BDLocationListener{
     private  double test_point=0.00001;
     private View progressBar;
     private boolean firstLocation = true;
+    public Button btn_drop_arrive;
+
     private Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -115,6 +118,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
        // bdmap_Lout =(RelativeLayout) findViewById(R.id.bmapView);
         mMapView = (MapView)findViewById(R.id.bmapView);
      //   bdmap_Lout.addView(mMapView);
+        btn_drop_arrive = (Button) findViewById(R.id.btn_drop_arrive);
         drap_distanceView = (TextView)findViewById(R.id.drap_distance);
         btn_drop_arriveView = (Button)findViewById(R.id.btn_drop_arrive);
         progressBar=findViewById(R.id.drag_map_include);
@@ -122,6 +126,9 @@ public class MapDragActivity extends Activity implements BDLocationListener{
         ispause = false;
         tot_distance = 0;
         point = 1;
+        SharedPreferences sharedPreferences = this.getSharedPreferences("isfirst", Context.MODE_PRIVATE);
+        isfirst_drag = sharedPreferences.getInt("isfirst",0);
+        Log.e(TAG, "isfist oncreat :" + isfirst);
        // progressBar.setVisibility(View.VISIBLE);
         if(cherkGPSandNetWork())
             location();
@@ -297,6 +304,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
 
 
     public void startDrag(View v){
+        Log.e("tuoche","=======map======="+isfirst );
         if (isfirst == 0) {
             if(cherkGPSandNetWork()) {
                 final View v2 = v;
@@ -317,7 +325,13 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                                     ((Button)v2).setTextColor(getResources().getColor(R.color.color_black));
                                     ((Button)v2).setBackgroundResource(R.drawable.bg_second_btn_white2);
                                     ((Button) v2).setText(String.format(getString(R.string.label_carDrag_stop)));
-                                    isfirst++;
+                                    isfirst = 1;
+                                    SharedPreferences sharedPreferences = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                    editor.putInt("isfirst", isfirst);
+                                    editor.commit();
+                                    isfirst_drag = sharedPreferences.getInt("isfirst",0);
+                                    Log.e(TAG, "after start tuoche" + isfirst);
                                     progressBar.setVisibility(View.VISIBLE);
                                     TimerTask task = new TimerTask() {
                                         public void run() {
@@ -367,6 +381,10 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                         dialogView.dialog(R.string.msg_type_distance,R.string.label_ok2,MapDragActivity.this);
                         }
                     else {
+                        SharedPreferences sharedPreferences = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.commit();
                         client.unRegisterLocationListener(com.autosos.yd.view.MapDragActivity.this);
                         client.stop();
                         trance = locationdrag.getTrance(Location.path_drag, MapDragActivity.this);
@@ -411,15 +429,20 @@ public class MapDragActivity extends Activity implements BDLocationListener{
     protected void onResume() {
 
         super.onResume();
+
         SharedPreferences sharedPreferences = this.getSharedPreferences("Location", Context.MODE_PRIVATE);
-        float dis = sharedPreferences.getFloat("Location_drag_distance",0);
+        float dis = sharedPreferences.getFloat("Location_drag_distance", 0);
+        SharedPreferences sharedPreferences1 = this.getSharedPreferences("isfirst", Context.MODE_PRIVATE);
+        isfirst_drag = sharedPreferences1.getInt("isfirst",0);
         tot_distance = dis;
+
+        Log.e(TAG, "isfist onresume :" + isfirst);
      //   if(Constants.DEBUG)
        //     tot_distance = 99999;
         drap_distanceView.setText(String.format("%.2f", tot_distance / 1000));
         Log.e(TAG, "Now TOTdistance :" + dis);
-        if(tot_distance > 0){
-            ((TextView)findViewById(R.id.repain)).setVisibility(View.VISIBLE);
+            if(tot_distance > 0){
+                ((TextView)findViewById(R.id.repain)).setVisibility(View.VISIBLE);
             trance = locationdrag.getTrance(Location.path_drag, MapDragActivity.this);
 
             String [] ss = trance.split("\\|");
