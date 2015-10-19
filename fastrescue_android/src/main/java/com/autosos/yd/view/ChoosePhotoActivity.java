@@ -78,7 +78,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
         getSuggest().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopupWindow();
+                showPopupWindow();   //把照片展示出来
             }
         });
         showPopupWindow();

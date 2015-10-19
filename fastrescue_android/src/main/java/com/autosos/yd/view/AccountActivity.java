@@ -22,6 +22,12 @@ public class AccountActivity extends AutososBackActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         setBill();
+        getBill().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AccountActivity.this,AccountOfMonthActivity.class);
+            }
+        });
 
     }
     @Override
