@@ -87,7 +87,7 @@ public class AutososBackActivity extends Activity {
         TextView photo_suggest = (TextView) findViewById(R.id.photo_suggest);
         return photo_suggest;
     }
-
+        //test
     public void setBill(){
         TextView bill = (TextView) findViewById(R.id.bill);
         bill.setVisibility(View.VISIBLE);

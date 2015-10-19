@@ -108,6 +108,13 @@
             android:theme="@style/CustomTitleTheme" />
 
         <activity
+            android:name=".view.AccountActivity"
+            android:label="@string/label_account"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
             android:name=".view.PasswordActivity"
             android:label="@string/label_seting_password"
             android:launchMode="singleTask"
