@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.autosos.yd.view.AccountActivity;
 import com.autosos.yd.view.LoginActivity;
 import com.autosos.yd.view.PasswordActivity;
 import com.autosos.yd.view.SetingActivity;
@@ -43,6 +44,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
     private TextView countView;
     private TextView rateView;
     private RelativeLayout seting;
+    private RelativeLayout account;
     private RatingBar ratingbarView;
     private RoundedImageView avatarView;
     private com.autosos.yd.model.Person person = null;
@@ -70,6 +72,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
         countView = (TextView) rootView.findViewById(R.id.count);
         rateView = (TextView) rootView.findViewById(R.id.rate);
         seting = (RelativeLayout) rootView.findViewById(R.id.seting);
+        account = (RelativeLayout) rootView.findViewById(R.id.account);
         ratingbarView =(RatingBar) rootView.findViewById(R.id.ratingbar_person);
         avatarView = (RoundedImageView) rootView.findViewById(R.id.user_avatar);
         avatarView.setCornerRadius(1000);
@@ -82,6 +85,16 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
             }
         });
+        account.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AccountActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
+            }
+        });
+
+
         if(!Constants.DEBUG && false)
             rootView.findViewById(R.id.seting).setVisibility(View.GONE);
         scrollView.setOnRefreshListener(this);
