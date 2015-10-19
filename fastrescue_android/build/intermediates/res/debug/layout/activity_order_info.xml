@@ -6,6 +6,7 @@
     tools:context=".view.OrderInfoActivity">
 
     <RelativeLayout
+        android:gravity="center_vertical"
         android:id="@+id/user_info_layout"
         android:layout_width="match_parent"
         android:layout_height="88dp"
@@ -16,7 +17,6 @@
 
         <ImageView
             android:layout_marginRight="10dp"
-            android:layout_marginTop="14dp"
             android:id="@+id/telephone"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -48,31 +48,38 @@
 
         <!--</LinearLayout>-->
 
-        <TextView
-            android:layout_marginTop="11dp"
-            android:text="1454555"
-            android:visibility="visible"
-            android:id="@+id/carNumber"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"
-            android:textColor="@color/color_white"
-            android:textSize="30sp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-           />
+        <LinearLayout
 
-        <TextView
-            android:text="姚焕焕"
-            android:visibility="invisible"
-            android:id="@+id/name"
+            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/color_white"
-            android:textSize="12sp"
-            android:layout_below="@+id/carNumber"
-            android:layout_alignLeft="@+id/carNumber"
-            android:layout_alignStart="@+id/carNumber" />
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="1454555"
+                android:visibility="visible"
+                android:id="@+id/carNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:textColor="@color/color_white"
+                android:textSize="30sp"
+                />
+
+            <TextView
+                android:text="姚焕焕"
+                android:visibility="invisible"
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_white"
+                android:textSize="12sp"
+                android:layout_below="@+id/carNumber"
+                android:layout_alignLeft="@+id/carNumber"
+                android:layout_alignStart="@+id/carNumber" />
+
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <LinearLayout
