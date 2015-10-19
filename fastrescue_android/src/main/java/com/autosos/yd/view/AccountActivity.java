@@ -21,6 +21,7 @@ public class AccountActivity extends AutososBackActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
+        setBill();
 
     }
     @Override

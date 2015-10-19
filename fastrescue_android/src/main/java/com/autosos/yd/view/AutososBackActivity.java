@@ -88,6 +88,16 @@ public class AutososBackActivity extends Activity {
         return photo_suggest;
     }
 
+    public void setBill(){
+        TextView bill = (TextView) findViewById(R.id.bill);
+        bill.setVisibility(View.VISIBLE);
+    }
+
+    public View getBill(){
+        TextView bill = (TextView) findViewById(R.id.bill);
+        return bill;
+    }
+
     public void hideBackButton() {
         RelativeLayout backBtn = (RelativeLayout) findViewById(android.R.id.home);
         backBtn.setVisibility(View.GONE);
