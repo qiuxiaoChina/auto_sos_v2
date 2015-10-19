@@ -375,8 +375,8 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-//                    if(Constants.DEBUG)
-//                        tot_distance = 95300;
+                    if(Constants.DEBUG)
+                        tot_distance = 95300;
                     if(tot_distance == 0){
                         DialogView dialogView =new DialogView();
                         dialogView.dialog(R.string.msg_type_distance,R.string.label_ok2,MapDragActivity.this);

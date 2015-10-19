@@ -133,11 +133,11 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
         switch (v.getId()) {
             case R.id.empty_view:
                 Intent intent = new Intent(this, ChoosePhotoActivity.class);
-                if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 && orderInfo != null){
+//                if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 && orderInfo != null){
                     intent.putExtra("limit", 1- jsonPics.size());
-                }else{
+//                }else{
                     intent.putExtra("limit", 3 - jsonPics.size());
-                }
+//                }
 //                intent.putExtra("limit", 3 - jsonPics.size());
                 intent.putExtra("OrderInfo", orderInfo);
                 startActivityForResult(intent, Constants.RequestCode.PHOTO_FROM_GALLERY);
@@ -199,11 +199,11 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
         JsonPic jsonPic = (JsonPic) parent.getAdapter().getItem(position);
         if (jsonPic != null && JSONUtil.isEmpty(jsonPic.getPath())) {
             Intent intent = new Intent(this, ChoosePhotoActivity.class);
-            if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 && orderInfo != null){
-                intent.putExtra("limit", 1- jsonPics.size());
-            }else{
+//            if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 && orderInfo != null){
+//                intent.putExtra("limit", 1- jsonPics.size());
+//            }else{
                 intent.putExtra("limit", 3 - jsonPics.size());
-            }
+//            }
 //            intent.putExtra("limit", 3 - jsonPics.size());
             intent.putExtra("OrderInfo", orderInfo);
             startActivityForResult(intent, Constants.RequestCode.PHOTO_FROM_GALLERY);
@@ -441,7 +441,7 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
                             }
                             cherk();
                             if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2){
-                                if (!photos.isEmpty() && photos.size() < 1) {
+                                if (!photos.isEmpty() && photos.size() < 3) {       //此处控制照片上传数量
                                     photos.add(emptyPic);
                                 }
                             }else {
