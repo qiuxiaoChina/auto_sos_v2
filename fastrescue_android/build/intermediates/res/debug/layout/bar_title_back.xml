@@ -66,6 +66,20 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent" />
 
+    <TextView
+        android:textColor="#aaa"
+        android:textSize="12sp"
+        android:id="@+id/bill"
+        android:visibility="gone"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        android:minWidth="46dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="15dp"
+        android:text="月账单"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
     <View
         android:id="@+id/line"
         android:layout_width="match_parent"

@@ -34,7 +34,7 @@ public class AccountActivity extends AutososBackActivity {
     }
 
     public void drawCash(View view){
-        Intent intent = new Intent(AccountActivity.this,AccountOfMonthActivity.class);
+        Intent intent = new Intent(AccountActivity.this,DrawCashActivity.class);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
     }

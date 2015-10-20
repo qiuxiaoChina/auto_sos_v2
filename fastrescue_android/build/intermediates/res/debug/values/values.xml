@@ -309,11 +309,13 @@
     <string name="hint_choose_photo_limit_out">选择的照片数量已经超过限制</string>
     <string name="hint_password">密码</string>
     <string name="hint_phone">手机号</string>
-    <string name="hint_post_add_images">可添加3张照片</string>
+    <string name="hint_post_add_images">请添加照片</string>
     <string name="hint_type_distance">拖车行驶公里数</string>
     <string name="label_QR_QR">没有关注e救援微信公众号的车主\n可以扫一扫上面的二维码加以关注</string>
     <string name="label_QR_QR_QR">扫一扫关注e救援微信公众号</string>
     <string name="label_QR_code">e救援公众号二维码</string>
+    <string name="label_account">账户余额</string>
+    <string name="label_account_month">月账单</string>
     <string name="label_address">地址:</string>
     <string name="label_app">e救援</string>
     <string name="label_baoxian">免费%s公里</string>
@@ -347,6 +349,7 @@
     <string name="label_distance">距</string>
     <string name="label_drag">拖车计费</string>
     <string name="label_drag_fininsh">确认完成拖车？</string>
+    <string name="label_draw_cash">提现</string>
     <string name="label_driver">车主</string>
     <string name="label_edit">修改</string>
     <string name="label_ehelp">e救援</string>
