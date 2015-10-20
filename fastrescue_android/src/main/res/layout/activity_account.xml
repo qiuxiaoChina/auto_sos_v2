@@ -64,6 +64,7 @@
     </RelativeLayout>
 
     <Button
+        android:onClick="drawCash"
         android:layout_marginTop="25dp"
         android:textSize="15sp"
         android:textColor="#666"

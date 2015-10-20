@@ -115,6 +115,21 @@
             android:theme="@style/CustomTitleTheme" />
 
         <activity
+            android:name=".view.AccountOfMonthActivity"
+            android:label="@string/label_account_month"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.DrawCashActivity"
+            android:label="@string/label_draw_cash"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+
+        <activity
             android:name=".view.PasswordActivity"
             android:label="@string/label_seting_password"
             android:launchMode="singleTask"

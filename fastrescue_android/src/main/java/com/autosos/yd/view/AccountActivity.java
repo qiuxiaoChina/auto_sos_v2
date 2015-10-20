@@ -14,7 +14,7 @@ import com.autosos.yd.util.UpdateStateServe;
 /**
  * Created by Administrator on 2015/8/13.
  */
-public class AccountActivity extends AutososBackActivity implements View.OnClickListener{
+public class AccountActivity extends AutososBackActivity {
 
 
     @Override
@@ -26,19 +26,17 @@ public class AccountActivity extends AutososBackActivity implements View.OnClick
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AccountActivity.this,AccountOfMonthActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
             }
         });
 
     }
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.setting_password:
-                Intent intent = new Intent(this,PasswordActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
-               break;
-        }
+
+    public void drawCash(View view){
+        Intent intent = new Intent(AccountActivity.this,AccountOfMonthActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
     }
 
     public void onBackPressed() {

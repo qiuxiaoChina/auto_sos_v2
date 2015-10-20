@@ -99,6 +99,8 @@
     <string name="label_return">返回</string>
     <string name="label_seting">设置</string>
     <string name="label_account">账户余额</string>
+    <string name="label_draw_cash">提现</string>
+    <string name="label_account_month">月账单</string>
     <string name="label_seting_password">修改密码</string>
     <string name="label_record_info">接单详情</string>
     <string name="label_choose_ok">完成选取(%s)</string>
