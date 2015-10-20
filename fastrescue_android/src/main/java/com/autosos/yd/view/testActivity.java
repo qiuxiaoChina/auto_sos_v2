@@ -80,7 +80,7 @@ public class testActivity extends Activity{
     }
     public void talk2(View v){
         PushManager.getInstance().initialize(SplashActivity.splashActivity);
-        PushManager.getInstance().turnOnPush(SplashActivity.splashActivity);
+//        PushManager.getInstance().turnOnPush(SplashActivity.splashActivity);
         Log.e("getui ","======================   getui serve turnon     =====================");
     }
 }

@@ -277,6 +277,7 @@ public class WorkFragment extends Fragment implements View.OnClickListener,
 
     @Override
     public void onHiddenChanged(boolean hidden) {
+        Log.e("test", "2222222");
         if(!hidden){
             try{
                 NotificationManager manager = (NotificationManager) rootView.getContext().getSystemService(Context.NOTIFICATION_SERVICE);

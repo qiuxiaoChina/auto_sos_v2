@@ -38,14 +38,35 @@ public class GetuiSdkMsgReceiver extends BroadcastReceiver {
     public static String mycid;
     @Override
     public void onReceive(Context context, Intent intent) {
-            Log.e("Up yoyo","------");
             String mylocaluid = context.getSharedPreferences(Constants.PREF_FILE, Context.MODE_PRIVATE).getString("clientid", null);
             mycid = intent.getExtras().getString("clientid");
-            if(mylocaluid == null){
-                Bundle mybundle = intent.getExtras();
-                mycid = mybundle.getString("clientid");
-                context.getSharedPreferences(Constants.PREF_FILE,Context.MODE_PRIVATE).edit().putString("clientid",mycid).commit();
+
+            if (mycid != null){
+                if (mycid != mylocaluid){
+                    Log.e("Up yoyo","mycid ====  " + mycid + "  ||   " + "mylocaluid ===== "+mylocaluid );
+                    Bundle mybundle = intent.getExtras();
+                    mycid = mybundle.getString("clientid");
+                    context.getSharedPreferences(Constants.PREF_FILE,Context.MODE_PRIVATE).edit().putString("clientid",mycid).commit();
+                }
             }
+
+//            if( mylocaluid == null || mylocaluid != mycid ){
+//                Log.e("Up yoyo2","mycid ====  " + mycid + "  ||   " + "mylocaluid ===== "+mylocaluid );
+//                Bundle mybundle = intent.getExtras();
+//                mycid = mybundle.getString("clientid");
+//                context.getSharedPreferences(Constants.PREF_FILE,Context.MODE_PRIVATE).edit().putString("clientid",mycid).commit();
+
+//                Log.e("Up yoyo","------");
+//                String mylocaluid = context.getSharedPreferences(Constants.PREF_FILE, Context.MODE_PRIVATE).getString("clientid", null);
+//                mycid = intent.getExtras().getString("clientid");
+//                if(mylocaluid == null){
+//                    Bundle mybundle = intent.getExtras();
+//                    mycid = mybundle.getString("clientid");
+//                    context.getSharedPreferences(Constants.PREF_FILE,Context.MODE_PRIVATE).edit().putString("clientid",mycid).commit();
+                //注释掉的代码是之前出    现问题offline的代码
+//            }
+
+
 
 
 

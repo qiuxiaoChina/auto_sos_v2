@@ -28,6 +28,7 @@ import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.autosos.yd.model.OrderInfo;
+import com.autosos.yd.util.MusicUtil;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONObject;
@@ -73,6 +74,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
         gridView = (GridView) findViewById(R.id.gallery);
         gridView.setOnItemClickListener(this);
         gridView.setAdapter(adapter);
+        MusicUtil.playmusics(ChoosePhotoActivity.this, MusicUtil.Take_three_photo);
         orderInfo = (OrderInfo) getIntent().getSerializableExtra("OrderInfo");
         setSuggest();
         getSuggest().setOnClickListener(new View.OnClickListener() {

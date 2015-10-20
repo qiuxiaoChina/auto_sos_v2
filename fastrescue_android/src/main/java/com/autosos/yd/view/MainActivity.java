@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -302,6 +303,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
        // selectChange(0);
         super.onResume();
         //MobclickAgent.onResume(this);
+        Log.e("test", "11111111");
     }
     public void test(View v){
         Intent i =new Intent(MainActivity.this,testActivity.class);

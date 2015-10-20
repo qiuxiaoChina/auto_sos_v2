@@ -153,7 +153,7 @@
 
     <string name="hint_phone">手机号</string>
     <string name="hint_password">密码</string>
-    <string name="hint_post_add_images">可添加3张照片</string>
+    <string name="hint_post_add_images">请添加照片</string>
     <string name="hint_choose_photo_limit_out">选择的照片数量已经超过限制</string>
     <string name="hint_type_distance">拖车行驶公里数</string>
 
