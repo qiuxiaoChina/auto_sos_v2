@@ -1,96 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.handmark.pulltorefresh.library.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="#f8f8f8"
+    android:id="@+id/account_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_marginTop="25dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:src="@drawable/icon40"
-            android:layout_width="wrap_content"
-            android:layout_height="135dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
-
 
         <LinearLayout
-            android:layout_centerInParent="true"
             android:orientation="vertical"
+            android:background="#f8f8f8"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <RelativeLayout
-                android:gravity="center"
+                android:layout_marginTop="25dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:textSize="17sp"
-                    android:textColor="#fff"
-                    android:id="@+id/yuan_unit"
-                    android:text="余额"
+                <ImageView
+                    android:src="@drawable/icon40"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="135dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true" />
 
-                <TextView
-                    android:layout_alignBottom="@+id/yuan_unit"
-                    android:textSize="15sp"
-                    android:textColor="#fff"
-                    android:layout_toRightOf="@+id/yuan_unit"
-                    android:text="（元）"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:textSize="17sp"
+                            android:textColor="#fff"
+                            android:id="@+id/yuan_unit"
+                            android:text="余额"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:layout_alignBottom="@+id/yuan_unit"
+                            android:textSize="15sp"
+                            android:textColor="#fff"
+                            android:layout_toRightOf="@+id/yuan_unit"
+                            android:text="（元）"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+
+
+                    <TextView
+                        android:textSize="25sp"
+                        android:textColor="#fff"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center_horizontal"
+                        android:text="5848.00"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
 
             </RelativeLayout>
 
+            <Button
+                android:onClick="drawCash"
+                android:layout_marginTop="25dp"
+                android:textSize="15sp"
+                android:textColor="#666"
+                android:background="@drawable/bg_btn_rectangle_white"
+                android:layout_gravity="center_horizontal"
+                android:text="提现"
+                android:layout_width="90dp"
+                android:layout_height="30dp" />
 
-
-            <TextView
-                android:textSize="25sp"
-                android:textColor="#fff"
-                android:layout_marginTop="10dp"
-                android:gravity="center_horizontal"
-                android:text="5848.00"
+            <LinearLayout
+                android:layout_marginTop="25dp"
+                android:background="#efeff0"
+                android:gravity="center_vertical"
                 android:layout_width="match_parent"
+                android:layout_height="30dp">
+
+                <TextView
+                    android:textColor="#aaa"
+                    android:textSize="12sp"
+                    android:layout_marginLeft="23dp"
+                    android:text="明细"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_picture"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-    </RelativeLayout>
-
-    <Button
-        android:onClick="drawCash"
-        android:layout_marginTop="25dp"
-        android:textSize="15sp"
-        android:textColor="#666"
-        android:background="@drawable/bg_btn_rectangle_white"
-        android:layout_gravity="center_horizontal"
-        android:text="提现"
-        android:layout_width="90dp"
-        android:layout_height="30dp" />
-
-    <LinearLayout
-        android:layout_marginTop="25dp"
-        android:background="#efeff0"
-        android:gravity="center_vertical"
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-
-        <TextView
-            android:textColor="#aaa"
-            android:textSize="12sp"
-            android:layout_marginLeft="23dp"
-            android:text="明细"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
 
 
-
-</LinearLayout>
+</com.handmark.pulltorefresh.library.PullToRefreshScrollView>

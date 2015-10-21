@@ -174,8 +174,10 @@ public class OrderInfoActivity extends AutososBackActivity{
 
         @Override
         protected void onPostExecute(JSONObject result) {
+            Log.e("json","result ===== "+result);
             progressBar.setVisibility(View.GONE);
             orderInfo = new OrderInfo(result);
+            Log.e("json","orderInfo ===== "+orderInfo.getId());
             SharedPreferences sharedPreferences = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
             int isfirst_drag = sharedPreferences.getInt("isfirst", 0);
             Log.e("tuoch","===orderinfo fist coming==="+isfirst_drag);

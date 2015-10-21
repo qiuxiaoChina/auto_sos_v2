@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-
+        android:inputType="number"
         android:paddingLeft="23dp"
         android:background="#ffffff"
         android:textSize="17sp"
@@ -21,7 +21,7 @@
         android:textSize="12sp"
         android:textColor="#aaa"
         android:layout_marginLeft="23dp"
-        android:text="体现到银行卡"
+        android:text="提现到银行卡"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
