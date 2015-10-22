@@ -49,6 +49,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:id="@+id/tv_bank_number"
             android:layout_marginRight="23dp"
             android:layout_alignParentRight="true"
             android:text="5458854758964785"

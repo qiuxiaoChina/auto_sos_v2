@@ -16,6 +16,7 @@ import com.autosos.yd.Constants;
 import com.autosos.yd.adapter.ObjectBindAdapter;
 import com.autosos.yd.fragment.WorkFragment;
 import com.autosos.yd.model.Notice;
+import com.autosos.yd.model.Order;
 import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.Utils;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -83,7 +84,10 @@ public class NoticeView extends AutososBackActivity implements ObjectBindAdapter
                     for (int i = 0; i < size; i++) {
                         Notice order = new Notice(result.optJSONObject(i));
                         notices.add(order);
+
                     }
+
+
                     adapter.notifyDataSetChanged();
                 }
             }

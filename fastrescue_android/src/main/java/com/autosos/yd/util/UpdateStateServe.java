@@ -134,7 +134,7 @@ public class UpdateStateServe extends Service implements BDLocationListener {
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
         Log.e(TAG, "received!");
-        cherkGetuiServe();
+//        cherkGetuiServe();
         if ( UpdateStateServeActive ) {
             if(UpdateChangeTime == 1 || UpdateChangeTime == 2){
                 changeClientTime();
@@ -245,9 +245,12 @@ public class UpdateStateServe extends Service implements BDLocationListener {
     }
     private void cherkGetuiServe(){
         if(!PushManager.getInstance().isPushTurnedOn(SplashActivity.splashActivity) && PushManager.getInstance() != null){
-//            PushManager.getInstance().initialize(SplashActivity.splashActivity);
-            PushManager.getInstance().turnOnPush(SplashActivity.splashActivity);
-            Log.e("getui ","======================   getui serve turnon     =====================");
+            PushManager.getInstance().initialize(SplashActivity.splashActivity);
+            if (PushManager.getInstance() != null){
+                PushManager.getInstance().turnOnPush(SplashActivity.splashActivity);
+            }
+
+            Log.e("getui ", "======================   getui serve turnon     =====================");
         }
     }
 }

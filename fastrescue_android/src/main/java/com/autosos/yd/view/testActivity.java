@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -49,6 +50,11 @@ import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.igexin.sdk.PushManager;
 
+import org.json.JSONArray;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -67,10 +73,14 @@ public class testActivity extends Activity{
     int i = 0;
     private int width,height;
     private boolean ismoving = false;
+    private Bitmap bitmap;
+    private ImageView picture;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
+        picture = (ImageView) findViewById(R.id.picture);
+        new getImageTask().execute("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg");
 
     }
     public void talk(View v){
@@ -82,5 +92,33 @@ public class testActivity extends Activity{
         PushManager.getInstance().initialize(SplashActivity.splashActivity);
 //        PushManager.getInstance().turnOnPush(SplashActivity.splashActivity);
         Log.e("getui ","======================   getui serve turnon     =====================");
+    }
+
+    private class getImageTask extends AsyncTask<String, Void, Bitmap>{
+
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            try {
+                URL url = new URL("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg"); //path图片的网络地址
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+                    bitmap  = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
+
+                    System.out.println("加载网络图片完成");
+                }else{
+                    System.out.println("加载网络图片失败");
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return bitmap;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            super.onPostExecute(bitmap);
+            picture.setImageBitmap(bitmap);
+        }
     }
 }

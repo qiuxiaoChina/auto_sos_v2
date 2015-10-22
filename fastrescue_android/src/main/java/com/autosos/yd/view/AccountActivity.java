@@ -52,17 +52,7 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
         account_main = (PullToRefreshScrollView) findViewById(R.id.account_main);
         account_main.setOnRefreshListener(this);
 
-//        TimerTask task = new TimerTask() {
-//            public void run() {
-//                Message msg = new Message();
-//                msg.what = 1;
-//                handler.sendMessage(msg);
-//            }
-//        };
-//        Timer timer = new Timer();
-//        timer.schedule(task, 1000);
-
-        new Thread(downloadRun).start();
+//        new Thread(downloadRun).start();
 
         setBill();
         getBill().setOnClickListener(new View.OnClickListener() {
@@ -76,40 +66,40 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
 
     }
 
-    Runnable downloadRun = new Runnable() {
-
-        @Override
-        public void run() {
-            // TODO Auto-generated method stub
-            try {
-                URL url = new URL("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg"); //path图片的网络地址
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
-                    bitmap  = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
-
-                    System.out.println("加载网络图片完成");
-                }else{
-                    System.out.println("加载网络图片失败");
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Message msg = new Message();
-                msg.what = 1;
-                handler.sendMessage(msg);
-
-        }
-    };
-        private Handler handler = new Handler(){
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 1){
-                iv_picture.setImageBitmap(bitmap);//加载到ImageView上
-            }
-        }
-    };
+//    Runnable downloadRun = new Runnable() {
+//
+//        @Override
+//        public void run() {
+//            // TODO Auto-generated method stub
+//            try {
+//                URL url = new URL("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg"); //path图片的网络地址
+//                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+//                if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
+//                    bitmap  = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
+//
+//                    System.out.println("加载网络图片完成");
+//                }else{
+//                    System.out.println("加载网络图片失败");
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            Message msg = new Message();
+//                msg.what = 1;
+//                handler.sendMessage(msg);
+//
+//        }
+//    };
+//        private Handler handler = new Handler(){
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            if (msg.what == 1){
+//                iv_picture.setImageBitmap(bitmap);
+//            }
+//        }
+//    };
 
 
     private class GetAccountInfoTask extends AsyncTask<String, Object, JSONArray> {

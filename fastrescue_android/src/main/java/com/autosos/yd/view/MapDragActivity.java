@@ -175,8 +175,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
         if (client.isStarted()) {
                 Log.e(TAG, "BDLocation  " + bdLocation.toString() + "***********************" + "la:"
                         + bdLocation.getLatitude() + "**log" + bdLocation.getLongitude() + "***point:" + point++);
-                if (bdLocation.getLocType() == 61 || bdLocation.getLocType() == 65 || bdLocation
-                        .getLocType() == 161) {
+                if (bdLocation.getLocType() == 61 || bdLocation.getLocType() == 65 || bdLocation.getLocType() == 161) {
                     double la = latitude;
                     double lo = longitude;
                     latitude = bdLocation.getLatitude() ;
@@ -197,38 +196,36 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                     }else if (cherkGPSandNetWork()) {
                         LatLng lastpt = new LatLng(last_latitude, last_longitude);
                         LatLng nowpt = new LatLng(latitude, longitude);
-                        if(DistanceUtil.getDistance(lastpt,nowpt) == -1||DistanceUtil.getDistance(lastpt,nowpt) < 5.00
-                        || DistanceUtil.getDistance(lastpt,nowpt) > 200){
-                             Log.e(TAG, DistanceUtil.getDistance(lastpt,nowpt)+"< 5m or > 200m dont utils distance!!!");
-                             last_longitude = lo;
-                             last_latitude = la;
+                        if(DistanceUtil.getDistance(lastpt,nowpt) == -1||DistanceUtil.getDistance(lastpt,nowpt) < 5.00 || DistanceUtil.getDistance(lastpt,nowpt) > 200){
+                            Log.e(TAG, DistanceUtil.getDistance(lastpt,nowpt)+"< 5m or > 200m dont utils distance!!!");
+                            last_longitude = lo;
+                            last_latitude = la;
                         }else {
-                            //5 * 12s = 60s update the address
-                            if(point % 12 == 0){
-                                    if (latitude > 0 && longitude > 0) {
-                                        Map<String, Object> map = new HashMap<>();
-                                        map.put("lat", String.valueOf(latitude));
-                                        map.put("lng", String.valueOf(longitude));
-                                        // map.put("status", String.valueOf(status));
-                                        new NewHttpPostTask(this, new OnHttpRequestListener() {
-                                            @Override
-                                            public void onRequestCompleted(Object obj) {
-                                                Log.e(TAG,"pu tong !");
-                                            }
+                                //5 * 12s = 60s update the address
+                                if(point % 12 == 0){
+                                        if (latitude > 0 && longitude > 0) {
+                                            Map<String, Object> map = new HashMap<>();
+                                            map.put("lat", String.valueOf(latitude));
+                                            map.put("lng", String.valueOf(longitude));
+                                            // map.put("status", String.valueOf(status));
+                                            new NewHttpPostTask(this, new OnHttpRequestListener() {
+                                                @Override
+                                                public void onRequestCompleted(Object obj) {
+                                                    Log.e(TAG,"pu tong !");
+                                                }
 
-                                            @Override
-                                            public void onRequestFailed(Object obj) {
-                                            }
-                                        }).execute(Constants.USER_LOCATION_URL, map);
-                                    }
+                                                @Override
+                                                public void onRequestFailed(Object obj) {
+                                                }
+                                            }).execute(Constants.USER_LOCATION_URL, map);
+                                        }
                             }
                             UpdateStateServe.latitude = latitude;
                             UpdateStateServe.longitude = longitude;
                             locationdrag.writeJWD(latitude,longitude,Location.path_drag,MapDragActivity.this);
                             PaintRoute();
                         }
-                    }
-                    else{
+                    }else{
 
                     }
                 }
