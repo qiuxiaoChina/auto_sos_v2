@@ -137,6 +137,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
         protected JSONObject doInBackground(String... params) {
             try {
                 String jsonStr = com.autosos.yd.util.JSONUtil.getStringFromUrl(getActivity().getApplicationContext(), params[0]);
+                Log.e("person",jsonStr);
                 if (com.autosos.yd.util.JSONUtil.isEmpty(jsonStr)) {
                     return null;
                 }
@@ -164,6 +165,11 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
                 com.autosos.yd.task.AsyncBitmapDrawable image = new com.autosos.yd.task.AsyncBitmapDrawable(rootView.getResources(),
                         com.autosos.yd.Constants.PLACEHOLDER_AVATAR, task);
                 task.loadImage(person.getAvatar(), avatarView.getMeasuredWidth(), com.autosos.yd.util.ScaleMode.WIDTH, image);
+                if (person.getIs_manager() == 1){
+                    account.setVisibility(View.VISIBLE);
+                }else {
+                    account.setVisibility(View.GONE);
+                }
             }
             empty.setVisibility(View.GONE);
             super.onPostExecute(result);

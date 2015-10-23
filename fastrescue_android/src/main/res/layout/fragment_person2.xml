@@ -191,7 +191,7 @@
                 android:background="@color/color_line" />
 
             <RelativeLayout
-                android:visibility="visible"
+                android:visibility="gone"
                 android:id="@+id/account"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"

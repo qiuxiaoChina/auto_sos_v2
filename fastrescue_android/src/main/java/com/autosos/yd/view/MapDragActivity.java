@@ -76,6 +76,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
     private TextView drap_distanceView;
     private double latitude;
     private double longitude;
+    private TextView test_distance;
     private double last_latitude = 0.00;
     private double last_longitude = 0.00;
     private double tot_distance;
@@ -121,6 +122,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
         btn_drop_arrive = (Button) findViewById(R.id.btn_drop_arrive);
         drap_distanceView = (TextView)findViewById(R.id.drap_distance);
         btn_drop_arriveView = (Button)findViewById(R.id.btn_drop_arrive);
+        test_distance = (TextView) findViewById(R.id.test_distance);
         progressBar=findViewById(R.id.drag_map_include);
         isfirst = 0;
         ispause = false;
@@ -176,12 +178,14 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                 Log.e(TAG, "BDLocation  " + bdLocation.toString() + "***********************" + "la:"
                         + bdLocation.getLatitude() + "**log" + bdLocation.getLongitude() + "***point:" + point++);
                 if (bdLocation.getLocType() == 61 || bdLocation.getLocType() == 65 || bdLocation.getLocType() == 161) {
+                    Log.e(TAG, "1111111111111111111111111111111111");
                     double la = latitude;
                     double lo = longitude;
                     latitude = bdLocation.getLatitude() ;
                     test_point += 0.00005 ;
                     longitude = bdLocation.getLongitude();
                     if (firstLocation) {
+                        Log.e(TAG, "222222222222222222222222222222");
                         last_latitude = latitude;
                         last_longitude = longitude;
                         firstLocation = false;
@@ -194,9 +198,10 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                         last_longitude = lo;
                         last_latitude = la;
                     }else if (cherkGPSandNetWork()) {
+                        Log.e(TAG, "3333333333333333333333333333");
                         LatLng lastpt = new LatLng(last_latitude, last_longitude);
                         LatLng nowpt = new LatLng(latitude, longitude);
-                        if(DistanceUtil.getDistance(lastpt,nowpt) == -1||DistanceUtil.getDistance(lastpt,nowpt) < 5.00 || DistanceUtil.getDistance(lastpt,nowpt) > 200){
+                        if(DistanceUtil.getDistance(lastpt,nowpt) == -1||DistanceUtil.getDistance(lastpt,nowpt) < 5.00 || DistanceUtil.getDistance(lastpt,nowpt) > 300){
                             Log.e(TAG, DistanceUtil.getDistance(lastpt,nowpt)+"< 5m or > 200m dont utils distance!!!");
                             last_longitude = lo;
                             last_latitude = la;
@@ -277,13 +282,23 @@ public class MapDragActivity extends Activity implements BDLocationListener{
     }
 
     private void rePaintRoute(String [] las,String [] los ,String[] times){
-        if(las.length < 2)
+        if(las.length < 2){
             return;
-        double lal = Double.parseDouble(las[0]); ;
-        double lol = Double.parseDouble(los[0]); ;
+        }
+        double lal = Double.parseDouble(las[0]);
+        double lol = Double.parseDouble(los[0]);
+        Double amendment_ditance=null;
+        Double sum_amendment_ditance = 0.0000001;
         for(int i = 1; i < las.length; i++){
             LatLng lastpt=new LatLng(lal,lol);
             LatLng nowpt=new LatLng(Double.parseDouble(las[i]),Double.parseDouble(los[i]));
+            amendment_ditance = DistanceUtil.getDistance(lastpt, nowpt);
+            if (amendment_ditance < 5000 && amendment_ditance >5 ){
+                sum_amendment_ditance += amendment_ditance;
+            }
+
+            Log.e(TAG, "amendment_ditance  =====  " + amendment_ditance);
+
             pts=new ArrayList<LatLng>();
             pts.add(lastpt);
             pts.add(nowpt);
@@ -294,6 +309,11 @@ public class MapDragActivity extends Activity implements BDLocationListener{
             lal = Double.parseDouble(las[i]);
             lol = Double.parseDouble(los[i]);
         }
+        if (Constants.DEBUG){
+            test_distance.setText(String.format("%.2f", sum_amendment_ditance / 1000));
+        }
+
+        Log.e(TAG, "amendment_ditance  =====  "+amendment_ditance);
        // progressBar.setVisibility(View.GONE);
         //TEST from gongsi
         //TEST from bijiben2
@@ -448,6 +468,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
             String [] time = new String[ss.length];
             String [] las = new String[ss.length];
             String [] los = new String[ss.length];
+            Double [][] dot = new Double[ss.length][ss.length];
             for (int i = 0;i<ss.length;i++){
                 String[] x = ss[i].split("#");
                 ss2[i] = x[0];

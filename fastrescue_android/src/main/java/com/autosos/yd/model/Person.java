@@ -21,6 +21,7 @@ public class Person implements Identifiable {
     private long money;
     private String avatar;
     private int online_status;
+    private int is_manager;
 
     public Person(JSONObject jsonObject) {
         if (jsonObject != null) {
@@ -36,11 +37,17 @@ public class Person implements Identifiable {
             this.money = jsonObject.optLong("money");
             this.avatar = JSONUtil.getString(jsonObject, "avatar");
             this.online_status = jsonObject.optInt("online_status");
+            this.is_manager = jsonObject.optInt("is_manager");
         }
     }
     public void setOnline_status(int online_status){ this.online_status = online_status;}
 
     public int getOnline_status(){ return online_status; }
+
+    public void setIs_manager(int online_status){ this.is_manager = is_manager;}
+
+    public int getIs_manager(){ return is_manager; }
+
 
     public Long getId() {
         return id;

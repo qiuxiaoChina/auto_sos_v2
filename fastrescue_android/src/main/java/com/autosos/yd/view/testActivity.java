@@ -33,9 +33,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.autosos.yd.Constants;
 import com.autosos.yd.R;
 import com.autosos.yd.fragment.WorkFragment;
 import com.autosos.yd.game.hospital;
+import com.autosos.yd.task.AsyncBitmapDrawable;
+import com.autosos.yd.task.ImageLoadTask;
 import com.autosos.yd.util.MusicUtil;
 import com.autosos.yd.util.MyUtils;
 import com.autosos.yd.util.UpdateStateServe;
@@ -49,6 +52,7 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.igexin.sdk.PushManager;
+import com.makeramen.rounded.RoundedImageView;
 
 import org.json.JSONArray;
 
@@ -70,16 +74,16 @@ public class testActivity extends Activity{
     private MapView mMapView ;
     private ImageView spirtView;
     private RelativeLayout cavasView;
-    int i = 0;
     private int width,height;
     private boolean ismoving = false;
     private Bitmap bitmap;
-    private ImageView picture;
+    private RoundedImageView picture;
+    private RoundedImageView avatarView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.test);
-        picture = (ImageView) findViewById(R.id.picture);
+        picture = (RoundedImageView) findViewById(R.id.picture);
         new getImageTask().execute("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg");
 
     }
@@ -118,7 +122,15 @@ public class testActivity extends Activity{
         @Override
         protected void onPostExecute(Bitmap bitmap) {
             super.onPostExecute(bitmap);
-            picture.setImageBitmap(bitmap);
+//            com.autosos.yd.task.ImageLoadTask task = new com.autosos.yd.task.ImageLoadTask(avatarView, null, 0);
+//            com.autosos.yd.task.AsyncBitmapDrawable image = new com.autosos.yd.task.AsyncBitmapDrawable(rootView.getResources(),
+//                    com.autosos.yd.Constants.PLACEHOLDER_AVATAR, task);
+//            task.loadImage(person.getAvatar(), avatarView.getMeasuredWidth(), com.autosos.yd.util.ScaleMode.WIDTH, image);
+            ImageLoadTask task = new ImageLoadTask(picture, null,0);
+            AsyncBitmapDrawable image = new AsyncBitmapDrawable(getResources(), Constants.PLACEHOLDER_AVATAR, task);
+            task.loadImage("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg",180,com.autosos.yd.util.ScaleMode.WIDTH, image);
+
+//            picture.setImageBitmap(bitmap);
         }
     }
 }
