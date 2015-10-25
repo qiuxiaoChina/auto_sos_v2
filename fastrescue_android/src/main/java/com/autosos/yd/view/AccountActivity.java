@@ -109,7 +109,9 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
     }
 
     public void drawCash(View view){
+
         Intent intent = new Intent(AccountActivity.this,DrawCashActivity.class);
+        intent.putExtra("balance",balance.getBalance());
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
     }

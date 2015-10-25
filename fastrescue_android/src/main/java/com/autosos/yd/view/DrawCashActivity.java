@@ -1,10 +1,17 @@
 package com.autosos.yd.view;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,37 +56,83 @@ public class DrawCashActivity extends AutososBackActivity {
 
     }
 
+
+
     public void takeMoney(View view){
         String money = "";
         money = et_money.getText().toString();
-        Map<String, Object> map = new HashMap<>();
-        map.put("money",money);
-
-        new com.autosos.yd.task.NewHttpPostTask(DrawCashActivity.this, new com.autosos.yd.task.OnHttpRequestListener() {
-            @Override
-            public void onRequestCompleted(Object obj) {
-                try {
-                    JSONObject jsonObject = new JSONObject(obj.toString());
-                    Log.e("ChangPSD", jsonObject.toString());
-                    if (!jsonObject.isNull("result")) {
-                        int result = jsonObject.optInt("result");
-                        if(result == 1){
-                            Log.e("drawcash", "success");
-                        }else{
-                            String msg = jsonObject.optString("msg");
-                            findViewById(R.id.progressBar).setVisibility(View.GONE);
-                            Toast.makeText(DrawCashActivity.this, msg, Toast.LENGTH_LONG).show();
+        String balance = getIntent().getStringExtra("balance");
+        long balance_long = Long.parseLong(balance);
+        Log.e("drawcash","balance_long  ====  "+balance_long);
+        long money_long = Long.parseLong(money);
+        Log.e("drawcash","money_long  ====  "+money_long);
+        if (money == null || money.length() == 0 ){
+            showDrawCashDialog(R.string.msg_enter_cash);
+        }else {
+            Map<String, Object> map = new HashMap<>();
+            map.put("money",money);
+            new com.autosos.yd.task.NewHttpPostTask(DrawCashActivity.this, new com.autosos.yd.task.OnHttpRequestListener() {
+                @Override
+                public void onRequestCompleted(Object obj) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(obj.toString());
+                        Log.e("ChangPSD", jsonObject.toString());
+                        if (!jsonObject.isNull("result")) {
+                            int result = jsonObject.optInt("result");
+                            if(result == 1){
+                                Log.e("drawcash", "success");
+                                showDrawCashDialog(R.string.msg_enter_cash_success);
+                            }else{
+                                String msg = jsonObject.optString("msg");
+//                                findViewById(R.id.progressBar).setVisibility(View.GONE);
+                                Toast.makeText(DrawCashActivity.this, msg, Toast.LENGTH_LONG).show();
+                            }
                         }
+                    }catch (Exception e ){
+                        e.printStackTrace();
                     }
-                }catch (Exception e ){
-                    e.printStackTrace();
+                }
+                @Override
+                public void onRequestFailed(Object obj) {
+                    Log.e("drawcash", "failed");
+                }
+            }).execute(String.format(Constants.TAKECASH), map);
+        }
+
+
+    }
+
+    public void showDrawCashDialog(final int msg){
+        View v2 = getLayoutInflater().inflate(R.layout.dialog_msg_content,
+                null);
+        final Dialog dialog = new Dialog(v2.getContext(), R.style.bubble_dialog);
+        Button tvConfirm = (Button) v2.findViewById(R.id.btn_notice_confirm);
+        TextView tvMsg = (TextView) v2.findViewById(R.id.tv_notice_msg);
+        tvMsg.setText(String.format(getString(msg)));
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                if(msg == R.string.msg_enter_cash_success){
+                    Intent intent = new Intent(DrawCashActivity.this,AccountActivity.class);
+                    startActivity(intent);
                 }
             }
+        });
+        dialog.setContentView(v2);
+        dialog.setCanceledOnTouchOutside(false);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        Point point = JSONUtil.getDeviceSize(DrawCashActivity.this);
+        params.width = Math.round(point.x * 5 / 7);
+        window.setAttributes(params);
+        dialog.show();
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
-            public void onRequestFailed(Object obj) {
-                Log.e("drawcash", "failed");
+            public void onCancel(DialogInterface dialog) {
+
             }
-        }).execute(String.format(Constants.TAKECASH), map);
+        });
     }
 
     @Override
