@@ -62,10 +62,10 @@ public class DrawCashActivity extends AutososBackActivity {
         String money = "";
         money = et_money.getText().toString();
         String balance = getIntent().getStringExtra("balance");
-        long balance_long = Long.parseLong(balance);
-        Log.e("drawcash","balance_long  ====  "+balance_long);
-        long money_long = Long.parseLong(money);
-        Log.e("drawcash","money_long  ====  "+money_long);
+//        long balance_long = Long.parseLong(balance);
+//        Log.e("drawcash","balance_long  ====  "+balance_long);
+//        long money_long = Long.parseLong(money);
+//        Log.e("drawcash","money_long  ====  "+money_long);
         if (money == null || money.length() == 0 ){
             showDrawCashDialog(R.string.msg_enter_cash);
         }else {
