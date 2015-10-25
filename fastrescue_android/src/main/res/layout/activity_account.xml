@@ -59,6 +59,7 @@
 
 
                     <TextView
+                        android:id="@+id/tv_balance"
                         android:textSize="25sp"
                         android:textColor="#fff"
                         android:layout_marginTop="10dp"

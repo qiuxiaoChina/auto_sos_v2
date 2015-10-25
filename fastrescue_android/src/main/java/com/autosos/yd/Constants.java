@@ -20,6 +20,7 @@ public class Constants {
     public static final int PLACEHOLDER = com.autosos.yd.R.drawable.icon_image_l;
     public static final int PLACEHOLDER_NORMAL = com.autosos.yd.R.drawable.icon_default;
     public static final int PLACEHOLDER_AVATAR = com.autosos.yd.R.drawable.icon_avatar;
+    public static final int PLACEHOLDER_AVATAR2 = R.drawable.bg_white2;
     public static final Executor LISTTHEADPOOL = Executors.newFixedThreadPool(5);
     public static final Executor THEADPOOL = Executors.newFixedThreadPool(10);
     public static final Executor INFOTHEADPOOL = Executors.newFixedThreadPool(3);
@@ -41,6 +42,7 @@ public class Constants {
     public static String ARRIVE_SUBMIT_URL = HOST + "v1/orders/%s/arrive-submit";   //id号订单 到达现场按钮
     public static String ORDER_ORDER_START_URL = HOST + "v1/orders/%s/start-reserved-order";//id号预约订单，开始处理按钮
 
+
     public static String QINIU_TOKEN_URL = HOST + "qiniu/get-token";        //获取七牛token
     public static String NOTICE_URL = HOST +"v1/bulletins";                 //通知接口
     public static String NOTICE_CONTENT_URL = HOST + "v1/bulletins/%s";     //id号通知接口
@@ -51,6 +53,10 @@ public class Constants {
     public static String ORDERS_DIAL = HOST +"v1/orders/%s/dial";           //id号订单拨打电话
     public static String BUG_REPORT = HOST + "v1/bug/report";               //异常捕捉上传接口
     public static  String CHANGE_PASSWORD = HOST + "v1/user/changepwd";
+    public static  String GET_BALANCE = HOST + "v1/balance";                //获取余额
+    public static  String GET_BALANCE_ONLY = HOST + "v1/balance/total";     //仅获取余额
+    public static  String GET_BANK_INFO = HOST + "v1/balance/bankcard-info";     //获取银行卡信息
+    public static  String TAKECASH = HOST + "v1/balance/takecash-apply";     //获取银行卡信息
 
     public static final String USER_FILE = "user.json";                     //存放用户信息（账号密码以及token）
     public static final String LOCATION_DARG = "drag.txt";                  //记录拖车轨迹

@@ -17,14 +17,19 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
+import android.widget.TextView;
 
+import com.autosos.yd.Constants;
 import com.autosos.yd.R;
+import com.autosos.yd.model.Balance;
 import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.UpdateStateServe;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -41,6 +46,8 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
     private PullToRefreshScrollView account_main;
     private ImageView iv_picture;
     private Bitmap bitmap;
+    private TextView tv_balance;
+    private Balance balance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,11 +56,10 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
         iv_picture = (ImageView) findViewById(R.id.iv_picture);
+        tv_balance = (TextView) findViewById(R.id.tv_balance);
         account_main = (PullToRefreshScrollView) findViewById(R.id.account_main);
+
         account_main.setOnRefreshListener(this);
-
-//        new Thread(downloadRun).start();
-
         setBill();
         getBill().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,62 +72,38 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
 
     }
 
-//    Runnable downloadRun = new Runnable() {
-//
-//        @Override
-//        public void run() {
-//            // TODO Auto-generated method stub
-//            try {
-//                URL url = new URL("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg"); //path图片的网络地址
-//                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//                if(httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK){
-//                    bitmap  = BitmapFactory.decodeStream(httpURLConnection.getInputStream());
-//
-//                    System.out.println("加载网络图片完成");
-//                }else{
-//                    System.out.println("加载网络图片失败");
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            Message msg = new Message();
-//                msg.what = 1;
-//                handler.sendMessage(msg);
-//
-//        }
-//    };
-//        private Handler handler = new Handler(){
-//
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            if (msg.what == 1){
-//                iv_picture.setImageBitmap(bitmap);
-//            }
-//        }
-//    };
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetAccountInfoTask().execute(Constants.GET_BALANCE_ONLY);
+    }
 
-
-    private class GetAccountInfoTask extends AsyncTask<String, Object, JSONArray> {
+    //
+    private class GetAccountInfoTask extends AsyncTask<String, Object, JSONObject> {
 
         @Override
-        protected JSONArray doInBackground(String... params) {
+        protected JSONObject doInBackground(String... params) {
             try {
                 String jsonStr = JSONUtil.getStringFromUrl(AccountActivity.this, params[0] );
                 if (JSONUtil.isEmpty(jsonStr)){
                     return null;
                 }
                 Log.e(TAG, jsonStr);
-            } catch (IOException e) {
-                e.printStackTrace();
+                return new JSONObject(jsonStr);
+            } catch (IOException | JSONException e) {
+
             }
             return null;
+
         }
 
         @Override
-        protected void onPostExecute(JSONArray jsonArray) {
-            super.onPostExecute(jsonArray);//前后不知道一不一样，先试试
-
+        protected void onPostExecute(JSONObject result) {
+            super.onPostExecute(result);//前后不知道一不一样，先试试
+            account_main.onRefreshComplete();
+            balance = new Balance(result);
+            balance.getBalance();
+            tv_balance.setText(balance.getBalance() + "");
 
         }
     }
@@ -139,6 +121,6 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
 
     @Override
     public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-            account_main.onRefreshComplete();
+        new GetAccountInfoTask().execute(Constants.GET_BALANCE_ONLY);
     }
 }
