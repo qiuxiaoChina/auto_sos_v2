@@ -12,13 +12,6 @@ import org.json.JSONObject;
 public class BankInfo implements Identifiable {
 
 
-    /**
-     * code : CCB
-     * card_no : 6210811595690135832
-     * name : 建设银行
-     * logo : https://apimg.alipay.com/combo.png?d=cashier&t=CCB
-     * account : 1212
-     */
     private String code;
     private String card_no;
     private String name;

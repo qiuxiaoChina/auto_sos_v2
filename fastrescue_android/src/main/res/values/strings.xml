@@ -168,7 +168,9 @@
     <string name="msg_noInterner">网络连接错误，请检查你的网络！</string>
     <string name="msg_enter_psd">请输入原始密码！</string>
     <string name="msg_enter_cash">请输入金额！</string>
-    <string name="msg_enter_cash_success">提现成功！</string>
+    <string name="msg_enter_cash_success">提现申请已提交，客服人员会在两个工作日内转账到该银行卡！</string>
+    <string name="msg_enter_cash_failed">提现失败！</string>
+    <string name="msg_enter_no_cash">账户余额不足！</string>
     <string name="msg_psd_error1">新密码不能为空！</string>
     <string name="msg_psd_error2">两次密码输入不一致！</string>
     <string name="msg_psd_error3">密码长度不能低于6位！</string>

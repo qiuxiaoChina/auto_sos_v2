@@ -471,6 +471,10 @@
     <string name="msg_drag_cherk">请先点击确认拖车费用再返回!</string>
     <string name="msg_drag_ok">拖车完成，车主需支付</string>
     <string name="msg_drag_repain">正在重新绘制轨迹，请耐心等待！</string>
+    <string name="msg_enter_cash">请输入金额！</string>
+    <string name="msg_enter_cash_failed">提现失败！</string>
+    <string name="msg_enter_cash_success">提现申请已提交，客服人员会在两个工作日内转账到该银行卡！</string>
+    <string name="msg_enter_no_cash">账户余额不足！</string>
     <string name="msg_enter_psd">请输入原始密码！</string>
     <string name="msg_exit_after_change_host">修改地址后请退出应用重新打开</string>
     <string name="msg_handbook">请选择要查看的手册</string>

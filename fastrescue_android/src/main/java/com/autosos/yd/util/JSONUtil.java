@@ -44,6 +44,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.AbstractHttpMessage;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
@@ -94,6 +96,15 @@ public class JSONUtil {
 
     public static String getString(JSONObject obj, String name) {
         return obj.isNull(name) ? null : obj.optString(name);
+    }
+
+    public static JSONArray getJSONArray(JSONObject obj, String name) {
+        try {
+            return obj.isNull(name) ? null : obj.getJSONArray(name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static String getImagePath(String str, int width, int height) {

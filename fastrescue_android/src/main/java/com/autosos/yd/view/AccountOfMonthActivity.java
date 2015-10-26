@@ -23,6 +23,12 @@ public class AccountOfMonthActivity extends AutososBackActivity implements Objec
         setContentView(R.layout.activity_account_month);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, R.anim.slide_out_right);

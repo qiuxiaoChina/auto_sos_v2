@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.handmark.pulltorefresh.library.PullToRefreshScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:background="#f8f8f8"
     android:id="@+id/account_main"
@@ -100,13 +100,20 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/iv_picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            <com.handmark.pulltorefresh.library.PullToRefreshListView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/title_layout"
+                android:descendantFocusability="blocksDescendants"
+                android:divider="@null"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:listSelector="@android:color/transparent"
+                android:scrollbars="none" />
 
         </LinearLayout>
 
 
 
-</com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+</LinearLayout>

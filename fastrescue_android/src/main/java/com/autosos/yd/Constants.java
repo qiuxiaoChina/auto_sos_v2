@@ -56,7 +56,7 @@ public class Constants {
     public static  String GET_BALANCE = HOST + "v1/balance";                //获取余额
     public static  String GET_BALANCE_ONLY = HOST + "v1/balance/total";     //仅获取余额
     public static  String GET_BANK_INFO = HOST + "v1/balance/bankcard-info";     //获取银行卡信息
-    public static  String TAKECASH = HOST + "v1/balance/takecash-apply";     //获取银行卡信息
+    public static  String TAKECASH = HOST + "v1/balance/takecash-apply";     //提现
 
     public static final String USER_FILE = "user.json";                     //存放用户信息（账号密码以及token）
     public static final String LOCATION_DARG = "drag.txt";                  //记录拖车轨迹

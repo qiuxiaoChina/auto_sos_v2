@@ -38,67 +38,78 @@ import java.util.Map;
 public class DrawCashActivity extends AutososBackActivity {
     private String TAG = "DrawCashActivity";
     private BankInfo bankInfo;
-    private RoundedImageView bank_icon;
+//    private RoundedImageView bank_icon;
     private String logo_url;
     private TextView tv_bank_name;
     private String bankNumber;
     private TextView tv_bank_number;
-    private EditText et_money;
+    private TextView et_money;
+    private String balance;
+    private View empty;
+    private View progressBar;
+    private Button bt_takemoney;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_draw_cash);
-        bank_icon = (RoundedImageView) findViewById(R.id.bank_icon);
+//        bank_icon = (RoundedImageView) findViewById(R.id.bank_icon);
         tv_bank_name = (TextView) findViewById(R.id.tv_bank_name);
         tv_bank_number = (TextView) findViewById(R.id.tv_bank_number);
-        et_money = (EditText) findViewById(R.id.et_money);
-
+        et_money = (TextView) findViewById(R.id.et_money);
+        balance = getIntent().getStringExtra("balance");
+        et_money.setText(balance);
+        empty = findViewById(R.id.empty);
+        progressBar = findViewById(R.id.progressBar);
+        bt_takemoney = (Button) findViewById(R.id.bt_takemoney);
     }
 
 
 
     public void takeMoney(View view){
-        String money = "";
-        money = et_money.getText().toString();
-        String balance = getIntent().getStringExtra("balance");
-//        long balance_long = Long.parseLong(balance);
-//        Log.e("drawcash","balance_long  ====  "+balance_long);
-//        long money_long = Long.parseLong(money);
-//        Log.e("drawcash","money_long  ====  "+money_long);
-        if (money == null || money.length() == 0 ){
-            showDrawCashDialog(R.string.msg_enter_cash);
+//        bt_takemoney.setVisibility(View.GONE);
+        bt_takemoney.setClickable(false);
+        Map<String, Object> map = new HashMap<>();
+        if (Constants.DEBUG){
+            map.put("money", 10);
         }else {
-            Map<String, Object> map = new HashMap<>();
-            map.put("money",money);
-            new com.autosos.yd.task.NewHttpPostTask(DrawCashActivity.this, new com.autosos.yd.task.OnHttpRequestListener() {
-                @Override
-                public void onRequestCompleted(Object obj) {
-                    try {
-                        JSONObject jsonObject = new JSONObject(obj.toString());
-                        Log.e("ChangPSD", jsonObject.toString());
-                        if (!jsonObject.isNull("result")) {
-                            int result = jsonObject.optInt("result");
-                            if(result == 1){
-                                Log.e("drawcash", "success");
-                                showDrawCashDialog(R.string.msg_enter_cash_success);
-                            }else{
-                                String msg = jsonObject.optString("msg");
-//                                findViewById(R.id.progressBar).setVisibility(View.GONE);
-                                Toast.makeText(DrawCashActivity.this, msg, Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    }catch (Exception e ){
-                        e.printStackTrace();
-                    }
-                }
-                @Override
-                public void onRequestFailed(Object obj) {
-                    Log.e("drawcash", "failed");
-                }
-            }).execute(String.format(Constants.TAKECASH), map);
+            map.put("money", balance);
         }
 
+        Log.e("drawcash", "balance === "+balance);
+        progressBar.setVisibility(View.VISIBLE);
+        new com.autosos.yd.task.NewHttpPostTask(DrawCashActivity.this, new com.autosos.yd.task.OnHttpRequestListener() {
+            @Override
+            public void onRequestCompleted(Object obj) {
+                try {
+                    JSONObject jsonObject = new JSONObject(obj.toString());
+                    Log.e("ChangPSD", jsonObject.toString());
+                    if (!jsonObject.isNull("result")) {
+                        int result = jsonObject.optInt("result");
+                        if(result == 1){
+                            Log.e("drawcash", "failed");
+                            progressBar.setVisibility(View.GONE);
+                            showDrawCashDialog(R.string.msg_enter_cash_success);
+                        }else{
+                            Log.e("drawcash", "success");
+                            String msg = jsonObject.optString("msg");
+                            findViewById(R.id.progressBar).setVisibility(View.GONE);
+                            showDrawCashDialog(R.string.msg_enter_cash_failed);
+                            Toast.makeText(DrawCashActivity.this, msg, Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }catch (Exception e ){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onRequestFailed(Object obj) {
+                Log.e("drawcash", "failed");
+
+            }
+        }).execute(String.format(Constants.TAKECASH), map);
+//        bt_takemoney.setVisibility(View.VISIBLE);
 
     }
 
@@ -113,9 +124,11 @@ public class DrawCashActivity extends AutososBackActivity {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
+                bt_takemoney.setClickable(true);
                 if(msg == R.string.msg_enter_cash_success){
                     Intent intent = new Intent(DrawCashActivity.this,AccountActivity.class);
                     startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
                 }
             }
         });
@@ -139,6 +152,7 @@ public class DrawCashActivity extends AutososBackActivity {
     protected void onResume() {
         super.onResume();
         new GetAccountInfoTask().execute(Constants.GET_BANK_INFO);
+
     }
 
     private class GetAccountInfoTask extends AsyncTask<String,Void,JSONObject>{
@@ -161,6 +175,7 @@ public class DrawCashActivity extends AutososBackActivity {
         @Override
         protected void onPostExecute(JSONObject result) {
             super.onPostExecute(result);
+            progressBar.setVisibility(View.GONE);
             bankInfo = new BankInfo(result);
             logo_url = bankInfo.getLogo();
             bankNumber = bankInfo.getCard_no();
@@ -171,12 +186,14 @@ public class DrawCashActivity extends AutososBackActivity {
             String f = a + " " + b + " " + c + " " + d;
             tv_bank_number.setText(f);
             tv_bank_name.setText(bankInfo.getName());
-            ImageLoadTask task = new ImageLoadTask(bank_icon, null,0);
-            AsyncBitmapDrawable image = new AsyncBitmapDrawable(getResources(), Constants.PLACEHOLDER_AVATAR2, task);
-            task.loadImage(logo_url,140,com.autosos.yd.util.ScaleMode.WIDTH, image);
+//            ImageLoadTask task = new ImageLoadTask(bank_icon, null,0);
+//            AsyncBitmapDrawable image = new AsyncBitmapDrawable(getResources(), Constants.PLACEHOLDER_AVATAR2, task);
+//            task.loadImage(logo_url, 180, com.autosos.yd.util.ScaleMode.WIDTH, image);
 
-
+//            progressBar.setVisibility(View.GONE);
+            empty.setVisibility(View.GONE);
         }
+
     }
 
     public void onBackPressed() {
