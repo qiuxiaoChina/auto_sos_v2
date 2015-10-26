@@ -53,10 +53,11 @@ public class Constants {
     public static String ORDERS_DIAL = HOST +"v1/orders/%s/dial";           //id号订单拨打电话
     public static String BUG_REPORT = HOST + "v1/bug/report";               //异常捕捉上传接口
     public static  String CHANGE_PASSWORD = HOST + "v1/user/changepwd";
-    public static  String GET_BALANCE = HOST + "v1/balance";                //获取余额
+    public static  String GET_BALANCE = HOST + "v1/balance";                //获取余额各种信息
     public static  String GET_BALANCE_ONLY = HOST + "v1/balance/total";     //仅获取余额
     public static  String GET_BANK_INFO = HOST + "v1/balance/bankcard-info";     //获取银行卡信息
     public static  String TAKECASH = HOST + "v1/balance/takecash-apply";     //提现
+    public static  String MONTH_BILL = HOST + "v1/balance/bill";     //月收入支出
 
     public static final String USER_FILE = "user.json";                     //存放用户信息（账号密码以及token）
     public static final String LOCATION_DARG = "drag.txt";                  //记录拖车轨迹
