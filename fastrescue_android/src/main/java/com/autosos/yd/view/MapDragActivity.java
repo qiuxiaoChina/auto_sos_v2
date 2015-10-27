@@ -122,7 +122,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
         btn_drop_arrive = (Button) findViewById(R.id.btn_drop_arrive);
         drap_distanceView = (TextView)findViewById(R.id.drap_distance);
         btn_drop_arriveView = (Button)findViewById(R.id.btn_drop_arrive);
-        test_distance = (TextView) findViewById(R.id.test_distance);
+//        test_distance = (TextView) findViewById(R.id.test_distance);
         progressBar=findViewById(R.id.drag_map_include);
         isfirst = 0;
         ispause = false;
@@ -281,6 +281,43 @@ public class MapDragActivity extends Activity implements BDLocationListener{
 
     }
 
+    private Double getRealDistance(){
+        String trance2 = locationdrag.getTrance(Location.path_drag, MapDragActivity.this);
+        String [] ss = trance2.split("\\|");
+        String [] ss2 = new String[ss.length];
+        String [] time = new String[ss.length];
+        String [] las = new String[ss.length];
+        String [] los = new String[ss.length];
+        for (int i = 0;i<ss.length;i++){
+            String[] x = ss[i].split("#");
+            ss2[i] = x[0];
+            time[i] = x[1];
+        }
+        for (int i = 0;i<ss2.length;i++){
+            String [] x = ss2[i].split(",");
+            las [i] = x[0];
+            los [i] = x[1];
+        }
+        double lal = Double.parseDouble(las[0]);
+        double lol = Double.parseDouble(los[0]);
+        Double amendment_ditance=null;
+        Double sum_amendment_ditance = 0.0000001;
+        for(int i = 1; i < las.length; i++) {
+            LatLng lastpt = new LatLng(lal, lol);
+            LatLng nowpt = new LatLng(Double.parseDouble(las[i]), Double.parseDouble(los[i]));
+            amendment_ditance = DistanceUtil.getDistance(lastpt, nowpt);
+            if (amendment_ditance < 5000 && amendment_ditance > 5) {
+                sum_amendment_ditance += amendment_ditance;
+                Log.e("mapd","sum_amendment_ditance === "+sum_amendment_ditance );
+            }
+            lal = Double.parseDouble(las[i]);
+            lol = Double.parseDouble(los[i]);
+        }
+
+        return sum_amendment_ditance;
+
+    }
+
     private void rePaintRoute(String [] las,String [] los ,String[] times){
         if(las.length < 2){
             return;
@@ -291,7 +328,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
         Double sum_amendment_ditance = 0.0000001;
         for(int i = 1; i < las.length; i++){
             LatLng lastpt=new LatLng(lal,lol);
-            LatLng nowpt=new LatLng(Double.parseDouble(las[i]),Double.parseDouble(los[i]));
+            LatLng nowpt = new LatLng(Double.parseDouble(las[i]),Double.parseDouble(los[i]));
             amendment_ditance = DistanceUtil.getDistance(lastpt, nowpt);
             if (amendment_ditance < 5000 && amendment_ditance >5 ){
                 sum_amendment_ditance += amendment_ditance;
@@ -309,9 +346,11 @@ public class MapDragActivity extends Activity implements BDLocationListener{
             lal = Double.parseDouble(las[i]);
             lol = Double.parseDouble(los[i]);
         }
-        if (Constants.DEBUG){
-            test_distance.setText(String.format("%.2f", sum_amendment_ditance / 1000));
-        }
+        Log.e("test","tot_distance === "+tot_distance);
+        tot_distance = sum_amendment_ditance;
+        Log.e("test","sum_amendment_ditance === "+sum_amendment_ditance);
+        drap_distanceView.setText(String.format("%.2f", sum_amendment_ditance / 1000));
+
 
         Log.e(TAG, "amendment_ditance  =====  "+amendment_ditance);
        // progressBar.setVisibility(View.GONE);
@@ -379,6 +418,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                 }).execute(String.format(com.autosos.yd.Constants.DRAG_START, orderInfo.getId()), map);
             }
         } else {
+
             UpdateStateServe.UpdateStateServeActive = true;
             View v2 = getLayoutInflater().inflate(R.layout.dialog_msg_notice,
                     null);
@@ -387,18 +427,22 @@ public class MapDragActivity extends Activity implements BDLocationListener{
             Button tvCancel = (Button) v2.findViewById(R.id.btn_notice_cancel);
             TextView tvMsg = (TextView) v2.findViewById(R.id.tv_notice_msg);
             tvMsg.setText(String.format(getString(R.string.msg_ok_tuoche)));
+//            Double test = getRealDistance();
+//            Log.e("mapdra", "zui zhong jie guo === " + test);
             tvConfirm.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    if(Constants.DEBUG)
-                        tot_distance = 95300;
+//                    if(Constants.DEBUG)
+//                        tot_distance = 95300;
                     if(tot_distance == 0){
                         DialogView dialogView =new DialogView();
                         dialogView.dialog(R.string.msg_type_distance,R.string.label_ok2,MapDragActivity.this);
                         }
                     else {
+//                        tot_distance = getRealDistance();
+                        Log.e("mapdra","zui zhong jie guo === " + tot_distance);
                         SharedPreferences sharedPreferences = getSharedPreferences("isfirst", Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.clear();
@@ -406,10 +450,10 @@ public class MapDragActivity extends Activity implements BDLocationListener{
                         client.unRegisterLocationListener(com.autosos.yd.view.MapDragActivity.this);
                         client.stop();
                         trance = locationdrag.getTrance(Location.path_drag, MapDragActivity.this);
-                        if(Constants.DEBUG) {
-                            trance = locationdrag.cutErrorPoint2(trance);
-                            trance = locationdrag.cutErrorPoint(trance);
-                        }
+//                        if(Constants.DEBUG) {
+//                            trance = locationdrag.cutErrorPoint2(trance);
+//                            trance = locationdrag.cutErrorPoint(trance);
+//                        }
                         //trance = changeTrance(trance);
                         Log.e(TAG, "trance    :" + trance.toString());
                         //locationdrag.deleteJWD(Location.path_drag);
@@ -457,22 +501,21 @@ public class MapDragActivity extends Activity implements BDLocationListener{
         Log.e(TAG, "isfist onresume :" + isfirst);
      //   if(Constants.DEBUG)
        //     tot_distance = 99999;
-        drap_distanceView.setText(String.format("%.2f", tot_distance / 1000));
+//        drap_distanceView.setText(String.format("%.2f", tot_distance / 1000));
         Log.e(TAG, "Now TOTdistance :" + dis);
             if(tot_distance > 0){
                 ((TextView)findViewById(R.id.repain)).setVisibility(View.VISIBLE);
-            trance = locationdrag.getTrance(Location.path_drag, MapDragActivity.this);
 
-            String [] ss = trance.split("\\|");
-            String [] ss2 = new String[ss.length];
-            String [] time = new String[ss.length];
-            String [] las = new String[ss.length];
-            String [] los = new String[ss.length];
-            Double [][] dot = new Double[ss.length][ss.length];
-            for (int i = 0;i<ss.length;i++){
-                String[] x = ss[i].split("#");
-                ss2[i] = x[0];
-                time[i] = x[1];
+                trance = locationdrag.getTrance(Location.path_drag, MapDragActivity.this);
+                String [] ss = trance.split("\\|");
+                String [] ss2 = new String[ss.length];
+                String [] time = new String[ss.length];
+                String [] las = new String[ss.length];
+                String [] los = new String[ss.length];
+                for (int i = 0;i<ss.length;i++){
+                    String[] x = ss[i].split("#");
+                    ss2[i] = x[0];
+                    time[i] = x[1];
             }
             for (int i = 0;i<ss2.length;i++){
                 String [] x = ss2[i].split(",");

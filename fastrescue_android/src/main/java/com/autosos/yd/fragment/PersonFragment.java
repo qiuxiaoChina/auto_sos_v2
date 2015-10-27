@@ -137,7 +137,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
         protected JSONObject doInBackground(String... params) {
             try {
                 String jsonStr = com.autosos.yd.util.JSONUtil.getStringFromUrl(getActivity().getApplicationContext(), params[0]);
-                Log.e("person",jsonStr);
+
                 if (com.autosos.yd.util.JSONUtil.isEmpty(jsonStr)) {
                     return null;
                 }

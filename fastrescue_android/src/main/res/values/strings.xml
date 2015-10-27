@@ -188,6 +188,7 @@
     <string name="msg_choose_photo">请选择照片进行上传</string>
     <string name="msg_order_empty">当前还没有人需要救援，请耐心哦</string>
     <string name="msg_notice_empty">当前没有公告</string>
+    <string name="msg_bill_empty">当前没有账单明细</string>
     <string name="msg_record_empty">没有历史接单记录</string>
     <string name="msg_push_empty">没有历史推送记录</string>
     <string name="msg_photo_empty">没有照片上传记录</string>

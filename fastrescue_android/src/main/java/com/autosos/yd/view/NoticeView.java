@@ -86,8 +86,6 @@ public class NoticeView extends AutososBackActivity implements ObjectBindAdapter
                         notices.add(order);
 
                     }
-
-
                     adapter.notifyDataSetChanged();
                 }
             }

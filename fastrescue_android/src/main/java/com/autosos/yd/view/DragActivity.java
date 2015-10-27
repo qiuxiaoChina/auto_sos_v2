@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,7 @@ public class DragActivity extends com.autosos.yd.view.AutososBackActivity {
     private Button sure_freeView;
     private TextView baoxianView;
     private TextView baoxianView2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +75,7 @@ public class DragActivity extends com.autosos.yd.view.AutososBackActivity {
         trance = getIntent().getStringExtra("trance");
         progressBar = findViewById(R.id.progressBar);
         statusView = (TextView) findViewById(R.id.status);
-
+        Log.e("DragActivity","11");
         realPrice = (TextView)findViewById(R.id.drag_real_price2);
         priceView = (TextView) findViewById(R.id.price);
         carDistanceView = (TextView) findViewById(R.id.drag_distance);
@@ -204,9 +206,11 @@ public class DragActivity extends com.autosos.yd.view.AutososBackActivity {
                 price = orderInfo.getPay_amount();
             priceView.setText(String.valueOf(price));
             realPrice.setText(String.valueOf(orderInfo.getTotal_amount()));
+
             outofDistanceView.setText(String.format(getString(R.string.label_rmb_s),
                     orderInfo.getTuoche_distance() - orderInfo.getStarting_km() > 0
-                            ? (orderInfo.getTuoche_distance() - orderInfo.getStarting_km()) * orderInfo.getKm_price() : 0.00));
+                            ? new BigDecimal(""+Math.ceil((orderInfo.getTuoche_distance() - orderInfo.getStarting_km())) * orderInfo.getKm_price()).stripTrailingZeros() : 0.00));
+            //以上这个方法可以把8.0这个.0去掉，new BigDecimal("11.0").stripTrailingZeros()
             startDragPriceView2.setText(String.format(getString(R.string.label_car_fee_service2),orderInfo.getPrice()));
             startDragPriceView.setText(String.format(getString(R.string.label_car_fee_service1),orderInfo.getStarting_km()));
             if(orderInfo.getIs_own_expense() == 1){
@@ -272,6 +276,7 @@ public class DragActivity extends com.autosos.yd.view.AutososBackActivity {
                 if (JSONUtil.isEmpty(jsonStr)) {
                     return null;
                 }
+                Log.e("DragActivity", jsonStr);
                 return new JSONObject(jsonStr);
             } catch (IOException | JSONException e) {
             }

@@ -183,21 +183,21 @@ public class OrderInfoActivity extends AutososBackActivity{
             Log.e("tuoch","===orderinfo fist coming==="+isfirst_drag);
             if (orderInfo != null) {
 
-                if (orderInfo.getService_type() == 3 ){
-                    if (orderInfo.getTuoche_distance() > 0){
-
-                    }else {
-                        if (isfirst_drag == 1){
-                            Intent intent;
-                            intent = new Intent();
-                            intent.setClass(OrderInfoActivity.this, MapDragActivity.class);
-                            intent.putExtra("OrderInfo", orderInfo);
-                            startActivity(intent);
-                        }
-
-
-                    }
-                }
+//                if (orderInfo.getService_type() == 3 ){
+//                    if (orderInfo.getTuoche_distance() > 0){
+//
+//                    }else {
+//                        if (isfirst_drag == 1){
+//                            Intent intent;
+//                            intent = new Intent();
+//                            intent.setClass(OrderInfoActivity.this, MapDragActivity.class);
+//                            intent.putExtra("OrderInfo", orderInfo);
+//                            startActivity(intent);
+//                        }
+//
+//
+//                    }
+//                }
 
                 if(orderInfo.getStatus() == 403) {
                     showCancelView();

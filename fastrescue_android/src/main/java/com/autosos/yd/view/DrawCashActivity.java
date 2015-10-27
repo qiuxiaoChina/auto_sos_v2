@@ -62,6 +62,7 @@ public class DrawCashActivity extends AutososBackActivity {
         empty = findViewById(R.id.empty);
         progressBar = findViewById(R.id.progressBar);
         bt_takemoney = (Button) findViewById(R.id.bt_takemoney);
+
     }
 
 
@@ -126,9 +127,7 @@ public class DrawCashActivity extends AutososBackActivity {
                 dialog.dismiss();
                 bt_takemoney.setClickable(true);
                 if(msg == R.string.msg_enter_cash_success){
-                    Intent intent = new Intent(DrawCashActivity.this,AccountActivity.class);
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
+                    onBackPressed();
                 }
             }
         });

@@ -19,9 +19,11 @@ public class Bill implements Identifiable {
     private String income;
     private String outgo;
     private String month;
+    private String year;
 
     public Bill(JSONObject jsonObject) {
         if (jsonObject != null) {
+            this.year =  JSONUtil.getString(jsonObject, "year");
             this.income =  JSONUtil.getString(jsonObject, "income");
             this.outgo =  JSONUtil.getString(jsonObject, "outgo");
             this.month =  JSONUtil.getString(jsonObject, "month");
@@ -56,5 +58,8 @@ public class Bill implements Identifiable {
 
     public String getMonth() {
         return month;
+    }
+    public String getYear() {
+        return year;
     }
 }

@@ -35,6 +35,8 @@ import com.autosos.yd.model.LastestLog;
 import com.autosos.yd.model.Notice;
 import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.UpdateStateServe;
+import com.autosos.yd.widget.CherkInternet;
+import com.autosos.yd.widget.DialogView;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
@@ -88,6 +90,28 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
             }
         });
 
+    }
+
+    public void setEmptyView() {
+        if (lastestLogs.isEmpty()) {
+            View emptyView = listView.getRefreshableView().getEmptyView();
+            if (emptyView == null) {
+                emptyView = getLayoutInflater().inflate(R.layout.list_empty_view, null);
+                listView.getRefreshableView().setEmptyView(emptyView);
+            }
+            ImageView imgEmptyHint = (ImageView) emptyView.findViewById(R.id
+                    .img_empty_hint);
+            TextView textEmptyHint = (TextView) emptyView.findViewById(R.id.text_empty_hint);
+
+            imgEmptyHint.setVisibility(View.VISIBLE);
+            textEmptyHint.setVisibility(View.VISIBLE);
+
+            if (JSONUtil.isNetworkConnected(com.autosos.yd.view.AccountActivity.this)) {
+                textEmptyHint.setText(R.string.msg_bill_empty);
+            } else {
+                textEmptyHint.setText(R.string.msg_net_disconnected);
+            }
+        }
     }
 
     @Override
@@ -170,6 +194,7 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
                     adapter.notifyDataSetChanged();
                 }
             }
+            setEmptyView();
         }
     }
 
@@ -204,19 +229,23 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
     }
 
     public void drawCash(View view){
-        Double limitMoney = Double.valueOf(1);
-        Log.e("account", "limitMoney" + limitMoney);
-        Double balance_long = Double.valueOf(balance.getBalance());
-        Log.e("account", "balance_long" + balance_long);
-        if (balance_long > limitMoney){
-            Intent intent = new Intent(AccountActivity.this,DrawCashActivity.class);
-            intent.putExtra("balance",balance.getBalance());
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
+        if (!CherkInternet.cherkInternet(AccountActivity.this)){
+            DialogView dialogView = new DialogView();
+            dialogView.dialogInternet(AccountActivity.this);
         }else {
-            showDrawCashDialog(R.string.msg_enter_no_cash);
+            Double limitMoney = Double.valueOf(1);
+            Log.e("account", "limitMoney" + limitMoney);
+            Double balance_long = Double.valueOf(balance.getBalance());
+            Log.e("account", "balance_long" + balance_long);
+            if (balance_long > limitMoney){
+                Intent intent = new Intent(AccountActivity.this,DrawCashActivity.class);
+                intent.putExtra("balance",balance.getBalance());
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
+            }else {
+                showDrawCashDialog(R.string.msg_enter_no_cash);
+            }
         }
-
 
     }
 

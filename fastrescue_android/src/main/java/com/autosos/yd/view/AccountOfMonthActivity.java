@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,16 +67,15 @@ public class AccountOfMonthActivity extends AutososBackActivity implements Objec
             view.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        String yearMonth = bill.getMonth();
-        final String smonth = yearMonth.substring(4,yearMonth.length());
-        holder.month.setText(smonth);
+        final String yearMonth = bill.getMonth();
+        holder.month.setText(yearMonth);
         holder.tv_outgo.setText(bill.getOutgo());
         holder.tv_in.setText(bill.getIncome());
         holder.rly_month_bill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AccountOfMonthActivity.this, BillDetailsActivity.class);
-                intent.putExtra("month",smonth);
+                intent.putExtra("yearMonth",yearMonth);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
             }
@@ -87,6 +87,28 @@ public class AccountOfMonthActivity extends AutososBackActivity implements Objec
         TextView tv_outgo;
         TextView tv_in;
         RelativeLayout rly_month_bill;
+    }
+
+    public void setEmptyView() {
+        if (bills.isEmpty()) {
+            View emptyView = listView.getRefreshableView().getEmptyView();
+            if (emptyView == null) {
+                emptyView = getLayoutInflater().inflate(R.layout.list_empty_view, null);
+                listView.getRefreshableView().setEmptyView(emptyView);
+            }
+            ImageView imgEmptyHint = (ImageView) emptyView.findViewById(R.id
+                    .img_empty_hint);
+            TextView textEmptyHint = (TextView) emptyView.findViewById(R.id.text_empty_hint);
+
+            imgEmptyHint.setVisibility(View.VISIBLE);
+            textEmptyHint.setVisibility(View.VISIBLE);
+
+            if (JSONUtil.isNetworkConnected(com.autosos.yd.view.AccountOfMonthActivity.this)) {
+                textEmptyHint.setText(R.string.msg_bill_empty);
+            } else {
+                textEmptyHint.setText(R.string.msg_net_disconnected);
+            }
+        }
     }
 
     private class GetNoticeTask extends AsyncTask<String, Object, JSONArray> {
@@ -119,6 +141,7 @@ public class AccountOfMonthActivity extends AutososBackActivity implements Objec
                     adapter.notifyDataSetChanged();
                 }
             }
+            setEmptyView();
 //            onLoading = false;
 //            setEmptyView();
             super.onPostExecute(result);
