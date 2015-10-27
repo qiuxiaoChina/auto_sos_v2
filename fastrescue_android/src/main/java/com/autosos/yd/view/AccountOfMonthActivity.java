@@ -67,15 +67,18 @@ public class AccountOfMonthActivity extends AutososBackActivity implements Objec
             view.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        final String yearMonth = bill.getMonth();
-        holder.month.setText(yearMonth);
+        final String month = bill.getMonth();
+        final String year = bill.getYear();
+        Log.e("accountof","year === " +year);
+        holder.month.setText(month);
         holder.tv_outgo.setText(bill.getOutgo());
         holder.tv_in.setText(bill.getIncome());
         holder.rly_month_bill.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AccountOfMonthActivity.this, BillDetailsActivity.class);
-                intent.putExtra("yearMonth",yearMonth);
+                intent.putExtra("month",month);
+                intent.putExtra("year",year);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
             }

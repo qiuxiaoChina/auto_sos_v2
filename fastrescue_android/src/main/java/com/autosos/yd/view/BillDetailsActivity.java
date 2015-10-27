@@ -32,8 +32,8 @@ public class BillDetailsActivity extends AutososBackActivity implements PullToRe
     private ArrayList<Balance> banlances;
     private PullToRefreshListView listView;
     private ObjectBindAdapter<Balance> adapter;
-    private String yearMonth;
     private String smonth;
+    private String syear;
     private View progressBar;
 
 
@@ -47,10 +47,9 @@ public class BillDetailsActivity extends AutososBackActivity implements PullToRe
                 R.layout.lastestlog_item, this);
         listView.setAdapter(adapter);
         listView.setOnRefreshListener(this);
-        smonth = getIntent().getStringExtra("yearMonth");
+        smonth = getIntent().getStringExtra("month");
+        syear = getIntent().getStringExtra("syear");
         setTitle(smonth + "月账单");
-
-        Log.e("bill", yearMonth+"");
         progressBar = findViewById(R.id.include);
 
     }
@@ -82,7 +81,7 @@ public class BillDetailsActivity extends AutososBackActivity implements PullToRe
     protected void onResume() {
         super.onResume();
         new GetAccountInfoTask().executeOnExecutor(Constants.INFOTHEADPOOL,
-                String.format(Constants.GET_MONTH_BILL,yearMonth ));
+                String.format(Constants.GET_MONTH_BILL,2015,10 ));
 
     }
 
@@ -147,7 +146,8 @@ public class BillDetailsActivity extends AutososBackActivity implements PullToRe
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
         new GetAccountInfoTask().executeOnExecutor(Constants.INFOTHEADPOOL,
-                String.format(Constants.GET_MONTH_BILL,yearMonth ));
+                String.format(Constants.GET_MONTH_BILL,syear,smonth ));
+
 
     }
 

@@ -58,7 +58,7 @@ public class Constants {
     public static  String GET_BANK_INFO = HOST + "v1/balance/bankcard-info";     //获取银行卡信息
     public static  String TAKECASH = HOST + "v1/balance/takecash-apply";     //提现
     public static  String MONTH_BILL = HOST + "v1/balance/bill";     //月收入支出
-    public static  String GET_MONTH_BILL = HOST + "v1/balance/bill/%s";     //获取月收入支出
+    public static  String GET_MONTH_BILL = HOST + "v1/balance/bill/%s/&s";     //获取月收入支出
 
 
     public static final String USER_FILE = "user.json";                     //存放用户信息（账号密码以及token）
