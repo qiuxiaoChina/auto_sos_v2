@@ -48,7 +48,7 @@ public class BillDetailsActivity extends AutososBackActivity implements PullToRe
         listView.setAdapter(adapter);
         listView.setOnRefreshListener(this);
         smonth = getIntent().getStringExtra("month");
-        syear = getIntent().getStringExtra("syear");
+        syear = getIntent().getStringExtra("year");
         setTitle(smonth + "月账单");
         progressBar = findViewById(R.id.include);
 
@@ -81,7 +81,7 @@ public class BillDetailsActivity extends AutososBackActivity implements PullToRe
     protected void onResume() {
         super.onResume();
         new GetAccountInfoTask().executeOnExecutor(Constants.INFOTHEADPOOL,
-                String.format(Constants.GET_MONTH_BILL,2015,10 ));
+                String.format(Constants.GET_MONTH_BILL,syear,smonth ));
 
     }
 
