@@ -26,7 +26,7 @@
             android:id="@+id/car1"
             android:src="@drawable/icon37"
             android:layout_width="300dp"
-            android:layout_height="120dp" />
+            android:layout_height="180dp" />
 
         <TextView
             android:layout_marginTop="10dp"
@@ -45,7 +45,7 @@
             android:layout_below="@+id/car1"
             android:src="@drawable/icon38"
             android:layout_width="300dp"
-            android:layout_height="120dp" />
+            android:layout_height="180dp" />
 
         <TextView
             android:layout_marginRight="40dp"
@@ -59,26 +59,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <ImageView
-            android:id="@+id/car3"
-            android:layout_marginTop="52dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/car2"
-            android:src="@drawable/icon39"
-            android:layout_width="300dp"
-            android:layout_height="120dp" />
+        <!--<ImageView-->
+            <!--android:id="@+id/car3"-->
+            <!--android:layout_marginTop="52dp"-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:layout_below="@+id/car2"-->
+            <!--android:src="@drawable/icon39"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_height="120dp" />-->
 
-        <TextView
-            android:layout_marginRight="40dp"
-            android:layout_marginTop="10dp"
-            android:textColor="#fff"
-            android:textSize="15dp"
-            android:layout_marginLeft="40dp"
-            android:layout_below="@+id/car3"
-            android:text="第三张：拖至目的地并卸下后，拍摄完整故障车，背景需是4S店、修理厂或其它目的地"
+        <!--<TextView-->
+            <!--android:layout_marginRight="40dp"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:textColor="#fff"-->
+            <!--android:textSize="15dp"-->
+            <!--android:layout_marginLeft="40dp"-->
+            <!--android:layout_below="@+id/car3"-->
+            <!--android:text="第三张：拖至目的地并卸下后，拍摄完整故障车，背景需是4S店、修理厂或其它目的地"-->
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content" />-->
 
 
         <Button

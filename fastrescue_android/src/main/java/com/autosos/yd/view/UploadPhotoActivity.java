@@ -138,7 +138,7 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
                 }else{
                     intent.putExtra("limit", 3 - jsonPics.size());
                 }
-                intent.putExtra("limit", 3 - jsonPics.size());
+//                intent.putExtra("limit", 3 - jsonPics.size());
                 intent.putExtra("OrderInfo", orderInfo);
                 startActivityForResult(intent, Constants.RequestCode.PHOTO_FROM_GALLERY);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
@@ -204,7 +204,7 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
             }else{
                 intent.putExtra("limit", 3 - jsonPics.size());
             }
-            intent.putExtra("limit", 3 - jsonPics.size());
+//            intent.putExtra("limit", 3 - jsonPics.size());
             intent.putExtra("OrderInfo", orderInfo);
             startActivityForResult(intent, Constants.RequestCode.PHOTO_FROM_GALLERY);
             overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);

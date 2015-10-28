@@ -4,15 +4,21 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -20,6 +26,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +50,8 @@ import com.umeng.analytics.MobclickAgent;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -92,6 +101,8 @@ public class OrderInfoActivity extends AutososBackActivity{
     public  double latitude;
     public  double longitude;
     private TextView order_orderView;
+    private String currentPath;
+    private String name;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +117,7 @@ public class OrderInfoActivity extends AutososBackActivity{
         progressBar = findViewById(R.id.progressBar);
         qr_codeView =(ImageView) findViewById(R.id.qr_code);
         empty = findViewById(R.id.empty);
+
         telphoneView = (ImageView)findViewById(R.id.telephone);
         nameView = (TextView) findViewById(R.id.name);
 //        phoneView = (TextView) findViewById(R.id.phone);
@@ -116,6 +128,27 @@ public class OrderInfoActivity extends AutososBackActivity{
         distanceView = (TextView) findViewById(R.id.distance);
         remarkView = (TextView) findViewById(R.id.remark);
         order_orderView = (TextView)findViewById(R.id.order_order);
+        setTakePhoto();
+        getTakePhoto().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File f = com.autosos.yd.util.FileUtil.createImageFile();
+                Uri imageUri = Uri.fromFile(f);
+                currentPath = f.getAbsolutePath();
+                name = f.getName();
+                SharedPreferences sharedPreferences =
+                        getSharedPreferences("photo_root", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+
+                editor.commit();
+
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                startActivityForResult(intent,
+                        com.autosos.yd.Constants.RequestCode.PHOTO_FROM_CAMERA);
+//                startActivity(intent);
+            }
+        });
         TimerTask task = new TimerTask() {
             public void run() {
                 Message msg = new Message();
@@ -126,6 +159,8 @@ public class OrderInfoActivity extends AutososBackActivity{
         Timer timer = new Timer();
         timer.schedule(task, 1000);
     }
+
+
 
     private Handler handler = new Handler(){
         @Override
@@ -379,11 +414,42 @@ public class OrderInfoActivity extends AutososBackActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case com.autosos.yd.Constants.RequestCode.PHOTO_FROM_CAMERA:
+                    com.autosos.yd.model.Item item = new com.autosos.yd.model.Item(new JSONObject());
+                    if(currentPath == null || currentPath.length() < 3){
+                        SharedPreferences sharedPreferences = getSharedPreferences("photo_root", Context.MODE_PRIVATE);
+                        currentPath = sharedPreferences.getString("root", "");
+                    }
+                    com.autosos.yd.util.Size size = com.autosos.yd.util.JSONUtil.getImageSizeFromPath(OrderInfoActivity.this,currentPath, 400, 400);
+                    item.setWidth(size.getWidth());
+                    item.setHeight(size.getHeight());
+                    item.setMediaPath(currentPath);
+                    try {
+                        MediaStore.Images.Media.insertImage(getContentResolver(),
+                                currentPath, name, null);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(new File(Environment.getExternalStorageDirectory() + "/com.autosos.jd/image"))));
+//                    selectedItems.clear();
+//                    selectedItems.add(item);
+//                    selectedPhotos.clear();
+//                    Intent intent = getIntent();
+//                    intent.putExtra("selectedPhotos", selectedItems);
+//                    setResult(RESULT_OK, intent);
+                    break;
+            }
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
-        Log.e(TAG,data.toString());
+//        Log.e(TAG,data.toString());
     }
 
     public void onArrive(View v) {
+
+
         if (progressBar.getVisibility() == View.VISIBLE) {
             return;
         }
@@ -450,6 +516,8 @@ public class OrderInfoActivity extends AutososBackActivity{
                 public void onClick(View v) {
                     dialog.dismiss();
                     requestArriveTask();
+                    showPopupWindow();
+
                 }
             });
             tvCancel.setOnClickListener(new View.OnClickListener() {
@@ -473,6 +541,38 @@ public class OrderInfoActivity extends AutososBackActivity{
                 e.printStackTrace();
             }
         }
+    }
+
+    private void showPopupWindow() {
+
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View vPopWindow =null;
+        if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 ){
+            Log.e("order",orderInfo.getOrder_type()+"        =================");
+            Log.e("order","dadian suggest!");
+            vPopWindow  = inflater.inflate(R.layout.pop_window, null);
+        }else {
+            Log.e("order",orderInfo.getOrder_type()+"        =================");
+            Log.e("order","tuoche suggest!");
+            vPopWindow  = inflater.inflate(R.layout.pop_window_drag1, null);
+        }
+
+        final PopupWindow popupWindow =new PopupWindow(vPopWindow, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT,true);
+        Drawable drawable = getResources().getDrawable(R.color.color_black_transparency);
+        popupWindow.setBackgroundDrawable(drawable);
+        popupWindow.setFocusable(true);
+//        popupWindow.setAnimationStyle(R.style.popwin_anim_style);
+        final View finalVPopWindow = vPopWindow;
+        popupWindow.showAsDropDown(finalVPopWindow);
+        Button bt_dismiss = (Button) finalVPopWindow.findViewById(R.id.bt_dismiss);
+        bt_dismiss.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupWindow.isShowing()) {
+                    popupWindow.dismiss();
+                }
+            }
+        });
     }
 
     public void requestArriveTask() {
@@ -659,38 +759,7 @@ public class OrderInfoActivity extends AutososBackActivity{
             progressBar.setVisibility(View.GONE);
             payBtn.setEnabled(true);
             orderInfo = new OrderInfo(result);
-           /* if (orderInfo != null) {
-                Log.e(TAG,"staus  ---- :"+orderInfo.getPay_status());
-                if (orderInfo.getPay_status() > 0) {
-                    Intent intent = null;
-                    //拖车超出免费距离代支付
-                    if( !orderInfo.getIs_paid() && orderInfo.getIs_own_expense() ==0 && orderInfo.getPay_amount() >0 &&orderInfo.getIs_completed() == 1){
-                        intent = new Intent(OrderInfoActivity.this, PayActivity.class);
-                        intent.putExtra("OrderInfo", orderInfo);
-                        intent.putExtra("other_free", true);
-                    }
-                    else if ((orderInfo.getPay_status() == 1 || orderInfo.getPay_status() == 2) && orderInfo.getIs_paid()) {
-                        //免费支付显示结果页面
-                        intent = new Intent(OrderInfoActivity.this, PayInfoActivity.class);
-                        intent.putExtra("OrderInfo", orderInfo);
-                        intent.putExtra("free", true);
-                    } else if (orderInfo.getPay_status() == 3 && !orderInfo.getIs_paid()) {
-                        //微信支付
-                        intent = new Intent(OrderInfoActivity.this, PayActivity.class);
-                        intent.putExtra("OrderInfo", orderInfo);
-                        intent.putExtra("other_free", false);
-                    } else if (orderInfo.getPay_status() == 3 && orderInfo.getIs_paid()) {
-                        //代付显示结果页面
-                        intent = new Intent(OrderInfoActivity.this, PayInfoActivity.class);
-                        intent.putExtra("OrderInfo", orderInfo);
-                        intent.putExtra("free", false);
-                    }
-                    startActivity(intent);
-                    overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
-                } else {
-                        showToastView(R.string.msg_pls_wait,1);
-                }
-                */
+
             if(orderInfo == null)
                 return;
             if (orderInfo.getIs_completed() == 1) {
@@ -800,7 +869,6 @@ public class OrderInfoActivity extends AutososBackActivity{
                 else{
                     switch (todo){
                         case 1:
-
                             if (orderInfo.getService_type() == 3) {
                                 Intent intent;
                                 intent = new Intent();
@@ -822,8 +890,10 @@ public class OrderInfoActivity extends AutososBackActivity{
                                     String.format(Constants.HISTORY_ORDER_INFO_URL, id));
                             break;
                         case 3:
-                            if (true || orderInfo.getIs_completed() == 1&&((orderInfo.getPay_amount() > 0 && orderInfo.getIs_paid())
-                                    || (orderInfo.getPay_amount() == 0))) {
+                            Log.e(TAG,"getIs_completed == "+orderInfo.getIs_completed() );
+                            Log.e(TAG,"getPay_amount == "+orderInfo.getPay_amount() );
+                            Log.e(TAG,"getIs_paid == "+orderInfo.getIs_paid() );
+                            if (orderInfo.getIs_completed() == 1 && ((orderInfo.getPay_amount() > 0 && orderInfo.getIs_paid()) || (orderInfo.getPay_amount() == 0))) {
                                 Intent intent = new Intent(com.autosos.yd.view.OrderInfoActivity.this, UploadPhotoActivity.class);
                                 intent.putExtra("OrderInfo", orderInfo);
                                 intent.putExtra("id", orderInfo.getId());

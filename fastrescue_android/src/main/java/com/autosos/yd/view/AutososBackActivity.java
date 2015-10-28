@@ -73,6 +73,16 @@ public class AutososBackActivity extends Activity {
         line.setVisibility(View.GONE);
     }
 
+    public void setTakePhoto(){
+        ImageView take_photo_inorder = (ImageView) findViewById(R.id.take_photo_inorder);
+        take_photo_inorder.setVisibility(View.VISIBLE);
+    }
+
+    public ImageView getTakePhoto(){
+        ImageView take_photo_inorder = (ImageView) findViewById(R.id.take_photo_inorder);
+        return take_photo_inorder;
+    }
+
     public void setArrow(int arrow){
         ImageView arrowicon = (ImageView) findViewById(R.id.arrow);
         arrowicon.setImageResource(arrow);
