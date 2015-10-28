@@ -209,7 +209,7 @@ public class DragActivity extends com.autosos.yd.view.AutososBackActivity {
 
             outofDistanceView.setText(String.format(getString(R.string.label_rmb_s),
                     orderInfo.getTuoche_distance() - orderInfo.getStarting_km() > 0
-                            ? new BigDecimal(""+Math.ceil((orderInfo.getTuoche_distance() - orderInfo.getStarting_km())) * orderInfo.getKm_price()).stripTrailingZeros() : 0.00));
+                            ? Math.ceil((orderInfo.getTuoche_distance() - orderInfo.getStarting_km())) * orderInfo.getKm_price() : 0.00));
             //以上这个方法可以把8.0这个.0去掉，new BigDecimal("11.0").stripTrailingZeros()
             startDragPriceView2.setText(String.format(getString(R.string.label_car_fee_service2),orderInfo.getPrice()));
             startDragPriceView.setText(String.format(getString(R.string.label_car_fee_service1),orderInfo.getStarting_km()));

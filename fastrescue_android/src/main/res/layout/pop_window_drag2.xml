@@ -92,7 +92,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/photo_suggest"
             android:id="@+id/car1"
-            android:src="@drawable/icon37"
+            android:src="@drawable/icon39"
             android:layout_width="300dp"
             android:layout_height="180dp" />
 
@@ -121,12 +121,13 @@
             <!--android:layout_alignParentEnd="true" />-->
 
         <TextView
+            android:layout_marginRight="33dp"
             android:layout_marginTop="10dp"
             android:textColor="#fff"
             android:textSize="15dp"
             android:layout_marginLeft="40dp"
             android:layout_below="@+id/car1"
-            android:text="故障车现场照片，保持车牌号清晰"
+            android:text="第三张：拖至目的地并卸下后，拍摄完整故障车，背景需是4s店、修理厂或其它目的地"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView5" />

@@ -116,7 +116,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
         }else {
             Log.e("order",orderInfo.getOrder_type()+"        =================");
             Log.e("order","tuoche suggest!");
-            vPopWindow  = inflater.inflate(R.layout.pop_window_drag1, null);
+            vPopWindow  = inflater.inflate(R.layout.pop_window_drag2, null);
         }
 
         final PopupWindow popupWindow =new PopupWindow(vPopWindow, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT,true);
