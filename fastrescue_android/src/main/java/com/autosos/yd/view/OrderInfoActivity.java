@@ -26,7 +26,9 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -544,7 +546,6 @@ public class OrderInfoActivity extends AutososBackActivity{
     }
 
     private void showPopupWindow() {
-
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vPopWindow =null;
         if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 ){
@@ -564,13 +565,34 @@ public class OrderInfoActivity extends AutososBackActivity{
 //        popupWindow.setAnimationStyle(R.style.popwin_anim_style);
         final View finalVPopWindow = vPopWindow;
         popupWindow.showAsDropDown(finalVPopWindow);
-        Button bt_dismiss = (Button) finalVPopWindow.findViewById(R.id.bt_dismiss);
+
+        final Button bt_dismiss = (Button) finalVPopWindow.findViewById(R.id.bt_dismiss);
+        final TextView photo_suggest = (TextView) finalVPopWindow.findViewById(R.id.photo_suggest);
+        final TextView textView5 = (TextView) finalVPopWindow.findViewById(R.id.textView5);
+        final ImageView car1 = (ImageView) finalVPopWindow.findViewById(R.id.car1);
+
+        final TextView photo_suggest2 = (TextView) finalVPopWindow.findViewById(R.id.photo_suggest2);
+        final ImageView icon_camera = (ImageView) finalVPopWindow.findViewById(R.id.icon_camera);
+        final ImageView icon_arrow = (ImageView) finalVPopWindow.findViewById(R.id.icon_arrow);
+
+        final LinearLayout linearLayout = (LinearLayout) finalVPopWindow.findViewById(R.id.lly_all);
+        final RelativeLayout relativeLayout = (RelativeLayout) finalVPopWindow.findViewById(R.id.rly_all);
+        final Button bt_dismiss2 = (Button) finalVPopWindow.findViewById(R.id.bt_dismiss2);
+        final int first = 0;
         bt_dismiss.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (popupWindow.isShowing()) {
+                        linearLayout.setVisibility(View.VISIBLE);
+                        relativeLayout.setVisibility(View.GONE);
+
+            }
+        });
+        bt_dismiss2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (popupWindow.isShowing())
                     popupWindow.dismiss();
-                }
+
             }
         });
     }
