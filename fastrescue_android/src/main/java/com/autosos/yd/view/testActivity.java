@@ -37,8 +37,11 @@ import com.autosos.yd.Constants;
 import com.autosos.yd.R;
 import com.autosos.yd.fragment.WorkFragment;
 import com.autosos.yd.game.hospital;
+import com.autosos.yd.model.Balance;
+import com.autosos.yd.model.LastestLog;
 import com.autosos.yd.task.AsyncBitmapDrawable;
 import com.autosos.yd.task.ImageLoadTask;
+import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.MusicUtil;
 import com.autosos.yd.util.MyUtils;
 import com.autosos.yd.util.UpdateStateServe;
@@ -55,6 +58,8 @@ import com.igexin.sdk.PushManager;
 import com.makeramen.rounded.RoundedImageView;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -87,6 +92,13 @@ public class testActivity extends Activity{
         new getImageTask().execute("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg");
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetAccountInfoTask().execute(String.format(Constants.GET_ORDER_FEE,1910));
+    }
+
     public void talk(View v){
         PushManager.getInstance().turnOffPush(SplashActivity.splashActivity);
         Log.e(TAG, "---guan le ----");
@@ -131,6 +143,32 @@ public class testActivity extends Activity{
             task.loadImage("http://www.qqai.net/fa/UploadPic/2012-7/20127417475611762.jpg",180,com.autosos.yd.util.ScaleMode.WIDTH, image);
 
 //            picture.setImageBitmap(bitmap);
+        }
+    }
+
+    private class GetAccountInfoTask extends AsyncTask<String, Object, JSONObject> {
+
+        @Override
+        protected JSONObject doInBackground(String... params) {
+            try {
+                String jsonStr = JSONUtil.getStringFromUrl(testActivity.this, params[0]);
+                jsonStr.length();
+                if (JSONUtil.isEmpty(jsonStr)){
+                    return null;
+                }
+                Log.e("test", jsonStr);
+                return new JSONObject(jsonStr);
+            } catch (IOException | JSONException e) {
+
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(JSONObject result) {
+            super.onPostExecute(result);//前后不知道一不一样，先试试
+
         }
     }
 }

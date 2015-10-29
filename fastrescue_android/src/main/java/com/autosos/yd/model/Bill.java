@@ -20,10 +20,16 @@ public class Bill implements Identifiable {
     private String outgo;
     private String month;
     private String year;
+    private int id;
+    private String amount;
+    private int status;
 
     public Bill(JSONObject jsonObject) {
         if (jsonObject != null) {
+            this.id = jsonObject.optInt("id");
+            this.status = jsonObject.optInt("status");
             this.year =  JSONUtil.getString(jsonObject, "year");
+            this.amount =  JSONUtil.getString(jsonObject, "amount");
             this.income =  JSONUtil.getString(jsonObject, "income");
             this.outgo =  JSONUtil.getString(jsonObject, "outgo");
             this.month =  JSONUtil.getString(jsonObject, "month");
@@ -34,6 +40,17 @@ public class Bill implements Identifiable {
     @Override
     public Long getId() {
         return null;
+    }
+
+    public int getIntId() {
+        return id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+    public String getAmount() {
+        return amount;
     }
 
     public void setIncome(String income) {

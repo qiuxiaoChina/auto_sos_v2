@@ -122,7 +122,7 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Log.e("test","==================");
     }
 
 

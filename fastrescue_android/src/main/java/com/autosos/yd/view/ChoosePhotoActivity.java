@@ -201,6 +201,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Log.e("test","==================");
         com.autosos.yd.model.Item item = (com.autosos.yd.model.Item) parent.getAdapter().getItem(position);
         if (item != null && !com.autosos.yd.util.JSONUtil.isEmpty(item.getMediaPath())) {
             if (selectedPhotos.contains(item.getMediaPath())) {

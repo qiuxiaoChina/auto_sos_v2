@@ -15,6 +15,7 @@ public class LastestLog implements Identifiable {
     private String remark;
     private int type;
 
+
     public LastestLog(JSONObject jsonObject) {
         if (jsonObject != null) {
             this.amount =  JSONUtil.getString(jsonObject, "amount");

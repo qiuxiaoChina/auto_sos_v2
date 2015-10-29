@@ -59,6 +59,10 @@ public class Constants {
     public static  String TAKECASH = HOST + "v1/balance/takecash-apply";     //提现
     public static  String MONTH_BILL = HOST + "v1/balance/bill";     //月收入支出
     public static  String GET_MONTH_BILL = HOST + "v1/balance/bill/%s/%s";     //获取月收入支出
+    public static  String GET_TOTAL_AMOUNT = HOST + "v1/settle-list/total-amount";     //获取月收入支出
+    public static  String GET_SETTLE_LIST= HOST + "v1/settle-list/";     //结算报表详细
+    public static  String GET_MONTH_LIST= HOST + "v1/settle-list/view-orders/%s";     //结算报表详细
+    public static  String GET_ORDER_FEE= HOST + "v1/settle-list/order-fee-detail/%s";     //结算报表详细
 
 
     public static final String USER_FILE = "user.json";                     //存放用户信息（账号密码以及token）

@@ -15,18 +15,51 @@ public class Balance implements Identifiable{
     private String remark;
     private int type;
     private JSONArray lastest_log;
+    private int order_id;
+    private int service_type;
+    private String car_number;
+    private String settle_fee;
+    private String title;
+    private String fee;
+
+
 
     public Balance(JSONObject jsonObject) {
         if (jsonObject != null) {
             this.lastest_log =  JSONUtil.getJSONArray(jsonObject, "lastest_log");
+            this.title =  JSONUtil.getString(jsonObject, "title");
+            this.fee =  JSONUtil.getString(jsonObject, "fee");
             this.balance =  JSONUtil.getString(jsonObject, "balance");
             this.amount =  JSONUtil.getString(jsonObject, "amount");
             this.created_at =  JSONUtil.getString(jsonObject, "created_at");
             this.remark =  JSONUtil.getString(jsonObject, "remark");
             this.type = jsonObject.optInt("type");
+            this.order_id = jsonObject.optInt("order_id");
+            this.service_type = jsonObject.optInt("service_type");
+            this.car_number =  JSONUtil.getString(jsonObject, "car_number");
+            this.settle_fee =  JSONUtil.getString(jsonObject, "settle_fee");
+
         }
     }
 
+    public int getOrder_id(){
+        return order_id;
+    }
+    public int getService_type(){
+        return service_type;
+    }
+    public String getCar_number(){
+        return car_number;
+    }
+    public String getSettle_fee(){
+        return settle_fee;
+    }
+    public String getFee(){
+        return fee;
+    }
+    public String getTitle(){
+        return title;
+    }
 
     public void setAmount(String amount) {
         this.amount = amount;

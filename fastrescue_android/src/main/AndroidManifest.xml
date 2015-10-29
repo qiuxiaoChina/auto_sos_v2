@@ -129,6 +129,20 @@
             android:theme="@style/CustomTitleTheme" />
 
         <activity
+            android:name=".view.StatementDetailsActivity"
+            android:label="@string/label_statement_month"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.StatementActivity"
+            android:label="@string/label_account_statement"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
             android:name=".view.DrawCashActivity"
             android:label="@string/label_draw_cash"
             android:launchMode="singleTask"

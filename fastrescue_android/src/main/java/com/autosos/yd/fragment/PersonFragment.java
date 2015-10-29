@@ -18,6 +18,7 @@ import com.autosos.yd.view.AccountActivity;
 import com.autosos.yd.view.LoginActivity;
 import com.autosos.yd.view.PasswordActivity;
 import com.autosos.yd.view.SetingActivity;
+import com.autosos.yd.view.StatementActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
 import com.makeramen.rounded.RoundedImageView;
@@ -45,6 +46,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
     private TextView rateView;
     private RelativeLayout seting;
     private RelativeLayout account;
+    private RelativeLayout statement;
     private RatingBar ratingbarView;
     private RoundedImageView avatarView;
     private com.autosos.yd.model.Person person = null;
@@ -76,6 +78,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
         ratingbarView =(RatingBar) rootView.findViewById(R.id.ratingbar_person);
         avatarView = (RoundedImageView) rootView.findViewById(R.id.user_avatar);
         avatarView.setCornerRadius(1000);
+        statement = (RelativeLayout) rootView.findViewById(R.id.statement);
         scrollView = (PullToRefreshScrollView) rootView.findViewById(R.id.personne_list);
         seting.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,6 +96,15 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
             }
         });
+        statement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), StatementActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
+            }
+        });
+
 
 
         if(!Constants.DEBUG && false)
