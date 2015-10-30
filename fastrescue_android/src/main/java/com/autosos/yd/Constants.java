@@ -4,12 +4,12 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class Constants {
-    public static final boolean DEBUG = true; // 开发模式是 true 的时候可以动态修改服务器地址
+    public static final boolean DEBUG = false; // 开发模式是 true 的时候可以动态修改服务器地址
     public static final String APP_VERSION = "1.1.7";
     public static final int VERSION_CODE = 108;
     //public static String HOST = "http://api.auto-sos.com.cn/";
-    public static String HOST = "http://autosos.wicp.net:46622/";//测试服务器
-//    public static String HOST = "http://api.auto-sos.cn/";//正式服务器
+//    public static String HOST = "http://autosos.wicp.net:46622/";//测试服务器
+    public static String HOST = "http://api.auto-sos.cn/";//正式服务器
 
     public static final String ACTIONNAME_STRING = "com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn";
 
