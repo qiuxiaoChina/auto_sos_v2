@@ -151,6 +151,11 @@ public class StatementActivity extends AutososBackActivity implements ObjectBind
         }
     }
 
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(0, R.anim.slide_out_right);
+    }
+
     private class GetTotalAmountInfoTask extends AsyncTask<String,Void,JSONObject> {
 
         @Override
@@ -174,7 +179,12 @@ public class StatementActivity extends AutososBackActivity implements ObjectBind
             super.onPostExecute(result);
             if (result != null){
                 balance = new Balance(result);
-                tv_money.setText(balance.getAmount());
+                if (balance.getAmount() == null ){
+                    tv_money.setText("0.00");
+                }else {
+                    tv_money.setText(balance.getAmount());
+                }
+
             }
 
         }

@@ -59,9 +59,10 @@
             android:layout_height="wrap_content">
 
             <TextView
+
                 android:textSize="17sp"
                 android:textColor="#88cc44"
-                android:text="-"
+                android:text="+"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 

@@ -94,7 +94,7 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
         progressBarView =(ProgressBar)rootView.findViewById(R.id.progressBar_download);
         progress_textView = (TextView)rootView.findViewById(R.id.progress_text);
         QR_codeView = (RelativeLayout)rootView.findViewById(R.id.QR_code);
-        QR_codeView.setVisibility(View.GONE);
+//        QR_codeView.setVisibility(View.GONE);
         String versionNumber = null;
         try {
             versionNumber = getActivity().getPackageManager().getPackageInfo(

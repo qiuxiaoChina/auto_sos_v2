@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,11 +37,17 @@ public class StatementDetailsActivity extends AutososBackActivity implements Pul
         ObjectBindAdapter.ViewBinder<Balance>,AdapterView.OnItemClickListener {
 
     private ArrayList<Balance> banlances;
+    private ArrayList<Balance> banlances2;
     private PullToRefreshListView listView;
     private ObjectBindAdapter<Balance> adapter;
+    private ObjectBindAdapter<Balance> adapter2;
     private String smonth;
     private String syear;
     private View progressBar;
+    public PopupWindow popWindow ;
+    private ListView listView2;
+    private static Context Context = null;
+
 
 
     @Override
@@ -49,8 +56,11 @@ public class StatementDetailsActivity extends AutososBackActivity implements Pul
         setContentView(R.layout.activity_month_details);
         listView = (PullToRefreshListView) findViewById(R.id.list);
         banlances = new ArrayList<>();
+        banlances2 = new ArrayList<>();
         adapter = new ObjectBindAdapter<>(this, banlances,
                 R.layout.lastestlog_item, this);
+        adapter2 = new ObjectBindAdapter<>(this, banlances2,
+                R.layout.pop_item, this);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
         listView.setOnRefreshListener(this);
@@ -60,6 +70,9 @@ public class StatementDetailsActivity extends AutososBackActivity implements Pul
         progressBar = findViewById(R.id.include);
 
     }
+
+
+
 
     public void setEmptyView() {
         if (banlances.isEmpty()) {
@@ -88,7 +101,8 @@ public class StatementDetailsActivity extends AutososBackActivity implements Pul
     protected void onResume() {
         super.onResume();
         new GetAccountInfoTask().executeOnExecutor(Constants.INFOTHEADPOOL,
-                String.format(Constants.GET_MONTH_LIST,syear+smonth  ));
+                String.format(Constants.GET_MONTH_LIST, syear + smonth));
+        new GetAccountInfoTask2().execute(String.format(Constants.GET_ORDER_FEE, 1910));
 
     }
 
@@ -167,19 +181,66 @@ public class StatementDetailsActivity extends AutososBackActivity implements Pul
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-        Balance b = (Balance) parent.getAdapter().getItem(position);
-        Log.e("test","position === " + position +"     " +"id === " +id);
-//        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        View vPopWindow =null;
-//        vPopWindow  = inflater.inflate(R.layout.statement_pop_window, null);
-//        PopDetail popDetail =new PopDetail(vPopWindow,ViewGroup.LayoutParams.FILL_PARENT, 150,true,StatementDetailsActivity.this);
-//        Drawable drawable = getResources().getDrawable(R.color.color_gray7);
-//        popDetail.setBackgroundDrawable(drawable);
-//        popDetail.setFocusable(true);
-//        final View finalVPopWindow = vPopWindow;
-//        popDetail.showAsDropDown(view);
+//        Balance b = (Balance) parent.getAdapter().getItem(position);
+//        Log.e("test","position === " + position +"     " +"id === " +id);
+//        PopDetail popDetail = new PopDetail(getApplicationContext(),this);
+//        popDetail.showDetailPopwindow(view,b.getOrder_id());
+//        showDetailPopwindow(view);
 
 
+    }
+
+    public void showDetailPopwindow(View view){
+        LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View vPopWindow =null;
+        vPopWindow  = inflater.inflate(R.layout.statement_pop_window, null);
+        popWindow =new PopupWindow(vPopWindow,ViewGroup.LayoutParams.FILL_PARENT, 150,true);
+        Drawable drawable = getResources().getDrawable(R.color.color_gray7);
+        popWindow.setBackgroundDrawable(drawable);
+        popWindow.setFocusable(true);
+        final View finalVPopWindow = vPopWindow;
+        popWindow.showAsDropDown(view);
+        listView2 = (ListView)findViewById(R.id.list2);
+
+        listView2.setAdapter(adapter2);
+
+
+    }
+
+    private class GetAccountInfoTask2 extends AsyncTask<String, Object, JSONArray> {
+
+        @Override
+        protected JSONArray doInBackground(String... params) {
+            try {
+                String jsonStr = JSONUtil.getStringFromUrl(StatementDetailsActivity.this, params[0]);
+                jsonStr.length();
+                if (JSONUtil.isEmpty(jsonStr)){
+                    return null;
+                }
+                Log.e("test", jsonStr);
+                return new JSONArray(jsonStr);
+            } catch (IOException | JSONException e) {
+
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(JSONArray result) {
+            super.onPostExecute(result);//前后不知道一不一样，先试试
+            banlances2.clear();
+            if (result != null) {
+                if (result.length() > 0) {
+                    int size = result.length();
+                    for (int i = 0; i < size; i++) {
+                        Balance balance = new Balance(result.optJSONObject(i));
+                        banlances2.add(balance);
+                    }
+                    adapter2.notifyDataSetChanged();
+                }
+            }
+        }
     }
 
     @Override

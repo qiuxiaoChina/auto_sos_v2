@@ -178,7 +178,12 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
             listView.onRefreshComplete();
             balance = new Balance(result);
             balance.getBalance();
-            tv_balance.setText(balance.getBalance() + "");
+            if (balance.getBalance() == null  ){
+                tv_balance.setText( "0.00");
+            }else {
+                tv_balance.setText(balance.getBalance() + "");
+            }
+
             lastestLogs.clear();
 
             JSONArray jsonArray = balance.getLastest_log();
@@ -235,16 +240,28 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
         }else {
             Double limitMoney = Double.valueOf(1);
             Log.e("account", "limitMoney" + limitMoney);
-            Double balance_long = Double.valueOf(balance.getBalance());
+            Double balance_long=null;
+            if (balance.getBalance() == null){
+
+            }else {
+                balance_long = Double.valueOf(balance.getBalance());
+            }
+
             Log.e("account", "balance_long" + balance_long);
-            if (balance_long > limitMoney){
-                Intent intent = new Intent(AccountActivity.this,DrawCashActivity.class);
-                intent.putExtra("balance",balance.getBalance());
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
+            if (balance_long != null){
+                if (balance_long > limitMoney){
+                    Intent intent = new Intent(AccountActivity.this,DrawCashActivity.class);
+                    intent.putExtra("balance",balance.getBalance());
+                    startActivity(intent);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
+                }else {
+                    showDrawCashDialog(R.string.msg_enter_no_cash);
+                }
             }else {
                 showDrawCashDialog(R.string.msg_enter_no_cash);
             }
+
+
         }
 
     }

@@ -5,6 +5,7 @@ import android.util.Log;
 import com.autosos.yd.util.JSONUtil;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Balance implements Identifiable{
@@ -21,12 +22,27 @@ public class Balance implements Identifiable{
     private String settle_fee;
     private String title;
     private String fee;
+    private JSONObject tuoche;
+    private String distance;
+    private String price;
+    private String starting_km;
+    private String km_price;
+
 
 
 
     public Balance(JSONObject jsonObject) {
         if (jsonObject != null) {
+            this.distance =  JSONUtil.getString(jsonObject, "distance");
+            this.price =  JSONUtil.getString(jsonObject, "price");
+            this.starting_km =  JSONUtil.getString(jsonObject, "starting_km");
+            this.km_price =  JSONUtil.getString(jsonObject, "km_price");
             this.lastest_log =  JSONUtil.getJSONArray(jsonObject, "lastest_log");
+            try {
+                this.tuoche =  jsonObject.getJSONObject("tuoche");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             this.title =  JSONUtil.getString(jsonObject, "title");
             this.fee =  JSONUtil.getString(jsonObject, "fee");
             this.balance =  JSONUtil.getString(jsonObject, "balance");
@@ -41,7 +57,19 @@ public class Balance implements Identifiable{
 
         }
     }
+    public String getdistance(){
+        return distance;
+    }
+    public String getprice(){
+        return price;
+    }
+    public String getstarting_km(){
+        return starting_km;
+    }
+    public String getkm_price(){
+        return km_price;
 
+    }
     public int getOrder_id(){
         return order_id;
     }
@@ -60,7 +88,12 @@ public class Balance implements Identifiable{
     public String getTitle(){
         return title;
     }
-
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setFee(String fee) {
+        this.fee = fee;
+    }
     public void setAmount(String amount) {
         this.amount = amount;
     }
@@ -79,6 +112,19 @@ public class Balance implements Identifiable{
         this.remark = remark;
     }
 
+    public void setdistance(String distance) {
+        this.distance = distance;
+    }
+    public void setprice(String price) {
+        this.price = price;
+    }
+    public void setstarting_km(String starting_km) {
+        this.starting_km = starting_km;
+    }
+    public void setkm_price(String km_price) {
+        this.km_price = km_price;
+    }
+
     public void setType(int type) {
         this.type = type;
     }
@@ -93,6 +139,10 @@ public class Balance implements Identifiable{
 
     public JSONArray getLastest_log(){
         return lastest_log;
+    }
+
+    public JSONObject getTuoche(){
+        return tuoche;
     }
 
     public String getCreated_at() {

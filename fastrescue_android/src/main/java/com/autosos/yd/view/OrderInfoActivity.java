@@ -590,8 +590,11 @@ public class OrderInfoActivity extends AutososBackActivity{
         bt_dismiss2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (popupWindow.isShowing())
+                if (popupWindow.isShowing()){
                     popupWindow.dismiss();
+                }
+                MusicUtil.playmusics(OrderInfoActivity.this,MusicUtil.Arive);
+                showSuccessView(12500);
 
             }
         });
@@ -627,8 +630,13 @@ public class OrderInfoActivity extends AutososBackActivity{
                         int result = jsonObject.optInt("result");
                         if (result == 1) {
                             palyonce = true;
-                            showSuccessView(8500);
-                            MusicUtil.playmusics(OrderInfoActivity.this,MusicUtil.Arive);
+
+
+                                MusicUtil.playmusics(OrderInfoActivity.this, MusicUtil.Take_three_photo);
+
+//                                MusicUtil.playmusics(OrderInfoActivity.this,MusicUtil.Arive);
+
+
                         } else {
                             arriveBtn.setEnabled(true);
                             int code = jsonObject.optInt("code");

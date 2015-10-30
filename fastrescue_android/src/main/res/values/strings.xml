@@ -165,14 +165,15 @@
     <string name="msg_pay_by_other">您有新消息啦！</string>
     <string name="msg_order_null">手慢了，订单已经被接走啦!</string>
     <string name="msg_distance_error">（请刷新）</string>
-    <string name="msg_nofinish">您有未完成的订单呀！</string>
+    <string name="msg_nofinish">当前有订单未完成！</string>
     <string name="msg_reloction">经纬度定位失败，是否重新定位？</string>
     <string name="msg_noInterner">网络连接错误，请检查你的网络！</string>
     <string name="msg_enter_psd">请输入原始密码！</string>
     <string name="msg_enter_cash">请输入金额！</string>
-    <string name="msg_enter_cash_success">提现申请已提交，客服人员会在两个工作日内转账到该银行卡！</string>
+    <string name="msg_enter_cash_success">提现申请提交成功！</string>
+    <string name="msg_enter_bank_id_null">您的银行卡信息不完整，请联系客服！</string>
     <string name="msg_enter_cash_failed">提现失败！</string>
-    <string name="msg_enter_no_cash">账户余额不足！</string>
+    <string name="msg_enter_no_cash">账户余额不足，无法提现！</string>
     <string name="msg_psd_error1">新密码不能为空！</string>
     <string name="msg_psd_error2">两次密码输入不一致！</string>
     <string name="msg_psd_error3">密码长度不能低于6位！</string>
@@ -198,6 +199,7 @@
     <string name="msg_new_order">快看，有新订单啦~</string>
     <string name="msg_order_uploading">上传照片中...</string>
     <string name="msg_ok_tuoche">是否完成拖车？</string>
+    <string name="msg_ok_tijiao">是否提交提现申请？</string>
     <string name="msg_update">当前有新版本，是否立即更新？</string>
     <string name="msg_can_update">发现可用的新版本，是否马上升级？</string>
     <string name="msg_update_content">更新内容：</string>

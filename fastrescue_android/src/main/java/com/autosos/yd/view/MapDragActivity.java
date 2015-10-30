@@ -499,8 +499,8 @@ public class MapDragActivity extends Activity implements BDLocationListener{
         tot_distance = dis;
 
         Log.e(TAG, "isfist onresume :" + isfirst);
-        if(Constants.DEBUG)
-            tot_distance = 99999;
+//        if(Constants.DEBUG)
+//            tot_distance = 99999;
 //        drap_distanceView.setText(String.format("%.2f", tot_distance / 1000));
         Log.e(TAG, "Now TOTdistance :" + dis);
             if(tot_distance > 0){

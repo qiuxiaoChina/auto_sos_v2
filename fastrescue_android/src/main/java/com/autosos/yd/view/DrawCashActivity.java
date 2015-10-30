@@ -69,49 +69,83 @@ public class DrawCashActivity extends AutososBackActivity {
 
     public void takeMoney(View view){
 //        bt_takemoney.setVisibility(View.GONE);
-        bt_takemoney.setClickable(false);
-        Map<String, Object> map = new HashMap<>();
-        if (Constants.DEBUG){
-            map.put("money", 10);
-        }else {
-            map.put("money", balance);
-        }
 
-        Log.e("drawcash", "balance === "+balance);
-        progressBar.setVisibility(View.VISIBLE);
-        new com.autosos.yd.task.NewHttpPostTask(DrawCashActivity.this, new com.autosos.yd.task.OnHttpRequestListener() {
+//        bt_takemoney.setVisibility(View.VISIBLE);
+        showDialog();
+    }
+
+    public void showDialog(){
+        View v2 = getLayoutInflater().inflate(R.layout.dialog_msg_notice,
+                null);
+        final Dialog dialog = new Dialog(v2.getContext(), R.style.bubble_dialog);
+        Button tvConfirm = (Button) v2.findViewById(R.id.btn_notice_confirm);
+        Button tvCancel = (Button) v2.findViewById(R.id.btn_notice_cancel);
+        TextView tvMsg = (TextView) v2.findViewById(R.id.tv_notice_msg);
+        tvMsg.setText(String.format(getString(R.string.msg_ok_tijiao)));
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public void onRequestCompleted(Object obj) {
-                try {
-                    JSONObject jsonObject = new JSONObject(obj.toString());
-                    Log.e("ChangPSD", jsonObject.toString());
-                    if (!jsonObject.isNull("result")) {
-                        int result = jsonObject.optInt("result");
-                        if(result == 1){
-                            Log.e("drawcash", "failed");
-                            progressBar.setVisibility(View.GONE);
-                            showDrawCashDialog(R.string.msg_enter_cash_success);
-                        }else{
-                            Log.e("drawcash", "success");
-                            String msg = jsonObject.optString("msg");
-                            findViewById(R.id.progressBar).setVisibility(View.GONE);
-                            showDrawCashDialog(R.string.msg_enter_cash_failed);
-                            Toast.makeText(DrawCashActivity.this, msg, Toast.LENGTH_LONG).show();
+            public void onClick(View v) {
+                bt_takemoney.setClickable(false);
+                Map<String, Object> map = new HashMap<>();
+//                if (Constants.DEBUG){
+//                    map.put("money", 10);
+//                }else {
+                    map.put("money", balance);
+//                }
+
+                Log.e("drawcash", "balance === "+balance);
+                progressBar.setVisibility(View.VISIBLE);
+                new com.autosos.yd.task.NewHttpPostTask(DrawCashActivity.this, new com.autosos.yd.task.OnHttpRequestListener() {
+                    @Override
+                    public void onRequestCompleted(Object obj) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(obj.toString());
+                            Log.e("ChangPSD", jsonObject.toString());
+                            if (!jsonObject.isNull("result")) {
+                                int result = jsonObject.optInt("result");
+                                if(result == 1){
+                                    Log.e("drawcash", "failed");
+                                    progressBar.setVisibility(View.GONE);
+                                    showDrawCashDialog(R.string.msg_enter_cash_success);
+                                }else{
+                                    Log.e("drawcash", "success");
+                                    String msg = jsonObject.optString("msg");
+                                    findViewById(R.id.progressBar).setVisibility(View.GONE);
+                                    showDrawCashDialog(R.string.msg_enter_cash_failed);
+                                    Toast.makeText(DrawCashActivity.this, msg, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        }catch (Exception e ){
+                            e.printStackTrace();
                         }
                     }
-                }catch (Exception e ){
-                    e.printStackTrace();
-                }
+
+                    @Override
+                    public void onRequestFailed(Object obj) {
+                        Log.e("drawcash", "failed");
+
+                    }
+                }).execute(String.format(Constants.TAKECASH), map);
+
             }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onRequestFailed(Object obj) {
-                Log.e("drawcash", "failed");
-
+            public void onClick(View v) {
+                dialog.dismiss();
             }
-        }).execute(String.format(Constants.TAKECASH), map);
-//        bt_takemoney.setVisibility(View.VISIBLE);
-
+        });
+        dialog.setContentView(v2);
+        dialog.setCanceledOnTouchOutside(false);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        Point point = JSONUtil.getDeviceSize(DrawCashActivity.this);
+        params.width = Math.round(point.x * 5 / 7);
+        window.setAttributes(params);
+        dialog.show();
     }
 
     public void showDrawCashDialog(final int msg){
@@ -178,13 +212,22 @@ public class DrawCashActivity extends AutososBackActivity {
             bankInfo = new BankInfo(result);
             logo_url = bankInfo.getLogo();
             bankNumber = bankInfo.getCard_no();
-            String a = bankNumber.substring(0,4);
-            String b = bankNumber.substring(4,8);
-            String c = bankNumber.substring(8,12);
-            String d = bankNumber.substring(12,bankNumber.length());
-            String f = a + " " + b + " " + c + " " + d;
-            tv_bank_number.setText(f);
-            tv_bank_name.setText(bankInfo.getName());
+            if (bankNumber != null){
+                String a = bankNumber.substring(0,4);
+                String b = bankNumber.substring(4,8);
+                String c = bankNumber.substring(8,12);
+                String d = bankNumber.substring(12,bankNumber.length());
+                String f = a + " " + b + " " + c + " " + d;
+                tv_bank_number.setText(f);
+            }else {
+                showBank();
+            }
+            if (bankInfo.getName() != null){
+                tv_bank_name.setText(bankInfo.getName());
+            }else {
+                showBank();
+            }
+
 //            ImageLoadTask task = new ImageLoadTask(bank_icon, null,0);
 //            AsyncBitmapDrawable image = new AsyncBitmapDrawable(getResources(), Constants.PLACEHOLDER_AVATAR2, task);
 //            task.loadImage(logo_url, 180, com.autosos.yd.util.ScaleMode.WIDTH, image);
@@ -193,6 +236,30 @@ public class DrawCashActivity extends AutososBackActivity {
             empty.setVisibility(View.GONE);
         }
 
+    }
+
+    public void showBank(){
+        View v2 = getLayoutInflater().inflate(R.layout.dialog_msg_content,
+                null);
+        final Dialog dialog = new Dialog(v2.getContext(), R.style.bubble_dialog);
+        Button tvConfirm = (Button) v2.findViewById(R.id.btn_notice_confirm);
+        TextView tvMsg = (TextView) v2.findViewById(R.id.tv_notice_msg);
+        tvMsg.setText(R.string.msg_enter_bank_id_null);
+        tvConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+        dialog.setContentView(v2);
+        dialog.setCanceledOnTouchOutside(false);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        Point point = JSONUtil.getDeviceSize(DrawCashActivity.this);
+        params.width = Math.round(point.x * 5 / 7);
+        window.setAttributes(params);
+        dialog.show();
     }
 
     public void onBackPressed() {
