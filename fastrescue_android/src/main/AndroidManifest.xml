@@ -82,6 +82,12 @@
             android:theme="@style/ChooserTheme" />
 
         <activity
+            android:name=".test.MainActivity2"
+            android:label=""
+            android:screenOrientation="portrait"
+            android:theme="@style/ChooserTheme" />
+
+        <activity
             android:name=".view.testActivity"
             android:label=""
             android:screenOrientation="portrait"

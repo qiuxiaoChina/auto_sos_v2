@@ -30,6 +30,9 @@
 -keep public class * extends android.app.Activity
 -keep public class * extends android.app.Application
 -keep public class * extends android.app.Service
+-keep public class * extends android.support.v4.app.Fragment{
+    public protected <methods>;
+}
 -keep public class * extends android.content.BroadcastReceiver
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
@@ -51,7 +54,9 @@
 -keep public class com.autosos.yd.R$*{
 	public static final int *;
 }
+-keep public class com.autosos.yd.util.** {public protected <methods>; }
 -dontwarn android.support.v4.**
+-keep public class com.autosos.yd.**
 -keep class android.support.v4.** { *; }
 -keep public abstract interface com.asqw.android.Listener{
 public protected <methods>;

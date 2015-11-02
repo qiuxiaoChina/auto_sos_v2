@@ -187,6 +187,8 @@ public class StatementDetailsActivity extends AutososBackActivity implements Pul
 //        popDetail.showDetailPopwindow(view,b.getOrder_id());
 //        showDetailPopwindow(view);
 
+        view.getLayoutParams();
+
 
     }
 

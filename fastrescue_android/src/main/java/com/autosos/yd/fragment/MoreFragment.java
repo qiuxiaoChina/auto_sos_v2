@@ -48,9 +48,11 @@ import com.autosos.yd.task.OnHttpRequestListener;
 import com.autosos.yd.util.DownLoad;
 import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.UpdateStateServe;
+import com.autosos.yd.util.Utils;
 import com.autosos.yd.util.XmlParse;
 import com.autosos.yd.view.LoginActivity;
 import com.autosos.yd.view.NoticeView;
+import com.autosos.yd.view.testActivity;
 import com.autosos.yd.widget.CherkInternet;
 import com.autosos.yd.widget.CherkVersion;
 import com.autosos.yd.widget.DialogView;
@@ -182,6 +184,8 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
                 dialog.show();
                 break;
             case R.id.aboutE :
+//                Utils.test1();//学习的测试代码
+
                 showpop(rootView.getContext(),"aboutE");
                 break;
             case R.id.QR_code:
@@ -507,5 +511,10 @@ public class MoreFragment extends Fragment implements View.OnClickListener {
             }
         };
         new Thread(runnable).start();
+    }
+
+    public void test1(){
+        String a =null;
+        Log.e("tt",a );
     }
 }
