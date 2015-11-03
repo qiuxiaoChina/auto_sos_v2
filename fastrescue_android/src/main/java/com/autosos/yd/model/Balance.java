@@ -16,6 +16,7 @@ public class Balance implements Identifiable{
     private String remark;
     private int type;
     private JSONArray lastest_log;
+    private JSONArray detail;
     private int order_id;
     private int service_type;
     private String car_number;
@@ -31,6 +32,7 @@ public class Balance implements Identifiable{
 
 
 
+
     public Balance(JSONObject jsonObject) {
         if (jsonObject != null) {
             this.distance =  JSONUtil.getString(jsonObject, "distance");
@@ -38,6 +40,7 @@ public class Balance implements Identifiable{
             this.starting_km =  JSONUtil.getString(jsonObject, "starting_km");
             this.km_price =  JSONUtil.getString(jsonObject, "km_price");
             this.lastest_log =  JSONUtil.getJSONArray(jsonObject, "lastest_log");
+            this.detail =  JSONUtil.getJSONArray(jsonObject, "detail");
             try {
                 this.tuoche =  jsonObject.getJSONObject("tuoche");
             } catch (JSONException e) {
@@ -139,6 +142,10 @@ public class Balance implements Identifiable{
 
     public JSONArray getLastest_log(){
         return lastest_log;
+    }
+
+    public JSONArray getDetail(){
+        return detail;
     }
 
     public JSONObject getTuoche(){

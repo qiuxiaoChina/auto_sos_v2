@@ -309,6 +309,9 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         Intent i =new Intent(MainActivity.this,testActivity.class);
         startActivity(i);
     }
+    public void test2(View v){
+        PushManager.getInstance().initialize(SplashActivity.splashActivity);
+    }
 
     @Override
 

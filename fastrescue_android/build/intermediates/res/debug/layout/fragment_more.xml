@@ -224,6 +224,14 @@
             android:onClick="test"
             android:text="我只是看看的！"
             android:textColor="@color/color_black" />
+        <!--<Button-->
+            <!--android:id="@+id/onlytest2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="55dp"-->
+            <!--android:background="@color/color_gray3"-->
+            <!--android:onClick="test2"-->
+            <!--android:text="个推服务重启！"-->
+            <!--android:textColor="@color/color_black" />-->
 
 
 
