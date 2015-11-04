@@ -145,7 +145,7 @@ public class testActivity extends Activity{
             if(convertView == null) {
                 convertView = inflater.inflate(R.layout.item_layout, null);
                 tag.item1 = (TextView)convertView.findViewById(R.id.item1);
-                final ListView list2 = (ListView) convertView.findViewById(R.id.list_test);
+                ListView list2 = (ListView) convertView.findViewById(R.id.list_test);
                 list2.setAdapter(new BaseAdapter() {
                     @Override
                     public int getCount() {

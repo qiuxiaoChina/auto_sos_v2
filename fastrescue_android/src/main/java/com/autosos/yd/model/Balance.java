@@ -10,6 +10,7 @@ import org.json.JSONObject;
 
 public class Balance implements Identifiable{
 
+    public boolean expand = false;
     private String balance;
     private String amount;
     private String created_at;
