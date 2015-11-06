@@ -209,6 +209,7 @@ public class DrawCashActivity extends AutososBackActivity {
         protected void onPostExecute(JSONObject result) {
             super.onPostExecute(result);
             progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
             bankInfo = new BankInfo(result);
             logo_url = bankInfo.getLogo();
             bankNumber = bankInfo.getCard_no();

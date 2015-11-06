@@ -34,7 +34,7 @@ import com.autosos.yd.task.ImageLoadTask;
 import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.ScaleMode;
 
-public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefreshListener<ScrollView>{
+public class PersonFragment extends Fragment {
 
     private View rootView;
     private static final String TAG = "PersonFragment";
@@ -79,7 +79,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
         avatarView = (RoundedImageView) rootView.findViewById(R.id.user_avatar);
         avatarView.setCornerRadius(1000);
         statement = (RelativeLayout) rootView.findViewById(R.id.statement);
-        scrollView = (PullToRefreshScrollView) rootView.findViewById(R.id.personne_list);
+//        scrollView = (PullToRefreshScrollView) rootView.findViewById(R.id.personne_list);
         seting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +109,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
 
         if(!Constants.DEBUG && false)
             rootView.findViewById(R.id.seting).setVisibility(View.GONE);
-        scrollView.setOnRefreshListener(this);
+//        scrollView.setOnRefreshListener(this);
         return rootView;
     }
 
@@ -133,12 +133,12 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
     }
 
     //刷新
-    @Override
-    public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
-        new GetPersonTask(rootView.getContext()).executeOnExecutor(com.autosos.yd.Constants.INFOTHEADPOOL,
-                com.autosos.yd.Constants.PERSON_URL);
-
-    }
+//    @Override
+//    public void onRefresh(PullToRefreshBase<ScrollView> refreshView) {
+//        new GetPersonTask(rootView.getContext()).executeOnExecutor(com.autosos.yd.Constants.INFOTHEADPOOL,
+//                com.autosos.yd.Constants.PERSON_URL);
+//
+//    }
 
     private class GetPersonTask extends com.autosos.yd.task.AuthGetJSONObjectAsyncTask {
         public GetPersonTask(Context context) {
@@ -163,7 +163,7 @@ public class PersonFragment extends Fragment implements PullToRefreshBase.OnRefr
         @Override
         protected void onPostExecute(JSONObject result) {
             progressBar.setVisibility(View.GONE);
-            scrollView.onRefreshComplete();
+//            scrollView.onRefreshComplete();
             person = new com.autosos.yd.model.Person(result);
             if (person != null) {
                 name_person.setText(person.getRealname());

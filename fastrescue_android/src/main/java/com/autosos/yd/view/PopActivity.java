@@ -115,7 +115,7 @@ public class PopActivity extends Activity implements ObjectBindAdapter.ViewBinde
         int[] location = new int[2];
         v.getLocationOnScreen(location);
 
-        popWindow.showAtLocation(v, Gravity.BOTTOM, location[0], popWindow.getHeight() * 2/ 10);
+        popWindow.showAtLocation(v, Gravity.BOTTOM, location[0], popWindow.getHeight() * 7/ 40);
         //   popWindow.showAtLocation(v, Gravity.NO_GRAVITY, 0, 0 - popWindow.getHeight());
         initView();
     }

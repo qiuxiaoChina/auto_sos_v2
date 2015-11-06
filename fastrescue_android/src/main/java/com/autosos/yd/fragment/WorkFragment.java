@@ -151,8 +151,8 @@ public class WorkFragment extends Fragment implements View.OnClickListener,
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_second_work, container, false);
         UpdateStateServe.UpdateStateServeActive = true;
-        if(Constants.DEBUG)
-             rootView.findViewById(R.id.test_label).setVisibility(View.VISIBLE);
+//        if(Constants.DEBUG)
+//             rootView.findViewById(R.id.test_label).setVisibility(View.VISIBLE);
         test_point = 1;
         longitude = UpdateStateServe.longitude;
         latitude = UpdateStateServe.latitude;

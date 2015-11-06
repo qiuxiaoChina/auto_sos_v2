@@ -1,6 +1,8 @@
 package com.autosos.yd.view;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -306,9 +308,30 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         Log.e("test", "11111111");
     }
     public void test(View v){
-        Intent i =new Intent(MainActivity.this,testActivity.class);
-        startActivity(i);
+        final String items[]={"男","女"};
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);  //先得到构造器
+        builder.setTitle("提示"); //设置标题
+        builder.setIcon(R.drawable.icon19);//设置图标，图片id即可
+        builder.setSingleChoiceItems(items,0,new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //dialog.dismiss();
+                Toast.makeText(MainActivity.this, items[which], Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                Toast.makeText(MainActivity.this, "确定", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.create().show();
+
+//        Intent i =new Intent(MainActivity.this,testActivity.class);
+//        startActivity(i);
     }
+
     public void test2(View v){
         PushManager.getInstance().initialize(SplashActivity.splashActivity);
     }

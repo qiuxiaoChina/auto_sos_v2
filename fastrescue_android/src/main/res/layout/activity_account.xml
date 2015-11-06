@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="#f8f8f8"
     android:id="@+id/account_main"
     android:layout_width="match_parent"
@@ -114,6 +113,14 @@
 
         </LinearLayout>
 
+    <View
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activityBackground"
+        android:visibility="visible" />
 
-
-</LinearLayout>
+    <include
+        layout="@layout/progressbar_layout"
+        android:visibility="visible" />
+</RelativeLayout>

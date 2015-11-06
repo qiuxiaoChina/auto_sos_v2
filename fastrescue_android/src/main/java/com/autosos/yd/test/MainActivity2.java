@@ -25,16 +25,16 @@ public class MainActivity2 extends Activity {
 			@Override
 			public View getView(int position, View convertView, ViewGroup parent) {
 				//*******************************************************************************
-				//第一种方法
+				//
 				View inflate = getLayoutInflater().inflate(R.layout.items2, null);
 				ListView listView = (ListView) inflate.findViewById(R.id.expandedListView1);
 				
 				//*******************************************************************************
-				/**第二中方法
-				 * View inflate = getLayoutInflater().inflate(R.layout.items, null);
-				 * ListView listView = (ListView) inflate.findViewById(R.id.items_myListView1);
-				 * mListview.setListViewHeightBasedOnChildren(listView);
-				 */
+//
+//				 * View inflate = getLayoutInflater().inflate(R.layout.items, null);
+//				 * ListView listView = (ListView) inflate.findViewById(R.id.items_myListView1);
+//				 * mListview.setListViewHeightBasedOnChildren(listView);
+//
 				
 				
 				listView.setAdapter(new BaseAdapter() {

@@ -135,6 +135,7 @@ public class UpdateStateServe extends Service implements BDLocationListener {
     public void onReceiveLocation(BDLocation bdLocation) {
         Log.e(TAG, "received!");
 //        cherkGetuiServe();
+        PushManager.getInstance().initialize(SplashActivity.splashActivity);
         if ( UpdateStateServeActive ) {
             if(UpdateChangeTime == 1 || UpdateChangeTime == 2){
                 changeClientTime();

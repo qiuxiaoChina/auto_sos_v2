@@ -3,6 +3,7 @@ package com.autosos.yd.view;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
@@ -65,11 +66,16 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
     private ArrayList<LastestLog> lastestLogs;
     private PullToRefreshListView listView;
     private ObjectBindAdapter<LastestLog> adapter;
+    private View empty;
+    private View progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account);
         tv_balance = (TextView) findViewById(R.id.tv_balance);
+        SharedPreferences sharedPreferences = getSharedPreferences("account",this.MODE_PRIVATE);
+        String sBalance = sharedPreferences.getString("balance","0.0");
+        tv_balance.setText(sBalance);
 //        account_main = (PullToRefreshScrollView) findViewById(R.id.account_main);
 
 //        account_main.setOnRefreshListener(this);
@@ -79,7 +85,8 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
                 R.layout.lastestlog_item, this);
         listView.setAdapter(adapter);
         listView.setOnRefreshListener(this);
-
+        empty = findViewById(R.id.empty);
+        progressBar = findViewById(R.id.progressBar);
         setBill();
         getBill().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -175,9 +182,14 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
         protected void onPostExecute(JSONObject result) {
             super.onPostExecute(result);//前后不知道一不一样，先试试
 //            account_main.onRefreshComplete();
+            progressBar.setVisibility(View.GONE);
             listView.onRefreshComplete();
             balance = new Balance(result);
             balance.getBalance();
+            SharedPreferences sharedPreferences = getSharedPreferences("account", AccountActivity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("banlance",balance.getBalance());
+            editor.commit();
             if (balance.getBalance() == null  ){
                 tv_balance.setText( "0.00");
             }else {
@@ -200,6 +212,7 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
                 }
             }
             setEmptyView();
+            empty.setVisibility(View.GONE);
         }
     }
 

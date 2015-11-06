@@ -1,6 +1,7 @@
 package com.autosos.yd.view;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,14 +41,21 @@ public class StatementActivity extends AutososBackActivity implements ObjectBind
     private PullToRefreshListView listView;
     private ArrayList<Bill> bills;
     private ObjectBindAdapter<Bill> adapter;
+    private View empty;
+    private View progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statement);
         tv_money = (TextView) findViewById(R.id.tv_money);
+        SharedPreferences sharedPreferences = getSharedPreferences("statement", this.MODE_PRIVATE);
+        String mMoney = sharedPreferences.getString("income", "0.0");
+        tv_money.setText(mMoney);
         listView = (PullToRefreshListView) findViewById(R.id.list);
         bills = new ArrayList<>();
+        empty = findViewById(R.id.empty);
+        progressBar = findViewById(R.id.progressBar);
         adapter = new ObjectBindAdapter<>(this, bills,
                 R.layout.statement_item, this);
         listView.setAdapter(adapter);
@@ -134,6 +142,8 @@ public class StatementActivity extends AutososBackActivity implements ObjectBind
         @Override
         protected void onPostExecute(JSONArray result) {
             listView.onRefreshComplete();
+            progressBar.setVisibility(View.GONE);
+            empty.setVisibility(View.GONE);
             bills.clear();
             if (result != null) {
                 if (result.length() > 0) {
@@ -179,6 +189,10 @@ public class StatementActivity extends AutososBackActivity implements ObjectBind
             super.onPostExecute(result);
             if (result != null){
                 balance = new Balance(result);
+                SharedPreferences sharedPreferences = getSharedPreferences("statement", StatementActivity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("income", balance.getAmount());
+                editor.commit();
                 if (balance.getAmount() == null ){
                     tv_money.setText("0.00");
                 }else {

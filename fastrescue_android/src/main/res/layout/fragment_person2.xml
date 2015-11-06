@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".view.PersonneActivity">
 
-
-    <com.handmark.pulltorefresh.library.PullToRefreshScrollView
+    <!--com.handmark.pulltorefresh.library.PullToRefreshScrollView-->
+    <RelativeLayout
 
         android:id="@+id/personne_list"
         android:layout_width="match_parent"
@@ -328,7 +328,7 @@
 
     </LinearLayout>
         </RelativeLayout>
-    </com.handmark.pulltorefresh.library.PullToRefreshScrollView>
+    </RelativeLayout>
     <View
         android:visibility="visible"
         android:id="@+id/empty"

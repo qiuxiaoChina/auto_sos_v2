@@ -12,12 +12,16 @@ import org.json.JSONObject;
 public class MoreDetail implements Identifiable {
     private String title;
     private String fee;
-    private JSONArray tuoche;
+    private JSONObject tuoche;
     public static boolean expand;
 
     public MoreDetail(JSONObject jsonObject) {
         if (jsonObject != null) {
-            this.tuoche =  JSONUtil.getJSONArray(jsonObject, "tuoche");
+            try {
+                this.tuoche =  jsonObject.getJSONObject("tuoche");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             this.title =  JSONUtil.getString(jsonObject, "title");
             this.fee =  JSONUtil.getString(jsonObject, "fee");
 
@@ -30,7 +34,16 @@ public class MoreDetail implements Identifiable {
     public String getTitle(){
         return title;
     }
+    public JSONObject getTuoche(){
+        return tuoche;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setFee(String fee) {
+        this.fee = fee;
+    }
     @Override
     public Long getId() {
         return null;

@@ -121,6 +121,13 @@
             android:theme="@style/CustomTitleTheme" />
 
         <activity
+            android:name=".view.StatementFeeActivity"
+            android:label="@string/label_statement_fee"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
             android:name=".view.AccountOfMonthActivity"
             android:label="@string/label_account_month"
             android:launchMode="singleTask"
