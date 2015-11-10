@@ -190,8 +190,8 @@ public class CatchException implements UncaughtExceptionHandler {
             long timestamp = System.currentTimeMillis();
             String time = formatter.format(new Date());
             String fileName = "crash-" + "Exception" + ".log";
-            String path =  Environment.getExternalStorageDirectory()+"/com.autosos.jd/log/";;
-            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            String path =  Environment.getExternalStorageDirectory()+"/com.autosos.jd/log/";        //存储的路劲
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {          // 判断SD的状态
                 File dir = new File(path);
                 if (!dir.exists()) {
                     dir.mkdirs();
@@ -207,8 +207,9 @@ public class CatchException implements UncaughtExceptionHandler {
         }
     }
 
-    public static String  readLog(String path) {
+    public static String readLog(String path) {
         try {
+            Log.e("test","path === " + path);
             File file = new File(path);
             InputStream in = new FileInputStream(file);
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

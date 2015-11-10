@@ -18,6 +18,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.autosos.yd.test.TestActivity2;
 import com.autosos.yd.util.CherkNetWorkReceiver;
 import com.autosos.yd.util.GetuiSdkMsgReceiver;
 import com.autosos.yd.util.Session;
@@ -87,7 +88,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
 //        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         String fileName = "crash-" + "Exception" + ".log";
         String path =  Environment.getExternalStorageDirectory()+"/com.autosos.jd/log/";
-        File file = new File(path +fileName);
+        File file = new File(path + fileName);
         if(file.exists()) {
             String log = CatchException.readLog(path + fileName);
             CatchException.sendtoServe(MainActivity.this, log);
@@ -308,28 +309,28 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         Log.e("test", "11111111");
     }
     public void test(View v){
-        final String items[]={"男","女"};
-        AlertDialog.Builder builder=new AlertDialog.Builder(this);  //先得到构造器
-        builder.setTitle("提示"); //设置标题
-        builder.setIcon(R.drawable.icon19);//设置图标，图片id即可
-        builder.setSingleChoiceItems(items,0,new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //dialog.dismiss();
-                Toast.makeText(MainActivity.this, items[which], Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                Toast.makeText(MainActivity.this, "确定", Toast.LENGTH_SHORT).show();
-            }
-        });
-        builder.create().show();
+//        final String items[]={"男","女"};
+//        AlertDialog.Builder builder=new AlertDialog.Builder(this);  //先得到构造器
+//        builder.setTitle("提示"); //设置标题
+//        builder.setIcon(R.drawable.icon19);//设置图标，图片id即可
+//        builder.setSingleChoiceItems(items,0,new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                //dialog.dismiss();
+//                Toast.makeText(MainActivity.this, items[which], Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        builder.setPositiveButton("确定",new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.dismiss();
+//                Toast.makeText(MainActivity.this, "确定", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//        builder.create().show();
 
-//        Intent i =new Intent(MainActivity.this,testActivity.class);
-//        startActivity(i);
+        Intent i =new Intent(MainActivity.this,TestActivity2.class);
+        startActivity(i);
     }
 
     public void test2(View v){

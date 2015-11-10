@@ -278,8 +278,7 @@ public class SplashActivity extends Activity {
                 Intent i = new Intent(com.autosos.yd.view.SplashActivity.this, LoginActivity.class);
                 com.autosos.yd.view.SplashActivity.this.startActivity(i);
                 com.autosos.yd.view.SplashActivity.this.finish();
-                com.autosos.yd.view.SplashActivity.this.overridePendingTransition(
-                        R.anim.fade_in, R.anim.fade_out);
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         }, 2000);
     }

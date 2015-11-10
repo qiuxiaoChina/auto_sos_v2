@@ -135,6 +135,12 @@
             android:theme="@style/CustomTitleTheme" />
 
         <activity
+            android:name=".test.TestActivity2"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
             android:name=".view.BillDetailsActivity"
             android:label="@string/label_account_month"
             android:launchMode="singleTask"

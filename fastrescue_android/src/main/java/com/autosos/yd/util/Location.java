@@ -184,7 +184,7 @@ public class Location {
             if(!file.exists()){
                 file.createNewFile();
             }
-            BufferedWriter fileOutputStream  =    new BufferedWriter(new OutputStreamWriter(
+            BufferedWriter fileOutputStream  =  new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream(file, true)));
             if (fileOutputStream != null) {
                 long now_time = System.currentTimeMillis() / 1000;
