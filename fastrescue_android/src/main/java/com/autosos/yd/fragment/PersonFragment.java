@@ -18,6 +18,7 @@ import com.autosos.yd.view.AccountActivity;
 import com.autosos.yd.view.LoginActivity;
 import com.autosos.yd.view.PasswordActivity;
 import com.autosos.yd.view.SetingActivity;
+import com.autosos.yd.view.SettingActivity2;
 import com.autosos.yd.view.StatementActivity;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshScrollView;
@@ -51,6 +52,7 @@ public class PersonFragment extends Fragment {
     private RoundedImageView avatarView;
     private com.autosos.yd.model.Person person = null;
     private PullToRefreshScrollView scrollView;
+    private String mobile;
 
     public static PersonFragment newInstance() {
         return new PersonFragment();
@@ -73,7 +75,7 @@ public class PersonFragment extends Fragment {
 //        phoneView = (TextView) rootView.findViewById(R.id.phone);
         countView = (TextView) rootView.findViewById(R.id.count);
         rateView = (TextView) rootView.findViewById(R.id.rate);
-        seting = (RelativeLayout) rootView.findViewById(R.id.seting);
+        seting = (RelativeLayout) rootView.findViewById(R.id.setting);
         account = (RelativeLayout) rootView.findViewById(R.id.account);
         ratingbarView =(RatingBar) rootView.findViewById(R.id.ratingbar_person);
         avatarView = (RoundedImageView) rootView.findViewById(R.id.user_avatar);
@@ -83,7 +85,8 @@ public class PersonFragment extends Fragment {
         seting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), PasswordActivity.class);
+                Intent intent = new Intent(getActivity(), SettingActivity2.class);
+                intent.putExtra("mobile",mobile);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.activity_anim_default);
             }
@@ -108,7 +111,7 @@ public class PersonFragment extends Fragment {
 
 
         if(!Constants.DEBUG && false)
-            rootView.findViewById(R.id.seting).setVisibility(View.GONE);
+            rootView.findViewById(R.id.setting).setVisibility(View.GONE);
 //        scrollView.setOnRefreshListener(this);
         return rootView;
     }
@@ -169,6 +172,7 @@ public class PersonFragment extends Fragment {
                 name_person.setText(person.getRealname());
                 nameView.setText(person.getCompany_name());
                 nameView.setTextColor(0x7fffffff);
+                mobile = person.getMobile();
 //                phoneView.setText(person.getMobile());
                 countView.setText(String.valueOf(person.getAccepted_count()));
                 rateView.setText(String.valueOf(person.getAverage_rate()));

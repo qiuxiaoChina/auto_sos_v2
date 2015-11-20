@@ -175,7 +175,7 @@ public class MapDragActivity extends Activity implements BDLocationListener{
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
         if (client.isStarted()) {
-                Log.e(TAG, "BDLocation  " + bdLocation.toString() + "***********************" + "la:"
+                Log.e("maps", "BDLocation  " + bdLocation.toString() + "***********************" + "la:"
                         + bdLocation.getLatitude() + "**log" + bdLocation.getLongitude() + "***point:" + point++);
                 if (bdLocation.getLocType() == 61 || bdLocation.getLocType() == 65 || bdLocation.getLocType() == 161) {
                     Log.e(TAG, "1111111111111111111111111111111111");

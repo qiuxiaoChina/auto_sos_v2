@@ -155,6 +155,20 @@
             android:theme="@style/CustomTitleTheme" />
 
         <activity
+            android:name=".view.MobileActivity"
+            android:label="@string/label_seting_mobile"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.SettingActivity2"
+            android:label="@string/label_seting"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
             android:name=".view.StatementActivity"
             android:label="@string/label_account_statement"
             android:launchMode="singleTask"

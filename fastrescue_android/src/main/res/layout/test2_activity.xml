@@ -5,42 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv"
-        android:text="文件内容"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
     <Button
-        android:text="写文件"
-        android:layout_marginTop="30dp"
-        android:onClick="write"
+        android:id="@+id/test"
+        android:onClick="ontest"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <Button
-        android:text="读文件"
-        android:onClick="read"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:text="删文件"
-        android:onClick="delete"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <Button
-        android:text="BufferedWriter创建文件"
-        android:onClick="creat"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-    <Button
-        android:text="BufferedWriter创建文件"
-        android:onClick="creat"
-        android:layout_marginTop="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 </LinearLayout>

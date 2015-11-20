@@ -94,6 +94,7 @@
     <orderEntry type="library" exported="" name="myjson-1.7.1" level="project" />
     <orderEntry type="library" exported="" name="alipayutdid" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.1" level="project" />
     <orderEntry type="library" exported="" name="libpingpp" level="project" />
     <orderEntry type="library" exported="" name="httpmime-4.2.4" level="project" />
     <orderEntry type="library" exported="" name="locSDK_5.2" level="project" />

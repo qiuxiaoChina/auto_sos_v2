@@ -206,8 +206,6 @@ public class AccountActivity extends AutososBackActivity implements PullToRefres
                         LastestLog lastestLog = new LastestLog(jsonArray.optJSONObject(i));
                         lastestLogs.add(lastestLog);
                     }
-
-
                     adapter.notifyDataSetChanged();
                 }
             }

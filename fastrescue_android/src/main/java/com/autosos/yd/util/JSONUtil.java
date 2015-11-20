@@ -145,9 +145,10 @@ public class JSONUtil {
 
     private static void auth(Context context,AbstractHttpMessage ahm) {
         Session.getInstance().cherkSession(context);
-        String mtype = android.os.Build.MODEL;
+        String mtype = android.os.Build.MODEL;      //手机型号
         TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
         String DEVICE_ID = tm.getDeviceId();
+        Log.e("imeid","DEVICE_ID === " + DEVICE_ID);
         User u = Session.getInstance().getCurrentUser(context);
         int sdkversion = Integer.valueOf(Build.VERSION.SDK_INT);
         String androidversion = Utils.getAndroidVersion(sdkversion);

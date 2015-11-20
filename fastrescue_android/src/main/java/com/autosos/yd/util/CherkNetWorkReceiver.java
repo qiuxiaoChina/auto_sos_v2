@@ -42,8 +42,8 @@ public class CherkNetWorkReceiver extends BroadcastReceiver {
             for (ActivityManager.RunningServiceInfo serinfo : mserviceTasks)
             {
                // Log.e("TaskServerInfo", serinfo.process+"("+serinfo.pid+")" + serinfo.clientPackage +"--"+serinfo.lastActivityTime);
-                if("com.autosos.yd".equals(serinfo.process) || //在这里判断服务是否存活，还未找到方法
-                        true){
+                if("com.autosos.yd".equals(serinfo.process) || true){           //在这里判断服务是否存活，还未找到方法
+
                     serveractive = true;
                 }
             }

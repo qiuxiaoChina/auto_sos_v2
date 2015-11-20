@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         filter=new IntentFilter();
         filter.addAction(Intent.ACTION_TIME_TICK);
         filter.addAction(Intent.ACTION_SCREEN_ON);
-        filter.addAction(Intent.ACTION_SCREEN_OFF);
+            filter.addAction(Intent.ACTION_SCREEN_OFF);
         filter.addAction(Intent.ACTION_USER_PRESENT);
 
         registerReceiver(cherkNetWorkReceiver, filter);
@@ -166,14 +166,10 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
             tabHost = (TabHost) findViewById(android.R.id.tabhost);
             tabHost.setOnTabChangedListener(this);
             tabHost.setup();
-            tabHost.addTab(tabHost.newTabSpec("workFragment").setIndicator(tab1)
-                    .setContent(R.id.tab1));
-            tabHost.addTab(tabHost.newTabSpec("recordsFragment").setIndicator(tab2)
-                    .setContent(R.id.tab2));
-            tabHost.addTab(tabHost.newTabSpec("personFragment").setIndicator(tab3)
-                    .setContent(R.id.tab3));
-            tabHost.addTab(tabHost.newTabSpec("moreFragment").setIndicator(tab4)
-                    .setContent(R.id.tab4));
+            tabHost.addTab(tabHost.newTabSpec("workFragment").setIndicator(tab1).setContent(R.id.tab1));
+            tabHost.addTab(tabHost.newTabSpec("recordsFragment").setIndicator(tab2).setContent(R.id.tab2));
+            tabHost.addTab(tabHost.newTabSpec("personFragment").setIndicator(tab3).setContent(R.id.tab3));
+            tabHost.addTab(tabHost.newTabSpec("moreFragment").setIndicator(tab4).setContent(R.id.tab4));
     }
 
     public void selectChange(int position) {
@@ -187,23 +183,15 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
             return;
         }
         FragmentManager fm = getSupportFragmentManager();
-         workFragment = (WorkFragment) fm
-                .findFragmentByTag("workFragment");
-        RecordsFragment orderFragment = (RecordsFragment) fm
-                .findFragmentByTag("recordsFragment");
-        PersonFragment messageFragment = (PersonFragment) fm
-                .findFragmentByTag("personFragment");
-        MoreFragment settingFragment = (MoreFragment) fm
-                .findFragmentByTag("moreFragment");
+        workFragment = (WorkFragment) fm.findFragmentByTag("workFragment");
+        RecordsFragment orderFragment = (RecordsFragment) fm.findFragmentByTag("recordsFragment");
+        PersonFragment messageFragment = (PersonFragment) fm.findFragmentByTag("personFragment");
+        MoreFragment settingFragment = (MoreFragment) fm.findFragmentByTag("moreFragment");
         FragmentTransaction ft = fm.beginTransaction();
-        if (workFragment != null && !workFragment.isHidden())
-            ft.hide(workFragment);
-        if (orderFragment != null && !orderFragment.isHidden())
-            ft.hide(orderFragment);
-        if (messageFragment != null && !messageFragment.isHidden())
-            ft.hide(messageFragment);
-        if (settingFragment != null && !settingFragment.isHidden())
-            ft.hide(settingFragment);
+        if (workFragment != null && !workFragment.isHidden())ft.hide(workFragment);
+        if (orderFragment != null && !orderFragment.isHidden())ft.hide(orderFragment);
+        if (messageFragment != null && !messageFragment.isHidden())ft.hide(messageFragment);
+        if (settingFragment != null && !settingFragment.isHidden())ft.hide(settingFragment);
         switch (position) {
             case 0:
                 tabView1.setTextColor(getResources().getColor(R.color.color_blue2));
@@ -246,6 +234,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         }
         ft.commitAllowingStateLoss();
     }
+
     @Override
     public void onTabChanged(String tabId) {
         if (!JSONUtil.isEmpty(tabId)) {
