@@ -55,17 +55,18 @@
             android:textSize="16sp" />
 
         <TextView
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@+id/coner"
             android:id="@+id/tv_number"
-            android:layout_marginLeft="25dp"
             android:textColor="#aaa"
             android:textSize="15sp"
-            android:layout_toRightOf="@+id/tv_mobile"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="5dp"
             android:text="18815289611"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <ImageView
+            android:id="@+id/coner"
             android:layout_alignParentRight="true"
             android:src="@drawable/icon_arrow"
             android:layout_width="8dp"

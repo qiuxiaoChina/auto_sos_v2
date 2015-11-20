@@ -19,7 +19,7 @@ import com.autosos.yd.R;
  * 参数 endStrRid   倒计时结束后，按钮对应显示的文字
  */
 public class MyCountTimer extends CountDownTimer {
-    public static final int TIME_COUNT = 10000;//时间防止从119s开始显示（以倒计时120s为例子）
+    public static final int TIME_COUNT = 60000;//时间防止从119s开始显示（以倒计时120s为例子）
     private TextView btn;
     private int endStrRid;
     private int normalColor, timingColor;//未计时的文字颜色，计时期间的文字颜色

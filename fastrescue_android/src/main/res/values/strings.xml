@@ -103,7 +103,7 @@
     <string name="label_draw_cash">提现</string>
     <string name="label_account_month">月账单</string>
     <string name="label_statement_month">月结算报表</string>
-    <string name="label_seting_mobile">修改手机</string>
+    <string name="label_seting_mobile">修改手机号</string>
     <string name="txt_getMsgCode_validate">重新发送</string>
     <string name="label_account_statement">结算报表</string>
     <string name="label_seting_password">修改密码</string>
