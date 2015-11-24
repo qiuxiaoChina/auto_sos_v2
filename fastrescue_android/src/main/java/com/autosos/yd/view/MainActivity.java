@@ -102,6 +102,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         */
         lastPosition = -1;
         setContentView(R.layout.bottom_buttons);
+
         tabsInit();
 
     }

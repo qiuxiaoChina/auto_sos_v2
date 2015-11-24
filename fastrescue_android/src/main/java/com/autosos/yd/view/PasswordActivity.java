@@ -145,19 +145,19 @@ public class PasswordActivity extends AutososBackActivity implements View.OnClic
         super.onBackPressed();
         overridePendingTransition(0, R.anim.slide_out_right);
     }
- private void exit(){
-     findViewById(R.id.progressBar).setVisibility(View.GONE);
-     //Toast.makeText(PasswordActivity.this,R.string.msg_psd_succeed,Toast.LENGTH_LONG).show();
-     Intent intent = new Intent(PasswordActivity.this, LoginActivity.class);
-     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-     intent.putExtra("logout", true);
-     Intent stopIntent = new Intent(PasswordActivity.this, UpdateStateServe.class);
-     stopIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-     stopService(stopIntent);
-     startActivity(intent);
-     overridePendingTransition(R.anim.slide_in_up, R.anim.activity_anim_default);
-     //setResult(RESULT_OK, intent);
-     MainActivity.Mainactivity.finish();
-     finish();
- }
+     private void exit(){
+         findViewById(R.id.progressBar).setVisibility(View.GONE);
+         //Toast.makeText(PasswordActivity.this,R.string.msg_psd_succeed,Toast.LENGTH_LONG).show();
+         Intent intent = new Intent(PasswordActivity.this, LoginActivity.class);
+         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+         intent.putExtra("logout", true);
+         Intent stopIntent = new Intent(PasswordActivity.this, UpdateStateServe.class);
+         stopIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+         stopService(stopIntent);
+         startActivity(intent);
+         overridePendingTransition(R.anim.slide_in_up, R.anim.activity_anim_default);
+         //setResult(RESULT_OK, intent);
+         MainActivity.Mainactivity.finish();
+         finish();
+     }
 }

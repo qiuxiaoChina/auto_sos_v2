@@ -55,7 +55,7 @@ public class MyCountTimer extends CountDownTimer {
 //        }
         btn.setTextColor(timingColor);
         btn.setEnabled(false);
-        btn.setText("重新发送 " + millisUntilFinished / 1000);
+        btn.setText("已发送 " + millisUntilFinished / 1000);
     }
 
     @Override

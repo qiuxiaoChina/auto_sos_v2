@@ -23,7 +23,7 @@
 
         <EditText
             android:layout_weight="1"
-            android:id="@+id/old_password"
+            android:id="@+id/Edit_number"
             android:layout_width="120dp"
             android:layout_height="40dp"
             android:background="#f4f4f3"
@@ -54,7 +54,7 @@
         android:layout_marginRight="22dp"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_alignBottom="@+id/old_password"
+        android:layout_alignBottom="@+id/Edit_number"
         android:background="@color/color_line" />
 
     <LinearLayout
@@ -71,7 +71,7 @@
             android:layout_height="wrap_content" />
 
         <EditText
-            android:id="@+id/new_password"
+            android:id="@+id/Edit_code"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
@@ -90,30 +90,30 @@
         android:layout_marginRight="22dp"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:layout_alignBottom="@+id/new_password"
+        android:layout_alignBottom="@+id/Edit_code"
         android:background="@color/color_line" />
 
 
-    <View
-        android:layout_marginLeft="22dp"
-        android:layout_marginRight="22dp"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignBottom="@+id/input"
-        android:background="@color/color_line" />
     <Button
+        android:id="@+id/Button_modification"
         android:textColor="@color/color_white"
-        android:onClick="changePassword"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:text="确认修改"
-        android:background="@drawable/bg_shape_second_green"
+        android:background="@drawable/bg_shape_second_grav"
         />
 
 </LinearLayout>
+    <View
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/activityBackground"
+        android:visibility="gone" />
+
     <include
         layout="@layout/progressbar_layout"
         android:visibility="gone" />

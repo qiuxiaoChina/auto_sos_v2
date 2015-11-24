@@ -189,11 +189,6 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
         ImageView imageView;
     }
 
-
-
-
-
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         JsonPic jsonPic = (JsonPic) parent.getAdapter().getItem(position);

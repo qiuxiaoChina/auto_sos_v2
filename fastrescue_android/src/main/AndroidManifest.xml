@@ -3,6 +3,11 @@
     package="com.autosos.yd"
     android:versionCode="115"
     android:versionName="1.1.7">
+
+
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <!-- 接收消息 -->
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -157,13 +162,19 @@
         <activity
             android:name=".view.MobileActivity"
             android:label="@string/label_seting_mobile"
-            android:launchMode="singleTask"
+            android:launchMode="standard"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTitleTheme" />
 
         <activity
             android:name=".view.SettingActivity2"
             android:label="@string/label_seting"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.CheckActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTitleTheme" />
