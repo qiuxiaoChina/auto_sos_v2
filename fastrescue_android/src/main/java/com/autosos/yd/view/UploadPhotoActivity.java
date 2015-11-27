@@ -108,6 +108,7 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
         Point point = JSONUtil.getDeviceSize(this);
         imageSize = Math.round((point.x - 44 * dm.density) / 3);
         int imagesHeight = Math.round(point.x + 5 * dm.density);
+        Log.e("upload","imagesHeight === "+ imagesHeight);
         GridView imagesView = (GridView) findViewById(R.id.imagesView);
         View emptyView = findViewById(R.id.empty_view);
         imagesLayout = findViewById(R.id.images_layout);
@@ -116,7 +117,9 @@ public class UploadPhotoActivity extends AutososBackActivity implements ObjectBi
         jsonPics = new ArrayList<>();
         emptyPic = new JsonPic(new JSONObject());
         adapter = new ObjectBindAdapter<>(this, photos, R.layout.post_image_item, this);
+        Log.e("upload","imagesLayout.getLayoutParams().height === "+ imagesLayout.getLayoutParams().height);
         imagesLayout.getLayoutParams().height = imagesHeight;
+
         imagesView.setEmptyView(emptyView);
         imagesView.setOnItemClickListener(this);
         imagesView.setAdapter(adapter);

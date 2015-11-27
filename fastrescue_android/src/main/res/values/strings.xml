@@ -101,6 +101,7 @@
     <string name="label_account">账户余额</string>
     <string name="label_statement_fee">费用详情</string>
     <string name="label_draw_cash">提现</string>
+    <string name="label_fill_code">填写验证码</string>
     <string name="label_account_month">月账单</string>
     <string name="label_statement_month">月结算报表</string>
     <string name="label_seting_mobile">修改手机号</string>

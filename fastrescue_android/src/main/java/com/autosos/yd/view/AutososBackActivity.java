@@ -68,6 +68,11 @@ public class AutososBackActivity extends Activity {
         RelateiveLayout1.setBackgroundResource(color);
     }
 
+//    public void setBackgroundVisibal(){
+//        RelativeLayout RelateiveLayout1 = (RelativeLayout) findViewById(R.id.RelateiveLayout1);
+//        RelateiveLayout1.setVisibility(View.GONE);
+//    }
+
     public void setLineGone(){
         View line = findViewById(R.id.line);
         line.setVisibility(View.GONE);

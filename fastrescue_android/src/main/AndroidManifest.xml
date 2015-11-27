@@ -177,7 +177,7 @@
             android:name=".view.CheckActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/CustomTitleTheme" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <activity
             android:name=".view.StatementActivity"
@@ -189,6 +189,13 @@
         <activity
             android:name=".view.DrawCashActivity"
             android:label="@string/label_draw_cash"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/CustomTitleTheme" />
+
+        <activity
+            android:name=".view.FillCodeActivity"
+            android:label="@string/label_fill_code"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/CustomTitleTheme" />

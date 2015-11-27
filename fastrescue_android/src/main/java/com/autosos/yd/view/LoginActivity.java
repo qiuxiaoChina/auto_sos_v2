@@ -73,12 +73,13 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private boolean uname_enter;
     private boolean psw_enter;
     private Button loginView;
+    private String code;
     private GetuiSdkMsgReceiver broadcastReceiver = new GetuiSdkMsgReceiver();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // PushManager.getInstance().initialize(this);
-
+        code = null;
         CatchException catchException = CatchException.getInstance();
         catchException.init(getApplicationContext());
 
@@ -99,8 +100,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             UpdateStateServe.UpdateStateServeActive = false;
             loginView = (Button) findViewById(R.id.login);
             progressBar = findViewById(R.id.progressBar);
+            code = getIntent().getStringExtra("code");
+            String username = getIntent().getStringExtra("username");
+            String password = getIntent().getStringExtra("password");
             usernameView = (EditText) findViewById(R.id.username);
             passwordView = (EditText) findViewById(R.id.password);
+            Log.e("log", "code === " + code);
+            Log.e("log", "username === " + username);
+            Log.e("log", "password === " + password);
+//            if (TextUtils.isEmpty(code) && TextUtils.isEmpty(username) && TextUtils.isEmpty(password)){
+//                usernameView.setText(username);
+//                usernameView.setText(password);
+//            }
             TextView telephoneView = (TextView) findViewById(R.id.telephone);
             telephoneView.setText(Html.fromHtml(getString(R.string.label_telephone)));
             telephoneView.setOnClickListener(this);
@@ -159,6 +170,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 }
             });
         }
+        if (getIntent().getBooleanExtra("fillcode",false)){
+            login();
+        }
+
     }
      protected void onSaveContent(){
         super.onStop();
@@ -170,6 +185,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         editor.commit();
     }
     public void onLogin(View view) {
+        login();
+    }
+
+    public void login(){
         if (this.getCurrentFocus() != null) {
             ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                     .hideSoftInputFromWindow(this.getCurrentFocus()
@@ -178,6 +197,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
         String username = usernameView.getText().toString();
         String password = passwordView.getText().toString();
+        if (getIntent().getBooleanExtra("fillcode",false)){
+            username = getIntent().getStringExtra("username");
+            password = getIntent().getStringExtra("password");
+        }
+
         if (TextUtils.isEmpty(username)) {
             Toast.makeText(this, R.string.msg_username_empty, Toast.LENGTH_SHORT).show();
         } else if (TextUtils.isEmpty(password)) {
@@ -193,6 +217,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             Map<String, Object> map = new HashMap<>();
             map.put("username", username);
             map.put("password", password);
+            map.put("sms_code", code);
+            Log.e("code", "code === " + code);
+            Log.e("code", "username === " + username);
+            Log.e("code", "password === " + password);
             String clientId = getSharedPreferences(Constants.PREF_FILE,
                     Context.MODE_PRIVATE).getString("clientid", null);
             if(clientId == null){
@@ -204,7 +232,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             }
             if (clientId != null) {
                 map.put("getui_cid", clientId);
-                  Log.e(TAG, "clientId   :" + clientId);
+                Log.e(TAG, "clientId   :" + clientId);
             }
             new NewHttpPostTask(this, new OnHttpRequestListener() {
                 @Override
@@ -220,8 +248,26 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 showMain(null);
                                 onSaveContent();
                             } else {
-                                String msg = jsonObject.optString("msg");
-                                Toast.makeText(com.autosos.yd.view.LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                if (jsonObject.optInt("code") == 9 || jsonObject.optInt("code") == 10 ){
+                                    String username = usernameView.getText().toString();
+                                    String password = passwordView.getText().toString();
+                                    Intent intent = new Intent(LoginActivity.this,CheckActivity.class);
+                                    intent.putExtra("mobile",jsonObject.optString("mobile"));
+                                    Log.e("log", "mobile === " + jsonObject.optString("mobile"));
+                                    Log.e("log","username === "+username);
+                                    Log.e("log","password === "+password);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("password", password);
+                                    startActivity(intent);
+                                    if (jsonObject.optInt("code") == 10){
+                                        Toast.makeText(com.autosos.yd.view.LoginActivity.this, "短信验证码不正确!", Toast.LENGTH_SHORT).show();
+                                    }
+                                    finish();
+                                }else {
+                                    String msg = jsonObject.optString("msg");
+                                    Toast.makeText(com.autosos.yd.view.LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                }
+
                             }
                         }
 

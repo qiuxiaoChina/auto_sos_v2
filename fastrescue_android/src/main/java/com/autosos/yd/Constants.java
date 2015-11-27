@@ -65,6 +65,7 @@ public class Constants {
     public static  String GET_ORDER_FEE= HOST + "v1/settle-list/order-fee-detail/%s";     //结算报表详细
     public static  String GET_SEND_CODE = HOST + "v1/user/change-mobile-verify-code";    //发送修改手机号码验证码
     public static  String GET_CHANGE_NUMBER = HOST + "v1/user/change-mobile";               //修改手机号码
+    public static  String GET_AUTH_NUMBER = HOST + "v1/auth/device-verify-code";               //验证手机号
 
 
     public static final String USER_FILE = "user.json";                     //存放用户信息（账号密码以及token）
