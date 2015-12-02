@@ -260,7 +260,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                     intent.putExtra("password", password);
                                     startActivity(intent);
                                     if (jsonObject.optInt("code") == 10){
-                                        Toast.makeText(com.autosos.yd.view.LoginActivity.this, "短信验证码不正确!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(com.autosos.yd.view.LoginActivity.this, "", Toast.LENGTH_SHORT).show();
                                     }
                                     finish();
                                 }else {

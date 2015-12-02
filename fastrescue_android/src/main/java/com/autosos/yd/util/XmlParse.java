@@ -19,16 +19,15 @@ import javax.xml.parsers.DocumentBuilderFactory;
  * Created by Administrator on 2015/7/29.
  */
 public class XmlParse {
-    public static Version parseXml(InputStream inStream) throws Exception
-    {
+    public static Version parseXml(InputStream inStream) throws Exception{
+
         Version version =new Version();
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(inStream);
         Element root = document.getDocumentElement();
         NodeList childNodes = root.getChildNodes();
-        for (int j = 0; j < childNodes.getLength(); j++)
-        {
+        for (int j = 0; j < childNodes.getLength(); j++){
             Node childNode = (Node) childNodes.item(j);
             if (childNode.getNodeType() == Node.ELEMENT_NODE) {
                 Element childElement = (Element) childNode;

@@ -1,189 +1,211 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:text="@string/label_get_fee"
-        android:textColor="#ff2726"
-        android:textSize="@dimen/large_text_size" />
-    <TextView
-        android:layout_marginTop="4dp"
-        android:visibility="visible"
-        android:id="@+id/status2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:text="收取现金之后需帮车主待支付"
-        android:textColor="@color/color_black1"
-        android:textSize="15sp" />
-
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_weight="1"
-            android:background="@color/color_line" />
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/type"
+            android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:text="@string/label_service_type1"
-            android:textColor="@color/color_gray"
-            android:textSize="@dimen/medium_text_size2" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="@string/label_get_fee"
+            android:textColor="#ff2726"
+            android:textSize="@dimen/large_text_size" />
+        <TextView
+            android:layout_marginTop="4dp"
+            android:visibility="visible"
+            android:id="@+id/status2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="收取现金之后需帮车主待支付"
+            android:textColor="@color/color_black1"
+            android:textSize="15sp" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0.5dp"
-            android:layout_weight="1"
-            android:background="@color/color_line" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_weight="1"
+                android:background="@color/color_line" />
+
+            <TextView
+                android:id="@+id/type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:text="@string/label_service_type1"
+                android:textColor="@color/color_gray"
+                android:textSize="@dimen/medium_text_size2" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0.5dp"
+                android:layout_weight="1"
+                android:background="@color/color_line" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/cost_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="0"
+                android:textColor="@color/color_orange"
+                android:textSize="@dimen/xxxx_huge_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/label_rmb"
+                android:layout_toRightOf="@+id/cost"
+                android:layout_alignBottom="@+id/cost"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="10dp"
+                android:textColor="@color/color_black1"
+                android:textSize="@dimen/medium_text_size3" />
+        </RelativeLayout>
+        <LinearLayout
+            android:id="@+id/descrip"
+            android:visibility="visible"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="该车主免费拖车距离为"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/free_distance"
+                    android:textColor="@color/color_orange"
+                    android:text="50km"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="以上收取的费用为超出后的自费部分"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="8dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="车主如有疑问请让其咨询"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/phonenumber"
+                    android:textColor="@color/color_orange"
+                    android:text=""
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/take_photo"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_second_btn_white2"
+            android:gravity="center"
+            android:onClick="takePhoto"
+            android:text="@string/label_upload_photo2"
+            android:textColor="@color/color_gray5"
+            android:textSize="@dimen/medium_text_size1" />
+
+        <Button
+            android:id="@+id/payBtn"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/bg_shape_second_green"
+            android:gravity="center"
+            android:onClick="onThirdPay"
+            android:text="@string/label_pay_second"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/medium_text_size1" />
+
+
+
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/cost_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/cost"
+        <View
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#b2000000"
+            android:visibility="gone" />
+
+        <include
+            android:layout_marginTop="160dp"
+            layout="@layout/progressbar_layout"
+            android:id="@+id/include_pay"
+            android:visibility="visible"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="0"
-            android:textColor="@color/color_orange"
-            android:textSize="@dimen/xxxx_huge_text_size" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/label_rmb"
-            android:layout_toRightOf="@+id/cost"
-            android:layout_alignBottom="@+id/cost"
-            android:layout_marginLeft="3dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="@color/color_black1"
-            android:textSize="@dimen/medium_text_size3" />
+            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
-   <LinearLayout
-       android:id="@+id/descrip"
-       android:visibility="visible"
-       android:orientation="vertical"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
 
-       <LinearLayout
-           android:layout_marginTop="10dp"
-           android:gravity="center_horizontal"
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-
-           <TextView
-               android:text="该车主免费拖车距离为"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-
-           <TextView
-               android:id="@+id/free_distance"
-               android:textColor="@color/color_orange"
-               android:text="50km"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-
-       </LinearLayout>
-
-       <LinearLayout
-           android:layout_marginTop="8dp"
-           android:gravity="center_horizontal"
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-
-           <TextView
-               android:text="以上收取的费用为超出后的自费部分"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-
-
-       </LinearLayout>
-
-       <LinearLayout
-           android:layout_marginTop="8dp"
-           android:gravity="center_horizontal"
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content">
-
-           <TextView
-               android:text="车主如有疑问请让其咨询"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-
-           <TextView
-               android:id="@+id/phonenumber"
-               android:textColor="@color/color_orange"
-               android:text=""
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content" />
-
-       </LinearLayout>
-
-   </LinearLayout>
-
-    <Button
-        android:visibility="gone"
-        android:id="@+id/take_photo"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/bg_second_btn_white2"
-        android:gravity="center"
-        android:onClick="takePhoto"
-        android:text="@string/label_upload_photo2"
-        android:textColor="@color/color_gray5"
-        android:textSize="@dimen/medium_text_size1" />
-<RelativeLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <Button
-        android:id="@+id/payBtn"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/bg_shape_second_green"
-        android:gravity="center"
-        android:onClick="onThirdPay"
-        android:text="@string/label_pay_second"
-        android:textColor="@color/color_white"
-        android:textSize="@dimen/medium_text_size1" />
-    <include
-        layout="@layout/progressbar_layout"
-        android:id="@+id/include_pay"
-        android:visibility="visible"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
 </RelativeLayout>
-</LinearLayout>

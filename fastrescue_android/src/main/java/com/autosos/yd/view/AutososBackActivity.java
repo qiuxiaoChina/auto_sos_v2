@@ -17,6 +17,7 @@ public class AutososBackActivity extends Activity {
 
     private int barResID;
     private TextView titleLabel;
+    private View empty_title;
 
     /*
      * (non-Javadoc)
@@ -43,6 +44,7 @@ public class AutososBackActivity extends Activity {
                 barResID != 0 ? barResID : R.layout.bar_title_back);
         titleLabel = (TextView) findViewById(android.R.id.title);
         titleLabel.setText(getTitle());
+        empty_title = findViewById(R.id.empty_title);
         RelativeLayout homeButton = (RelativeLayout) findViewById(android.R.id.home);
         homeButton.setOnClickListener(new View.OnClickListener() {
 
@@ -57,6 +59,13 @@ public class AutososBackActivity extends Activity {
     public void setHomeButtonGone(){
         RelativeLayout homeButton = (RelativeLayout) findViewById(android.R.id.home);
         homeButton.setVisibility(View.GONE);
+    }
+
+    public void setEmptyGo(){
+        empty_title.setVisibility(View.GONE);
+    }
+    public void setEmptyVisibal(){
+        empty_title.setVisibility(View.VISIBLE);
     }
 
     public void setTitleLabelColor(int color){

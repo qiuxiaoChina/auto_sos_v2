@@ -428,6 +428,7 @@
             android:targetActivity="com.pingplusplus.android.PaymentActivity"
             android:exported="true" />
 
+
         <activity
             android:name="com.umeng.update.UpdateDialogActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >

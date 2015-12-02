@@ -97,4 +97,11 @@
         android:layout_alignParentBottom="true"
         android:background="@color/color_line" />
 
+    <View
+        android:id="@+id/empty_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#b2000000"
+        android:visibility="gone" />
+
 </RelativeLayout>

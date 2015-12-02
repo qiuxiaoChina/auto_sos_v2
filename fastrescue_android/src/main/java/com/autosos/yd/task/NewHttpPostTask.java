@@ -12,8 +12,7 @@ import java.util.Map;
 
 import com.autosos.yd.R;
 import com.autosos.yd.entity.ProgressListener;
-import com.autosos.yd.task.*;
-import com.autosos.yd.task.OnHttpRequestListener;
+
 import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.widget.RoundProgressDialog;
 

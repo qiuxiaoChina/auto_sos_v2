@@ -63,6 +63,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
         Point point = com.autosos.yd.util.JSONUtil.getDeviceSize(this);
         DisplayMetrics dm = getResources().getDisplayMetrics();
         size = Math.round((point.x - 8 * dm.density) / 3);
+        Log.e("cho","size === " + size);
         list = new ArrayList<>();
         selectedItems = new ArrayList<>();
         selectedPhotos = new ArrayList<>();
@@ -171,6 +172,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
             holder.takePhotoView = view.findViewById(R.id.take_photo_btn);
             view.getLayoutParams().width = size;
             view.getLayoutParams().height = size;
+
             view.setTag(holder);
         }
         if (com.autosos.yd.util.JSONUtil.isEmpty(item.getMediaPath())) {
@@ -272,7 +274,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
                             MediaStore.Images.Media.HEIGHT,
                             MediaStore.Images.Media.BUCKET_ID},
                     null, null,
-                    MediaStore.Images.Media.DATE_ADDED + " desc");
+                    MediaStore.Images.Media.DATE_ADDED + " desc");          //最后个参数是表示排序，根据添加的信息排序
             int i = 0;
             list.clear();
             list.add(new com.autosos.yd.model.Item(new JSONObject()));
