@@ -220,7 +220,7 @@
     <string name="msg_logout">确定退出登录？</string>
     <string name="msg_callus">400-882-0019</string>
     <string name="msg_pay_success">支付成功</string>
-    <string name="msg_pay_fail">还未打开微信支付，请重试！</string>
+    <string name="msg_pay_fail">支付软件未打开，请重试！</string>
     <string name="msg_pay_cancel">用户取消支付</string>
     <string name="msg_exit_after_change_host">修改地址后请退出应用重新打开</string>
     <string name="msg_auth_error">您的账号在其他地方登陆\n \n请重新登陆!</string>

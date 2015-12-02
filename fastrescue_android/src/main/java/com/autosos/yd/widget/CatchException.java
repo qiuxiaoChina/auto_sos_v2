@@ -79,9 +79,9 @@ public class CatchException implements UncaughtExceptionHandler {
     public void init(Context context) {
         mContext = context;
         //获取系统默认的UncaughtException处理器
-//        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
+        mDefaultHandler = Thread.getDefaultUncaughtExceptionHandler();
         //设置该CrashHandler为程序的默认处理器
-//        Thread.setDefaultUncaughtExceptionHandler(this);
+        Thread.setDefaultUncaughtExceptionHandler(this);
     }
 
     /**
