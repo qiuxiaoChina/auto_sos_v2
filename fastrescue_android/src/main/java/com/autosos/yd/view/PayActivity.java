@@ -189,6 +189,7 @@ public class PayActivity extends AutososBackActivity {
                     if (!jsonObject.isNull("result")) {
                         int result = jsonObject.optInt("result");
                         if (result == 1) {
+                            Log.e("test","ok");
                             String charge = jsonObject.optString("charge");
                             Intent intent = new Intent();
                             String packageName = getPackageName();
@@ -197,6 +198,7 @@ public class PayActivity extends AutososBackActivity {
                             intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
                             startActivityForResult(intent, REQUEST_CODE_PAYMENT);
                         } else if(result == 0){
+                            Log.e("test","not ok");
                             findViewById(R.id.payBtn).setClickable(true);
                             include_payView.setVisibility(View.GONE);
                             String message =jsonObject.optString("info");
