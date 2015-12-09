@@ -110,7 +110,7 @@ public class ChoosePhotoActivity extends com.autosos.yd.view.AutososBackActivity
 
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vPopWindow =null;
-        if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 ){
+        if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 || orderInfo.getService_type() == 5 ){
             Log.e("order",orderInfo.getOrder_type()+"        =================");
             Log.e("order","dadian suggest!");
             vPopWindow  = inflater.inflate(R.layout.pop_window, null);

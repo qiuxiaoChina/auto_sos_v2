@@ -50,39 +50,22 @@ public class GetuiSdkMsgReceiver extends BroadcastReceiver {
                 }
             }
 
-//            if( mylocaluid == null || mylocaluid != mycid ){
-//                Log.e("Up yoyo2","mycid ====  " + mycid + "  ||   " + "mylocaluid ===== "+mylocaluid );
-//                Bundle mybundle = intent.getExtras();
-//                mycid = mybundle.getString("clientid");
-//                context.getSharedPreferences(Constants.PREF_FILE,Context.MODE_PRIVATE).edit().putString("clientid",mycid).commit();
-
-//                Log.e("Up yoyo","------");
-//                String mylocaluid = context.getSharedPreferences(Constants.PREF_FILE, Context.MODE_PRIVATE).getString("clientid", null);
-//                mycid = intent.getExtras().getString("clientid");
-//                if(mylocaluid == null){
-//                    Bundle mybundle = intent.getExtras();
-//                    mycid = mybundle.getString("clientid");
-//                    context.getSharedPreferences(Constants.PREF_FILE,Context.MODE_PRIVATE).edit().putString("clientid",mycid).commit();
-                //注释掉的代码是之前出    现问题offline的代码
-//            }
-
-
-
-
-
         if (Session.getInstance().getCurrentUser(context) == null) {
             return;
         }
+        Log.e("getui","data" );
         Bundle bundle = intent.getExtras();
         switch (bundle.getInt(PushConsts.CMD_ACTION)) {
             case PushConsts.GET_MSG_DATA:
                 byte[] payload = bundle.getByteArray("payload");
                 if (payload != null) {
                     String data = new String(payload);
+                    Log.e("getui","data" + data );
                     try {
                         JSONObject jsonObject = new JSONObject(data);
                         int msg_type = jsonObject.optInt("msg_type");
                         String env = jsonObject.optString("env");
+                        Log.e("getui","env" + env );
                         if (msg_type == 1 && !jsonObject.isNull("data") && (env.equals("dev")&&Constants.DEBUG)||(env.equals("prod")&&!Constants.DEBUG)) {
                             GetuiWrite(data.toString());
                             String title = "e救援服务商";

@@ -153,9 +153,14 @@ public class MusicUtil implements MediaPlayer.OnCompletionListener {
         }
         if(is_order)
             ids [0] = 20;
-        else
-            ids [0] = 21;
-        ids [2] = type -1 + 15;
+        else{ids [0] = 21;
+        }
+        if (type == 5 ){
+            ids [2] = 15;
+        }else {
+            ids [2] = type -1 + 15;
+        }
+
         ids [3] = 19;
         ids [1] = 18;
         playmusic2();

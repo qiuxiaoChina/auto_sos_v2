@@ -113,21 +113,25 @@ public class FinishActivity extends AutososBackActivity {
                 if (recordInfo.getService_type() == 1) {
                     typeView.setText(R.string.label_service_type1);
                     typeImageView.setImageResource(R.drawable.icon_service_type1);
-                    type_image_backgroundView.setBackgroundResource(R.drawable.bg_oval_plue);
-                    findViewById(R.id.telephone).setBackgroundResource(R.drawable.bg_oval_plue);
-                    findViewById(R.id.finish).setBackgroundResource(R.drawable.bg_shape_second_plue);
+//                    type_image_backgroundView.setBackgroundResource(R.drawable.bg_oval_plue);
+//                    findViewById(R.id.telephone).setBackgroundResource(R.drawable.bg_oval_plue);
+//                    findViewById(R.id.finish).setBackgroundResource(R.drawable.bg_shape_second_plue);
                 } else if (recordInfo.getService_type() == 2) {
                     typeView.setText(R.string.label_service_type2);
                     typeImageView.setImageResource(R.drawable.icon_service_type2);
-                    type_image_backgroundView.setBackgroundResource(R.drawable.bg_oval_blue);
-                    findViewById(R.id.telephone).setBackgroundResource(R.drawable.bg_oval_blue);
-                    findViewById(R.id.finish).setBackgroundResource(R.drawable.bg_shape_second_blue);
-                } else {
+//                    type_image_backgroundView.setBackgroundResource(R.drawable.bg_oval_blue);
+//                    findViewById(R.id.telephone).setBackgroundResource(R.drawable.bg_oval_blue);
+//                    findViewById(R.id.finish).setBackgroundResource(R.drawable.bg_shape_second_blue);
+                } else if (recordInfo.getService_type() == 3){
                     typeImageView.setImageResource(R.drawable.icon_service_type3);
-                    type_image_backgroundView.setBackgroundResource(R.drawable.bg_oval_green);
+//                    type_image_backgroundView.setBackgroundResource(R.drawable.bg_oval_green);
                     typeView.setText(R.string.label_service_type3);
-                    findViewById(R.id.telephone).setBackgroundResource(R.drawable.bg_oval_green);
-                    findViewById(R.id.finish).setBackgroundResource(R.drawable.bg_shape_second_green);
+//                    findViewById(R.id.telephone).setBackgroundResource(R.drawable.bg_oval_green);
+//                    findViewById(R.id.finish).setBackgroundResource(R.drawable.bg_shape_second_green);
+                }else {
+                    typeImageView.setImageResource(R.drawable.icon_service_type5);
+//                    type_image_backgroundView.setBackgroundResource(R.drawable.bg_oval_green);
+                    typeView.setText(R.string.label_service_type4);
                 }
                 costView.setText(String.valueOf(recordInfo.getTotal_amount()));
             }

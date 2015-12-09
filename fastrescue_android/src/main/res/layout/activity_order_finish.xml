@@ -226,7 +226,7 @@
                         android:id="@+id/type_image_background"
                         android:layout_width="30dp"
                         android:layout_height="30dp"
-                        android:background="@drawable/bg_oval_plue"
+                        android:background="@drawable/bg_shape_second_green"
                         android:gravity="center">
 
                         <ImageView

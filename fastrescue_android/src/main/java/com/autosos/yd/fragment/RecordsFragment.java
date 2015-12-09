@@ -586,10 +586,13 @@ public class RecordsFragment extends Fragment implements ObjectBindAdapter.ViewB
                 holder.typeView.setBackgroundResource(R.drawable.bg_shape_purle);
             } else if (record.getService_type() == 2) {
                 holder.typeView.setText(R.string.label_service_type2);
-                holder.typeView.setBackgroundResource(R.drawable.bg_shape_blue2);
-            } else {
+                holder.typeView.setBackgroundResource(R.drawable.bg_shape_purle);
+            } else if (record.getService_type() == 3){
                 holder.typeView.setText(R.string.label_service_type3);
-                holder.typeView.setBackgroundResource(R.drawable.bg_shape_green2);
+                holder.typeView.setBackgroundResource(R.drawable.bg_shape_purle);
+            } else {
+                holder.typeView.setText(R.string.label_service_type4);
+                holder.typeView.setBackgroundResource(R.drawable.bg_shape_purle);
             }
     }
 

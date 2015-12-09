@@ -64,8 +64,12 @@ public class TestActivity2 extends Activity implements Thread.UncaughtExceptionH
 
     }
 
-    public void ontest(){
-
+    public void ontest(View view){
+        if(2 < 3){
+            Log.e("name","kuohaonei1");
+            return;
+        }
+        Log.e("name","waibian1");
     }
 
     @Override

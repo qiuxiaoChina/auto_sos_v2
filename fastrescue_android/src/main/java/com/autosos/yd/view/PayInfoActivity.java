@@ -39,8 +39,10 @@ public class PayInfoActivity extends AutososBackActivity {
             typeView.setText(R.string.label_service_type1);
         } else if (orderInfo.getService_type() == 2) {
             typeView.setText(R.string.label_service_type2);
-        } else {
+        } else if (orderInfo.getService_type() == 3){
             typeView.setText(R.string.label_service_type3);
+        } else {
+            typeView.setText(R.string.label_service_type4);
         }
         take_photoView.setVisibility(View.VISIBLE);
         TextView costView = (TextView) findViewById(R.id.cost);

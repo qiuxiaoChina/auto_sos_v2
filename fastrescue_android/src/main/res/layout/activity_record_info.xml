@@ -32,7 +32,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="10dp"
                     android:contentDescription="@string/app_name"
-                    android:background="@drawable/bg_btn_second_green2"
+                    android:background="@drawable/bg_shape_second_green"
                     android:onClick="onCall"
                     android:src="@drawable/icon_telephone_white" />
 
@@ -78,6 +78,7 @@
             </RelativeLayout>
 
             <LinearLayout
+
                 android:gravity="center_vertical"
                 android:paddingLeft="23dp"
                 android:layout_marginTop="15dp"
@@ -86,10 +87,10 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
+                    android:background="@drawable/bg_shape_second_green"
                     android:id="@+id/type_image_background"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/bg_oval_plue"
                     android:gravity="center">
 
                     <ImageView
@@ -221,7 +222,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginTop="40dp"
-                    android:background="@drawable/bg_shape_second_green3"
+                    android:background="@drawable/button_green"
                     android:gravity="center"
                     android:onClick="onViewPhotos"
                     android:text="@string/label_view_photos"

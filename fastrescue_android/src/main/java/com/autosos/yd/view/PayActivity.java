@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -36,7 +38,10 @@ import com.unionpay.UPPayAssistEx;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import com.autosos.yd.Constants;
@@ -65,7 +70,7 @@ public class PayActivity extends AutososBackActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
         bWX = false;
-        bZFB = false;
+        bZFB = true;
         empty = findViewById(R.id.empty);
         orderInfo = (OrderInfo) getIntent().getSerializableExtra("OrderInfo");
         boolean other_free = getIntent().getBooleanExtra("other_free", false);
@@ -87,14 +92,17 @@ public class PayActivity extends AutososBackActivity {
             typeView.setText(R.string.label_service_type1);
         } else if (orderInfo.getService_type() == 2) {
             typeView.setText(R.string.label_service_type2);
-        } else {
+        } else if (orderInfo.getService_type() == 3){
             typeView.setText(R.string.label_service_type3);
             if (!other_free){
                 descrip.setVisibility(View.GONE);
             }else {
+                descrip.setVisibility(View.VISIBLE);
                 free_distance.setText(""+ orderInfo.getTuoche_free_km() +getResources().getString(R.string.label_m));
                 phonenumber.setText(orderInfo.getInsurance_name() + orderInfo.getHotline());
             }
+        }else {
+            typeView.setText(R.string.label_service_type4);
         }
         TextView costView = (TextView) findViewById(R.id.cost);
         costView.setText(String.valueOf(orderInfo.getPay_amount()));
@@ -108,69 +116,92 @@ public class PayActivity extends AutososBackActivity {
     }
 
     public void openWX(){
-        include_payView.setVisibility(View.VISIBLE);
-         findViewById(R.id.payBtn).setClickable(false);
-         Map<String, Object> map = new HashMap<>();
-         map.put("channel", "wx");
-         Log.e("Pay",map.toString());
-         new NewHttpPostTask(this, new OnHttpRequestListener() {
-            @Override
-             public void onRequestCompleted(Object obj) {
+        Boolean install = false;
+        PackageManager packageManager = getPackageManager();
+        List<PackageInfo> list = packageManager.getInstalledPackages(0);
+        if(list != null) {
+            for (int i = 0; i < list.size(); i++) {
+                String pn = list.get(i).packageName;
+
+                if (pn.equals("com.tencent.mm")){
+                    install =true;
+                    Log.e("name","xiangtong");
+                }else {
+
+                }
+            }
+        }
+        if (install){
+            include_payView.setVisibility(View.VISIBLE);
+            findViewById(R.id.payBtn).setClickable(false);
+            Map<String, Object> map = new HashMap<>();
+            map.put("channel", "wx");
+            Log.e("Pay",map.toString());
+            new NewHttpPostTask(this, new OnHttpRequestListener() {
+                @Override
+                public void onRequestCompleted(Object obj) {
                     findViewById(R.id.payBtn).setClickable(false);
                     try {
-                     JSONObject jsonObject = new JSONObject(obj.toString());
+                        JSONObject jsonObject = new JSONObject(obj.toString());
                         Log.e("xxxxxxxxxx",jsonObject.toString());
-                      if (!jsonObject.isNull("result")) {
-                      int result = jsonObject.optInt("result");
-                      if (result == 1) {
-                        String charge = jsonObject.optString("charge");
-                        Intent intent = new Intent();
-                        String packageName = getPackageName();
-                        ComponentName componentName = new ComponentName("com.autosos.yd", "com.autosos.yd.wxapi.WXPayEntryActivity");
-                        intent.setComponent(componentName);
-                        intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
-                        startActivityForResult(intent, REQUEST_CODE_PAYMENT);
-                     } else if(result == 0){
-                          findViewById(R.id.payBtn).setClickable(true);
-                          include_payView.setVisibility(View.GONE);
-                          String message =jsonObject.optString("info");
-                          JSONObject msg =new JSONObject(message.toString());
-                          String me = msg.optString("error");
-                          msg = new JSONObject(me.toString());
-                          String m = msg.optString("message");
-                          View v2 = getLayoutInflater().inflate(R.layout.dialog_msg_content,
-                                  null);
-                          dialog = new Dialog(v2.getContext(), R.style.bubble_dialog);
-                          Button tvConfirm = (Button) v2.findViewById(R.id.btn_notice_confirm);
-                          TextView tvMsg = (TextView) v2.findViewById(R.id.tv_notice_msg);
-                          tvMsg.setText(String.format(getString(R.string.msg_pay_error))+"  :"+m.toString());
-                          tvConfirm.setOnClickListener(new View.OnClickListener() {
+                        if (!jsonObject.isNull("result")) {
+                            int result = jsonObject.optInt("result");
+                            if (result == 1) {
+                                String charge = jsonObject.optString("charge");
+                                Intent intent = new Intent();
+                                String packageName = getPackageName();
+                                ComponentName componentName = new ComponentName("com.autosos.yd", "com.autosos.yd.wxapi.WXPayEntryActivity");
+                                intent.setComponent(componentName);
+                                intent.putExtra(PaymentActivity.EXTRA_CHARGE, charge);
+                                startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+                            } else if(result == 0){
+                                findViewById(R.id.payBtn).setClickable(true);
+                                include_payView.setVisibility(View.GONE);
+                                String message =jsonObject.optString("info");
+                                JSONObject msg =new JSONObject(message.toString());
+                                String me = msg.optString("error");
+                                msg = new JSONObject(me.toString());
+                                String m = msg.optString("message");
+                                View v2 = getLayoutInflater().inflate(R.layout.dialog_msg_content,
+                                        null);
+                                dialog = new Dialog(v2.getContext(), R.style.bubble_dialog);
+                                Button tvConfirm = (Button) v2.findViewById(R.id.btn_notice_confirm);
+                                TextView tvMsg = (TextView) v2.findViewById(R.id.tv_notice_msg);
+                                tvMsg.setText(String.format(getString(R.string.msg_pay_error))+"  :"+m.toString());
+                                tvConfirm.setOnClickListener(new View.OnClickListener() {
 
-                              @Override
-                              public void onClick(View v) {
-                                  dialog.dismiss();
-                              }
-                          });
-                          dialog.setContentView(v2);
-                          dialog.setCanceledOnTouchOutside(false);
-                          Window window = dialog.getWindow();
-                          WindowManager.LayoutParams params = window.getAttributes();
-                          Point point = JSONUtil.getDeviceSize(PayActivity.this);
-                          params.width = Math.round(point.x * 5 / 7);
-                          window.setAttributes(params);
-                          dialog.show();
-                      }
-                }
-            } catch (JSONException e) {
+                                    @Override
+                                    public void onClick(View v) {
+                                        dialog.dismiss();
+                                    }
+                                });
+                                dialog.setContentView(v2);
+                                dialog.setCanceledOnTouchOutside(false);
+                                Window window = dialog.getWindow();
+                                WindowManager.LayoutParams params = window.getAttributes();
+                                Point point = JSONUtil.getDeviceSize(PayActivity.this);
+                                params.width = Math.round(point.x * 5 / 7);
+                                window.setAttributes(params);
+                                dialog.show();
+                            }
+                        }
+                    } catch (JSONException e) {
                         Log.e("Pay",e.toString());
-            }
+                    }
 
-         }
+                }
 
-            @Override
-            public void onRequestFailed(Object obj) {
-         }
-         }).execute(String.format(Constants.PAY_URL, orderInfo.getId()), map);
+                @Override
+                public void onRequestFailed(Object obj) {
+                }
+            }).execute(String.format(Constants.PAY_URL, orderInfo.getId()), map);
+
+        }else {
+            Toast.makeText(PayActivity.this,"您没有安装微信",Toast.LENGTH_SHORT).show();
+
+        }
+
+
 
     }
     public void openZFB(){
@@ -263,6 +294,7 @@ public class PayActivity extends AutososBackActivity {
         final ImageView hook_zfb = (ImageView) vPopWindow.findViewById(R.id.hook_zfb);
         LinearLayout bt_wx = (LinearLayout) vPopWindow.findViewById(R.id.bt_wx);
         LinearLayout bt_zfb = (LinearLayout) vPopWindow.findViewById(R.id.bt_zfb);
+        hook_zfb.setVisibility(View.VISIBLE);
         bt_wx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

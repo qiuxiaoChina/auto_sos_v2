@@ -4,10 +4,8 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.media.SoundPool;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,8 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -32,20 +28,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.autosos.yd.model.Image;
-import com.autosos.yd.task.NewHttpPostTask;
 import com.autosos.yd.util.DistanceUtil;
-import com.autosos.yd.util.GetuiSdkMsgReceiver;
 import com.autosos.yd.util.Location;
 import com.autosos.yd.util.MusicUtil;
-import com.autosos.yd.util.MyUtils;
 import com.autosos.yd.util.UpdateStateServe;
 import com.autosos.yd.widget.CherkInternet;
 import com.autosos.yd.widget.DialogView;
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.umeng.analytics.MobclickAgent;
 
@@ -62,19 +51,10 @@ import java.util.TimerTask;
 
 import com.autosos.yd.Constants;
 import com.autosos.yd.R;
-import com.autosos.yd.fragment.WorkFragment;
 import com.autosos.yd.model.OrderInfo;
 import com.autosos.yd.task.NewHttpPutTask;
 import com.autosos.yd.task.OnHttpRequestListener;
 import com.autosos.yd.util.JSONUtil;
-import com.autosos.yd.util.Utils;
-import com.autosos.yd.view.*;
-import com.autosos.yd.view.AutososBackActivity;
-import com.autosos.yd.view.DragActivity;
-import com.autosos.yd.view.MainActivity;
-import com.autosos.yd.view.PayActivity;
-import com.autosos.yd.view.PayInfoActivity;
-import com.autosos.yd.view.UploadPhotoActivity;
 
 public class OrderInfoActivity extends AutososBackActivity{
 
@@ -119,7 +99,7 @@ public class OrderInfoActivity extends AutososBackActivity{
         progressBar = findViewById(R.id.progressBar);
         qr_codeView =(ImageView) findViewById(R.id.qr_code);
         empty = findViewById(R.id.empty);
-
+        setBackground(R.color.color_gray4);
         telphoneView = (ImageView)findViewById(R.id.telephone);
         nameView = (TextView) findViewById(R.id.name);
 //        phoneView = (TextView) findViewById(R.id.phone);
@@ -257,65 +237,31 @@ public class OrderInfoActivity extends AutososBackActivity{
                 if (orderInfo.getService_type() == 1) {
                     typeView.setText(R.string.label_service_type1);
                     typeImgView.setImageResource(R.drawable.icon_service_type1);
-//                    typeImgView.setBackgroundResource(R.drawable.bg_oval_plue);
-                    setBackground(R.color.color_purple);
                     setLineGone();
-                    setArrow(R.drawable.icon48);
-                    setTitleLabelColor(R.color.color_white);
-
-                    findViewById(R.id.user_info_layout).setBackgroundResource(R.color.color_purple);
-                    ((ImageView)findViewById(R.id.telephone)).setImageResource(R.drawable.icon_telephont_plue);
-                    findViewById(R.id.type_icon).setBackgroundResource(R.drawable.bg_oval_plue);
-                    findViewById(R.id.btn_arrive).setBackgroundResource(R.drawable.bg_btn_purple);
                     findViewById(R.id.btn_drag).setBackgroundResource(R.drawable.bg_btn_plue);
-                    findViewById(R.id.btn_pay).setBackgroundResource(R.drawable.bg_btn_plue);
-                    findViewById(R.id.btn_photo).setBackgroundResource(R.drawable.bg_btn_plue);
                     ((TextView)findViewById(R.id.btn_drag)).setTextColor(getResources().getColor(R.color.color_white));
-                    ((Button)findViewById(R.id.btn_photo)).setTextColor(getResources().getColor(R.color.btn_text_color_orange_plue));
-                    ((Button)findViewById(R.id.btn_pay)).setTextColor(getResources().getColor(R.color.btn_text_color_orange_plue));
                     dragBtn.setEnabled(false);
 
                 } else if (orderInfo.getService_type() == 2) {
                     typeView.setText(R.string.label_service_type2);
                     typeImgView.setImageResource(R.drawable.icon_service_type2);
-//                    typeImgView.setBackgroundResource(R.drawable.bg_oval_blue);
-
-                    setBackground(R.color.color_blue);
                     setLineGone();
-                    setArrow(R.drawable.icon48);
-                    setTitleLabelColor(R.color.color_white);
-
-                    findViewById(R.id.user_info_layout).setBackgroundResource(R.color.color_blue);
-                    ((ImageView)findViewById(R.id.telephone)).setImageResource(R.drawable.icon_telephone_blue);
-                    findViewById(R.id.type_icon).setBackgroundResource(R.drawable.bg_oval_blue);
-                    findViewById(R.id.btn_arrive).setBackgroundResource(R.drawable.bg_btn_blue2);
                     findViewById(R.id.btn_drag).setBackgroundResource(R.drawable.bg_btn_blue);
                     ((TextView)findViewById(R.id.btn_drag)).setTextColor(getResources().getColor(R.color.color_white));
-                    findViewById(R.id.btn_pay).setBackgroundResource(R.drawable.bg_btn_blue);
-                    findViewById(R.id.btn_photo).setBackgroundResource(R.drawable.bg_btn_blue);
-                    ((Button)findViewById(R.id.btn_photo)).setTextColor(getResources().getColor(R.color.btn_text_color_orange_blue));
-                    ((Button)findViewById(R.id.btn_pay)).setTextColor(getResources().getColor(R.color.btn_text_color_orange_blue));
                     dragBtn.setEnabled(false);
-                } else {
+                } else if (orderInfo.getService_type() == 3){
                     typeView.setText(R.string.label_service_type3);
-
-                    setBackground(R.color.color_green2);
                     setLineGone();
-                    setArrow(R.drawable.icon48);
-                    setTitleLabelColor(R.color.color_white);
-
-//                    typeImgView.setBackgroundResource(R.drawable.bg_oval_green2);
                     typeImgView.setImageResource(R.drawable.icon_service_type3);
-                    findViewById(R.id.user_info_layout).setBackgroundResource(R.color.color_green2);
-                    ((ImageView)findViewById(R.id.telephone)).setImageResource(R.drawable.icon_telephone_green);
-                    findViewById(R.id.type_icon).setBackgroundResource(R.drawable.bg_oval_green);
-                    findViewById(R.id.btn_arrive).setBackgroundResource(R.drawable.bg_second_btn_green2);
-                    findViewById(R.id.btn_drag).setBackgroundResource(R.drawable.bg_btn_green2);
-                    findViewById(R.id.btn_pay).setBackgroundResource(R.drawable.bg_btn_green2);
-                    findViewById(R.id.btn_photo).setBackgroundResource(R.drawable.bg_btn_green2);
-                    ((Button)findViewById(R.id.btn_photo)).setTextColor(getResources().getColor(R.color.btn_text_color_orange_green));
-                    ((Button)findViewById(R.id.btn_drag)).setTextColor(getResources().getColor(R.color.btn_text_color_orange_green));
-                    ((Button)findViewById(R.id.btn_pay)).setTextColor(getResources().getColor(R.color.btn_text_color_orange_green));
+//                    findViewById(R.id.user_info_layout).setBackgroundResource(R.color.color_green2);
+
+                }else{
+                    typeView.setText(R.string.label_service_type4);
+                    typeImgView.setImageResource(R.drawable.icon_service_type5);
+                    setLineGone();
+                    findViewById(R.id.btn_drag).setBackgroundResource(R.drawable.bg_btn_blue);
+                    ((TextView)findViewById(R.id.btn_drag)).setTextColor(getResources().getColor(R.color.color_white));
+                    dragBtn.setEnabled(false);
                 }
                 if(orderInfo.getOrder_type() == 2){
                     order_orderView.setVisibility(View.VISIBLE);
@@ -548,7 +494,7 @@ public class OrderInfoActivity extends AutososBackActivity{
     private void showPopupWindow() {
         LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View vPopWindow =null;
-        if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 ){
+        if (orderInfo.getService_type() == 1 || orderInfo.getService_type() == 2 || orderInfo.getService_type() == 5){
             Log.e("order",orderInfo.getOrder_type()+"        =================");
             Log.e("order","dadian suggest!");
             vPopWindow  = inflater.inflate(R.layout.pop_window, null);

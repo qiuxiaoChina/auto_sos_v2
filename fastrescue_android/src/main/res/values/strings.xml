@@ -117,6 +117,7 @@
     <string name="label_service_type1">搭电</string>
     <string name="label_service_type2">换胎</string>
     <string name="label_service_type3">拖车</string>
+    <string name="label_service_type4">快修</string>
     <string name="label_no_map">手机未安装地图软件，无法进行导航</string>
     <string name="label_view_available">去接订单</string>
     <string name="label_current_place">%s附近</string>

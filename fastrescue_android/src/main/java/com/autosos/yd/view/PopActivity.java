@@ -314,10 +314,13 @@ public class PopActivity extends Activity implements ObjectBindAdapter.ViewBinde
 
         } else if (order.getService_type() == 2) {
             holder.typeView.setText(R.string.label_service_type2);
-            holder.typeView.setBackgroundResource(R.drawable.bg_shape_blue2);
-        } else {
+            holder.typeView.setBackgroundResource(R.drawable.bg_shape_purle);
+        } else if (order.getService_type() == 3){
             holder.typeView.setText(R.string.label_service_type3);
-            holder.typeView.setBackgroundResource(R.drawable.bg_shape_green2);
+            holder.typeView.setBackgroundResource(R.drawable.bg_shape_purle);
+        } else {
+            holder.typeView.setText(R.string.label_service_type4);
+            holder.typeView.setBackgroundResource(R.drawable.bg_shape_purle);
         }
         holder.statusView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -477,6 +480,7 @@ public class PopActivity extends Activity implements ObjectBindAdapter.ViewBinde
                     byte[] payload = bundle.getByteArray("payload");
                     if (payload != null) {
                         String data = new String(payload);
+                        Log.e("pop","data === " +data);
                         Order order;
                         try {
                             JSONObject jsonObject = new JSONObject(data);
