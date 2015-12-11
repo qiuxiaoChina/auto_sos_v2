@@ -36,7 +36,7 @@ public class MusicUtil implements MediaPlayer.OnCompletionListener {
     private int i;
     public final int[] music2 = new int []{R.raw.zero,R.raw.one,R.raw.two,R.raw.three,R.raw.fore,R.raw.five
             ,R.raw.six,R.raw.seven,R.raw.eight,R.raw.nine,R.raw.ten,R.raw.point,R.raw.distance,R.raw.km,R.raw.alarm
-    ,R.raw.dadian,R.raw.huantai,R.raw.tuoche,R.raw.order_new,R.raw.order,R.raw.orderorder,R.raw.realtimeorder};
+    ,R.raw.dadian,R.raw.huantai,R.raw.tuoche,R.raw.order_new,R.raw.order,R.raw.orderorder,R.raw.realtimeorder,R.raw.kuaixiu};
     public final int[] music1 = new int[]{R.raw.dadian,R.raw.huantai,R.raw.tuoche,R.raw.order_new,R.raw.order};
     public void musicPlayer(String data,Context context){
         mycontext = context;
@@ -156,7 +156,7 @@ public class MusicUtil implements MediaPlayer.OnCompletionListener {
         else{ids [0] = 21;
         }
         if (type == 5 ){
-            ids [2] = 15;
+            ids [2] = 22;
         }else {
             ids [2] = type -1 + 15;
         }

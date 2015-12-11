@@ -53,6 +53,7 @@ public class PersonFragment extends Fragment {
     private com.autosos.yd.model.Person person = null;
     private PullToRefreshScrollView scrollView;
     private String mobile;
+    private View line;
 
     public static PersonFragment newInstance() {
         return new PersonFragment();
@@ -71,6 +72,7 @@ public class PersonFragment extends Fragment {
         progressBar = rootView.findViewById(R.id.progressBar);
         empty = rootView.findViewById(R.id.empty);
         nameView = (TextView)rootView.findViewById(R.id.name);
+        line = rootView.findViewById(R.id.line);
         name_person = (TextView) rootView.findViewById(R.id.name_person);
 //        phoneView = (TextView) rootView.findViewById(R.id.phone);
         countView = (TextView) rootView.findViewById(R.id.count);
@@ -183,6 +185,7 @@ public class PersonFragment extends Fragment {
                 task.loadImage(person.getAvatar(), avatarView.getMeasuredWidth(), com.autosos.yd.util.ScaleMode.WIDTH, image);
                 if (person.getIs_manager() == 1){
                     account.setVisibility(View.VISIBLE);
+                    line.setVisibility(View.VISIBLE);
                 }else {
                     account.setVisibility(View.GONE);
                 }
