@@ -132,8 +132,5 @@
     <orderEntry type="library" exported="" name="umeng-analytics-v5.5.3" level="project" />
     <orderEntry type="library" exported="" name="android-async-http-1.4.7" level="project" />
     <orderEntry type="library" exported="" name="GetuiSDK2.8.1.0" level="project" />
-    <orderEntry type="module" module-name="PhotoViewlibrary" exported="" />
-    <orderEntry type="module" module-name="PullToRefreshlibrary" exported="" />
-    <orderEntry type="module" module-name="RoundedImageViewlibrary" exported="" />
   </component>
 </module>

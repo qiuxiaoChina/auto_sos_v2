@@ -1,2 +1,2 @@
-include ':fastrescue_android', ':PullToRefreshlibrary', ':PhotoViewlibrary', ':RoundedImageViewlibrary'
+include ':fastrescue_android'
 //include ':com_handmark_pulltorefresh_li111brary'

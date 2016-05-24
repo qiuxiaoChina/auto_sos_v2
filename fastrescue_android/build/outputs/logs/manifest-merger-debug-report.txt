@@ -167,9 +167,6 @@ ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidMani
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:55:22-64
 application
 ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:57:5-87:19
-MERGED from [autosos_android_v2:PullToRefreshlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PullToRefreshlibrary\unspecified\AndroidManifest.xml:9:5-20
-MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
-MERGED from [autosos_android_v2:PhotoViewlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PhotoViewlibrary\unspecified\AndroidManifest.xml:9:5-20
 MERGED from [com.android.support:appcompat-v7:21.0.3] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\AndroidManifest.xml:16:5-19
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
@@ -222,10 +219,6 @@ ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidMani
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:81:13-46
 uses-sdk
 INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [autosos_android_v2:PullToRefreshlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PullToRefreshlibrary\unspecified\AndroidManifest.xml:7:5-43
-MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:20:5-43
-MERGED from [autosos_android_v2:PhotoViewlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PhotoViewlibrary\unspecified\AndroidManifest.xml:7:5-43
-MERGED from [autosos_android_v2:RoundedImageViewlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\RoundedImageViewlibrary\unspecified\AndroidManifest.xml:7:5-9:41
 MERGED from [com.android.support:appcompat-v7:21.0.3] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\AndroidManifest.xml:15:5-42
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:20:5-43
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:20:5-43
