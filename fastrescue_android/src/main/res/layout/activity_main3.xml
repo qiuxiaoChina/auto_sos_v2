@@ -1,0 +1,89 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.MainActivity">
+
+
+    <com.autosos.yd.viewpager.ContentViewPager
+        android:layout_width="match_parent"
+        android:id="@+id/content_viewpager"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+
+    </com.autosos.yd.viewpager.ContentViewPager  >
+
+
+
+    <RadioGroup
+        android:id="@+id/content_radiogroup"
+        android:layout_width="match_parent"
+        android:background="@drawable/bg_main_menu"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rb_work"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:button="@null"
+            android:drawableTop="@drawable/icon_main_menu1"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:paddingTop="3dp"
+            android:singleLine="true"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_order"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:button="@null"
+            android:drawableTop="@drawable/icon_main_menu2"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:singleLine="true"
+            android:paddingTop="3dp"
+            />
+
+        <RadioButton
+            android:id="@+id/rb_mine"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:button="@null"
+            android:drawableTop="@drawable/icon_main_menu3"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:paddingTop="3dp"
+            android:singleLine="true"
+             />
+
+        <RadioButton
+            android:id="@+id/rb_setting"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:button="@null"
+            android:drawableTop="@drawable/icon_main_menu4"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:paddingTop="3dp"
+            android:singleLine="true" />
+
+    </RadioGroup>
+
+
+
+
+
+</LinearLayout>

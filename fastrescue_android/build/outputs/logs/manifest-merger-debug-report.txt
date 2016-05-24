@@ -1,716 +1,246 @@
 -- Merging decision tree log ---
 manifest
-ADDED from AndroidManifest.xml:2:1
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:2:1-89:12
 	package
-		ADDED from AndroidManifest.xml:3:5
-		INJECTED from AndroidManifest.xml:0:0
-		INJECTED from AndroidManifest.xml:0:0
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:3:5-29
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
 	android:versionName
-		ADDED from AndroidManifest.xml:5:5
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:5:5-35
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
 	android:versionCode
-		ADDED from AndroidManifest.xml:4:5
-		INJECTED from AndroidManifest.xml:0:0
-		INJECTED from AndroidManifest.xml:0:0
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:4:5-30
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from AndroidManifest.xml:2:11
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:2:11-69
+uses-permission#android.permission.WRITE_SMS
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:7:5-68
+	android:name
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:7:22-65
+uses-permission#android.permission.RECEIVE_SMS
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:9:5-70
+	android:name
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:9:22-67
 uses-permission#android.permission.INTERACT_ACROSS_USERS_FULL
-ADDED from AndroidManifest.xml:6:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:10:5-85
 	android:name
-		ADDED from AndroidManifest.xml:6:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:10:22-82
 uses-permission#android.permission.INTERNET
-ADDED from AndroidManifest.xml:7:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:11:5-67
 	android:name
-		ADDED from AndroidManifest.xml:7:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:11:22-64
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from AndroidManifest.xml:8:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:12:5-76
 	android:name
-		ADDED from AndroidManifest.xml:8:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:12:22-73
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from AndroidManifest.xml:9:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:13:5-79
 	android:name
-		ADDED from AndroidManifest.xml:9:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:13:22-76
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from AndroidManifest.xml:10:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:14:5-75
 	android:name
-		ADDED from AndroidManifest.xml:10:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:14:22-72
 uses-permission#android.permission.WAKE_LOCK
-ADDED from AndroidManifest.xml:11:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:15:5-68
 	android:name
-		ADDED from AndroidManifest.xml:11:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:15:22-65
 uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
-ADDED from AndroidManifest.xml:12:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:16:5-84
 	android:name
-		ADDED from AndroidManifest.xml:12:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:16:22-81
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from AndroidManifest.xml:13:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:17:5-81
 	android:name
-		ADDED from AndroidManifest.xml:13:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:17:22-78
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from AndroidManifest.xml:14:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:18:5-80
 	android:name
-		ADDED from AndroidManifest.xml:14:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:18:22-77
 uses-permission#android.permission.CHANGE_WIFI_STATE
-ADDED from AndroidManifest.xml:15:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:19:5-76
 	android:name
-		ADDED from AndroidManifest.xml:15:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:19:22-73
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
-ADDED from AndroidManifest.xml:16:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:20:5-81
 	android:name
-		ADDED from AndroidManifest.xml:16:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:20:22-78
 uses-permission#android.permission.VIBRATE
-ADDED from AndroidManifest.xml:17:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:21:5-66
 	android:name
-		ADDED from AndroidManifest.xml:17:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:21:22-63
 uses-permission#android.permission.GET_TASKS
-ADDED from AndroidManifest.xml:18:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:22:5-68
 	android:name
-		ADDED from AndroidManifest.xml:18:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:22:22-65
 uses-permission#getui.permission.GetuiService.com.autosos.yd
-ADDED from AndroidManifest.xml:19:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:23:5-84
 	android:name
-		ADDED from AndroidManifest.xml:19:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:23:22-81
 uses-permission#android.permission.GET_ACCOUNTS
-ADDED from AndroidManifest.xml:20:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:24:5-71
 	android:name
-		ADDED from AndroidManifest.xml:20:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:24:22-68
 uses-permission#android.permission.USE_CREDENTIALS
-ADDED from AndroidManifest.xml:21:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:25:5-74
 	android:name
-		ADDED from AndroidManifest.xml:21:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:25:22-71
 uses-permission#android.permission.MANAGE_ACCOUNTS
-ADDED from AndroidManifest.xml:22:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:26:5-74
 	android:name
-		ADDED from AndroidManifest.xml:22:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:26:22-71
 uses-permission#android.permission.AUTHENTICATE_ACCOUNTS
-ADDED from AndroidManifest.xml:23:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:27:5-80
 	android:name
-		ADDED from AndroidManifest.xml:23:22
-uses-permission#com.android.launcher.permission.READ_SETTINGS
-ADDED from AndroidManifest.xml:24:5
-	android:name
-		ADDED from AndroidManifest.xml:24:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:27:22-77
 uses-permission#android.permission.BROADCAST_STICKY
-ADDED from AndroidManifest.xml:25:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:28:5-75
 	android:name
-		ADDED from AndroidManifest.xml:25:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:28:22-72
 uses-permission#android.permission.WRITE_SETTINGS
-ADDED from AndroidManifest.xml:26:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:29:5-73
 	android:name
-		ADDED from AndroidManifest.xml:26:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:29:22-70
 uses-permission#android.permission.BAIDU_LOCATION_SERVICE
-ADDED from AndroidManifest.xml:30:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:30:5-81
 	android:name
-		ADDED from AndroidManifest.xml:30:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:30:22-78
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from AndroidManifest.xml:31:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:31:5-81
 	android:name
-		ADDED from AndroidManifest.xml:31:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:31:22-78
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from AndroidManifest.xml:32:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:32:5-79
 	android:name
-		ADDED from AndroidManifest.xml:32:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:32:22-76
+uses-permission#com.android.launcher.permission.READ_SETTINGS
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:33:5-85
+	android:name
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:33:22-82
 uses-permission#android.permission.ACCESS_GPS
-ADDED from AndroidManifest.xml:34:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:34:5-69
 	android:name
-		ADDED from AndroidManifest.xml:34:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:34:22-66
 uses-permission#android.permission.PROCESS_OUTGOING_CALLS
-ADDED from AndroidManifest.xml:35:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:35:5-81
 	android:name
-		ADDED from AndroidManifest.xml:35:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:35:22-78
 uses-permission#android.permission.MODIFY_AUDIO_SETTINGS
-ADDED from AndroidManifest.xml:36:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:36:5-80
 	android:name
-		ADDED from AndroidManifest.xml:36:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:36:22-77
 uses-permission#android.permission.ACCES_MOCK_LOCATION
-ADDED from AndroidManifest.xml:39:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:39:5-78
 	android:name
-		ADDED from AndroidManifest.xml:39:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:39:22-75
 uses-permission#android.permission.RECORD_AUDIO
-ADDED from AndroidManifest.xml:40:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:40:5-71
 	android:name
-		ADDED from AndroidManifest.xml:40:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:40:22-68
+uses-permission#android.permission.CAMERA
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:42:5-65
+	android:name
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:42:22-62
+uses-feature#android.hardware.camera.autofocus
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:47:5-70
+	android:name
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:47:19-67
 permission#getui.permission.GetuiService.com.autosos.yd
-ADDED from AndroidManifest.xml:43:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:49:5-51:44
 	android:protectionLevel
-		ADDED from AndroidManifest.xml:45:9
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:51:9-41
 	android:name
-		ADDED from AndroidManifest.xml:44:9
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:50:9-68
 uses-permission#android.permission.SEND_SMS
-ADDED from AndroidManifest.xml:47:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:53:5-67
 	android:name
-		ADDED from AndroidManifest.xml:47:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:53:22-64
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
-ADDED from AndroidManifest.xml:48:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:54:5-78
 	android:name
-		ADDED from AndroidManifest.xml:48:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:54:22-75
 uses-permission#android.permission.READ_SMS
-ADDED from AndroidManifest.xml:49:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:55:5-67
 	android:name
-		ADDED from AndroidManifest.xml:49:22
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:55:22-64
 application
-ADDED from AndroidManifest.xml:51:5
-MERGED from com.android.support:appcompat-v7:22.0.0:22:5
-MERGED from com.android.support:support-v4:22.0.0:22:5
-MERGED from autosos_android:PullToRefreshlibrary:unspecified:9:5
-MERGED from com.android.support:support-v4:22.0.0:22:5
-MERGED from autosos_android:PhotoViewlibrary:unspecified:9:5
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:57:5-87:19
+MERGED from [autosos_android_v2:PullToRefreshlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PullToRefreshlibrary\unspecified\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
+MERGED from [autosos_android_v2:PhotoViewlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PhotoViewlibrary\unspecified\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:appcompat-v7:21.0.3] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\AndroidManifest.xml:16:5-19
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-appindexing:8.1.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\AndroidManifest.xml:19:5-20
+MERGED from [com.google.android.gms:play-services-basement:8.1.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:20:5-24:19
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from AndroidManifest.xml:55:9
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:60:9-41
 	android:allowBackup
-		ADDED from AndroidManifest.xml:53:9
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:58:9-35
 	android:icon
-		ADDED from AndroidManifest.xml:54:9
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:59:9-45
 	android:persistent
-		ADDED from AndroidManifest.xml:52:9
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:61:9-34
 	android:theme
-		ADDED from AndroidManifest.xml:56:9
-meta-data#com.baidu.lbsapi.API_KEY
-ADDED from AndroidManifest.xml:57:9
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:62:9-42
+meta-data#com.amap.api.v2.apikey
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:64:9-66:63
 	android:value
-		ADDED from AndroidManifest.xml:59:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:66:13-61
 	android:name
-		ADDED from AndroidManifest.xml:58:13
-service#com.baidu.location.f
-ADDED from AndroidManifest.xml:61:9
-	android:enabled
-		ADDED from AndroidManifest.xml:63:13
-	android:process
-		ADDED from AndroidManifest.xml:64:13
-	android:name
-		ADDED from AndroidManifest.xml:62:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:65:13-50
 activity#com.autosos.yd.view.SplashActivity
-ADDED from AndroidManifest.xml:67:9
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:68:9-77:20
 	android:label
-		ADDED from AndroidManifest.xml:69:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:70:13-45
 	android:theme
-		ADDED from AndroidManifest.xml:70:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:71:13-71
 	android:name
-		ADDED from AndroidManifest.xml:68:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:69:13-48
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:71:13
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:72:13-76:29
 action#android.intent.action.MAIN
-ADDED from AndroidManifest.xml:72:17
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:73:17-69
 	android:name
-		ADDED from AndroidManifest.xml:72:25
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:73:25-66
 category#android.intent.category.LAUNCHER
-ADDED from AndroidManifest.xml:74:17
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:75:17-77
 	android:name
-		ADDED from AndroidManifest.xml:74:27
-activity#com.autosos.yd.view.LoginActivity
-ADDED from AndroidManifest.xml:78:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:81:13
-	android:label
-		ADDED from AndroidManifest.xml:80:13
-	android:theme
-		ADDED from AndroidManifest.xml:82:13
-	android:name
-		ADDED from AndroidManifest.xml:79:13
-activity#com.autosos.yd.view.testActivity
-ADDED from AndroidManifest.xml:84:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:87:13
-	android:label
-		ADDED from AndroidManifest.xml:86:13
-	android:theme
-		ADDED from AndroidManifest.xml:88:13
-	android:name
-		ADDED from AndroidManifest.xml:85:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:75:27-74
 activity#com.autosos.yd.view.MainActivity
-ADDED from AndroidManifest.xml:89:9
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:80:9-85:20
 	android:screenOrientation
-		ADDED from AndroidManifest.xml:93:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:84:13-49
 	android:label
-		ADDED from AndroidManifest.xml:91:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:92:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:82:13-45
 	android:theme
-		ADDED from AndroidManifest.xml:94:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:83:13-71
 	android:name
-		ADDED from AndroidManifest.xml:90:13
-activity#com.autosos.yd.view.OrderInfoActivity
-ADDED from AndroidManifest.xml:96:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:100:13
-	android:label
-		ADDED from AndroidManifest.xml:98:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:99:13
-	android:theme
-		ADDED from AndroidManifest.xml:101:13
-	android:name
-		ADDED from AndroidManifest.xml:97:13
-activity#com.autosos.yd.view.SetingActivity
-ADDED from AndroidManifest.xml:103:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:107:13
-	android:label
-		ADDED from AndroidManifest.xml:105:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:106:13
-	android:theme
-		ADDED from AndroidManifest.xml:108:13
-	android:name
-		ADDED from AndroidManifest.xml:104:13
-activity#com.autosos.yd.view.AccountActivity
-ADDED from AndroidManifest.xml:110:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:114:13
-	android:label
-		ADDED from AndroidManifest.xml:112:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:113:13
-	android:theme
-		ADDED from AndroidManifest.xml:115:13
-	android:name
-		ADDED from AndroidManifest.xml:111:13
-activity#com.autosos.yd.view.AccountOfMonthActivity
-ADDED from AndroidManifest.xml:117:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:121:13
-	android:label
-		ADDED from AndroidManifest.xml:119:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:120:13
-	android:theme
-		ADDED from AndroidManifest.xml:122:13
-	android:name
-		ADDED from AndroidManifest.xml:118:13
-activity#com.autosos.yd.view.BillDetailsActivity
-ADDED from AndroidManifest.xml:124:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:128:13
-	android:label
-		ADDED from AndroidManifest.xml:126:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:127:13
-	android:theme
-		ADDED from AndroidManifest.xml:129:13
-	android:name
-		ADDED from AndroidManifest.xml:125:13
-activity#com.autosos.yd.view.DrawCashActivity
-ADDED from AndroidManifest.xml:131:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:135:13
-	android:label
-		ADDED from AndroidManifest.xml:133:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:134:13
-	android:theme
-		ADDED from AndroidManifest.xml:136:13
-	android:name
-		ADDED from AndroidManifest.xml:132:13
-activity#com.autosos.yd.view.PasswordActivity
-ADDED from AndroidManifest.xml:139:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:143:13
-	android:label
-		ADDED from AndroidManifest.xml:141:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:142:13
-	android:theme
-		ADDED from AndroidManifest.xml:144:13
-	android:name
-		ADDED from AndroidManifest.xml:140:13
-activity#com.autosos.yd.view.MapDragActivity
-ADDED from AndroidManifest.xml:145:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:149:13
-	android:label
-		ADDED from AndroidManifest.xml:147:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:148:13
-	android:theme
-		ADDED from AndroidManifest.xml:150:13
-	android:name
-		ADDED from AndroidManifest.xml:146:13
-activity#com.autosos.yd.view.DragActivity
-ADDED from AndroidManifest.xml:152:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:155:13
-	android:label
-		ADDED from AndroidManifest.xml:154:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:156:13
-	android:theme
-		ADDED from AndroidManifest.xml:157:13
-	android:name
-		ADDED from AndroidManifest.xml:153:13
-activity#com.autosos.yd.view.PayActivity
-ADDED from AndroidManifest.xml:159:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:162:13
-	android:label
-		ADDED from AndroidManifest.xml:161:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:163:13
-	android:theme
-		ADDED from AndroidManifest.xml:164:13
-	android:name
-		ADDED from AndroidManifest.xml:160:13
-activity#com.autosos.yd.view.PayInfoActivity
-ADDED from AndroidManifest.xml:165:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:168:13
-	android:label
-		ADDED from AndroidManifest.xml:167:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:169:13
-	android:theme
-		ADDED from AndroidManifest.xml:170:13
-	android:name
-		ADDED from AndroidManifest.xml:166:13
-activity#com.autosos.yd.view.RecordInfoActivity
-ADDED from AndroidManifest.xml:172:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:175:13
-	android:label
-		ADDED from AndroidManifest.xml:174:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:176:13
-	android:theme
-		ADDED from AndroidManifest.xml:177:13
-	android:name
-		ADDED from AndroidManifest.xml:173:13
-activity#com.autosos.yd.view.UploadPhotoActivity
-ADDED from AndroidManifest.xml:179:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:182:13
-	android:label
-		ADDED from AndroidManifest.xml:181:13
-	android:theme
-		ADDED from AndroidManifest.xml:183:13
-	android:name
-		ADDED from AndroidManifest.xml:180:13
-activity#com.autosos.yd.view.ChoosePhotoActivity
-ADDED from AndroidManifest.xml:185:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:188:13
-	android:label
-		ADDED from AndroidManifest.xml:187:13
-	android:theme
-		ADDED from AndroidManifest.xml:189:13
-	android:name
-		ADDED from AndroidManifest.xml:186:13
-activity#com.autosos.yd.view.PhotosActivity
-ADDED from AndroidManifest.xml:191:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:194:13
-	android:label
-		ADDED from AndroidManifest.xml:193:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:195:13
-	android:theme
-		ADDED from AndroidManifest.xml:196:13
-	android:name
-		ADDED from AndroidManifest.xml:192:13
-activity#com.autosos.yd.view.WatchPhotoActivity
-ADDED from AndroidManifest.xml:198:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:201:13
-	android:label
-		ADDED from AndroidManifest.xml:200:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:202:13
-	android:theme
-		ADDED from AndroidManifest.xml:203:13
-	android:name
-		ADDED from AndroidManifest.xml:199:13
-activity#com.autosos.yd.view.NoticeView
-ADDED from AndroidManifest.xml:205:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:208:13
-	android:label
-		ADDED from AndroidManifest.xml:207:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:209:13
-	android:theme
-		ADDED from AndroidManifest.xml:210:13
-	android:name
-		ADDED from AndroidManifest.xml:206:13
-activity#com.autosos.yd.view.NoticeInfoActivity
-ADDED from AndroidManifest.xml:211:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:214:13
-	android:label
-		ADDED from AndroidManifest.xml:213:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:215:13
-	android:theme
-		ADDED from AndroidManifest.xml:216:13
-	android:name
-		ADDED from AndroidManifest.xml:212:13
-activity#com.autosos.yd.view.FinishActivity
-ADDED from AndroidManifest.xml:218:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:221:13
-	android:label
-		ADDED from AndroidManifest.xml:220:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:222:13
-	android:theme
-		ADDED from AndroidManifest.xml:223:13
-	android:name
-		ADDED from AndroidManifest.xml:219:13
-activity#com.autosos.yd.view.AddressActivity
-ADDED from AndroidManifest.xml:224:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:226:13
-	android:launchMode
-		ADDED from AndroidManifest.xml:227:13
-	android:theme
-		ADDED from AndroidManifest.xml:228:13
-	android:name
-		ADDED from AndroidManifest.xml:225:13
-meta-data#PUSH_APPID
-ADDED from AndroidManifest.xml:231:9
-	android:value
-		ADDED from AndroidManifest.xml:233:13
-	android:name
-		ADDED from AndroidManifest.xml:232:13
-meta-data#PUSH_APPKEY
-ADDED from AndroidManifest.xml:234:9
-	android:value
-		ADDED from AndroidManifest.xml:236:13
-	android:name
-		ADDED from AndroidManifest.xml:235:13
-meta-data#PUSH_APPSECRET
-ADDED from AndroidManifest.xml:237:9
-	android:value
-		ADDED from AndroidManifest.xml:239:13
-	android:name
-		ADDED from AndroidManifest.xml:238:13
-meta-data#PUSH_GROUPID
-ADDED from AndroidManifest.xml:240:9
-	android:value
-		ADDED from AndroidManifest.xml:242:13
-	android:name
-		ADDED from AndroidManifest.xml:241:13
-service#com.igexin.sdk.PushService
-ADDED from AndroidManifest.xml:245:9
-	android:process
-		ADDED from AndroidManifest.xml:249:13
-	android:label
-		ADDED from AndroidManifest.xml:248:13
-	android:exported
-		ADDED from AndroidManifest.xml:247:13
-	android:name
-		ADDED from AndroidManifest.xml:246:13
-service#com.autosos.yd.util.UpdateStateServe
-ADDED from AndroidManifest.xml:250:9
-	android:enabled
-		ADDED from AndroidManifest.xml:253:13
-	android:priority
-		ADDED from AndroidManifest.xml:254:13
-	android:persistent
-		ADDED from AndroidManifest.xml:252:13
-	android:name
-		ADDED from AndroidManifest.xml:251:13
-receiver#com.autosos.yd.util.CherkNetWorkReceiver
-ADDED from AndroidManifest.xml:257:9
-	android:name
-		ADDED from AndroidManifest.xml:258:13
-receiver#com.igexin.sdk.PushReceiver
-ADDED from AndroidManifest.xml:261:9
-	android:name
-		ADDED from AndroidManifest.xml:261:19
-intent-filter#android.intent.action.ACTION_POWER_CONNECTED+android.intent.action.ACTION_POWER_DISCONNECTED+android.intent.action.BOOT_COMPLETED+android.intent.action.MEDIA_MOUNTED+android.intent.action.USER_PRESENT+android.net.conn.CONNECTIVITY_CHANGE+com.igexin.sdk.action.refreshls
-ADDED from AndroidManifest.xml:262:13
-action#android.intent.action.BOOT_COMPLETED
-ADDED from AndroidManifest.xml:263:17
-	android:name
-		ADDED from AndroidManifest.xml:263:25
-action#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from AndroidManifest.xml:264:17
-	android:name
-		ADDED from AndroidManifest.xml:264:25
-action#android.intent.action.USER_PRESENT
-ADDED from AndroidManifest.xml:265:17
-	android:name
-		ADDED from AndroidManifest.xml:265:25
-action#com.igexin.sdk.action.refreshls
-ADDED from AndroidManifest.xml:266:17
-	android:name
-		ADDED from AndroidManifest.xml:266:25
-action#android.intent.action.MEDIA_MOUNTED
-ADDED from AndroidManifest.xml:267:17
-	android:name
-		ADDED from AndroidManifest.xml:267:25
-action#android.intent.action.ACTION_POWER_CONNECTED
-ADDED from AndroidManifest.xml:268:17
-	android:name
-		ADDED from AndroidManifest.xml:268:25
-action#android.intent.action.ACTION_POWER_DISCONNECTED
-ADDED from AndroidManifest.xml:269:17
-	android:name
-		ADDED from AndroidManifest.xml:269:25
-service#com.igexin.sdk.PushServiceUser
-ADDED from AndroidManifest.xml:272:9
-	android:label
-		ADDED from AndroidManifest.xml:275:13
-	android:exported
-		ADDED from AndroidManifest.xml:274:13
-	android:name
-		ADDED from AndroidManifest.xml:273:13
-receiver#com.igexin.sdk.PushManagerReceiver
-ADDED from AndroidManifest.xml:277:9
-	android:exported
-		ADDED from AndroidManifest.xml:279:13
-	android:name
-		ADDED from AndroidManifest.xml:278:13
-intent-filter#com.igexin.sdk.action.pushmanager
-ADDED from AndroidManifest.xml:280:13
-action#com.igexin.sdk.action.pushmanager
-ADDED from AndroidManifest.xml:281:17
-	android:name
-		ADDED from AndroidManifest.xml:281:25
-activity#com.igexin.sdk.PushActivity
-ADDED from AndroidManifest.xml:285:9
-	android:process
-		ADDED from AndroidManifest.xml:289:13
-	android:excludeFromRecents
-		ADDED from AndroidManifest.xml:287:13
-	android:exported
-		ADDED from AndroidManifest.xml:288:13
-	android:theme
-		ADDED from AndroidManifest.xml:291:13
-	android:taskAffinity
-		ADDED from AndroidManifest.xml:290:13
-	android:name
-		ADDED from AndroidManifest.xml:286:13
-service#com.igexin.download.DownloadService
-ADDED from AndroidManifest.xml:293:9
-	android:process
-		ADDED from AndroidManifest.xml:295:13
-	android:name
-		ADDED from AndroidManifest.xml:294:13
-receiver#com.igexin.download.DownloadReceiver
-ADDED from AndroidManifest.xml:296:9
-	android:name
-		ADDED from AndroidManifest.xml:296:19
-intent-filter#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from AndroidManifest.xml:297:13
-provider#com.igexin.download.DownloadProvider
-ADDED from AndroidManifest.xml:301:9
-	android:authorities
-		ADDED from AndroidManifest.xml:304:13
-	android:process
-		ADDED from AndroidManifest.xml:305:13
-	android:exported
-		ADDED from AndroidManifest.xml:303:13
-	android:name
-		ADDED from AndroidManifest.xml:302:13
-activity#com.igexin.getuiext.activity.GetuiExtActivity
-ADDED from AndroidManifest.xml:308:9
-	android:process
-		ADDED from AndroidManifest.xml:313:13
-	android:excludeFromRecents
-		ADDED from AndroidManifest.xml:311:13
-	android:exported
-		ADDED from AndroidManifest.xml:312:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:310:13
-	android:theme
-		ADDED from AndroidManifest.xml:315:13
-	android:taskAffinity
-		ADDED from AndroidManifest.xml:314:13
-	android:name
-		ADDED from AndroidManifest.xml:309:13
-receiver#com.igexin.getuiext.service.PayloadReceiver
-ADDED from AndroidManifest.xml:317:9
-	android:exported
-		ADDED from AndroidManifest.xml:319:13
-	android:name
-		ADDED from AndroidManifest.xml:318:13
-intent-filter#com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn+com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4
-ADDED from AndroidManifest.xml:320:13
-action#com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4
-ADDED from AndroidManifest.xml:322:17
-	android:name
-		ADDED from AndroidManifest.xml:322:25
-action#com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn
-ADDED from AndroidManifest.xml:324:17
-	android:name
-		ADDED from AndroidManifest.xml:324:25
-receiver#com.autosos.yd.util.GetuiSdkMsgReceiver
-ADDED from AndroidManifest.xml:329:9
-	android:exported
-		ADDED from AndroidManifest.xml:331:13
-	android:name
-		ADDED from AndroidManifest.xml:330:13
-intent-filter#com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn
-ADDED from AndroidManifest.xml:332:13
-service#com.igexin.getuiext.service.GetuiExtService
-ADDED from AndroidManifest.xml:340:9
-	android:process
-		ADDED from AndroidManifest.xml:342:13
-	android:name
-		ADDED from AndroidManifest.xml:341:13
-activity#com.pingplusplus.android.PaymentActivity
-ADDED from AndroidManifest.xml:344:9
-	android:launchMode
-		ADDED from AndroidManifest.xml:346:13
-	android:theme
-		ADDED from AndroidManifest.xml:347:13
-	android:name
-		ADDED from AndroidManifest.xml:345:13
-activity#com.alipay.sdk.app.H5PayActivity
-ADDED from AndroidManifest.xml:349:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:353:13
-	android:exported
-		ADDED from AndroidManifest.xml:352:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:351:13
-	android:name
-		ADDED from AndroidManifest.xml:350:13
-activity#com.alipay.sdk.auth.AuthActivity
-ADDED from AndroidManifest.xml:355:9
-	android:screenOrientation
-		ADDED from AndroidManifest.xml:359:13
-	android:exported
-		ADDED from AndroidManifest.xml:358:13
-	android:configChanges
-		ADDED from AndroidManifest.xml:357:13
-	android:name
-		ADDED from AndroidManifest.xml:356:13
-activity-alias#com.autosos.yd.wxapi.WXPayEntryActivity
-ADDED from AndroidManifest.xml:361:9
-	android:exported
-		ADDED from AndroidManifest.xml:364:13
-	android:targetActivity
-		ADDED from AndroidManifest.xml:363:13
-	android:name
-		ADDED from AndroidManifest.xml:362:13
-activity#com.umeng.update.UpdateDialogActivity
-ADDED from AndroidManifest.xml:366:9
-	android:theme
-		ADDED from AndroidManifest.xml:368:13
-	android:name
-		ADDED from AndroidManifest.xml:367:13
-meta-data#UMENG_APPKEY
-ADDED from AndroidManifest.xml:371:9
-	android:value
-		ADDED from AndroidManifest.xml:373:13
-	android:name
-		ADDED from AndroidManifest.xml:372:13
-meta-data#UMENG_CHANNEL
-ADDED from AndroidManifest.xml:375:9
-	android:value
-		ADDED from AndroidManifest.xml:377:13
-	android:name
-		ADDED from AndroidManifest.xml:376:13
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:81:13-46
 uses-sdk
-INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
-MERGED from com.android.support:appcompat-v7:22.0.0:20:5
-MERGED from com.android.support:support-v4:22.0.0:20:5
-MERGED from autosos_android:PullToRefreshlibrary:unspecified:7:5
-MERGED from com.android.support:support-v4:22.0.0:20:5
-MERGED from autosos_android:PhotoViewlibrary:unspecified:7:5
-MERGED from autosos_android:RoundedImageViewlibrary:unspecified:7:5
+INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [autosos_android_v2:PullToRefreshlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PullToRefreshlibrary\unspecified\AndroidManifest.xml:7:5-43
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:20:5-43
+MERGED from [autosos_android_v2:PhotoViewlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\PhotoViewlibrary\unspecified\AndroidManifest.xml:7:5-43
+MERGED from [autosos_android_v2:RoundedImageViewlibrary:unspecified] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\autosos_android_v2\RoundedImageViewlibrary\unspecified\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:21.0.3] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\AndroidManifest.xml:15:5-42
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-appindexing:8.1.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\AndroidManifest.xml:18:5-42
+MERGED from [com.google.android.gms:play-services-basement:8.1.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
-		INJECTED from AndroidManifest.xml:0:0
-		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from AndroidManifest.xml:0:0
-		INJECTED from AndroidManifest.xml:0:0
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
+		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:8.1.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:21:9-23:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:8.1.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:23:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:8.1.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:22:13-58

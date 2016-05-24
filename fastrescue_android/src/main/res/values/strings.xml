@@ -54,7 +54,7 @@
     <string name="label_order_finish">订单完成</string>
     <string name="label_dan">单</string>
     <string name="label_telephone"><Data><![CDATA[ <font color="#feb96a">400-882-0019</font>]]></Data></string>
-    <string name="label_get" >接</string>
+    <string name="label_get">接</string>
     <string name="label_distance">距</string>
     <string name="label_else">备注：</string>
     <string name="label_kilometre">公里</string>
@@ -69,6 +69,7 @@
     <string name="label_edit">修改</string>
     <string name="label_start_nav">启用导航</string>
     <string name="label_rescued">已到救援现场</string>
+    <string name="label_arrived_wantPay">请拍照并支付</string>
     <string name="label_fee">拖车计费</string>
     <string name="label_rmb">元</string>
     <string name="label_type_fee">输入里程</string>
@@ -185,7 +186,8 @@
     <string name="msg_psd_error4">新旧密码一样就不要改了吧~</string>
     <string name="msg_psd_succeed">密码修改成功，请重新登录！</string>
     <string name="msg_psd_falied">密码修改失败，请联系客服人员！</string>
-    <string name="msg_noGPS">GPS未打开，定位结果将有偏差！</string>
+    <string name="msg_noGPS">定位服务未打开,请手动将其打开！</string>
+    <string name="msg_notGPS">GPS模式未打开,请手动将其打开！</string>
     <string name="msg_delect_pic">重复图片已经自动清除</string>
     <string name="msg_stop_order">确定停止接单？</string>
     <string name="msg_username_empty">手机号不能为空</string>
@@ -248,4 +250,20 @@ e救援立志成为智能救援的推动者，成为规范汽车后市场标准�
     <string name="msg_network_0">当前网络没有连接，请连接网络！</string>
     <string name="msg_network_1">当前网络为手机网络！</string>
     <string name="msg_network_2">当前网络为无线网络！</string>
+    <string name="title_activity_main3">Main3Activity</string>
+
+    <string name="app_id">输入您讯飞的appid</string>
+    <string name="preference_default_tts_role">xiaoyan</string>
+    <string name="preference_key_tts_speed">tts_speed</string>
+    <string name="preference_title_tts_speed">语速</string>
+    <string name="preference_default_tts_speed">50</string>
+    <string name="preference_dialog_title_tts_speed">选择语速</string>
+    <string name="preference_key_tts_volume">tts_volume</string>
+    <string name="preference_title_tts_volume">音量</string>
+    <string name="preference_default_tts_volume">50</string>
+    <string name="preference_dialog_title_tts_volume">选择音量</string>
+    <string name="preference_key_tts_pitch">tts_pitch</string>
+    <string name="preference_title_tts_pitch">语调</string>
+    <string name="preference_default_tts_pitch">50</string>
+    <string name="intell_bd_title">智能播报</string>
 </resources>

@@ -1,0 +1,150 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/head_map"
+        android:background="#e66ed289"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch_online"
+            android:text="离线>>>"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <com.amap.api.navi.AMapNaviView
+        android:id="@+id/navi_view"
+        android:layout_below="@+id/head_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+    <com.amap.api.maps.TextureMapView
+        android:id="@+id/mapview"
+        android:layout_below="@+id/head_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <com.amap.api.maps.TextureMapView
+        android:id="@+id/mapviewForShow"
+        android:layout_below="@+id/head_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/menu_layout"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:background="#e66ed289"
+        android:layout_height="15dp"
+        android:gravity="center"
+        android:visibility="gone"
+        >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/menu"
+        android:background="#e66ed289"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+       >
+
+        <RelativeLayout
+            android:id="@+id/start_route"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="规划轨迹"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/start_navi"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="开始导航"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+        android:id="@+id/stop_navi"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="停止导航"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="#ffffff"
+            />
+
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/check_route"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="查看轨迹"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</RelativeLayout>

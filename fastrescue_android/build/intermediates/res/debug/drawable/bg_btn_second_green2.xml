@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item android:drawable="@drawable/bg_shape_second_green3" android:state_checked="false" android:state_pressed="false" />
-    <item android:drawable="@drawable/bg_shape_second_plue_pressed" android:state_pressed="true" />
-    <item android:drawable="@drawable/bg_shape_second_plue_pressed" android:state_checked="true" />
-
-</selector><!-- From: file:/F:/autosos/autosos_android/fastrescue_android/src/main/res/drawable/bg_btn_second_green2.xml -->

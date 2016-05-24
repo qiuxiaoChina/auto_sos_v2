@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+   <item>
+       <scale android:scaleHeight="250dp"
+               android:scaleWidth="314dp">
+       </scale>
+   </item>
+</layer-list>

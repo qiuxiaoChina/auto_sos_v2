@@ -8,22 +8,22 @@ package com.makeramen.rounded;
 
 public final class R {
 	public static final class attr {
-		public static final int border_color = 0x7f010048;
-		public static final int border_width = 0x7f010047;
-		public static final int bottom_left_qualified = 0x7f01004f;
-		public static final int bottom_qualified = 0x7f01004c;
-		public static final int bottom_right_qualified = 0x7f010050;
-		public static final int corner_radius = 0x7f010046;
-		public static final int is_oval = 0x7f01004a;
-		public static final int left_qualified = 0x7f010051;
-		public static final int right_qualified = 0x7f010052;
-		public static final int round_background = 0x7f010049;
-		public static final int top_left_qualified = 0x7f01004d;
-		public static final int top_qualified = 0x7f01004b;
-		public static final int top_right_qualified = 0x7f01004e;
+		public static final int border_color = 0x7f01004b;
+		public static final int border_width = 0x7f01004a;
+		public static final int bottom_left_qualified = 0x7f010052;
+		public static final int bottom_qualified = 0x7f01004f;
+		public static final int bottom_right_qualified = 0x7f010053;
+		public static final int corner_radius = 0x7f010049;
+		public static final int is_oval = 0x7f01004d;
+		public static final int left_qualified = 0x7f010054;
+		public static final int right_qualified = 0x7f010055;
+		public static final int round_background = 0x7f01004c;
+		public static final int top_left_qualified = 0x7f010050;
+		public static final int top_qualified = 0x7f01004e;
+		public static final int top_right_qualified = 0x7f010051;
 	}
 	public static final class styleable {
-		public static final int[] RoundedImageView = { 0x0101011d, 0x7f010046, 0x7f010047, 0x7f010048, 0x7f010049, 0x7f01004a, 0x7f01004b, 0x7f01004c, 0x7f01004d, 0x7f01004e, 0x7f01004f, 0x7f010050, 0x7f010051, 0x7f010052 };
+		public static final int[] RoundedImageView = { 0x0101011d, 0x7f010049, 0x7f01004a, 0x7f01004b, 0x7f01004c, 0x7f01004d, 0x7f01004e, 0x7f01004f, 0x7f010050, 0x7f010051, 0x7f010052, 0x7f010053, 0x7f010054, 0x7f010055 };
 		public static final int RoundedImageView_android_scaleType = 0;
 		public static final int RoundedImageView_border_color = 3;
 		public static final int RoundedImageView_border_width = 2;

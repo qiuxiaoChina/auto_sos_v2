@@ -43,5 +43,5 @@
 
     <color name="bg_image_default">#f5f0eb</color>
     <color name="photo_view_bg">#22211e</color>
-
+    <color name="sign_color">#000000</color>
 </resources>

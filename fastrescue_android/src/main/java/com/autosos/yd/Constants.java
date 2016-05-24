@@ -5,11 +5,12 @@ import java.util.concurrent.Executors;
 
 public class Constants {
     public static final boolean DEBUG = true; // 开发模式是 true 的时候可以动态修改服务器地址
-    public static final String APP_VERSION = "1.1.10";
+    public static final String APP_VERSION = "1.1.12.6";
     public static final int VERSION_CODE = 109;
     //public static String HOST = "http://api.auto-sos.com.cn/";
-    public static String HOST = "http://autosos.wicp.net:46622/";//测试服务器
-//    public static String HOST = "http://api.auto-sos.cn/";//正式服务器
+    //public static String HOST = "http://autosos.wicp.net:46622/";//测试服务器
+    public static String HOST = "http://api.test.auto-sos.cn/";//测试服务器
+   // public static String HOST = "http://api.auto-sos.cn/";//正式服务器
 
     public static final String ACTIONNAME_STRING = "com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn";
 
@@ -67,6 +68,14 @@ public class Constants {
     public static  String GET_CHANGE_NUMBER = HOST + "v1/user/change-mobile";               //修改手机号码
     public static  String GET_AUTH_NUMBER = HOST + "v1/auth/device-verify-code";               //验证手机号
 
+    public static String CHECK_IS_PAID = HOST+ "v1/orders/%s/get-pay-stat";  //获取支付状态
+    public static String UPLOAD_COMMENT_SIGN = HOST+"v1/orders/%s/upload-pay-pic";//提交车主签名
+    public static String GET_COMPANY_INFO = HOST+"v1/orders/%s/service-company";//在评价界面 获取服务商信息
+    public static String GET_ORDER_END_INFO = HOST+ "v1/orders/%s/service-detail"; //在订单完成界面显示的信息
+    public static String SUBMIT_COMMENT = HOST+"v1/orders/%s/comment-submit";//提交车主评价
+
+    public static String CONFIRM_THE_SERVICE_COMPLETED = HOST+"v1/orders/%s/get-completed";//获取微信端用户确认到达救援现场
+    public static String CONFIRM_USER_PAID = HOST+"v1/orders/%s/get-is-cash";//判断微信端用户是否现金 或者 微信支付
 
     public static final String USER_FILE = "user.json";                     //存放用户信息（账号密码以及token）
     public static final String LOCATION_DARG = "drag.txt";                  //记录拖车轨迹

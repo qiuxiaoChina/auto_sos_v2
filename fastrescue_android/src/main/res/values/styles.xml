@@ -6,6 +6,12 @@
 
     -->
 
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <!-- Customize your theme here. -->
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="MyAppBaseTheme" parent="android:Theme.Holo.Light">
         <!--
             Theme customizations available in newer API levels can go in
@@ -287,6 +293,13 @@
         <item name="android:indeterminateDrawable">@drawable/bg_ratingbar_progress</item>
         <item name="android:minHeight">31dp</item>
         <item name="android:maxHeight">31dp</item>
+    </style>
+
+    <style name="yellowRatingBar_new_way" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/bg_ratingbar_progress_new_way</item>
+        <item name="android:indeterminateDrawable">@drawable/bg_ratingbar_progress_new_way</item>
+        <item name="android:minHeight">29dp</item>
+        <item name="android:maxHeight">29dp</item>
     </style>
 
     <style name="web_progressBar" parent="@android:style/Widget.ProgressBar.Horizontal">
