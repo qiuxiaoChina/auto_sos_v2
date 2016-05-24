@@ -620,7 +620,7 @@ public class FragmentForWork extends BasicFragment {
 
                             mapView.setVisibility(View.GONE);
                             mAMapNaviView.setVisibility(View.VISIBLE);
-                            mAMapNavi.startNavi(NaviType.GPS);
+                            mAMapNavi.startNavi(NaviType.EMULATOR);
 
                         }
 
