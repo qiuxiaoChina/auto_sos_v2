@@ -6,6 +6,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
@@ -37,6 +39,7 @@ import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
@@ -49,6 +52,7 @@ import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
 import com.amap.api.navi.AMapNaviViewListener;
 import com.amap.api.navi.AMapNaviViewOptions;
+import com.amap.api.navi.enums.AimLessMode;
 import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.enums.PathPlanningStrategy;
 import com.amap.api.navi.model.AMapLaneInfo;
@@ -74,6 +78,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.LogRecord;
 
 
 public class FragmentForWork extends BasicFragment {
@@ -95,21 +100,22 @@ public class FragmentForWork extends BasicFragment {
     private OnLocationChangedListener mListener;
 
     private TextView switch_online;
-    private View head_map;
-  //  private View menu_layout;
+    private View head_map,head_map_tel_navi;
+    //  private View menu_layout;
     private View menu;
-    private View startNavi;
+   // private View startNavi;
     private View startRoute, stopNavi, checkRoute;
-    TextureMapView mapView,mapViewForShow;
-    private AMap amap,amapForShow;
+    TextureMapView mapView, mapViewForShow;
+    private AMap amap, amapForShow;
     // 规划线路
     private RouteOverLay mRouteOverLay;
 
     private static ArrayList<LatLng> latLngs = new ArrayList<LatLng>();
     private UiSettings mUiSettings;
     private Marker marker;
+    private TextView startNavi;
 
-
+    private Handler handler;
     public static Fragment newInstance() {
         if (fragment == null) {
             synchronized (FragmentForWork.class) {
@@ -192,6 +198,8 @@ public class FragmentForWork extends BasicFragment {
         AMapNaviViewOptions options = mAMapNaviView.getViewOptions();
         options.setCrossDisplayEnabled(false);
         options.setTilt(0);
+        options.setLayoutVisible(false);
+        //options.setLayoutVisible(true);
         mAMapNaviView.setViewOptions(options);
 
 
@@ -199,14 +207,18 @@ public class FragmentForWork extends BasicFragment {
         head_map = view.findViewById(R.id.head_map);
         head_map.setOnClickListener(this);
 
-      //  menu_layout = view.findViewById(R.id.menu_layout);
-       // menu_layout.setOnTouchListener(this);
+        head_map_tel_navi = view.findViewById(R.id.head_map_tel_navi);
+        startNavi = (TextView) view.findViewById(R.id.starNavi);
+        startNavi.setOnClickListener(this);
+
+        //  menu_layout = view.findViewById(R.id.menu_layout);
+        // menu_layout.setOnTouchListener(this);
 
         menu = view.findViewById(R.id.menu);
         menu.setOnTouchListener(this);
 
-        startNavi = view.findViewById(R.id.start_navi);
-        startNavi.setOnClickListener(this);
+        //startNavi = view.findViewById(R.id.start_navi);
+       // startNavi.setOnClickListener(this);
 
         startRoute = view.findViewById(R.id.start_route);
         startRoute.setOnClickListener(this);
@@ -226,6 +238,17 @@ public class FragmentForWork extends BasicFragment {
         mRouteOverLay = new RouteOverLay(amap, null);
 
         mStartList.add(mStartLatlng);
+
+        handler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.what==0){
+                    mAMapNaviView.displayOverview();
+                   // mTtsManager.stopSpeaking();
+
+                }
+            }
+        };
         return view;
     }
 
@@ -250,8 +273,7 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mTtsManager = TTSController.getInstance(this.getActivity().getApplicationContext());
-        mTtsManager.init();
+
         // mTtsManager.startSpeaking();
         mAMapNavi = AMapNavi.getInstance(this.getActivity().getApplicationContext());
         mAMapNavi.addAMapNaviListener(this);
@@ -261,6 +283,10 @@ public class FragmentForWork extends BasicFragment {
 
     }
 
+    @Override
+    public void onStartNavi(int i) {
+
+    }
 
     @Override
     public void onNaviSetting() {
@@ -282,19 +308,48 @@ public class FragmentForWork extends BasicFragment {
         return true;
     }
 
+    @Override
+    public void onArriveDestination() {
+
+       mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
+
+    }
+
+    @Override
+    public void onEndEmulatorNavi() {
+
+        mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
+
+    }
+
+    private LatLngBounds latLngBounds = null;
 
     @Override
     public void onCalculateRouteSuccess() {
         AMapNaviPath naviPath = mAMapNavi.getNaviPath();
-
+        latLngBounds = naviPath.getBoundsForPath();
         if (naviPath == null) {
             return;
         }
-        amap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mStartLatlng.getLatitude(), mStartLatlng.getLongitude()),16));
+//        amap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mStartLatlng.getLatitude(), mStartLatlng.getLongitude()), 13));
+//
+//        // 获取路径规划线路，显示到地图上
+//        mRouteOverLay.setAMapNaviPath(naviPath);
+//        mRouteOverLay.addToMap();
 
-        // 获取路径规划线路，显示到地图上
-        mRouteOverLay.setAMapNaviPath(naviPath);
-        mRouteOverLay.addToMap();
+        ViewGroup.MarginLayoutParams margin2 = new ViewGroup.MarginLayoutParams(menu.getLayoutParams());
+        margin2.setMargins(5, 0, 5, 0 - (menu.getLayoutParams().height / 4 * 3));
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin2);
+        layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        menu.setLayoutParams(layoutParams);
+        head_map.setVisibility(View.GONE);
+        head_map_tel_navi.setVisibility(View.VISIBLE);
+        // menu_layout.setVisibility(View.VISIBLE);
+        deactivate();
+        mapView.setVisibility(View.GONE);
+        mAMapNaviView.setVisibility(View.VISIBLE);
+        mAMapNavi.startNavi(NaviType.GPS);
+        handler.sendEmptyMessage(0);
 
     }
 
@@ -480,39 +535,41 @@ public class FragmentForWork extends BasicFragment {
                 switch (event.getAction()) {
 
                     case MotionEvent.ACTION_DOWN:
-                        yDown= event.getRawY();
-                        Log.d("move",yDown+"down");
+                        yDown = event.getRawY();
+                        Log.d("move", yDown + "down");
                         break;
                     case MotionEvent.ACTION_MOVE:
                         yMove = event.getRawY();
-                        Log.d("move",yMove+"");
-                        ViewGroup.MarginLayoutParams margin2=new ViewGroup.MarginLayoutParams(menu.getLayoutParams());
-                        if(yDown-yMove>0){
-                            int move = (int)(yDown-yMove);
-                            Log.d("move",margin2.bottomMargin+":"+margin2.topMargin+":margin");
-                            if(yDown-yMove<=250){
+                        //Log.d("move",yMove+"");
+                        ViewGroup.MarginLayoutParams margin2 = new ViewGroup.MarginLayoutParams(menu.getLayoutParams());
+                        if (yDown - yMove > 0) {
+                            int move = (int) (yDown - yMove);
+                            // Log.d("move",margin2.bottomMargin+":"+margin2.topMargin+":margin");
+                            if (yDown - yMove <= 250) {
 
-                                margin2.setMargins(5,0,5,move-250);
+                                margin2.setMargins(5, 0, 5, move - 250);
 
-                            }else{
+                            } else {
 
-                                margin2.setMargins(5,0,5,0);
+                                margin2.setMargins(5, 0, 5, 0);
                             }
                             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin2);
                             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                             menu.setLayoutParams(layoutParams);
 
-                        }else if(yDown-yMove<0){
+                        } else if (yDown - yMove < 0) {
 
-                            int move = (int)(yDown-yMove);;
-                           // Log.d("move",margin2.bottomMargin+":"+margin2.topMargin+":margin");
-                            if(yDown-yMove>-75){
+                            int move = (int) (yDown - yMove);
+                            ;
+                            Log.d("move", menu.getLayoutParams().height + "");
+                            if (yDown - yMove > -75) {
 
-                                margin2.setMargins(5,0,5,move*2);
-                            }else{
+                                margin2.setMargins(5, 0, 5, move * 2);
+                            } else {
 
-                                margin2.setMargins(5,0,5,-480);
+                                margin2.setMargins(5, 0, 5, 0 - (menu.getLayoutParams().height / 4 * 3));
                             }
+
                             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin2);
                             layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
                             menu.setLayoutParams(layoutParams);
@@ -533,7 +590,7 @@ public class FragmentForWork extends BasicFragment {
 
     @Override
     public void onMapLoaded() {
-       // Toast.makeText(getActivity().getApplicationContext(),"map load over",Toast.LENGTH_SHORT).show();
+        // Toast.makeText(getActivity().getApplicationContext(),"map load over",Toast.LENGTH_SHORT).show();
         amap.moveCamera(CameraUpdateFactory.zoomTo(16));
         amap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(29.807633, 121.555842)));
     }
@@ -541,6 +598,23 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.starNavi:
+                if("开启导航".equals(startNavi.getText())){
+
+                    mTtsManager = TTSController.getInstance(this.getActivity().getApplicationContext());
+                    mTtsManager.init();
+                    mTtsManager.startSpeaking();
+                    mAMapNavi.addAMapNaviListener(mTtsManager);
+                    mAMapNaviView.recoverLockMode();
+                    startNavi.setText("停止导航");
+                }else{
+                    mAMapNaviView.displayOverview();
+                    mTtsManager.stopSpeaking();
+                    mTtsManager=null;
+                    startNavi.setText("开启导航");
+                }
+
+                break;
             case R.id.head_map:
 
                 if ("离线>>>".equals(switch_online.getText())) {
@@ -563,39 +637,6 @@ public class FragmentForWork extends BasicFragment {
                 }
                 break;
 
-            case R.id.start_navi:
-                latLngs.clear();
-                if (mStartList.isEmpty() || mEndList.isEmpty()) {
-
-                    Toast.makeText(getActivity().getApplicationContext(), "设定起点和终点", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    head_map.setVisibility(View.GONE);
-                   // menu_layout.setVisibility(View.VISIBLE);
-                    deactivate();
-                    amap.animateCamera(CameraUpdateFactory.zoomTo(20), 2000, new AMap.CancelableCallback() {
-
-
-                        @Override
-                        public void onFinish() {
-
-
-                            mapView.setVisibility(View.GONE);
-                            mAMapNaviView.setVisibility(View.VISIBLE);
-                            mAMapNavi.startNavi(NaviType.GPS);
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    });
-
-
-                }
-
-                break;
             case R.id.start_route:
                 amap.clear(true);
                 mapViewForShow.setVisibility(View.GONE);
@@ -617,6 +658,7 @@ public class FragmentForWork extends BasicFragment {
                 amap.clear(true);
                 setUpMap();
                 head_map.setVisibility(View.VISIBLE);
+                head_map_tel_navi.setVisibility(View.GONE);
                 break;
             case R.id.check_route:
                 try {
@@ -624,46 +666,48 @@ public class FragmentForWork extends BasicFragment {
                     amapForShow.clear(true);
                     mapViewForShow.setVisibility(View.VISIBLE);
                     mapView.setVisibility(View.GONE);
+
                     boolean flag = true;
                     List<LatLng> newLatLngs = new ArrayList<LatLng>();
-                    for(LatLng l : latLngs){
-                        if(flag){
+                    for (LatLng l : latLngs) {
+                        if (flag) {
 
                             newLatLngs.add(l);
                             flag = false;
 
-                        }else{
+                        } else {
 
                             flag = true;
                         }
                     }
 
                     if (newLatLngs.size() % 2 == 0) {
-                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get(latLngs.size()/2),13));
+                        //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
+                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get(latLngs.size() / 2), 13));
                         for (int i = 0; i < newLatLngs.size() - 2; i++) {
                             List<LatLng> l = new ArrayList<LatLng>();
 
-                                l.add(latLngs.get(i));
-                                l.add(latLngs.get(i+1));
+                            l.add(latLngs.get(i));
+                            l.add(latLngs.get(i + 1));
                             Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
                             polyLine.setPoints(l);
                         }
 
                     } else {
-                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get((latLngs.size()-1)/2),13));
+                        //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
+                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get((latLngs.size() - 1) / 2), 13));
 
                         for (int i = 0; i < newLatLngs.size() - 3; i++) {
                             List<LatLng> l = new ArrayList<LatLng>();
 
-                                l.add(latLngs.get(i));
-                                l.add(latLngs.get(i+1));
+                            l.add(latLngs.get(i));
+                            l.add(latLngs.get(i + 1));
 
                             Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
                             polyLine.setPoints(l);
                         }
 
                     }
-
                     // 初始化Marker添加到地图
                     mStartMarker = amap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
@@ -674,11 +718,11 @@ public class FragmentForWork extends BasicFragment {
                     mEndMarker = amap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                                     .decodeResource(getResources(), R.drawable.end))));
-                   // menu.setVisibility(View.GONE);
-                  //  menu_layout.setVisibility(View.VISIBLE);
-                }catch (Exception e){
+                    // menu.setVisibility(View.GONE);
+                    //  menu_layout.setVisibility(View.VISIBLE);
+                } catch (Exception e) {
 
-                    Log.i(TAG,e.getMessage());
+                    Log.i(TAG, e.getMessage());
                 }
 
                 break;
