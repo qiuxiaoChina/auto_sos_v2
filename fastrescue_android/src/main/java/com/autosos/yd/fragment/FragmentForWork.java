@@ -19,6 +19,7 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -95,7 +96,7 @@ public class FragmentForWork extends BasicFragment {
 
     private TextView switch_online;
     private View head_map;
-    private View menu_layout;
+  //  private View menu_layout;
     private View menu;
     private View startNavi;
     private View startRoute, stopNavi, checkRoute;
@@ -132,6 +133,7 @@ public class FragmentForWork extends BasicFragment {
     public void onResume() {
         super.onResume();
         mapView.onResume();
+        mapViewForShow.onResume();
         //mapView.setVisibility(View.VISIBLE);
         Log.d(TAG, "resume");
 
@@ -144,6 +146,7 @@ public class FragmentForWork extends BasicFragment {
     public void onPause() {
         super.onPause();
         mapView.onPause();
+        mapViewForShow.onPause();
         //mapView.setVisibility(View.GONE);
         Log.d(TAG, "pause");
         //deactivate();
@@ -156,6 +159,7 @@ public class FragmentForWork extends BasicFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
+        mapViewForShow.onSaveInstanceState(outState);
     }
 
     /**
@@ -167,7 +171,9 @@ public class FragmentForWork extends BasicFragment {
         Log.i(TAG, "destroy");
         deactivate();
         mapView.onDestroy();
+        mapViewForShow.onDestroy();
         amap = null;
+        amapForShow = null;
         mAMapNavi.stopNavi();
         mTtsManager.destroy();
         mAMapNavi.destroy();
@@ -191,10 +197,10 @@ public class FragmentForWork extends BasicFragment {
 
         switch_online = (TextView) view.findViewById(R.id.switch_online);
         head_map = view.findViewById(R.id.head_map);
-        head_map.setOnTouchListener(this);
+        head_map.setOnClickListener(this);
 
-        menu_layout = view.findViewById(R.id.menu_layout);
-        menu_layout.setOnTouchListener(this);
+      //  menu_layout = view.findViewById(R.id.menu_layout);
+       // menu_layout.setOnTouchListener(this);
 
         menu = view.findViewById(R.id.menu);
         menu.setOnTouchListener(this);
@@ -235,7 +241,7 @@ public class FragmentForWork extends BasicFragment {
         }
 
         if (amapForShow == null) {
-            Log.d(TAG, "get Amap");
+            Log.d(TAG, "get AmapForShow");
             amapForShow = mapViewForShow.getMap();
         }
     }
@@ -250,7 +256,7 @@ public class FragmentForWork extends BasicFragment {
         mAMapNavi = AMapNavi.getInstance(this.getActivity().getApplicationContext());
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
-        mAMapNavi.setEmulatorNaviSpeed(300);
+        mAMapNavi.setEmulatorNaviSpeed(100);
         Log.d(TAG, "create");
 
     }
@@ -285,6 +291,7 @@ public class FragmentForWork extends BasicFragment {
             return;
         }
         amap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mStartLatlng.getLatitude(), mStartLatlng.getLongitude()),16));
+
         // 获取路径规划线路，显示到地图上
         mRouteOverLay.setAMapNaviPath(naviPath);
         mRouteOverLay.addToMap();
@@ -317,10 +324,6 @@ public class FragmentForWork extends BasicFragment {
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory
                 .fromResource(R.drawable.location_marker));// 设置小蓝点的图标
-//        myLocationStyle.strokeColor(Color.BLACK);// 设置圆形的边框颜色
-//        myLocationStyle.radiusFillColor(Color.argb(100, 0, 0, 180));// 设置圆形的填充颜色
-//        // myLocationStyle.anchor(int,int)//设置小蓝点的锚点
-//        myLocationStyle.strokeWidth(1.0f);// 设置圆形的边框粗细
         amap.setMyLocationStyle(myLocationStyle);
         amap.setLocationSource(this);// 设置定位监听
         amap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
@@ -343,25 +346,7 @@ public class FragmentForWork extends BasicFragment {
             public void onMapClick(LatLng latLng) {
 
                 mRouteOverLay.removeFromMap();
-//                if (mapClickStartReady && !mapClickEndReady) {
-//                    mStartLatlng = new NaviLatLng(latLng.latitude, latLng.longitude);
-//                    mStartMarker.setPosition(latLng);
-//                    mStartList.clear();
-//                    mStartList.add(mStartLatlng);
-//                    mapClickStartReady=false;
-//                    mapClickEndReady = true;
-//                    return;
-//                }
 
-
-//                if (mapClickEndReady && !mapClickStartReady) {
-//                    mEndLatlng = new NaviLatLng(latLng.latitude, latLng.longitude);
-//                    mEndMarker.setPosition(latLng);
-//                    mEndList.clear();
-//                    mEndList.add(mEndLatlng);
-//                    mapClickStartReady=true;
-//                    mapClickEndReady=false;
-//                }
                 if (mapClickEndReady) {
                     mEndMarker = amap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
@@ -394,18 +379,7 @@ public class FragmentForWork extends BasicFragment {
                 mStartList.add(mStartLatlng);
                 amap.moveCamera(CameraUpdateFactory.changeTilt(0));
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
-//                if(marker!=null)marker.destroy();
-//                LatLng latLng = new LatLng(aMapLocation.getLatitude(),
-//                        aMapLocation.getLongitude());
-//                // 定位成功后把地图移动到当前可视区域内
-//
-//                amap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,16));
-//                // 自定义定位成功后的小圆点
-//                marker=amap.addMarker(new MarkerOptions().position(latLng)
-//                        .anchor(0.5f,0.5f).icon(BitmapDescriptorFactory
-//                        .fromResource(R.drawable.location_marker)));
 
-                //Toast.makeText(this.getActivity().getApplicationContext(), aMapLocation.getLatitude()+"", Toast.LENGTH_SHORT).show();
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 //  Log.d(TAG,errText);
@@ -458,10 +432,10 @@ public class FragmentForWork extends BasicFragment {
 
 
     //记录手指按下时的横坐标。
-    private float xDown;
+    private float yDown;
 
     //记录手指移动时的横坐标。
-    private float xMove;
+    private float yMove;
 
 
     //用于计算手指滑动的速度。
@@ -502,86 +476,54 @@ public class FragmentForWork extends BasicFragment {
     public boolean onTouch(View v, MotionEvent event) {
         switch (v.getId()) {
 
-            case R.id.menu_layout:
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    menu.setVisibility(View.VISIBLE);
-                    menu_layout.setVisibility(View.GONE);
-
-
-                }
-                break;
             case R.id.menu:
                 switch (event.getAction()) {
 
-                    case MotionEvent.ACTION_UP:
-                        menu.setVisibility(View.GONE);
-                        menu_layout.setVisibility(View.VISIBLE);
-                        break;
-
-
-                    default:
-                        break;
-                }
-
-
-                break;
-
-            case R.id.head_map:
-                createVelocityTracker(event);
-                //ContentViewPager cvp = (ContentViewPager) getActivity().findViewById(R.id.content_viewpager);
-                switch (event.getAction()) {
                     case MotionEvent.ACTION_DOWN:
-                        xDown = event.getRawX();
-
-                        break;
-
-                    case MotionEvent.ACTION_UP:
+                        yDown= event.getRawY();
+                        Log.d("move",yDown+"down");
                         break;
                     case MotionEvent.ACTION_MOVE:
-                        xMove = event.getRawX();
-                        //活动的距离
-                        int distanceX = (int) (xMove - xDown);
+                        yMove = event.getRawY();
+                        Log.d("move",yMove+"");
+                        ViewGroup.MarginLayoutParams margin2=new ViewGroup.MarginLayoutParams(menu.getLayoutParams());
+                        if(yDown-yMove>0){
+                            int move = (int)(yDown-yMove);
+                            Log.d("move",margin2.bottomMargin+":"+margin2.topMargin+":margin");
+                            if(yDown-yMove<=250){
 
-                        //获取顺时速度
-                        int xSpeed = getScrollVelocity();
+                                margin2.setMargins(5,0,5,move-250);
 
-                        //当滑动的距离大于我们设定的最小距离且滑动的瞬间速度大于我们设定的速度时，返回到上一个activity
-                        if (distanceX > XDISTANCE_MIN && xSpeed > XSPEED_MIN) {
-                            if ("离线>>>".equals(switch_online.getText())) {
+                            }else{
 
-                                getActivity().findViewById(R.id.content_radiogroup).setVisibility(View.GONE);
-
-                                //  cvp.setScrollble(false);
-                                // amap.clear();
-                                init();
-                                setUpMap();
-                                //  mapView.invalidate();
-                                //amap.reloadMap();
-                                menu_layout.setVisibility(View.VISIBLE);
-                                switch_online.setText("在线>>>");
-
-                            } else {
-                                getActivity().findViewById(R.id.content_radiogroup).setVisibility(View.VISIBLE);
-                                menu_layout.setVisibility(View.GONE);
-                                menu.setVisibility(View.GONE);
-                                switch_online.setText("离线>>>");
-                                deactivate();
-                                amap.clear();
-                                amap = null;
+                                margin2.setMargins(5,0,5,0);
                             }
+                            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin2);
+                            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                            menu.setLayoutParams(layoutParams);
 
-                            recycleVelocityTracker();
-                            break;
+                        }else if(yDown-yMove<0){
+
+                            int move = (int)(yDown-yMove);;
+                           // Log.d("move",margin2.bottomMargin+":"+margin2.topMargin+":margin");
+                            if(yDown-yMove>-75){
+
+                                margin2.setMargins(5,0,5,move*2);
+                            }else{
+
+                                margin2.setMargins(5,0,5,-480);
+                            }
+                            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin2);
+                            layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+                            menu.setLayoutParams(layoutParams);
 
                         }
 
-                        break;
-
-
                     default:
                         break;
                 }
+
+
                 break;
 
         }
@@ -591,6 +533,7 @@ public class FragmentForWork extends BasicFragment {
 
     @Override
     public void onMapLoaded() {
+       // Toast.makeText(getActivity().getApplicationContext(),"map load over",Toast.LENGTH_SHORT).show();
         amap.moveCamera(CameraUpdateFactory.zoomTo(16));
         amap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(29.807633, 121.555842)));
     }
@@ -598,18 +541,37 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.head_map:
+
+                if ("离线>>>".equals(switch_online.getText())) {
+
+                    getActivity().findViewById(R.id.content_radiogroup).setVisibility(View.GONE);
+
+                    init();
+                    setUpMap();
+                    menu.setVisibility(View.VISIBLE);
+                    switch_online.setText("在线>>>");
+
+                } else {
+                    getActivity().findViewById(R.id.content_radiogroup).setVisibility(View.VISIBLE);
+                    //menu_layout.setVisibility(View.GONE);
+                    menu.setVisibility(View.GONE);
+                    switch_online.setText("离线>>>");
+                    deactivate();
+                    amap.clear();
+                    amap = null;
+                }
+                break;
+
             case R.id.start_navi:
                 latLngs.clear();
-                //route_latLngs.clear();
-                // navi_route_latLngs.clear();
-
                 if (mStartList.isEmpty() || mEndList.isEmpty()) {
 
                     Toast.makeText(getActivity().getApplicationContext(), "设定起点和终点", Toast.LENGTH_SHORT).show();
                 } else {
 
-                    menu.setVisibility(View.GONE);
-                    menu_layout.setVisibility(View.VISIBLE);
+                    head_map.setVisibility(View.GONE);
+                   // menu_layout.setVisibility(View.VISIBLE);
                     deactivate();
                     amap.animateCamera(CameraUpdateFactory.zoomTo(20), 2000, new AMap.CancelableCallback() {
 
@@ -620,7 +582,7 @@ public class FragmentForWork extends BasicFragment {
 
                             mapView.setVisibility(View.GONE);
                             mAMapNaviView.setVisibility(View.VISIBLE);
-                            mAMapNavi.startNavi(NaviType.EMULATOR);
+                            mAMapNavi.startNavi(NaviType.GPS);
 
                         }
 
@@ -654,21 +616,10 @@ public class FragmentForWork extends BasicFragment {
                 mapView.setVisibility(View.VISIBLE);
                 amap.clear(true);
                 setUpMap();
-//                // 初始化Marker添加到地图
-//                mStartMarker = amap.addMarker(new MarkerOptions()
-//                        .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-//                                .decodeResource(getResources(), R.drawable.start))));
-//                mWayMarker = amap.addMarker(new MarkerOptions()
-//                        .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-//                                .decodeResource(getResources(), R.drawable.way))));
-//                mEndMarker = amap.addMarker(new MarkerOptions()
-//                        .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-//                                .decodeResource(getResources(), R.drawable.end))));
+                head_map.setVisibility(View.VISIBLE);
                 break;
             case R.id.check_route:
-
                 try {
-
                     amap.clear(true);
                     amapForShow.clear(true);
                     mapViewForShow.setVisibility(View.VISIBLE);
@@ -723,8 +674,8 @@ public class FragmentForWork extends BasicFragment {
                     mEndMarker = amap.addMarker(new MarkerOptions()
                             .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
                                     .decodeResource(getResources(), R.drawable.end))));
-                    menu.setVisibility(View.GONE);
-                    menu_layout.setVisibility(View.VISIBLE);
+                   // menu.setVisibility(View.GONE);
+                  //  menu_layout.setVisibility(View.VISIBLE);
                 }catch (Exception e){
 
                     Log.i(TAG,e.getMessage());
