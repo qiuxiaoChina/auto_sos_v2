@@ -11,7 +11,9 @@ import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
@@ -31,6 +34,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
@@ -70,11 +74,15 @@ import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.DrivePath;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.autosos.yd.R;
+import com.autosos.yd.util.DensityUtil;
+import com.autosos.yd.util.DistanceUtil;
 import com.autosos.yd.util.TTSController;
 import com.autosos.yd.view.MainActivity;
 import com.autosos.yd.viewpager.ContentViewPager;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -100,10 +108,10 @@ public class FragmentForWork extends BasicFragment {
     private OnLocationChangedListener mListener;
 
     private TextView switch_online;
-    private View head_map,head_map_tel_navi;
+    private View head_map, head_map_tel_navi;
     //  private View menu_layout;
     private View menu;
-   // private View startNavi;
+    // private View startNavi;
     private View startRoute, stopNavi, checkRoute;
     TextureMapView mapView, mapViewForShow;
     private AMap amap, amapForShow;
@@ -114,8 +122,10 @@ public class FragmentForWork extends BasicFragment {
     private UiSettings mUiSettings;
     private Marker marker;
     private TextView startNavi;
+    private TextView distance_route, distance_moved;
 
     private Handler handler;
+
     public static Fragment newInstance() {
         if (fragment == null) {
             synchronized (FragmentForWork.class) {
@@ -199,6 +209,7 @@ public class FragmentForWork extends BasicFragment {
         options.setCrossDisplayEnabled(false);
         options.setTilt(0);
         options.setLayoutVisible(false);
+        options.setRouteListButtonShow(true);
         //options.setLayoutVisible(true);
         mAMapNaviView.setViewOptions(options);
 
@@ -218,7 +229,7 @@ public class FragmentForWork extends BasicFragment {
         menu.setOnTouchListener(this);
 
         //startNavi = view.findViewById(R.id.start_navi);
-       // startNavi.setOnClickListener(this);
+        // startNavi.setOnClickListener(this);
 
         startRoute = view.findViewById(R.id.start_route);
         startRoute.setOnClickListener(this);
@@ -239,16 +250,20 @@ public class FragmentForWork extends BasicFragment {
 
         mStartList.add(mStartLatlng);
 
+        distance_route = (TextView) view.findViewById(R.id.distance_route);
+        distance_moved = (TextView) view.findViewById(R.id.distance_moved);
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
-                if(msg.what==0){
+                if (msg.what == 0) {
                     mAMapNaviView.displayOverview();
-                   // mTtsManager.stopSpeaking();
+                    // mTtsManager.stopSpeaking();
 
                 }
             }
         };
+
         return view;
     }
 
@@ -278,14 +293,15 @@ public class FragmentForWork extends BasicFragment {
         mAMapNavi = AMapNavi.getInstance(this.getActivity().getApplicationContext());
         mAMapNavi.addAMapNaviListener(this);
         mAMapNavi.addAMapNaviListener(mTtsManager);
-        mAMapNavi.setEmulatorNaviSpeed(100);
+        mAMapNavi.setEmulatorNaviSpeed(200);
         Log.d(TAG, "create");
 
     }
 
     @Override
     public void onStartNavi(int i) {
-
+        dis_moved = 0;
+        latLngs.clear();
     }
 
     @Override
@@ -311,31 +327,37 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onArriveDestination() {
 
-       mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
+        latLngs.remove(latLngs.size() - 1);
+        mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
+        AMapNaviViewOptions option = mAMapNaviView.getViewOptions();
+        option.setPointToCenter(0.5, 0.5);
+        mAMapNaviView.setViewOptions(option);
+        handler.sendEmptyMessage(0);
+
 
     }
 
     @Override
     public void onEndEmulatorNavi() {
 
-        mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
-
+        latLngs.remove(latLngs.size() - 1);
+        distance_moved.setText("实际行进：" + DistanceUtil.checkDistance(dis_moved - last_distance) + "公里");
+        AMapNaviViewOptions option = mAMapNaviView.getViewOptions();
+        option.setPointToCenter(0.5, 0.5);
+        mAMapNaviView.setViewOptions(option);
+        handler.sendEmptyMessage(0);
+        Log.d("distance", "模拟导航结束");
     }
 
-    private LatLngBounds latLngBounds = null;
 
     @Override
     public void onCalculateRouteSuccess() {
+
+        timeStamp = new Date().getTime();
         AMapNaviPath naviPath = mAMapNavi.getNaviPath();
-        latLngBounds = naviPath.getBoundsForPath();
         if (naviPath == null) {
             return;
         }
-//        amap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mStartLatlng.getLatitude(), mStartLatlng.getLongitude()), 13));
-//
-//        // 获取路径规划线路，显示到地图上
-//        mRouteOverLay.setAMapNaviPath(naviPath);
-//        mRouteOverLay.addToMap();
 
         ViewGroup.MarginLayoutParams margin2 = new ViewGroup.MarginLayoutParams(menu.getLayoutParams());
         margin2.setMargins(5, 0, 5, 0 - (menu.getLayoutParams().height / 4 * 3));
@@ -344,22 +366,67 @@ public class FragmentForWork extends BasicFragment {
         menu.setLayoutParams(layoutParams);
         head_map.setVisibility(View.GONE);
         head_map_tel_navi.setVisibility(View.VISIBLE);
+        float route_distance = DistanceUtil.checkDistance(naviPath.getAllLength() / 1000f);
+        distance_route.setText("规划距离：" + route_distance + "公里");
         // menu_layout.setVisibility(View.VISIBLE);
         deactivate();
         mapView.setVisibility(View.GONE);
         mAMapNaviView.setVisibility(View.VISIBLE);
-        mAMapNavi.startNavi(NaviType.GPS);
+        mAMapNavi.startNavi(NaviType.EMULATOR);
         handler.sendEmptyMessage(0);
+        Log.d("distance", timeStamp + "");
 
     }
 
+    //根据时间排轨迹点 通过onLocationChange实时补充
+    private long timeStamp = 0;
+    private float dis_moved = 0;
+    private float last_distance = 0;
 
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
+        long timeNow = new Date().getTime();
+        LatLng currentLatLng = new LatLng(naviInfo.getCoord().getLatitude(), naviInfo.getCoord().getLongitude());
+        if (timeNow > timeStamp) {
 
-        latLngs.add(new LatLng(naviInfo.getCoord().getLatitude(), naviInfo.getCoord().getLongitude()));
+            if (latLngs.size() >= 2) {
+                LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
+                int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
+                float f_dis = DistanceUtil.checkDistance(distance / 1000f);
+                last_distance = f_dis;
+                dis_moved += f_dis;
+                distance_moved.setText("实际行进：" + DistanceUtil.checkDistance(dis_moved) + "公里");
+            }
 
-        //Toast.makeText(getActivity().getApplicationContext(),naviInfo.getCoord().getLatitude()+"::::"+naviInfo.getCoord().getLongitude()+"::::"+naviInfo.getCameraCoord().getLongitude()+"::::"+naviInfo.getCameraCoord().getLatitude(), Toast.LENGTH_SHORT).show();
+            Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance);
+            timeStamp = timeNow;
+            latLngs.add(currentLatLng);
+
+        }
+
+    }
+
+    @Override
+    public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
+        if (aMapNaviLocation.getAccuracy()<=50) {
+
+            long timeNow = new Date().getTime();
+            if (timeNow > timeStamp) {
+                LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
+                if (latLngs.size() > 2) {
+                    LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
+                    int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
+                    float f_dis = DistanceUtil.checkDistance(distance / 1000f);
+                    dis_moved += f_dis;
+                    distance_moved.setText("实际行进：" + DistanceUtil.checkDistance(dis_moved) + "公里");
+                }
+                latLngs.add(currentLatLng);
+               // Toast.makeText(getActivity(), "" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
+                timeStamp = timeNow;
+            }
+        }
+
+
     }
 
 
@@ -599,7 +666,7 @@ public class FragmentForWork extends BasicFragment {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.starNavi:
-                if("开启导航".equals(startNavi.getText())){
+                if ("开启导航".equals(startNavi.getText())) {
 
                     mTtsManager = TTSController.getInstance(this.getActivity().getApplicationContext());
                     mTtsManager.init();
@@ -607,10 +674,11 @@ public class FragmentForWork extends BasicFragment {
                     mAMapNavi.addAMapNaviListener(mTtsManager);
                     mAMapNaviView.recoverLockMode();
                     startNavi.setText("停止导航");
-                }else{
+                } else {
                     mAMapNaviView.displayOverview();
                     mTtsManager.stopSpeaking();
-                    mTtsManager=null;
+                    mAMapNavi.removeAMapNaviListener(mTtsManager);
+                    mTtsManager = null;
                     startNavi.setText("开启导航");
                 }
 
@@ -652,9 +720,11 @@ public class FragmentForWork extends BasicFragment {
                 break;
 
             case R.id.stop_navi:
+
                 mAMapNavi.stopNavi();
                 mAMapNaviView.setVisibility(View.GONE);
                 mapView.setVisibility(View.VISIBLE);
+                mapViewForShow.setVisibility(View.GONE);
                 amap.clear(true);
                 setUpMap();
                 head_map.setVisibility(View.VISIBLE);
@@ -683,30 +753,21 @@ public class FragmentForWork extends BasicFragment {
 
                     if (newLatLngs.size() % 2 == 0) {
                         //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
-                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get(latLngs.size() / 2), 13));
-                        for (int i = 0; i < newLatLngs.size() - 2; i++) {
-                            List<LatLng> l = new ArrayList<LatLng>();
-
-                            l.add(latLngs.get(i));
-                            l.add(latLngs.get(i + 1));
-                            Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
-                            polyLine.setPoints(l);
-                        }
+                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(newLatLngs.get(newLatLngs.size() / 2), 13));
 
                     } else {
                         //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
-                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get((latLngs.size() - 1) / 2), 13));
+                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(newLatLngs.get((newLatLngs.size() - 1) / 2), 13));
 
-                        for (int i = 0; i < newLatLngs.size() - 3; i++) {
-                            List<LatLng> l = new ArrayList<LatLng>();
+                    }
 
-                            l.add(latLngs.get(i));
-                            l.add(latLngs.get(i + 1));
+                    for (int i = 0; i < newLatLngs.size(); i++) {
+                        List<LatLng> l = new ArrayList<LatLng>();
 
-                            Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
-                            polyLine.setPoints(l);
-                        }
-
+                        l.add(newLatLngs.get(i));
+                        l.add(newLatLngs.get(i + 1));
+                        Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
+                        polyLine.setPoints(l);
                     }
                     // 初始化Marker添加到地图
                     mStartMarker = amap.addMarker(new MarkerOptions()
