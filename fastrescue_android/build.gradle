@@ -54,7 +54,7 @@ dependencies {
     compile files('libs/GetuiExt-2.0.3.jar')
     compile files('libs/GetuiSDK2.8.1.0.jar')
     compile files('libs/json_simple-1.1.jar')
-    // compile 'com.android.support:support-v4:+'
+   // compile 'com.android.support:support-v4'
     compile files('libs/myjson-1.7.1.jar')
     compile files('libs/alipaysdk.jar')
     compile files('libs/alipaysecsdk.jar')

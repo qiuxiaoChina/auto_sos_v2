@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
@@ -73,12 +74,18 @@ import com.amap.api.navi.view.RouteOverLay;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.DrivePath;
 import com.autonavi.tbt.TrafficFacilityInfo;
+import com.autosos.yd.Constants;
 import com.autosos.yd.R;
+import com.autosos.yd.task.NewHttpPostTask;
+import com.autosos.yd.task.OnHttpRequestListener;
 import com.autosos.yd.util.DensityUtil;
 import com.autosos.yd.util.DistanceUtil;
 import com.autosos.yd.util.TTSController;
+import com.autosos.yd.util.Utils;
 import com.autosos.yd.view.MainActivity;
 import com.autosos.yd.viewpager.ContentViewPager;
+
+import org.json.JSONObject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -86,6 +93,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.LogRecord;
 
 
@@ -200,7 +208,7 @@ public class FragmentForWork extends BasicFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         Log.d(TAG, "createView");
-        View view = inflater.inflate(R.layout.fragment_fragment_for_work, null);
+        final View view = inflater.inflate(R.layout.fragment_fragment_for_work, null);
         mAMapNaviView = (AMapNaviView) view.findViewById(R.id.navi_view);
         mAMapNaviView.onCreate(savedInstanceState);
         mAMapNaviView.setAMapNaviViewListener(this);
@@ -260,9 +268,37 @@ public class FragmentForWork extends BasicFragment {
                     mAMapNaviView.displayOverview();
                     // mTtsManager.stopSpeaking();
 
+                }else if(msg.what==1){
+                    Log.d("start","尝试上线");
+                    Map<String, Object> map = new HashMap<>();
+                    map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
+                    map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
+                    new NewHttpPostTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+                        @Override
+                        public void onRequestCompleted(Object obj) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(obj.toString());
+                                if (jsonObject.getString("result").equals("1")) {
+                                    Log.d("start","上线成功");
+                                } else {
+                                    Toast.makeText(getActivity().getApplicationContext(), R.string.msg_change_error, Toast.LENGTH_LONG).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onRequestFailed(Object obj) {
+
+                            Toast.makeText(getActivity().getApplicationContext(), "网络环境不太好，更新订单失败", Toast.LENGTH_LONG).show();
+                        }
+                    }).execute(Constants.USER_START_WORK_URL, map);
                 }
             }
         };
+
+
 
         return view;
     }
@@ -300,8 +336,7 @@ public class FragmentForWork extends BasicFragment {
 
     @Override
     public void onStartNavi(int i) {
-        dis_moved = 0;
-        latLngs.clear();
+
     }
 
     @Override
@@ -332,7 +367,7 @@ public class FragmentForWork extends BasicFragment {
         AMapNaviViewOptions option = mAMapNaviView.getViewOptions();
         option.setPointToCenter(0.5, 0.5);
         mAMapNaviView.setViewOptions(option);
-        handler.sendEmptyMessage(0);
+        //handler.sendEmptyMessage(0);
 
 
     }
@@ -345,7 +380,7 @@ public class FragmentForWork extends BasicFragment {
         AMapNaviViewOptions option = mAMapNaviView.getViewOptions();
         option.setPointToCenter(0.5, 0.5);
         mAMapNaviView.setViewOptions(option);
-        handler.sendEmptyMessage(0);
+       // handler.sendEmptyMessage(0);
         Log.d("distance", "模拟导航结束");
     }
 
@@ -372,7 +407,7 @@ public class FragmentForWork extends BasicFragment {
         deactivate();
         mapView.setVisibility(View.GONE);
         mAMapNaviView.setVisibility(View.VISIBLE);
-        mAMapNavi.startNavi(NaviType.EMULATOR);
+        mAMapNavi.startNavi(NaviType.GPS);
         handler.sendEmptyMessage(0);
         Log.d("distance", timeStamp + "");
 
@@ -686,13 +721,14 @@ public class FragmentForWork extends BasicFragment {
             case R.id.head_map:
 
                 if ("离线>>>".equals(switch_online.getText())) {
-
+                    handler.sendEmptyMessage(1);
                     getActivity().findViewById(R.id.content_radiogroup).setVisibility(View.GONE);
-
                     init();
                     setUpMap();
                     menu.setVisibility(View.VISIBLE);
                     switch_online.setText("在线>>>");
+
+
 
                 } else {
                     getActivity().findViewById(R.id.content_radiogroup).setVisibility(View.VISIBLE);
@@ -781,6 +817,9 @@ public class FragmentForWork extends BasicFragment {
                                     .decodeResource(getResources(), R.drawable.end))));
                     // menu.setVisibility(View.GONE);
                     //  menu_layout.setVisibility(View.VISIBLE);
+                    dis_moved = 0;
+                    latLngs.clear();
+
                 } catch (Exception e) {
 
                     Log.i(TAG, e.getMessage());

@@ -38,6 +38,7 @@ import com.autosos.yd.viewpager.ContentViewPager;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.igexin.sdk.PushManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,7 @@ public class MainActivity extends FragmentActivity implements View.OnTouchListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushManager.getInstance().initialize(this.getApplicationContext());
         setContentView(R.layout.activity_main3);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD

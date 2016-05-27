@@ -45,17 +45,11 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PushManager.getInstance().initialize(this.getApplicationContext());
         setContentView(R.layout.activity_splash);
-//        Intent startIntent = new Intent(SplashActivity.this, UpdateStateServe.class);//开启心跳服务
-//        startService(startIntent);
-
-//        CatchException catchException = CatchException.getInstance();//开启异常捕捉
-//        catchException.init(getApplicationContext());
         if(Constants.DEBUG){
             ((TextView)findViewById(R.id.debug)).setText(R.string.label_debug);
         }
-//        version = new com.autosos.yd.model.Version();
-//        version.setVerCode(0);
         progressBarView =(ProgressBar)findViewById(R.id.progressBar_download);
         progressBarView.setVisibility(View.GONE);
 
@@ -95,7 +89,7 @@ public class SplashActivity extends Activity {
                 if (isFinishing()) {
                     return;
                 }
-                Intent i = new Intent(com.autosos.yd.view.SplashActivity.this, MainActivity.class);
+                Intent i = new Intent(com.autosos.yd.view.SplashActivity.this, LoginActivity.class);
                 com.autosos.yd.view.SplashActivity.this.startActivity(i);
                 com.autosos.yd.view.SplashActivity.this.finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

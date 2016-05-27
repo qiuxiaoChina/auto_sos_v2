@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical"
+    android:padding="7dp">
+
+    <RelativeLayout
+        android:layout_width="125dp"
+        android:layout_height="125dp"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/bg_transparent_red_round_stroke" />
+
+        <com.autosos.yd.widget.CustomImage
+            android:id="@+id/customImage"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/color_red"
+            android:textSize="@dimen/large_text_size" />
+
+        <ImageView
+            android:id="@+id/complate"
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/icon_complete"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/customImage"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:includeFontPadding="false"
+            android:textColor="@color/color_red"
+            android:textSize="@dimen/medium_text_size2" />
+    </RelativeLayout>
+
+</RelativeLayout>
