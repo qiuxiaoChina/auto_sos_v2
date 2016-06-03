@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:2:1-195:12
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:2:1-209:12
 	package
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:3:5-29
 		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
@@ -166,7 +166,7 @@ ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidMani
 	android:name
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:56:22-64
 application
-ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:58:5-193:19
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:58:5-207:19
 MERGED from [com.android.support:appcompat-v7:21.0.3] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\AndroidManifest.xml:16:5-19
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
@@ -392,19 +392,39 @@ ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidMani
 	android:label
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:181:13-45
 	android:theme
-		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:182:13-71
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:182:13-66
 	android:name
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:180:13-47
-activity#com.autosos.yd.view.MainActivity
+activity#com.autosos.yd.view.CheckActivity
 ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:186:9-191:20
 	android:screenOrientation
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:190:13-49
 	android:label
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:188:13-45
 	android:theme
-		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:189:13-71
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:189:13-66
 	android:name
-		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:187:13-46
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:187:13-47
+activity#com.autosos.yd.view.FillCodeActivity
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:193:9-198:20
+	android:screenOrientation
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:197:13-49
+	android:label
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:195:13-45
+	android:theme
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:196:13-66
+	android:name
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:194:13-50
+activity#com.autosos.yd.view.MainActivity
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:200:9-205:20
+	android:screenOrientation
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:204:13-49
+	android:label
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:202:13-45
+	android:theme
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:203:13-66
+	android:name
+		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:201:13-46
 uses-sdk
 INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:appcompat-v7:21.0.3] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\AndroidManifest.xml:15:5-42

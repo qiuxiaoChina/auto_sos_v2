@@ -47,7 +47,7 @@ import java.util.Map;
 public class LoginActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "LoginActivity";
-    private static final String FILE_NAME="saveUserName";
+    private static final String FILE_NAME = "saveUserName";
     private View progressBar;
     private EditText usernameView;
     private EditText passwordView;
@@ -56,12 +56,16 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private boolean psw_enter;
     private Button loginView;
     private String code;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         uname_enter = false;
         psw_enter = false;
+        if (getIntent().getBooleanExtra("logout", false)) {
+            Session.getInstance().logout(this);
+        }
         loginView = (Button) findViewById(R.id.login);
         loginView.setOnClickListener(this);
         progressBar = findViewById(R.id.progressBar);
@@ -71,10 +75,74 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         usernameView = (EditText) findViewById(R.id.username);
         passwordView = (EditText) findViewById(R.id.password);
 
+        User user = Session.getInstance().getCurrentUser(com.autosos.yd.view.LoginActivity.this);
+        if (user != null) {
+            // unregisterReceiver(broadcastReceiver);
+            showMain(null);
+        } else {
+
+            SharedPreferences sharedPreferences = getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
+            String usernameContent = sharedPreferences.getString("username", "");
+            if (usernameContent != null && !"".equals(usernameContent))
+                usernameView.setText(usernameContent);
+            if (usernameView.getText().length() > 0) {
+                uname_enter = true;
+            }
+            usernameView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (usernameView.getText().length() > 0) {
+                        uname_enter = true;
+                    } else
+                        uname_enter = false;
+                    if (psw_enter && uname_enter) {
+                        loginView.setBackgroundResource(R.drawable.bg_btn_second_green);
+                    } else {
+                        loginView.setBackgroundResource(R.drawable.bg_shape_second_grav);
+                    }
+                }
+            });
+            passwordView.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (passwordView.getText().length() > 0) {
+                        psw_enter = true;
+                    } else
+                        psw_enter = false;
+                    if (psw_enter && uname_enter) {
+                        loginView.setBackgroundResource(R.drawable.bg_btn_second_green);
+                    } else {
+                        loginView.setBackgroundResource(R.drawable.bg_shape_second_grav);
+                    }
+                }
+            });
+        }
+        if (getIntent().getBooleanExtra("fillcode", false)) {
+            login();
+        }
+
     }
 
 
-    public void login(){
+    public void login() {
         if (this.getCurrentFocus() != null) {
             ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
                     .hideSoftInputFromWindow(this.getCurrentFocus()
@@ -83,7 +151,18 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
         String username = usernameView.getText().toString();
         String password = passwordView.getText().toString();
-        progressBar.setVisibility(View.VISIBLE);
+
+        if (getIntent().getBooleanExtra("fillcode", false)) {
+            username = getIntent().getStringExtra("username");
+            password = getIntent().getStringExtra("password");
+        }
+        if (TextUtils.isEmpty(username)) {
+            Toast.makeText(this, R.string.msg_username_empty, Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, R.string.msg_password_empty, Toast.LENGTH_SHORT).show();
+        } else {
+
+            progressBar.setVisibility(View.VISIBLE);
 
             Map<String, Object> map = new HashMap<>();
             map.put("username", username);
@@ -95,7 +174,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             String clientId = getSharedPreferences("cid",
                     Context.MODE_PRIVATE).getString("cid", null);
             map.put("getui_cid", clientId);
-             Log.e("code", "cid === " + clientId);
+            Log.e("code", "cid === " + clientId);
 
 
             new NewHttpPostTask(this, new OnHttpRequestListener() {
@@ -112,19 +191,28 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 showMain(null);
 
                             } else {
-                                if (jsonObject.optInt("code") == 9 || jsonObject.optInt("code") == 10 ){
+                                if (jsonObject.optInt("code") == 9 || jsonObject.optInt("code") == 10) {
                                     String username = usernameView.getText().toString();
                                     String password = passwordView.getText().toString();
 
                                     Log.e("login", "mobile === " + jsonObject.optString("mobile"));
-                                    Log.e("login","username === "+username);
-                                    Log.e("login","password === "+password);
+                                    Log.e("login", "username === " + username);
+                                    Log.e("login", "password === " + password);
+                                    Intent intent = new Intent(LoginActivity.this, CheckActivity.class);
+                                    intent.putExtra("mobile", jsonObject.optString("mobile"));
+                                    Log.e("log", "mobile === " + jsonObject.optString("mobile"));
+                                    Log.e("log", "username === " + username);
+                                    Log.e("log", "password === " + password);
+                                    intent.putExtra("username", username);
+                                    intent.putExtra("password", password);
+                                    startActivity(intent);
+                                    finish();
 
-                                    if (jsonObject.optInt("code") == 10){
+                                    if (jsonObject.optInt("code") == 10) {
                                         Toast.makeText(com.autosos.yd.view.LoginActivity.this, "", Toast.LENGTH_SHORT).show();
                                     }
 
-                                }else {
+                                } else {
                                     String msg = jsonObject.optString("msg");
                                     Toast.makeText(com.autosos.yd.view.LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
                                 }
@@ -142,6 +230,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 }
             }).execute(Constants.ACCESS_TOKEN_URL, map);
+        }
 
 
     }
@@ -163,7 +252,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -175,6 +263,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onResume();
         MobclickAgent.onResume(this);
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -184,7 +273,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()){
+        switch (v.getId()) {
 
             case R.id.login:
                 login();

@@ -68,6 +68,12 @@ public class GetuiSdkMsgReceiver extends BroadcastReceiver {
                             .FLAG_ONGOING_EVENT;
 
                     manager.notify(0, notification);
+
+                    Intent intentFilter = new Intent();
+                    intentFilter.setAction("newOrder");
+                    intentFilter.putExtra("order",data);
+                    context.sendBroadcast(intentFilter);
+
                 }
                 break;
             default:

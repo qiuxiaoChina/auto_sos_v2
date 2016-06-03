@@ -1,6 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android_custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/mainPage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
    <LinearLayout
        android:id="@+id/head_map_tel_navi"
        android:layout_width="match_parent"
@@ -51,7 +56,7 @@
                android:layout_width="match_parent"
                android:layout_height="35dp"
                android:padding="7dp"
-               android:text="目的地："
+               android:text="预定目的地："
                android:textColor="#ffffff"
                android:textSize="15sp"
                android:layout_alignParentTop="true"/>
@@ -155,14 +160,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:background="#6ed289"
+        android:background="@drawable/bg_menu_shape_green"
         android:orientation="vertical"
         android:layout_marginBottom="-170dp"
         android:visibility="gone"
         >
         <!--android:layout_marginBottom="-250dp"-->
         <RelativeLayout
-            android:background="#2b9275"
+            android:background="@drawable/bg_title_shape_green"
             android:layout_width="match_parent"
             android:layout_height="50dp">
 
@@ -224,6 +229,127 @@
 
         </RelativeLayout>
     </LinearLayout>
+   </RelativeLayout>
+
+    <com.autosos.yd.Layout.MyRaletiveLayout
+        android:id="@+id/newOrder"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#4d000000"
+        android:visibility="gone"
+        >
+
+        <ImageView
+            android:layout_width="333dp"
+            android:layout_height="450dp"
+            android:src="@drawable/order_background"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="67dp"
+            />
+
+        <View
+            android:id="@+id/closeNewOrder"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_width="50dp"
+            android:layout_height="100dp"/>
+
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="29dp"
+            android:src="@drawable/order_start"
+            android:layout_marginTop="125dp"
+            android:layout_marginLeft="80dp"/>
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="29dp"
+            android:src="@drawable/order_end"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="125dp"
+            android:layout_marginRight="80dp"/>
+
+        <ImageView
+            android:layout_width="84dp"
+            android:layout_height="2dp"
+            android:src="@drawable/fill_line"
+            android:layout_marginTop="140dp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="鄞州区日丽中路557号"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:maxLines="2"
+            android:textColor="#333333"
+            android:layout_marginTop="170dp"
+            android:layout_marginLeft="41dp"/>
+
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="姜山镇姜明哈哈哈哈哈哈哈哈"
+            android:textSize="14sp"
+            android:gravity="center"
+            android:maxLines="2"
+            android:textColor="#333333"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="170dp"
+            android:layout_marginRight="41dp"/>
+
+
+        <View
+
+            android:layout_width="327dp"
+            android:layout_height="2dp"
+            android:background="@drawable/dot_line"
+            android:layout_marginTop="220dp"
+            android:layout_centerHorizontal="true"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新的订单"
+            android:textSize="28sp"
+            android:textColor="#333333"
+            android:layout_marginTop="236dp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="¥"
+            android:layout_marginTop="290dp"
+            android:layout_marginLeft="132dp"
+            android:textSize="18sp"
+            android:textColor="#20b48b"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="355.00"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="283dp"
+            android:layout_marginRight="130dp"
+            android:textSize="28sp"
+            android:textColor="#20b48b"/>
+
+        <ImageView
+            android:id="@+id/intoOrder"
+            android:layout_width="77dp"
+            android:layout_height="77dp"
+            android:src="@drawable/order_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="427dp"
+            />
+
+
+    </com.autosos.yd.Layout.MyRaletiveLayout>
 
 
 </RelativeLayout>

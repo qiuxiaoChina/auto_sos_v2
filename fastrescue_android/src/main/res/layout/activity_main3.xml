@@ -5,82 +5,105 @@
     android:orientation="vertical"
     tools:context=".view.MainActivity">
 
-
-    <com.autosos.yd.viewpager.ContentViewPager
+    <FrameLayout
+        android:id="@+id/realtabcontent"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" />
+    <View
         android:layout_width="match_parent"
-        android:id="@+id/content_viewpager"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="0.3dp"
+        android:background="#e0e0e0"/>
 
+    <android.support.v4.app.FragmentTabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
 
-    </com.autosos.yd.viewpager.ContentViewPager  >
-
-
-
-    <RadioGroup
-        android:id="@+id/content_radiogroup"
-        android:layout_width="match_parent"
-        android:background="@drawable/bg_main_menu"
-        android:layout_height="45dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/rb_work"
+        <FrameLayout
+            android:id="@android:id/tabcontent"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:button="@null"
-            android:drawableTop="@drawable/icon_main_menu1"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:paddingTop="3dp"
-            android:singleLine="true"
-            />
+            android:layout_height="0dp"
+            android:layout_weight="0" />
+    </android.support.v4.app.FragmentTabHost>
 
-        <RadioButton
-            android:id="@+id/rb_order"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:button="@null"
-            android:drawableTop="@drawable/icon_main_menu2"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:singleLine="true"
-            android:paddingTop="3dp"
-            />
 
-        <RadioButton
-            android:id="@+id/rb_mine"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:button="@null"
-            android:drawableTop="@drawable/icon_main_menu3"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:paddingTop="3dp"
-            android:singleLine="true"
-             />
+    <!--<com.autosos.yd.viewpager.ContentViewPager-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:id="@+id/content_viewpager"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1">-->
 
-        <RadioButton
-            android:id="@+id/rb_setting"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:button="@null"
-            android:drawableTop="@drawable/icon_main_menu4"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:paddingTop="3dp"
-            android:singleLine="true" />
 
-    </RadioGroup>
+    <!--</com.autosos.yd.viewpager.ContentViewPager  >-->
+
+
+
+    <!--<RadioGroup-->
+        <!--android:id="@+id/content_radiogroup"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:background="@drawable/bg_main_menu"-->
+        <!--android:layout_height="45dp"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/rb_work"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#00000000"-->
+            <!--android:button="@null"-->
+            <!--android:drawableTop="@drawable/icon_main_menu1"-->
+            <!--android:ellipsize="marquee"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="3dp"-->
+            <!--android:singleLine="true"-->
+            <!--/>-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/rb_order"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#00000000"-->
+            <!--android:button="@null"-->
+            <!--android:drawableTop="@drawable/icon_main_menu2"-->
+            <!--android:ellipsize="marquee"-->
+            <!--android:gravity="center"-->
+            <!--android:singleLine="true"-->
+            <!--android:paddingTop="3dp"-->
+            <!--/>-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/rb_mine"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#00000000"-->
+            <!--android:button="@null"-->
+            <!--android:drawableTop="@drawable/icon_main_menu3"-->
+            <!--android:ellipsize="marquee"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="3dp"-->
+            <!--android:singleLine="true"-->
+             <!--/>-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/rb_setting"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#00000000"-->
+            <!--android:button="@null"-->
+            <!--android:drawableTop="@drawable/icon_main_menu4"-->
+            <!--android:ellipsize="marquee"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="3dp"-->
+            <!--android:singleLine="true" />-->
+
+    <!--</RadioGroup>-->
 
 
 
