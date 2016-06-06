@@ -1,6 +1,9 @@
 package com.autosos.yd.fragment;
 
 
+import android.os.Bundle;
+import android.os.IBinder;
+import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.view.MotionEvent;
 import android.view.View;
@@ -21,12 +24,13 @@ import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.autonavi.tbt.TrafficFacilityInfo;
+import com.iflytek.speech.SynthesizerListener;
 
 /**
  * Created by Administrator on 2016/5/10.
  */
 public class BasicFragment extends Fragment implements AMapNaviViewListener, AMapNaviListener,
-        AMapLocationListener, LocationSource, View.OnTouchListener, AMap.OnMapLoadedListener,View.OnClickListener ,AMap.OnMarkerClickListener{
+        AMapLocationListener, LocationSource, View.OnTouchListener, AMap.OnMapLoadedListener,View.OnClickListener ,AMap.OnMarkerClickListener {
 
 
     @Override
@@ -244,4 +248,6 @@ public class BasicFragment extends Fragment implements AMapNaviViewListener, AMa
     public boolean onMarkerClick(Marker marker) {
         return false;
     }
+
+
 }

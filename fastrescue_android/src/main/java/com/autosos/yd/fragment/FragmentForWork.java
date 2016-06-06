@@ -11,7 +11,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
+import android.os.RemoteException;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -91,11 +93,16 @@ import com.autosos.yd.task.NewHttpPostTask;
 import com.autosos.yd.task.OnHttpRequestListener;
 import com.autosos.yd.util.DensityUtil;
 import com.autosos.yd.util.DistanceUtil;
-import com.autosos.yd.util.TTSController;
 import com.autosos.yd.util.Utils;
 import com.autosos.yd.view.MainActivity;
 import com.autosos.yd.viewpager.ContentViewPager;
 import com.autosos.yd.widget.RoundProgressBar;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechRecognizer;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SynthesizerListener;
+
 
 import org.json.JSONObject;
 
@@ -118,7 +125,7 @@ public class FragmentForWork extends BasicFragment {
     private static FragmentForWork fragment = null;
     AMapNaviView mAMapNaviView;
     AMapNavi mAMapNavi;
-    TTSController mTtsManager;
+    //TTSController mTtsManager;
     NaviLatLng mEndLatlng = new NaviLatLng(29.825846, 121.432765);
     NaviLatLng mStartLatlng = new NaviLatLng(29.807633, 121.555842);
     List<NaviLatLng> mStartList = new ArrayList<NaviLatLng>();
@@ -135,7 +142,7 @@ public class FragmentForWork extends BasicFragment {
     //  private View menu_layout;
     private View menu;
     // private View startNavi;
-    private View startRoute, stopNavi, checkRoute;
+    private View stopNavi, checkRoute;
     TextureMapView mapView, mapViewForShow;
     private AMap amap, amapForShow;
     // 规划线路
@@ -160,6 +167,10 @@ public class FragmentForWork extends BasicFragment {
     private boolean isOnline = false;
     private View closeNewOrder;
     private ImageView intoOrder;
+    private boolean canGetNewOrder = true;
+    private TextView destination ;
+
+    private SpeechSynthesizer mTts = null;
 
     public static Fragment newInstance() {
         if (fragment == null) {
@@ -227,9 +238,12 @@ public class FragmentForWork extends BasicFragment {
         amap = null;
         amapForShow = null;
         mAMapNavi.stopNavi();
-        mTtsManager.destroy();
+        //mTtsManager.destroy();
+        mTts.destroy();
         mAMapNavi.destroy();
     }
+
+    private String s_destination = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -267,8 +281,8 @@ public class FragmentForWork extends BasicFragment {
         //startNavi = view.findViewById(R.id.start_navi);
         // startNavi.setOnClickListener(this);
 
-        startRoute = view.findViewById(R.id.start_route);
-        startRoute.setOnClickListener(this);
+        //startRoute = view.findViewById(R.id.start_route);
+        //startRoute.setOnClickListener(this);
 
         stopNavi = view.findViewById(R.id.stop_navi);
         stopNavi.setOnClickListener(this);
@@ -290,15 +304,17 @@ public class FragmentForWork extends BasicFragment {
         distance_moved = (TextView) view.findViewById(R.id.distance_moved);
 
         newOrder = (MyRaletiveLayout) view.findViewById(R.id.newOrder);
-        newOrder.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
+        newOrder.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mainPage = view.findViewById(R.id.mainPage);
 
-         intoOrder = (ImageView) view.findViewById(R.id.intoOrder);
+        intoOrder = (ImageView) view.findViewById(R.id.intoOrder);
         intoOrder.setOnClickListener(this);
 
         // roundProgressBar = (RoundProgressBar) view.findViewById(R.id.roundProgressBar);
         closeNewOrder = view.findViewById(R.id.closeNewOrder);
         closeNewOrder.setOnClickListener(this);
+
+        destination = (TextView) view.findViewById(R.id.destination);
 
         handler = new Handler() {
             @Override
@@ -321,6 +337,7 @@ public class FragmentForWork extends BasicFragment {
                                 JSONObject jsonObject = new JSONObject(obj.toString());
                                 if (jsonObject.getString("result").equals("1")) {
                                     Log.d("start", "上线成功");
+                                    mTts.startSpeaking("您已成功上线，开始接单",mSynListener);
 
                                 } else {
                                     //Toast.makeText(getActivity().getApplicationContext(), R.string.msg_change_error, Toast.LENGTH_LONG).show();
@@ -351,6 +368,7 @@ public class FragmentForWork extends BasicFragment {
                                 JSONObject jsonObject = new JSONObject(obj.toString());
                                 if (jsonObject.getString("result").equals("1")) {
                                     Log.d("start", "下线成功");
+                                    mTts.startSpeaking("您已停止接单,再见",mSynListener);
 
                                 } else {
                                     // Toast.makeText(getActivity().getApplicationContext(), R.string.msg_change_error, Toast.LENGTH_LONG).show();
@@ -369,14 +387,41 @@ public class FragmentForWork extends BasicFragment {
 
                 } else if (msg.what == 5) {
 
-                    startAlarm();
+                    Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
+                            R.anim.show);
+                    newOrder.setVisibility(View.VISIBLE);
+                    newOrder.startAnimation(animation);
+                    head_map.setVisibility(View.GONE);
+                    menu.setVisibility(View.GONE);
                     try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        JSONObject data = (JSONObject) msg.obj;
+                        s_destination = data.getString("address");
+                        int serviceType = data.getInt("service_type");
+                        double lat = data.getDouble("latitude");
+                        double lon = data.getDouble("longitude");
+                        NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
+                        mEndList.clear();
+                        mEndList.add(accidentPlace);
+                        String s_type = null;
+                        if (serviceType == 1) {
+                            s_type = "搭电";
+                        } else if (serviceType == 2) {
+
+                            s_type = "换胎";
+                        } else if (serviceType == 3) {
+
+                            s_type = "拖车";
+                        } else if (serviceType == 5) {
+
+                            s_type = "快修";
+
+                        }
+                        mTts.startSpeaking("您有新的" + s_type + "订单，地址" + s_destination, mSynListener);
+
+                    } catch (Exception e) {
+
                     }
 
-                    stopAlarm();
                 }
             }
         };
@@ -384,7 +429,6 @@ public class FragmentForWork extends BasicFragment {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("newOrder");
         getActivity().registerReceiver(myBroadcastReciever, intentFilter);
-
 
         return view;
     }
@@ -414,8 +458,20 @@ public class FragmentForWork extends BasicFragment {
         // mTtsManager.startSpeaking();
         mAMapNavi = AMapNavi.getInstance(this.getActivity().getApplicationContext());
         mAMapNavi.addAMapNaviListener(this);
-        mAMapNavi.addAMapNaviListener(mTtsManager);
+        //   mAMapNavi.addAMapNaviListener(mTtsManager);
         mAMapNavi.setEmulatorNaviSpeed(200);
+
+        if (mTts == null) {
+            //1.创建SpeechSynthesizer对象, 第二个参数：本地合成时传InitListener
+            mTts = SpeechSynthesizer.createSynthesizer(getActivity().getApplicationContext(), null);
+            //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
+            mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoqi");//设置发音人
+            mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
+            mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
+            mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
+            // mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
+        }
+
         Log.d(TAG, "create");
 
 
@@ -486,7 +542,7 @@ public class FragmentForWork extends BasicFragment {
         }
 
         ViewGroup.MarginLayoutParams margin2 = new ViewGroup.MarginLayoutParams(menu.getLayoutParams());
-        margin2.setMargins(5, 0, 5, 0 - (menu.getLayoutParams().height / 4 * 3));
+        margin2.setMargins(5, 0, 5, 0 - (menu.getLayoutParams().height / 3 * 2));
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin2);
         layoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         menu.setLayoutParams(layoutParams);
@@ -555,6 +611,22 @@ public class FragmentForWork extends BasicFragment {
 
     }
 
+    private boolean isNavi = false;
+
+    @Override
+    public void onGetNavigationText(int arg0, String arg1) {
+        // TODO Auto-generated method stub
+        if (!isNavi) {
+
+
+        } else {
+
+            mTts.startSpeaking(arg1, mSynListener);
+
+        }
+
+    }
+
 
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
@@ -580,36 +652,6 @@ public class FragmentForWork extends BasicFragment {
         amap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // aMap.setMyLocationType()
         // amap.setMyLocationType(AMap.MAP_TYPE_NAVI);
-        // 初始化Marker添加到地图
-        mStartMarker = amap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                        .decodeResource(getResources(), R.drawable.start))));
-        mWayMarker = amap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                        .decodeResource(getResources(), R.drawable.way))));
-
-//        // amap.setOnMarkerClickListener(this);
-        amap.setOnMapClickListener(new AMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-
-                mRouteOverLay.removeFromMap();
-
-                if (mapClickEndReady) {
-                    mEndMarker = amap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                    .decodeResource(getResources(), R.drawable.end))));
-                    mEndLatlng = new NaviLatLng(latLng.latitude, latLng.longitude);
-                    mEndMarker.setPosition(latLng);
-                    mEndList.clear();
-                    mEndList.add(mEndLatlng);
-                    mapClickEndReady = false;
-                } else {
-                    mEndMarker.remove();
-                    mapClickEndReady = true;
-                }
-            }
-        });
 
 
     }
@@ -622,13 +664,9 @@ public class FragmentForWork extends BasicFragment {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
 
-                if (canGetStartPoint) {
-
-                    mStartList.clear();
-                    mStartLatlng = new NaviLatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                    mStartList.add(mStartLatlng);
-                    canGetStartPoint = false;
-                }
+                mStartList.clear();
+                mStartLatlng = new NaviLatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
+                mStartList.add(mStartLatlng);
                 amap.moveCamera(CameraUpdateFactory.changeTilt(0));
                 mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
 
@@ -764,7 +802,7 @@ public class FragmentForWork extends BasicFragment {
                                 margin2.setMargins(5, 0, 5, move * 2);
                             } else {
 
-                                margin2.setMargins(5, 0, 5, 0 - (menu.getLayoutParams().height / 4 * 3));
+                                margin2.setMargins(5, 0, 5, 0 - (menu.getLayoutParams().height / 3 * 2));
                             }
 
                             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(margin2);
@@ -798,18 +836,23 @@ public class FragmentForWork extends BasicFragment {
             case R.id.starNavi:
                 if ("开启导航".equals(startNavi.getText())) {
 
-                    mTtsManager = TTSController.getInstance(this.getActivity().getApplicationContext());
-                    mTtsManager.init();
-                    mTtsManager.startSpeaking();
-                    mAMapNavi.addAMapNaviListener(mTtsManager);
+//                    mTtsManager = TTSController.getInstance(this.getActivity().getApplicationContext());
+//                    mTtsManager.init();
+//                    mTtsManager.startSpeaking();
+//                    mAMapNavi.addAMapNaviListener(mTtsManager);
+                    isNavi = true;
                     mAMapNaviView.recoverLockMode();
+                    mAMapNaviView.setLockZoom(20);
                     startNavi.setText("停止导航");
+                    mTts.startSpeaking("您已开启导航模式",mSynListener);
                 } else {
                     mAMapNaviView.displayOverview();
-                    mTtsManager.stopSpeaking();
-                    mAMapNavi.removeAMapNaviListener(mTtsManager);
-                    mTtsManager = null;
+//                    mTtsManager.stopSpeaking();
+//                    mAMapNavi.removeAMapNaviListener(mTtsManager);
+//                    mTtsManager = null;
+                    isNavi = false;
                     startNavi.setText("开启导航");
+                    mTts.startSpeaking("您已关闭导航模式",mSynListener);
                 }
 
                 break;
@@ -824,6 +867,7 @@ public class FragmentForWork extends BasicFragment {
                     switch_online.setText("在线>>>");
 
 
+
                 } else {
                     handler.sendEmptyMessage(2);
                     getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
@@ -836,20 +880,6 @@ public class FragmentForWork extends BasicFragment {
                 }
                 break;
 
-            case R.id.start_route:
-                amap.clear(true);
-                mapViewForShow.setVisibility(View.GONE);
-                mapView.setVisibility(View.VISIBLE);
-                if (mStartList.isEmpty()) {
-
-                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
-                } else {
-
-                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
-                    distance_moved.setText("实际行进：0.0公里");
-                }
-
-                break;
 
             case R.id.stop_navi:
                 canGetStartPoint = true;
@@ -861,6 +891,8 @@ public class FragmentForWork extends BasicFragment {
                 setUpMap();
                 head_map.setVisibility(View.VISIBLE);
                 head_map_tel_navi.setVisibility(View.GONE);
+                isNavi = false;
+                canGetNewOrder = true;
                 break;
             case R.id.check_route:
                 try {
@@ -901,18 +933,6 @@ public class FragmentForWork extends BasicFragment {
                         Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
                         polyLine.setPoints(l);
                     }
-                    // 初始化Marker添加到地图
-                    mStartMarker = amap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                    .decodeResource(getResources(), R.drawable.start))));
-                    mWayMarker = amap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                    .decodeResource(getResources(), R.drawable.way))));
-                    mEndMarker = amap.addMarker(new MarkerOptions()
-                            .icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory
-                                    .decodeResource(getResources(), R.drawable.end))));
-                    // menu.setVisibility(View.GONE);
-                    //  menu_layout.setVisibility(View.VISIBLE);
 
 
                 } catch (Exception e) {
@@ -933,12 +953,28 @@ public class FragmentForWork extends BasicFragment {
                 newOrder.setVisibility(View.GONE);
                 head_map.setVisibility(View.VISIBLE);
                 menu.setVisibility(View.VISIBLE);
+                mTts.startSpeaking("放弃订单，这样真的好吗?",mSynListener);
+                canGetNewOrder = true;
                 break;
             case R.id.intoOrder:
                 newOrder.clearAnimation();
                 newOrder.setVisibility(View.GONE);
                 head_map.setVisibility(View.VISIBLE);
                 menu.setVisibility(View.VISIBLE);
+                mTts.startSpeaking("开始任务",mSynListener);
+                amap.clear(true);
+                mapViewForShow.setVisibility(View.GONE);
+                mapView.setVisibility(View.VISIBLE);
+                if (mStartList.isEmpty()) {
+
+                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                } else {
+
+                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                    distance_moved.setText("实际行进：0.0公里");
+                    destination.setText("预定目的地:"+s_destination);
+                }
+
                 break;
 
 
@@ -947,9 +983,7 @@ public class FragmentForWork extends BasicFragment {
 
 
     public class MyBroadcastReciever extends BroadcastReceiver {
-        // 加载动画
-        final Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
-                R.anim.show);
+
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -957,12 +991,25 @@ public class FragmentForWork extends BasicFragment {
             if ("newOrder".equals(intent.getAction())) {
                 if (isOnline) {
 
-                    Log.i("newOrder", "有新的订单过来啦----" + intent.getStringExtra("order"));
-                    newOrder.setVisibility(View.VISIBLE);
-                    newOrder.startAnimation(animation);
-                    head_map.setVisibility(View.GONE);
-                    menu.setVisibility(View.GONE);
-                    handler.sendEmptyMessage(5);
+                    if (canGetNewOrder) {
+
+                        Log.i("newOrder", "有新的订单过来啦----" + intent.getStringExtra("order"));
+
+                        try {
+                            JSONObject jsonObject1 = new JSONObject(intent.getStringExtra("order"));
+                            JSONObject jsonObject = jsonObject1.optJSONObject("data");
+                            Message msg = new Message();
+                            canGetNewOrder = false;
+                            msg.what = 5;
+                            msg.obj = jsonObject;
+                            handler.sendMessage(msg);
+
+                        } catch (Exception e) {
+
+
+                        }
+
+                    }
 
                 }
 
@@ -970,29 +1017,41 @@ public class FragmentForWork extends BasicFragment {
         }
     }
 
-    MediaPlayer mMediaPlayer = null;
 
-    private void stopAlarm() {
-        mMediaPlayer.stop();
-    }
+    //合成监听器
+    private SynthesizerListener mSynListener = new SynthesizerListener() {
 
-    private void startAlarm() {
-        mMediaPlayer = MediaPlayer.create(getActivity().getApplicationContext(), getSystemDefultRingtoneUri());
-        mMediaPlayer.setLooping(true);
-        try {
-            mMediaPlayer.prepare();
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        //会话结束回调接口，没有错误时，error为null
+        public void onCompleted(SpeechError error) {
         }
-        mMediaPlayer.start();
-    }
 
-    private Uri getSystemDefultRingtoneUri() {
-        return RingtoneManager.getActualDefaultRingtoneUri(getActivity().getApplicationContext(),
-                RingtoneManager.TYPE_NOTIFICATION);
-    }
+        //缓冲进度回调
+        //percent为缓冲进度0~100，beginPos为缓冲音频在文本中开始位置，endPos表示缓冲音频在文本中结束位置，info为附加信息。
+        public void onBufferProgress(int percent, int beginPos, int endPos, String info) {
+        }
+
+        //开始播放
+        public void onSpeakBegin() {
+        }
+
+        //暂停播放
+        public void onSpeakPaused() {
+        }
+
+        //播放进度回调
+        //percent为播放进度0~100,beginPos为播放音频在文本中开始位置，endPos表示播放音频在文本中结束位置.
+        public void onSpeakProgress(int percent, int beginPos, int endPos) {
+        }
+
+        //恢复播放回调接口
+        public void onSpeakResumed() {
+        }
+
+        //会话事件回调接口
+        public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
+        }
+
+    };
 
 
 }

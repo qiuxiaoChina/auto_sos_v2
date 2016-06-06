@@ -43,6 +43,8 @@ import com.autosos.yd.viewpager.ContentViewPager;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechUtility;
 import com.igexin.sdk.PushManager;
 
 import java.util.ArrayList;
@@ -71,6 +73,8 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushManager.getInstance().initialize(this.getApplicationContext());
+       // SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID +"=5754c9e7"+ SpeechConstant.FORCE_LOGIN +"=true");
+        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID +"=5754c9e7,"+SpeechConstant.FORCE_LOGIN +"=true");
         setContentView(R.layout.activity_main3);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
