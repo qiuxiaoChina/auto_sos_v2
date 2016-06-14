@@ -22,7 +22,7 @@ android {
 
     defaultConfig {
         applicationId "com.autosos.yd"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 22
     }
     buildTypes {

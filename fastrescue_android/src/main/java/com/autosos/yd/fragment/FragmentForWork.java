@@ -104,6 +104,7 @@ import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
+import com.iflytek.thridparty.G;
 
 
 import org.json.JSONObject;
@@ -174,6 +175,7 @@ public class FragmentForWork extends BasicFragment {
 
     private SpeechSynthesizer mTts = null;
     private boolean canCountGPSPoint = false;
+    private View progressBar;
 
     public static Fragment newInstance() {
         if (fragment == null) {
@@ -323,17 +325,18 @@ public class FragmentForWork extends BasicFragment {
         closeNewOrder.setOnClickListener(this);
 
         destination = (TextView) view.findViewById(R.id.destination);
+        progressBar = view.findViewById(R.id.progressBar);
 
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
                 if (msg.what == 0) {
-                    mAMapNaviView.displayOverview();
+                    mAMapNaviView.displayOverview();//显示导航地图全览状态
                     // mTtsManager.stopSpeaking();
 
                 } else if (msg.what == 1) {
 
-                    isOnline = true;
+
                     Log.d("start", "尝试上线");
                     Map<String, Object> map = new HashMap<>();
                     map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
@@ -345,6 +348,10 @@ public class FragmentForWork extends BasicFragment {
                                 JSONObject jsonObject = new JSONObject(obj.toString());
                                 if (jsonObject.getString("result").equals("1")) {
                                     Log.d("start", "上线成功");
+                                    isOnline = true;
+                                    switch_online.setText("在线>>>");
+                                    menu.setVisibility(View.VISIBLE);
+                                    progressBar.setVisibility(View.GONE);
                                     mTts.startSpeaking("您已成功上线，开始接单",mSynListener);
 
                                 } else {
@@ -365,7 +372,6 @@ public class FragmentForWork extends BasicFragment {
 
                 } else if (msg.what == 2) {
 
-                    isOnline = false;
                     Map<String, Object> map = new HashMap<>();
                     map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
                     map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
@@ -376,6 +382,10 @@ public class FragmentForWork extends BasicFragment {
                                 JSONObject jsonObject = new JSONObject(obj.toString());
                                 if (jsonObject.getString("result").equals("1")) {
                                     Log.d("start", "下线成功");
+                                    isOnline = false;
+                                    switch_online.setText("离线>>>");
+                                    menu.setVisibility(View.GONE);
+                                    progressBar.setVisibility(View.GONE);
                                     mTts.startSpeaking("您已停止接单,再见",mSynListener);
 
                                 } else {
@@ -654,7 +664,7 @@ public class FragmentForWork extends BasicFragment {
         // 自定义系统定位小蓝点
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory
-                .fromResource(R.drawable.location_marker)).anchor(0.5f,0.5f).radiusFillColor(Color.TRANSPARENT);// 设置小蓝点的图标
+                .fromResource(R.drawable.location_marker)).anchor(0.5f,0.5f).radiusFillColor(Color.TRANSPARENT).strokeColor(Color.TRANSPARENT);// 设置小蓝点的图标
         amap.setMyLocationStyle(myLocationStyle);
         amap.setLocationSource(this);// 设置定位监听
         amap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
@@ -843,8 +853,8 @@ public class FragmentForWork extends BasicFragment {
                    // getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
 //                    init();
 //                    setUpMap();
-                    menu.setVisibility(View.VISIBLE);
-                    switch_online.setText("在线>>>");
+
+                    progressBar.setVisibility(View.VISIBLE);
 
 
 
@@ -852,8 +862,9 @@ public class FragmentForWork extends BasicFragment {
                     handler.sendEmptyMessage(2);
                    // getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                     //menu_layout.setVisibility(View.GONE);
-                    menu.setVisibility(View.GONE);
-                    switch_online.setText("离线>>>");
+                   // menu.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                   // switch_online.setText("离线>>>");
 //                    deactivate();
 //                    amap.clear();
 //                    amap = null;
@@ -882,20 +893,7 @@ public class FragmentForWork extends BasicFragment {
                     amapForShow.clear(true);
                     mapViewForShow.setVisibility(View.VISIBLE);
                     mapView.setVisibility(View.GONE);
-//
-//                    boolean flag = true;
-//                    List<LatLng> newLatLngs = new ArrayList<LatLng>();
-//                    for (LatLng l : latLngs) {
-//                        if (flag) {
-//
-//                            newLatLngs.add(l);
-//                            flag = false;
-//
-//                        } else {
-//
-//                            flag = true;
-//                        }
-//                    }
+
                     latLngs.remove(latLngs.size()-1);
 
                     if (latLngs.size() % 2 == 0) {

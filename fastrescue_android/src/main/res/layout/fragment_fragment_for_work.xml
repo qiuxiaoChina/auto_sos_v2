@@ -168,6 +168,7 @@
         android:layout_marginBottom="-120dp"
         android:visibility="gone"
         >
+
         <!--android:layout_marginBottom="-250dp"-->
         <RelativeLayout
             android:background="@drawable/bg_title_shape_green"
@@ -333,6 +334,22 @@
 
 
     </com.autosos.yd.Layout.MyRaletiveLayout>
+
+
+    <include layout="@layout/progressbar_layout" />
+
+    <com.autosos.yd.Layout.FabButton
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="50dp"
+        android_custom:bg_color="#6ed289"
+        android_custom:bg_color_pressed="#20b48b"
+        android:tint="@android:color/white"
+        />
 
 
 </RelativeLayout>

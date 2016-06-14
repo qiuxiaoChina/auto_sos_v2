@@ -24,7 +24,7 @@
         android:layout_centerHorizontal="true"
         android:paddingBottom="3dp"
         android:includeFontPadding="false"
-        android:textColor="#53a9f1"
+        android:textColor="@color/menu_text_select"
         android:text="工作">
     </TextView>
 
