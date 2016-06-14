@@ -93,6 +93,7 @@ public class SplashActivity extends Activity {
                 com.autosos.yd.view.SplashActivity.this.startActivity(i);
                 com.autosos.yd.view.SplashActivity.this.finish();
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                finish();
             }
         }, 2000);
     }

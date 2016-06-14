@@ -100,15 +100,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (usernameView.getText().length() > 0) {
-                        uname_enter = true;
-                    } else
-                        uname_enter = false;
-                    if (psw_enter && uname_enter) {
-                        loginView.setBackgroundResource(R.drawable.bg_btn_second_green);
-                    } else {
-                        loginView.setBackgroundResource(R.drawable.bg_shape_second_grav);
-                    }
+//                    if (usernameView.getText().length() > 0) {
+//                        uname_enter = true;
+//                    } else
+//                        uname_enter = false;
+
                 }
             });
             passwordView.addTextChangedListener(new TextWatcher() {
@@ -123,15 +119,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 @Override
                 public void afterTextChanged(Editable s) {
-                    if (passwordView.getText().length() > 0) {
-                        psw_enter = true;
-                    } else
-                        psw_enter = false;
-                    if (psw_enter && uname_enter) {
-                        loginView.setBackgroundResource(R.drawable.bg_btn_second_green);
-                    } else {
-                        loginView.setBackgroundResource(R.drawable.bg_shape_second_grav);
-                    }
+//                    if (passwordView.getText().length() > 0) {
+//                        psw_enter = true;
+//                    } else
+//                        psw_enter = false;
+//                    if (psw_enter && uname_enter) {
+//                        loginView.setBackgroundResource(R.drawable.bg_btn_second_green);
+//                    } else {
+//                        loginView.setBackgroundResource(R.drawable.bg_shape_second_grav);
+//                    }
                 }
             });
         }
@@ -189,29 +185,26 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                 Session.getInstance().setCurrentUser(com.autosos.yd.view.LoginActivity.this, jsonObject);
                                 Log.e(TAG, jsonObject.toString());
                                 showMain(null);
-
+                                finish();
                             } else {
                                 if (jsonObject.optInt("code") == 9 || jsonObject.optInt("code") == 10) {
-                                    String username = usernameView.getText().toString();
-                                    String password = passwordView.getText().toString();
-
-                                    Log.e("login", "mobile === " + jsonObject.optString("mobile"));
-                                    Log.e("login", "username === " + username);
-                                    Log.e("login", "password === " + password);
-                                    Intent intent = new Intent(LoginActivity.this, CheckActivity.class);
-                                    intent.putExtra("mobile", jsonObject.optString("mobile"));
-                                    Log.e("log", "mobile === " + jsonObject.optString("mobile"));
-                                    Log.e("log", "username === " + username);
-                                    Log.e("log", "password === " + password);
-                                    intent.putExtra("username", username);
-                                    intent.putExtra("password", password);
-                                    startActivity(intent);
-                                    finish();
-
-                                    if (jsonObject.optInt("code") == 10) {
-                                        Toast.makeText(com.autosos.yd.view.LoginActivity.this, "", Toast.LENGTH_SHORT).show();
+                                    if(jsonObject.optInt("code") == 9 ){
+                                        String username = usernameView.getText().toString();
+                                        String password = passwordView.getText().toString();
+                                        Log.e("login", "mobile === " + jsonObject.optString("mobile"));
+                                        Log.e("login", "username === " + username);
+                                        Log.e("login", "password === " + password);
+                                        Intent intent = new Intent(LoginActivity.this, CheckActivity.class);
+                                        intent.putExtra("mobile", jsonObject.optString("mobile"));
+                                        Log.e("log", "mobile === " + jsonObject.optString("mobile"));
+                                        Log.e("log", "username === " + username);
+                                        Log.e("log", "password === " + password);
+                                        intent.putExtra("username", username);
+                                        intent.putExtra("password", password);
+                                        startActivity(intent);
+                                    }else{
+                                        Toast.makeText(com.autosos.yd.view.LoginActivity.this, "短信验证码不正确,60秒后重新登录", Toast.LENGTH_SHORT).show();
                                     }
-
                                 } else {
                                     String msg = jsonObject.optString("msg");
                                     Toast.makeText(com.autosos.yd.view.LoginActivity.this, msg, Toast.LENGTH_SHORT).show();

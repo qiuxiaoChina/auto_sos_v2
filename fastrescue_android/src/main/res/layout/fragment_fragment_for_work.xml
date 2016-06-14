@@ -124,14 +124,16 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/head_map_tel_navi"
         android:visibility="gone"
+
        />
+        <!--android:layout_below="@+id/head_map_tel_navi"-->
 
     <com.amap.api.maps.TextureMapView
         android:id="@+id/mapview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/head_map"
-         />
+        />
 
     <com.amap.api.maps.TextureMapView
         android:id="@+id/mapviewForShow"
@@ -219,47 +221,38 @@
 
     <com.autosos.yd.Layout.MyRaletiveLayout
         android:id="@+id/newOrder"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#4d000000"
+        android:layout_width="333dp"
+        android:layout_height="450dp"
+        android:background="@mipmap/order_background"
+        android:layout_centerInParent="true"
         android:visibility="gone"
         >
-
-        <ImageView
-            android:layout_width="333dp"
-            android:layout_height="450dp"
-            android:src="@drawable/order_background"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="67dp"
-            />
 
         <View
             android:id="@+id/closeNewOrder"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="5dp"
             android:layout_width="50dp"
-            android:layout_height="100dp"/>
+            android:layout_height="50dp"/>
 
         <ImageView
             android:layout_width="22dp"
             android:layout_height="29dp"
-            android:src="@drawable/order_start"
-            android:layout_marginTop="125dp"
-            android:layout_marginLeft="80dp"/>
+            android:src="@mipmap/order_start"
+            android:layout_marginTop="52dp"
+            android:layout_marginLeft="73dp"/>
         <ImageView
             android:layout_width="22dp"
             android:layout_height="29dp"
-            android:src="@drawable/order_end"
+            android:src="@mipmap/order_end"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="125dp"
-            android:layout_marginRight="80dp"/>
+            android:layout_marginTop="52dp"
+            android:layout_marginRight="73dp"/>
 
         <ImageView
             android:layout_width="84dp"
             android:layout_height="2dp"
             android:src="@drawable/fill_line"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="62dp"
             android:layout_centerHorizontal="true"/>
 
         <TextView
@@ -270,7 +263,7 @@
             android:gravity="center"
             android:maxLines="2"
             android:textColor="#333333"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="91dp"
             android:layout_marginLeft="41dp"/>
 
 
@@ -283,7 +276,7 @@
             android:maxLines="2"
             android:textColor="#333333"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="170dp"
+            android:layout_marginTop="91dp"
             android:layout_marginRight="41dp"/>
 
 
@@ -292,7 +285,7 @@
             android:layout_width="327dp"
             android:layout_height="2dp"
             android:background="@drawable/dot_line"
-            android:layout_marginTop="220dp"
+            android:layout_marginTop="127dp"
             android:layout_centerHorizontal="true"/>
         
         <TextView
@@ -301,37 +294,41 @@
             android:text="新的订单"
             android:textSize="28sp"
             android:textColor="#333333"
-            android:layout_marginTop="236dp"
+            android:layout_marginTop="152dp"
             android:layout_centerHorizontal="true"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="¥"
-            android:layout_marginTop="290dp"
-            android:layout_marginLeft="132dp"
-            android:textSize="18sp"
-            android:textColor="#20b48b"/>
+            android:orientation="horizontal"
+            android:layout_marginTop="200dp"
+            android:gravity="center_horizontal"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥"
+                android:textSize="16sp"
+                android:textColor="#20b48b"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="355.00"
+                android:textSize="26sp"
+                android:textColor="#20b48b"/>
+
+        </LinearLayout>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="355.00"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="283dp"
-            android:layout_marginRight="130dp"
-            android:textSize="28sp"
-            android:textColor="#20b48b"/>
-
-        <ImageView
+        <View
             android:id="@+id/intoOrder"
             android:layout_width="77dp"
             android:layout_height="77dp"
-            android:src="@drawable/order_button"
+            android:background="@drawable/order_button_selector"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="427dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="12dp"
             />
 
 

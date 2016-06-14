@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2015/11/25.
  */
-public class FillCodeActivity extends Activity{
+public class FillCodeActivity extends Activity implements View.OnClickListener{
 
     private TextView TextView_mobile;
     private TextView send_code;
@@ -41,6 +42,7 @@ public class FillCodeActivity extends Activity{
     private EditText Edit_code;
     private Button Button_modification;
     private Boolean number_enter;
+    private ImageView back_button;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class FillCodeActivity extends Activity{
         Edit_code = (EditText) findViewById(R.id.Edit_code);
         Button_modification = (Button) findViewById(R.id.Button_modification);
         TextView_mobile = (TextView) findViewById(R.id.TextView_mobile);
+        back_button = (ImageView)findViewById(R.id.back_button);
+        back_button.setOnClickListener(this);
         String mobile = getIntent().getStringExtra("mobile");
         progressBar = findViewById(R.id.progressBar);
         send_code = (TextView) findViewById(R.id.send_code);
@@ -145,6 +149,7 @@ public class FillCodeActivity extends Activity{
             intent.putExtra("code", code);
             intent.putExtra("fillcode",true);
             startActivity(intent);
+            finish();
         }else {
             Toast.makeText(FillCodeActivity.this, "验证码不能为空", Toast.LENGTH_SHORT).show();
         }
@@ -152,4 +157,14 @@ public class FillCodeActivity extends Activity{
     }
 
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back_button:
+                finish();
+                break;
+            default:
+                break;
+        }
+    }
 }

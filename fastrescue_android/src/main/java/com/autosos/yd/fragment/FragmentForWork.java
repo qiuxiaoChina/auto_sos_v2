@@ -53,11 +53,13 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.Circle;
 import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
+import com.amap.api.maps.model.MarkerOptionsCreator;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.PolygonOptions;
 import com.amap.api.maps.model.Polyline;
@@ -127,7 +129,7 @@ public class FragmentForWork extends BasicFragment {
     AMapNavi mAMapNavi;
     //TTSController mTtsManager;
     NaviLatLng mEndLatlng = new NaviLatLng(29.825846, 121.432765);
-    NaviLatLng mStartLatlng = new NaviLatLng(29.807633, 121.555842);
+    NaviLatLng mStartLatlng = new NaviLatLng(29.808191, 121.556015);
     List<NaviLatLng> mStartList = new ArrayList<NaviLatLng>();
     List<NaviLatLng> mEndList = new ArrayList<NaviLatLng>();
     List<NaviLatLng> mWayPointList;
@@ -166,11 +168,12 @@ public class FragmentForWork extends BasicFragment {
     private boolean canGetStartPoint = true;
     private boolean isOnline = false;
     private View closeNewOrder;
-    private ImageView intoOrder;
+    private View intoOrder;
     private boolean canGetNewOrder = true;
     private TextView destination ;
 
     private SpeechSynthesizer mTts = null;
+    private boolean canCountGPSPoint = false;
 
     public static Fragment newInstance() {
         if (fragment == null) {
@@ -196,7 +199,10 @@ public class FragmentForWork extends BasicFragment {
         super.onResume();
         mapView.onResume();
         mapViewForShow.onResume();
+        init();
+        setUpMap();
         //mapView.setVisibility(View.VISIBLE);
+
         Log.d(TAG, "resume");
 
     }
@@ -209,6 +215,7 @@ public class FragmentForWork extends BasicFragment {
         super.onPause();
         mapView.onPause();
         mapViewForShow.onPause();
+        amap =null;
         //mapView.setVisibility(View.GONE);
         Log.d(TAG, "pause");
         //deactivate();
@@ -260,6 +267,7 @@ public class FragmentForWork extends BasicFragment {
         options.setTilt(0);
         options.setLayoutVisible(false);
         options.setRouteListButtonShow(true);
+      //  options.setReCalculateRouteForYaw(false);//设置偏航时是否重新计算路径
         //options.setLayoutVisible(true);
         mAMapNaviView.setViewOptions(options);
 
@@ -295,7 +303,7 @@ public class FragmentForWork extends BasicFragment {
 
         mapViewForShow = (TextureMapView) view.findViewById(R.id.mapviewForShow);
         mapViewForShow.onCreate(savedInstanceState);// 此方法必须重写
-        init();
+
         mRouteOverLay = new RouteOverLay(amap, null);
 
         mStartList.add(mStartLatlng);
@@ -307,7 +315,7 @@ public class FragmentForWork extends BasicFragment {
         newOrder.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mainPage = view.findViewById(R.id.mainPage);
 
-        intoOrder = (ImageView) view.findViewById(R.id.intoOrder);
+        intoOrder = view.findViewById(R.id.intoOrder);
         intoOrder.setOnClickListener(this);
 
         // roundProgressBar = (RoundProgressBar) view.findViewById(R.id.roundProgressBar);
@@ -392,6 +400,7 @@ public class FragmentForWork extends BasicFragment {
                     newOrder.setVisibility(View.VISIBLE);
                     newOrder.startAnimation(animation);
                     head_map.setVisibility(View.GONE);
+                    getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
                     menu.setVisibility(View.GONE);
                     try {
                         JSONObject data = (JSONObject) msg.obj;
@@ -430,6 +439,9 @@ public class FragmentForWork extends BasicFragment {
         intentFilter.addAction("newOrder");
         getActivity().registerReceiver(myBroadcastReciever, intentFilter);
 
+//        mAMapNavi.startGPS();
+//        mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
+
         return view;
     }
 
@@ -460,7 +472,6 @@ public class FragmentForWork extends BasicFragment {
         mAMapNavi.addAMapNaviListener(this);
         //   mAMapNavi.addAMapNaviListener(mTtsManager);
         mAMapNavi.setEmulatorNaviSpeed(200);
-
         if (mTts == null) {
             //1.创建SpeechSynthesizer对象, 第二个参数：本地合成时传InitListener
             mTts = SpeechSynthesizer.createSynthesizer(getActivity().getApplicationContext(), null);
@@ -471,9 +482,8 @@ public class FragmentForWork extends BasicFragment {
             mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
             // mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
         }
-
+        startLocation();
         Log.d(TAG, "create");
-
 
     }
 
@@ -551,7 +561,7 @@ public class FragmentForWork extends BasicFragment {
         float route_distance = DistanceUtil.checkDistance(naviPath.getAllLength() / 1000f);
         distance_route.setText("规划距离：" + route_distance + "公里");
         // menu_layout.setVisibility(View.VISIBLE);
-        deactivate();
+        //deactivate();
         mapView.setVisibility(View.GONE);
         mAMapNaviView.setVisibility(View.VISIBLE);
         mAMapNavi.startNavi(NaviType.GPS);
@@ -590,25 +600,26 @@ public class FragmentForWork extends BasicFragment {
 
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
-        if (aMapNaviLocation.getAccuracy() <= 20) {
 
-            long timeNow = new Date().getTime();
-            if (timeNow > timeStamp) {
-                LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
-                if (latLngs.size() > 2) {
-                    LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
-                    int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
-                    float f_dis = DistanceUtil.checkDistance(distance / 1000f);
-                    dis_moved += f_dis;
-                    distance_moved.setText("实际行进：" + DistanceUtil.checkDistance(dis_moved) + "公里");
+        if(canCountGPSPoint){
+            if (aMapNaviLocation.getAccuracy() <= 20) {
+
+                long timeNow = new Date().getTime();
+                if (timeNow > timeStamp) {
+                    LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
+                    if (latLngs.size() > 2) {
+                        LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
+                        int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
+                        float f_dis = DistanceUtil.checkDistance(distance / 1000f);
+                        dis_moved += f_dis;
+                        distance_moved.setText("实际行进：" + DistanceUtil.checkDistance(dis_moved) + "公里");
+                    }
+                    latLngs.add(currentLatLng);
+                   // Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
+                    timeStamp = timeNow;
                 }
-                latLngs.add(currentLatLng);
-                // Toast.makeText(getActivity(), "" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
-                timeStamp = timeNow;
             }
         }
-
-
     }
 
     private boolean isNavi = false;
@@ -643,19 +654,17 @@ public class FragmentForWork extends BasicFragment {
         // 自定义系统定位小蓝点
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.myLocationIcon(BitmapDescriptorFactory
-                .fromResource(R.drawable.location_marker));// 设置小蓝点的图标
+                .fromResource(R.drawable.location_marker)).anchor(0.5f,0.5f).radiusFillColor(Color.TRANSPARENT);// 设置小蓝点的图标
         amap.setMyLocationStyle(myLocationStyle);
         amap.setLocationSource(this);// 设置定位监听
         amap.getUiSettings().setMyLocationButtonEnabled(true);// 设置默认定位按钮是否显示
         amap.moveCamera(CameraUpdateFactory.zoomTo(16));
-        //amap.moveCamera(CameraUpdateFactory.changeTilt(0));
+        amap.moveCamera(CameraUpdateFactory.changeTilt(0));
         amap.setMyLocationEnabled(true);// 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         // aMap.setMyLocationType()
-        // amap.setMyLocationType(AMap.MAP_TYPE_NAVI);
-
+        amap.setMyLocationType(AMap.LOCATION_TYPE_MAP_FOLLOW);
 
     }
-
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
@@ -664,25 +673,28 @@ public class FragmentForWork extends BasicFragment {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
 
-                mStartList.clear();
+                Log.d("location",aMapLocation.getLocationType()+"");
                 mStartLatlng = new NaviLatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
-                mStartList.add(mStartLatlng);
+                LatLng latLng = new LatLng(aMapLocation.getLatitude(),aMapLocation.getLongitude());
+
                 amap.moveCamera(CameraUpdateFactory.changeTilt(0));
-                mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
+                if(mListener!=null){
+                    mListener.onLocationChanged(aMapLocation);// 显示系统小蓝点
+                }
+                //Toast.makeText(this.getActivity().getApplicationContext(), latLng.latitude+"--"+latLng.longitude, Toast.LENGTH_SHORT).show();
+               // Log.d(TAG,latLng.latitude+"--"+latLng.longitude);
 
             } else {
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
-                //  Log.d(TAG,errText);
+                 Log.d("location",errText);
                 //Toast.makeText(this.getActivity().getApplicationContext(), errText, Toast.LENGTH_SHORT).show();
             }
         }
 
     }
 
-    @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener) {
+    private void startLocation(){
 
-        mListener = onLocationChangedListener;
         if (locationClient == null) {
             locationClient = new AMapLocationClient(this.getActivity());
             locationOption = new AMapLocationClientOption();
@@ -690,6 +702,8 @@ public class FragmentForWork extends BasicFragment {
             locationClient.setLocationListener(this);
             //设置为高精度定位模式
             locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+
+            //  locationOption.setGpsFirst(true);
             //设置定位参数
             locationClient.setLocationOption(locationOption);
             // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -702,8 +716,13 @@ public class FragmentForWork extends BasicFragment {
     }
 
     @Override
-    public void deactivate() {
+    public void activate(OnLocationChangedListener onLocationChangedListener) {
 
+        mListener = onLocationChangedListener;
+    }
+
+    @Override
+    public void deactivate() {
 
         mListener = null;
         if (locationClient != null) {
@@ -714,12 +733,6 @@ public class FragmentForWork extends BasicFragment {
 
     }
 
-    //手指向右滑动时的最小速度
-    private static final int XSPEED_MIN = 200;
-
-    //手指向右滑动时的最小距离
-    private static final int XDISTANCE_MIN = 30;
-
 
     //记录手指按下时的横坐标。
     private float yDown;
@@ -727,40 +740,6 @@ public class FragmentForWork extends BasicFragment {
     //记录手指移动时的横坐标。
     private float yMove;
 
-
-    //用于计算手指滑动的速度。
-    private VelocityTracker mVelocityTracker;
-
-    /**
-     * 创建VelocityTracker对象，并将触摸content界面的滑动事件加入到VelocityTracker当中。
-     *
-     * @param event
-     */
-    private void createVelocityTracker(MotionEvent event) {
-        if (mVelocityTracker == null) {
-            mVelocityTracker = VelocityTracker.obtain();
-        }
-        mVelocityTracker.addMovement(event);
-    }
-
-    /**
-     * 回收VelocityTracker对象。
-     */
-    private void recycleVelocityTracker() {
-        mVelocityTracker.recycle();
-        mVelocityTracker = null;
-    }
-
-    /**
-     * 获取手指在content界面滑动的速度。
-     *
-     * @return 滑动速度，以每秒钟移动了多少像素值为单位。
-     */
-    private int getScrollVelocity() {
-        mVelocityTracker.computeCurrentVelocity(1000);
-        int velocity = (int) mVelocityTracker.getXVelocity();
-        return Math.abs(velocity);
-    }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
@@ -826,6 +805,7 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onMapLoaded() {
         // Toast.makeText(getActivity().getApplicationContext(),"map load over",Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "loadMap");
         amap.moveCamera(CameraUpdateFactory.zoomTo(16));
         amap.moveCamera(CameraUpdateFactory.changeLatLng(new LatLng(29.807633, 121.555842)));
     }
@@ -860,9 +840,9 @@ public class FragmentForWork extends BasicFragment {
 
                 if ("离线>>>".equals(switch_online.getText())) {
                     handler.sendEmptyMessage(1);
-                    getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
-                    init();
-                    setUpMap();
+                   // getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
+//                    init();
+//                    setUpMap();
                     menu.setVisibility(View.VISIBLE);
                     switch_online.setText("在线>>>");
 
@@ -870,13 +850,13 @@ public class FragmentForWork extends BasicFragment {
 
                 } else {
                     handler.sendEmptyMessage(2);
-                    getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
+                   // getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                     //menu_layout.setVisibility(View.GONE);
                     menu.setVisibility(View.GONE);
                     switch_online.setText("离线>>>");
-                    deactivate();
-                    amap.clear();
-                    amap = null;
+//                    deactivate();
+//                    amap.clear();
+//                    amap = null;
                 }
                 break;
 
@@ -884,6 +864,7 @@ public class FragmentForWork extends BasicFragment {
             case R.id.stop_navi:
                 canGetStartPoint = true;
                 mAMapNavi.stopNavi();
+                getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                 mAMapNaviView.setVisibility(View.GONE);
                 mapView.setVisibility(View.VISIBLE);
                 mapViewForShow.setVisibility(View.GONE);
@@ -893,6 +874,7 @@ public class FragmentForWork extends BasicFragment {
                 head_map_tel_navi.setVisibility(View.GONE);
                 isNavi = false;
                 canGetNewOrder = true;
+                canCountGPSPoint= false;
                 break;
             case R.id.check_route:
                 try {
@@ -900,36 +882,38 @@ public class FragmentForWork extends BasicFragment {
                     amapForShow.clear(true);
                     mapViewForShow.setVisibility(View.VISIBLE);
                     mapView.setVisibility(View.GONE);
+//
+//                    boolean flag = true;
+//                    List<LatLng> newLatLngs = new ArrayList<LatLng>();
+//                    for (LatLng l : latLngs) {
+//                        if (flag) {
+//
+//                            newLatLngs.add(l);
+//                            flag = false;
+//
+//                        } else {
+//
+//                            flag = true;
+//                        }
+//                    }
+                    latLngs.remove(latLngs.size()-1);
 
-                    boolean flag = true;
-                    List<LatLng> newLatLngs = new ArrayList<LatLng>();
-                    for (LatLng l : latLngs) {
-                        if (flag) {
-
-                            newLatLngs.add(l);
-                            flag = false;
-
-                        } else {
-
-                            flag = true;
-                        }
-                    }
-
-                    if (newLatLngs.size() % 2 == 0) {
+                    if (latLngs.size() % 2 == 0) {
                         //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
-                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(newLatLngs.get(newLatLngs.size() / 2), 13));
+                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get(latLngs.size() / 2), 13));
 
                     } else {
                         //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
-                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(newLatLngs.get((newLatLngs.size() - 1) / 2), 13));
+                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get((latLngs.size() - 1) / 2), 13));
 
                     }
 
-                    for (int i = 0; i < newLatLngs.size(); i++) {
+                    for (int i = 0; i < latLngs.size(); i++) {
                         List<LatLng> l = new ArrayList<LatLng>();
-
-                        l.add(newLatLngs.get(i));
-                        l.add(newLatLngs.get(i + 1));
+                        if(i%4==0){
+                            l.add(latLngs.get(i));
+                            l.add(latLngs.get(i + 4));
+                        }
                         Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
                         polyLine.setPoints(l);
                     }
@@ -953,23 +937,29 @@ public class FragmentForWork extends BasicFragment {
                 newOrder.setVisibility(View.GONE);
                 head_map.setVisibility(View.VISIBLE);
                 menu.setVisibility(View.VISIBLE);
+                getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                 mTts.startSpeaking("放弃订单，这样真的好吗?",mSynListener);
                 canGetNewOrder = true;
                 break;
             case R.id.intoOrder:
+
                 newOrder.clearAnimation();
                 newOrder.setVisibility(View.GONE);
                 head_map.setVisibility(View.VISIBLE);
                 menu.setVisibility(View.VISIBLE);
+
                 mTts.startSpeaking("开始任务",mSynListener);
                 amap.clear(true);
                 mapViewForShow.setVisibility(View.GONE);
                 mapView.setVisibility(View.VISIBLE);
+                mStartList.clear();
+                if(mStartLatlng != null){
+                    mStartList.add(mStartLatlng);
+                }
                 if (mStartList.isEmpty()) {
-
                     Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    canCountGPSPoint=true;
                     mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
                     distance_moved.setText("实际行进：0.0公里");
                     destination.setText("预定目的地:"+s_destination);

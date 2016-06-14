@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.autosos.yd"
-    android:versionCode="127"
-    android:versionName="1.1.12.7" >
+    android:versionCode="129"
+    android:versionName="1.1.12.9" >
 
     <uses-sdk
         android:minSdkVersion="14"
@@ -72,7 +72,10 @@
         android:theme="@style/MyAppTheme" >
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="d0ebc5e0530743649a6c7f884fa0dd7b" />
+            android:value="da1426dc2fe5219a6c7104f9d681eea0" />
+
+        <service android:name="com.amap.api.location.APSService" >
+        </service>
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
