@@ -1,7 +1,9 @@
 package com.autosos.yd.view;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
@@ -95,12 +97,42 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
         int count = fragmentArray.length;
+        SharedPreferences sp = getSharedPreferences("work", Context.MODE_PRIVATE);
+        sp.edit().putBoolean("working",true).commit();
 
         for(int i = 0; i < count; i++){
 
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextviewArray[i]).setIndicator(getTabItemView(i));
             mTabHost.addTab(tabSpec, fragmentArray[i], null);
            // mTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.selector_tab_background);
+            mTabHost.getTabWidget().getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String tip = ((TextView)v.findViewById(R.id.tip)).getText().toString();
+                    SharedPreferences sp = getSharedPreferences("work", Context.MODE_PRIVATE);
+                    switch (tip){
+                        case "工作":
+                            sp.edit().putBoolean("working",true).commit();
+                            mTabHost.setCurrentTab(0);
+                            break;
+                        case "订单":
+                            sp.edit().remove("working").commit();
+                            mTabHost.setCurrentTab(1);
+                            break;
+                        case "我的":
+                            sp.edit().remove("working").commit();
+                            mTabHost.setCurrentTab(2);
+                            break;
+                        case "设置":
+                            sp.edit().remove("working").commit();
+                            mTabHost.setCurrentTab(3);
+                            break;
+
+                    }
+
+                }
+            });
+
         }
 
 

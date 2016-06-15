@@ -6,96 +6,89 @@
         android:id="@+id/mainPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-   <LinearLayout
+   <RelativeLayout
        android:id="@+id/head_map_tel_navi"
        android:layout_width="match_parent"
-       android:layout_height="120dp"
-       android:orientation="vertical"
-       android:visibility="gone"
-       >
+       android:layout_height="74dp"
+       android:background="#ffffff"
+       android:visibility="gone">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="50dp"
-           android:background="#6ed289"
-           android:gravity="center"
-           android:orientation="horizontal">
 
-           <TextView
-               android:id="@+id/starNavi"
-               android:gravity="center"
-               android:textColor="#ffffff"
-               android:textSize="18sp"
-               android:text="开启导航"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1" />
+        <RelativeLayout
+            android:layout_width="235dp"
+            android:layout_height="47dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="14dp">
 
-           <TextView
-               android:layout_width="100dp"
-               android:layout_height="wrap_content"
-               android:text=""
-               android:textColor="#ffffff"
-               android:textSize="20sp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+                <ImageView
+                    android:id="@+id/iv_destination"
+                    android:layout_width="11dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/destination1"
+                    />
 
-           <TextView
-               android:gravity="center"
-               android:textColor="#ffffff"
-               android:textSize="18sp"
-               android:text="联系车主"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1" />
-       </LinearLayout>
+                <TextView
+                    android:id="@+id/destination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鄞州科技信息孵化园"
+                    android:textSize="18sp"
+                    android:textColor="#333333"
+                    android:layout_marginLeft="10dp"
+                    android:maxLines="1"/>
 
-       <RelativeLayout
-           android:background="#2b9275"
-           android:layout_width="match_parent"
-           android:layout_height="70dp">
-           <TextView
-               android:id="@+id/destination"
-               android:layout_width="match_parent"
-               android:layout_height="35dp"
-               android:padding="7dp"
-               android:text="预定目的地："
-               android:textColor="#ffffff"
-               android:textSize="15sp"
-               android:layout_alignParentTop="true"/>
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="35dp"
-               android:layout_alignParentBottom="true">
-               <TextView
-                   android:id="@+id/distance_route"
-                   android:padding="7dp"
-                   android:text="规划距离："
-                   android:layout_width="0sp"
-                   android:layout_weight="1"
-                   android:layout_height="35dp"
-                   android:textSize="15sp"
-                   android:textColor="#ffffff"/>
+            </LinearLayout>
 
-               <TextView
-                   android:id="@+id/distance_moved"
-                   android:textColor="#ffffff"
-                   android:padding="7dp"
-                   android:text="实际行进：0.0公里"
-                   android:layout_width="0sp"
-                   android:layout_weight="1"
-                   android:layout_height="35dp"
-                   android:textSize="15sp"/>
-           </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_alignParentBottom="true">
 
-       </RelativeLayout>
+                <TextView
+                    android:id="@+id/distance_route"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666666"
+                    android:text="总路程:0.0km"
+                    android:textSize="16sp"/>
 
-   </LinearLayout>
+                <TextView
+                    android:id="@+id/distance_moved"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#666666"
+                    android:text="已行驶:0.0km"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="16sp"/>
+
+
+            </LinearLayout>
+
+
+           
+        </RelativeLayout>
+       <ImageView
+           android:layout_width="45dp"
+           android:layout_height="45dp"
+           android:layout_centerVertical="true"
+           android:layout_alignParentRight="true"
+           android:layout_marginRight="20dp"
+           android:src="@drawable/tel_big"/>
+
+   </RelativeLayout>
 
 
     <LinearLayout
         android:id="@+id/head_map"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#e66ed289"
+        android:layout_height="54dp"
+        android:background="#ffffff"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -108,9 +101,11 @@
             android:id="@+id/switch_online"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="离线>>>"
+            android:background="@drawable/off_line"
+            android:gravity="center"
+            android:text="离线"
             android:textColor="#ffffff"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="0dp"
@@ -121,11 +116,10 @@
     <com.amap.api.navi.AMapNaviView
         android:id="@+id/navi_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/head_map_tel_navi"
         android:visibility="gone"
-
-       />
+        />
         <!--android:layout_below="@+id/head_map_tel_navi"-->
 
     <com.amap.api.maps.TextureMapView
@@ -133,6 +127,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/head_map"
+
         />
 
     <com.amap.api.maps.TextureMapView
@@ -143,81 +138,74 @@
         android:visibility="gone" />
 
 
-    <!--<LinearLayout-->
-    <!--android:orientation="horizontal"-->
-    <!--android:id="@+id/menu_layout"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_alignParentBottom="true"-->
-    <!--android:background="#e66ed289"-->
-    <!--android:layout_height="15dp"-->
-    <!--android:gravity="center"-->
-    <!--android:visibility="gone"-->
-    <!--&gt;-->
-    <!--</LinearLayout>-->
 
-    <LinearLayout
-        android:id="@+id/menu"
-        android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:background="@drawable/bg_menu_shape_green"
-        android:orientation="vertical"
-        android:layout_marginBottom="-120dp"
-        android:visibility="gone"
-        >
-
-        <!--android:layout_marginBottom="-250dp"-->
         <RelativeLayout
-            android:background="@drawable/bg_title_shape_green"
+            android:id="@+id/menu"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="85dp"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            android:visibility="gone"
+            >
 
-            <TextView
+            <LinearLayout
+                android:background="#ffffff"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="操作菜单"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
+                android:layout_height="54dp"
+                android:layout_alignParentBottom="true">
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/tel_customer"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:background="#ffffff"
+                android:text="联系车主"
+                android:textSize="12sp"
+                android:layout_alignParentBottom="true"
+                android:textColor="#aaaaaa"
+                android:drawableTop="@drawable/tel_small"
+                android:drawablePadding="4dp"
+                />
+
+            <Button
+                android:id="@+id/cancel_order"
+                android:layout_width="48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="30dp"
+                android:background="#ffffff"
+                android:text="取消订单"
+                android:textSize="12sp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:textColor="#aaaaaa"
+                android:drawableTop="@drawable/cancel"
+                android:drawablePadding="4dp"
+                />
+
+            <ImageView
+                android:id="@+id/take_photo"
+                android:layout_width="61dp"
+                android:layout_height="61dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="23dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/photo"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="到达救援现场,并拍照"
+                android:layout_alignParentBottom="true"
+                android:textSize="12sp"
+                android:textColor="#aaaaaa"
+                android:layout_marginBottom="4dp"
+                />
 
         </RelativeLayout>
 
 
-        <RelativeLayout
-            android:id="@+id/stop_navi"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="停止导航"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/check_route"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="查看轨迹"
-                android:textColor="#ffffff"
-                android:textSize="20sp" />
-
-        </RelativeLayout>
-    </LinearLayout>
    </RelativeLayout>
 
     <com.autosos.yd.Layout.MyRaletiveLayout
@@ -338,17 +326,28 @@
 
     <include layout="@layout/progressbar_layout" />
 
-    <com.autosos.yd.Layout.FabButton
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@android:drawable/ic_input_add"
+    <Button
+        android:id="@+id/starNavi"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:background="@drawable/navigation_nor"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginBottom="50dp"
-        android_custom:bg_color="#6ed289"
-        android_custom:bg_color_pressed="#20b48b"
-        android:tint="@android:color/white"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="115dp"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/coursePreview"
+        android:layout_width="37dp"
+        android:layout_height="37dp"
+        android:background="@drawable/course_selector"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="70dp"
+        android:visibility="gone"
         />
 
 
