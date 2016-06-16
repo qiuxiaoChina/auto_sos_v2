@@ -230,7 +230,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
 
     public void showMain(View v) {
-        Intent intent = new Intent(com.autosos.yd.view.LoginActivity.this, MainActivity.class);
+        Intent intent = new Intent(com.autosos.yd.view.LoginActivity.this, TrailerDetailActivity.class);
         startActivity(intent);
         finish();
     }

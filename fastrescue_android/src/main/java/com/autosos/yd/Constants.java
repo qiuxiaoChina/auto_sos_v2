@@ -9,7 +9,7 @@ public class Constants {
     public static final int VERSION_CODE = 109;
     //public static String HOST = "http://api.auto-sos.com.cn/";
     //public static String HOST = "http://autosos.wicp.net:46622/";//测试服务器
-   // public static String HOST = "http://api.test.auto-sos.cn/";//测试服务器
+    //public static String HOST = "http://api.test.auto-sos.cn/";//测试服务器
     public static String HOST = "http://api.auto-sos.net/";//测试服务器
    // public static String HOST = "http://api.auto-sos.cn/";//正式服务器
 

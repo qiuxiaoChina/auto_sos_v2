@@ -11,7 +11,8 @@
        android:layout_width="match_parent"
        android:layout_height="74dp"
        android:background="#ffffff"
-       android:visibility="gone">
+       android:visibility="gone"
+      >
 
 
         <RelativeLayout
@@ -31,7 +32,11 @@
                     android:layout_height="16dp"
                     android:src="@drawable/destination1"
                     />
-
+               <HorizontalScrollView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="10dp"
+                   android:scrollbars="none">
                 <TextView
                     android:id="@+id/destination"
                     android:layout_width="wrap_content"
@@ -39,8 +44,10 @@
                     android:text="鄞州科技信息孵化园"
                     android:textSize="18sp"
                     android:textColor="#333333"
-                    android:layout_marginLeft="10dp"
-                    android:maxLines="1"/>
+                    android:singleLine="true"
+                   />
+
+               </HorizontalScrollView>
 
             </LinearLayout>
 
@@ -55,17 +62,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#666666"
-                    android:text="总路程:0.0km"
-                    android:textSize="16sp"/>
+                    android:text="总路程:00.00km"
+                    android:textSize="13sp"/>
 
                 <TextView
                     android:id="@+id/distance_moved"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="#666666"
-                    android:text="已行驶:0.0km"
+                    android:text="已行驶:00.00km"
                     android:layout_marginLeft="20dp"
-                    android:textSize="16sp"/>
+                    android:textSize="13sp"/>
 
 
             </LinearLayout>

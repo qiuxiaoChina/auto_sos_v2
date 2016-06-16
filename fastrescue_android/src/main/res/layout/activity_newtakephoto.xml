@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 显示预览图形 -->
+    <!--<com.autosos.yd.util.TakePhotoSurfaceView-->
+        <!--android:id="@+id/surfaceView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:visibility="gone" />-->
+
+    <!--<com.autosos.yd.util.CameraSurfaceView-->
+        <!--android:id="@+id/surfaceView"-->
+        <!--android:layout_width="0dip"-->
+        <!--android:layout_height="0dip" />-->
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/cla"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/cla" />
+
+
+    <ImageView
+        android:id="@+id/preview_box"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/assistant1" />
+
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/icon50"
+        android:clickable="false"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="54dp"
+        android:layout_height="54dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/icon50" />
+
+    <Button
+        android:id="@+id/button_flash"
+        android:layout_width="40dp"
+        android:layout_height="54dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="295dp"
+        android:background="#00000000"
+        android:clickable="false"
+        android:drawableLeft="@drawable/light"
+        android:gravity="center"
+        android:rotation="270"
+        android:text="关闭"
+        android:textColor="#ffffff"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/button_cancel"
+        android:layout_width="40dp"
+        android:layout_height="54dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="26dp"
+        android:layout_marginTop="295dp"
+        android:background="#00000000"
+        android:clickable="false"
+        android:gravity="center"
+        android:rotation="270"
+        android:text="取消"
+        android:textColor="#ffffff"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/clockNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="42.5dp"
+        android:text="5"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="270dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:rotation="270"
+        android:layout_marginLeft="-60dp">
+
+
+        <TextView
+            android:id="@+id/photo_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="故障车现场照片"
+            android:textColor="#ff9626"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/photo_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="请将车辆置于虚线框内，并将车牌置于小虚线框内"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -24,6 +24,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.TextViewCompat;
 import android.text.Layout;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -104,6 +105,7 @@ import com.autosos.yd.util.DistanceUtil;
 import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.Utils;
 import com.autosos.yd.view.MainActivity;
+import com.autosos.yd.view.NewTakePhotoActivity;
 import com.autosos.yd.viewpager.ContentViewPager;
 import com.autosos.yd.widget.RoundProgressBar;
 import com.iflytek.cloud.SpeechConstant;
@@ -183,6 +185,7 @@ public class FragmentForWork extends BasicFragment {
     private SpeechSynthesizer mTts = null;
     private boolean canCountGPSPoint = false;
     private View progressBar;
+    private ImageView takePhoto;
 
     public static Fragment newInstance() {
         if (fragment == null) {
@@ -347,22 +350,10 @@ public class FragmentForWork extends BasicFragment {
         cancelOrder = (Button) view.findViewById(R.id.cancel_order);
         cancelOrder.setOnClickListener(this);
 
-        //  menu_layout = view.findViewById(R.id.menu_layout);
-        // menu_layout.setOnTouchListener(this);
 
         menu = view.findViewById(R.id.menu);
-
-        //startNavi = view.findViewById(R.id.start_navi);
-        // startNavi.setOnClickListener(this);
-
-        //startRoute = view.findViewById(R.id.start_route);
-        //startRoute.setOnClickListener(this);
-
-//        stopNavi = view.findViewById(R.id.stop_navi);
-//        stopNavi.setOnClickListener(this);
-
-//        checkRoute = view.findViewById(R.id.check_route);
-//        checkRoute.setOnClickListener(this);
+        takePhoto = (ImageView) view.findViewById(R.id.take_photo);
+        takePhoto.setOnClickListener(this);
 
         mapView = (TextureMapView) view.findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
@@ -389,6 +380,7 @@ public class FragmentForWork extends BasicFragment {
         closeNewOrder.setOnClickListener(this);
 
         destination = (TextView) view.findViewById(R.id.destination);
+
         progressBar = view.findViewById(R.id.progressBar);
 
         handler = new Handler() {
@@ -500,15 +492,15 @@ public class FragmentForWork extends BasicFragment {
                         mEndList.clear();
                         mEndList.add(accidentPlace);
                         String s_type = null;
-                        if (serviceType == 1) {
+                        if (serviceType == 4) {
                             s_type = "搭电";
                         } else if (serviceType == 2) {
 
                             s_type = "换胎";
-                        } else if (serviceType == 3) {
+                        } else if (serviceType == 1) {
 
                             s_type = "拖车";
-                        } else if (serviceType == 5) {
+                        } else if (serviceType == 9) {
 
                             s_type = "快修";
 
@@ -540,7 +532,7 @@ public class FragmentForWork extends BasicFragment {
 
                     }
                 } else if (msg.what == 7) {
-                    mTts.startSpeaking("订单已经被你取消了", mSynListener);
+                    mTts.startSpeaking("订单已被取消", mSynListener);
                     getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                     mAMapNaviView.setVisibility(View.GONE);
                     mapView.setVisibility(View.VISIBLE);
@@ -553,6 +545,9 @@ public class FragmentForWork extends BasicFragment {
                     isNavi = false;
                     canGetNewOrder = true;
                     canCountGPSPoint = false;
+                }else if(msg.what==8){
+
+                    mTts.startSpeaking("到达救援现场,请按要求拍照", mSynListener);
                 }
             }
         };
@@ -1034,7 +1029,11 @@ public class FragmentForWork extends BasicFragment {
 
                 }
                 break;
-
+            case R.id.take_photo:
+                handler.sendEmptyMessage(8);
+                Intent i = new Intent(getActivity(), NewTakePhotoActivity.class);
+                getActivity().startActivity(i);
+                break;
 
         }
     }

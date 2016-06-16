@@ -266,4 +266,11 @@ e救援立志成为智能救援的推动者，成为规范汽车后市场标准�
     <string name="preference_title_tts_pitch">语调</string>
     <string name="preference_default_tts_pitch">50</string>
     <string name="intell_bd_title">智能播报</string>
+
+    <string-array name="spinnername">
+        <item>京</item>
+        <item>沪</item>
+        <item>粤</item>
+        <item>浙</item>
+    </string-array>
 </resources>
