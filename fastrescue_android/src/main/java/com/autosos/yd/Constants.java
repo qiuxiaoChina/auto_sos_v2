@@ -9,7 +9,8 @@ public class Constants {
     public static final int VERSION_CODE = 109;
     //public static String HOST = "http://api.auto-sos.com.cn/";
     //public static String HOST = "http://autosos.wicp.net:46622/";//测试服务器
-    public static String HOST = "http://api.test.auto-sos.cn/";//测试服务器
+   // public static String HOST = "http://api.test.auto-sos.cn/";//测试服务器
+    public static String HOST = "http://api.auto-sos.net/";//测试服务器
    // public static String HOST = "http://api.auto-sos.cn/";//正式服务器
 
     public static final String ACTIONNAME_STRING = "com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn";
@@ -27,6 +28,7 @@ public class Constants {
     public static final Executor INFOTHEADPOOL = Executors.newFixedThreadPool(3);
 
     public static String ACCESS_TOKEN_URL = HOST + "v1/auth/get-access-token";  //token获取
+    public static  String GET_AUTH_NUMBER = HOST + "v1/auth/device-verify-code"; //验证手机号
     public static String PERSON_URL = HOST + "v1/user/info";    //个人信息
     public static String ORDERS_URL = HOST + "v1/orders/refresh-list";  //所以订单信息
     public static String ACCEPT_ORDER_URL = HOST + "v1/orders/%s/acceptance";   //接单操作
@@ -66,7 +68,7 @@ public class Constants {
     public static  String GET_ORDER_FEE= HOST + "v1/settle-list/order-fee-detail/%s";     //结算报表详细
     public static  String GET_SEND_CODE = HOST + "v1/user/change-mobile-verify-code";    //发送修改手机号码验证码
     public static  String GET_CHANGE_NUMBER = HOST + "v1/user/change-mobile";               //修改手机号码
-    public static  String GET_AUTH_NUMBER = HOST + "v1/auth/device-verify-code";               //验证手机号
+
 
     public static String CHECK_IS_PAID = HOST+ "v1/orders/%s/get-pay-stat";  //获取支付状态
     public static String UPLOAD_COMMENT_SIGN = HOST+"v1/orders/%s/upload-pay-pic";//提交车主签名
