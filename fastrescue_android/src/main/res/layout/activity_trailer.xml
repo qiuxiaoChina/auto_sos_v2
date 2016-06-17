@@ -233,6 +233,7 @@
 
 
     <RelativeLayout
+        android:id="@+id/countryName"
         android:layout_marginTop="54dp"
         android:layout_alignParentRight="true"
         android:layout_width="150dp"
@@ -240,7 +241,9 @@
         android:background="#ffffff"
         android:visibility="gone">
 
+
         <ListView
+            android:id="@+id/lv_countryName"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 

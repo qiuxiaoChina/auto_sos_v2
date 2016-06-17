@@ -47,9 +47,9 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         PushManager.getInstance().initialize(this.getApplicationContext());
         setContentView(R.layout.activity_splash);
-        SharedPreferences sp = getSharedPreferences("online",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.remove("online").commit();
+//        SharedPreferences sp = getSharedPreferences("online",Context.MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sp.edit();
+//        editor.remove("online").commit();
 
         SharedPreferences sp1 = getSharedPreferences("working",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor1 = sp1.edit();

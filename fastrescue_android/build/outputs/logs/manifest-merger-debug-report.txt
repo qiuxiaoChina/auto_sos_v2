@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:2:1-226:12
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:2:1-228:12
 	package
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:3:5-29
 		INJECTED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml
@@ -174,7 +174,7 @@ ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidMani
 	android:name
 		ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:61:22-64
 application
-ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:63:5-224:19
+ADDED from E:\autosos\autosos_android_v2\fastrescue_android\src\main\AndroidManifest.xml:63:5-226:19
 MERGED from [com.android.support:appcompat-v7:21.0.3] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\AndroidManifest.xml:16:5-19
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20
 MERGED from [com.android.support:support-v4:22.2.0] E:\autosos\autosos_android_v2\fastrescue_android\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.0\AndroidManifest.xml:22:5-20

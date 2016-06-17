@@ -41,6 +41,8 @@ import com.autosos.yd.fragment.FragmentForMine;
 import com.autosos.yd.fragment.FragmentForOrder;
 import com.autosos.yd.fragment.FragmentForSetting;
 import com.autosos.yd.fragment.FragmentForWork;
+import com.autosos.yd.util.MyService_one;
+import com.autosos.yd.util.MyService_two;
 import com.autosos.yd.viewpager.ContentViewPager;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -84,6 +86,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         initView();
+
 
     }
 

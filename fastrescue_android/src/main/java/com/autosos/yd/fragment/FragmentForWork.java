@@ -218,12 +218,9 @@ public class FragmentForWork extends BasicFragment {
         boolean online = sp.getBoolean("online", false);
         SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
         boolean newOrderComing = sp1.getBoolean("newOrderComing", false);
-        if (online) {
-            isOnline = true;
-            switch_online.setText("在线");
-            switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.on_line));
-
-            if (newOrderComing) {
+        handler.sendEmptyMessage(1);
+        progressBar.setVisibility(View.VISIBLE);
+        if (newOrderComing) {
 
                 Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
                         R.anim.show);
@@ -245,7 +242,7 @@ public class FragmentForWork extends BasicFragment {
 
                 }
             }
-        }
+
         if (mAMapNavi == null) {
 
             mAMapNavi = AMapNavi.getInstance(this.getActivity().getApplicationContext());
@@ -618,13 +615,13 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onArriveDestination() {
 
-        latLngs.remove(latLngs.size() - 1);
-        mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
+       // latLngs.remove(latLngs.size() - 1);
+      //  mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
 //        AMapNaviViewOptions option = mAMapNaviView.getViewOptions();
 //        option.setZoom(13);
 //        mAMapNaviView.setViewOptions(option);
-        mAMapNaviView.recoverLockMode();
-        mAMapNaviView.setLockZoom(13);
+      //  mAMapNaviView.recoverLockMode();
+       // mAMapNaviView.setLockZoom(13);
         //handler.sendEmptyMessage(0);
 
 
@@ -862,11 +859,11 @@ public class FragmentForWork extends BasicFragment {
             case R.id.head_map:
 
                 if ("离线".equals(switch_online.getText())) {
-                    handler.sendEmptyMessage(1);
+
                     // getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
 //                    init();
 //                    setUpMap();
-
+                    handler.sendEmptyMessage(1);
                     progressBar.setVisibility(View.VISIBLE);
 
 
