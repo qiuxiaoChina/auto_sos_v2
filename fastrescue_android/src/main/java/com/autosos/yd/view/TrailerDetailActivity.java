@@ -25,6 +25,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
     private Button planeMenu;
     private View countryName;
     private ListView lv_countryName;
+    private View trailer_page;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,9 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
 
         planeMenu = (Button) findViewById(R.id.planeMenu);
         planeMenu.setOnClickListener(this);
+
+        trailer_page = findViewById(R.id.trailer_page);
+        trailer_page.setOnClickListener(this);
 
         countryName = findViewById(R.id.countryName);
         lv_countryName = (ListView) findViewById(R.id.lv_countryName);
@@ -71,6 +75,18 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                     countryName.setVisibility(View.GONE);
                     isClicked = false;
 
+                }
+
+                break;
+
+            case R.id.trailer_page:
+                if(countryName.getVisibility()==View.VISIBLE){
+
+                    Animation animation = AnimationUtils.loadAnimation(
+                            TrailerDetailActivity.this, R.anim.plane_menu_out);
+                    countryName.startAnimation(animation);
+                    countryName.setVisibility(View.GONE);
+                    isClicked = false;
                 }
 
                 break;

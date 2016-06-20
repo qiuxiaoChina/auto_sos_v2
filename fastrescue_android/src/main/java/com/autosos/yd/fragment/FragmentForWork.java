@@ -186,6 +186,7 @@ public class FragmentForWork extends BasicFragment {
     private boolean canCountGPSPoint = false;
     private View progressBar;
     private ImageView takePhoto;
+    private Boolean speakOnce = false;
 
     public static Fragment newInstance() {
         if (fragment == null) {
@@ -408,7 +409,12 @@ public class FragmentForWork extends BasicFragment {
                                     SharedPreferences.Editor editor = sp.edit();
                                     editor.putBoolean("online", true).commit();
                                     progressBar.setVisibility(View.GONE);
-                                    mTts.startSpeaking("您已成功上线，开始接单", mSynListener);
+                                    if(!speakOnce){
+
+                                        mTts.startSpeaking("您已成功上线，开始接单", mSynListener);
+                                        speakOnce = true;
+                                    }
+
 
                                 } else {
                                     //Toast.makeText(getActivity().getApplicationContext(), R.string.msg_change_error, Toast.LENGTH_LONG).show();
@@ -615,14 +621,14 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onArriveDestination() {
 
-       // latLngs.remove(latLngs.size() - 1);
-      //  mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
+        latLngs.remove(latLngs.size() - 1);
+        mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
 //        AMapNaviViewOptions option = mAMapNaviView.getViewOptions();
 //        option.setZoom(13);
 //        mAMapNaviView.setViewOptions(option);
-      //  mAMapNaviView.recoverLockMode();
-       // mAMapNaviView.setLockZoom(13);
-        //handler.sendEmptyMessage(0);
+        mAMapNaviView.recoverLockMode();
+        mAMapNaviView.setLockZoom(13);
+      //  handler.sendEmptyMessage(0);
 
 
     }
@@ -873,6 +879,7 @@ public class FragmentForWork extends BasicFragment {
                     //menu_layout.setVisibility(View.GONE);
                     // menu.setVisibility(View.GONE);
                     progressBar.setVisibility(View.VISIBLE);
+                    speakOnce = false;
                     // switch_online.setText("离线>>>");
 //                    deactivate();
 //                    amap.clear();
