@@ -221,6 +221,7 @@
         android:layout_height="450dp"
         android:background="@drawable/order_background"
         android:layout_centerInParent="true"
+        android:visibility="gone"
         >
 
         <View
@@ -231,9 +232,10 @@
 
 
         <TextView
+            android:id="@+id/order_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="拖车订单"
+            android:text="订单"
             android:textSize="27sp"
             android:textColor="#333333"
             android:layout_marginTop="63dp"
@@ -246,6 +248,7 @@
             android:orientation="horizontal"
             android:layout_marginTop="112dp"
             android:gravity="center_horizontal"
+            android:visibility="gone"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -268,8 +271,9 @@
             android:layout_height="40dp"
             android:background="@drawable/order_add_bg2"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="161dp"
-            android:gravity="center_vertical">
+            android:layout_marginTop="126dp"
+            android:gravity="center_vertical"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="16dp"
@@ -283,9 +287,10 @@
                 android:scrollbars="none"
                 android:layout_marginLeft="39dp">
                 <TextView
+                    android:id="@+id/address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="鄞州科技信息孵化园哈哈哈哈哈哈哈哈哈"
+                    android:text=""
                     android:textSize="16sp"
                     android:textColor="#333333"
                     android:singleLine="true"
@@ -303,7 +308,7 @@
             android:layout_centerHorizontal="true"
             android:layout_width="314dp"
             android:layout_height="95dp"
-            android:layout_marginTop="161dp"
+            android:layout_marginTop="126dp"
             android:background="@drawable/order_add_bg"
             android:visibility="gone">
             
@@ -324,9 +329,10 @@
                     android:scrollbars="none"
                     android:layout_marginLeft="31dp">
                     <TextView
+                        android:id="@+id/address_tuoche1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="鄞州科技信息孵化园哈哈哈哈哈哈哈哈哈"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="#333333"
                         android:singleLine="true"
@@ -361,9 +367,10 @@
                     android:scrollbars="none"
                     android:layout_marginLeft="31dp">
                     <TextView
+                        android:id="@+id/address_tuoche2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="鄞州科技信息孵化园哈哈哈哈哈哈哈哈哈哈哈"
+                        android:text=""
                         android:textSize="16sp"
                         android:textColor="#333333"
                         android:singleLine="true"

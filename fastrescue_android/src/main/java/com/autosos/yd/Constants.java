@@ -27,6 +27,7 @@ public class Constants {
     public static final Executor THEADPOOL = Executors.newFixedThreadPool(10);
     public static final Executor INFOTHEADPOOL = Executors.newFixedThreadPool(3);
 
+    public static String CLOSE_ORDER_URL = HOST+"v1/orders/%s/close-order";//取消订单
     public static String ACCESS_TOKEN_URL = HOST + "v1/auth/get-access-token";  //token获取
     public static  String GET_AUTH_NUMBER = HOST + "v1/auth/device-verify-code"; //验证手机号
     public static String PERSON_URL = HOST + "v1/user/info";    //个人信息
