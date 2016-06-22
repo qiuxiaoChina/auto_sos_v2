@@ -53,30 +53,22 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
     private Camera mCamera = null;
     private SurfaceHolder mHolder = null;
     private AlbumOrientationEventListener mAlbumOrientationEventListener = null;
-    private boolean canShoot  = false;
+    private boolean canShoot = false;
     private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback() {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
 
-//            try {
-//                String path = saveToSDCard(data); // 保存图片到SD卡中
+            try {
+                String path = saveToSDCard(data); // 保存图片到SD卡中
                 Toast.makeText(NewTakePhotoActivity.this, "成功拍照", Toast.LENGTH_SHORT).show();
-                //图片更新，很重要的一点，部分手机如果不发送这条广播图片不是实时更新
-                // camera.startPreview(); // 拍完照后，重新开始预览
-//                Intent intent = new Intent();
-//                intent.setAction("NewUploadPhotoActivity");
-//                intent.putExtra("imagePath", path);
-//                if (tuoche != null) {
-//                    intent.putExtra("tuocheTaken", "tuocheTaken");
-//
-//                } else if (tuoche2 != null) {
-//                    intent.putExtra("tuocheTaken2", "tuocheTaken2");
-//                }
-//                startActivity(intent);
-//                finish();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+//                //图片更新，很重要的一点，部分手机如果不发送这条广播图片不是实时更新
+//                // camera.startPreview(); // 拍完照后，重新开始预览
+                Intent intent = new Intent(NewTakePhotoActivity.this,NewUploadPhotoActivity.class);
+                intent.putExtra("imagePath", path);
+                startActivity(intent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     };
 
@@ -84,21 +76,20 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
     @SuppressLint("SimpleDateFormat")
     public static String saveToSDCard(byte[] data) {
 
-//        File jpgFile = com.autosos.yd.util.FileUtil.createImageFile();
-//        FileOutputStream outputStream = null; // 文件输出流
-//        try {
-//            outputStream = new FileOutputStream(jpgFile);
-//            outputStream.write(data); // 写入SD卡中
-//            outputStream.close(); // 关闭输出流
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        return jpgFile.getAbsolutePath();
-        return "";
+        File jpgFile = com.autosos.yd.util.FileUtil.createImageFile();
+        FileOutputStream outputStream = null; // 文件输出流
+        try {
+            outputStream = new FileOutputStream(jpgFile);
+            outputStream.write(data); // 写入SD卡中
+            outputStream.close(); // 关闭输出流
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return jpgFile.getAbsolutePath();
     }
 
 
@@ -189,15 +180,15 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
 
             //保证只返回四个方向
             int newOrientation = ((orientation + 45) / 90 * 90) % 360;
-            Log.d("orientation",newOrientation+"---"+orientation);
+            Log.d("orientation", newOrientation + "---" + orientation);
             //返回的mOrientation就是手机方向，为0°、90°、180°和270°中的一个
             if (newOrientation == 270) {
 
-               canShoot = true;
+                canShoot = true;
 
-            }else{
+            } else {
 
-               canShoot = false;
+                canShoot = false;
             }
         }
     }
@@ -262,11 +253,11 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
                 break;
 
             case R.id.button1:
-                if(!canShoot){
+                if (!canShoot) {
 
                     Toast.makeText(NewTakePhotoActivity.this, "请按要求横屏拍摄照片。", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
 
                     try {
                         Camera.Parameters parameters = mCamera.getParameters();

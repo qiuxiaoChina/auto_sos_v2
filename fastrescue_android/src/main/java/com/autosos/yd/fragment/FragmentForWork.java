@@ -99,6 +99,7 @@ import com.autosos.yd.Layout.MyButton;
 import com.autosos.yd.Layout.MyRaletiveLayout;
 import com.autosos.yd.R;
 import com.autosos.yd.model.NewOrder;
+import com.autosos.yd.model.OrderInfo;
 import com.autosos.yd.task.HttpGetTask;
 import com.autosos.yd.task.NewHttpPostTask;
 import com.autosos.yd.task.NewHttpPutTask;
@@ -109,6 +110,7 @@ import com.autosos.yd.util.JSONUtil;
 import com.autosos.yd.util.Utils;
 import com.autosos.yd.view.MainActivity;
 import com.autosos.yd.view.NewTakePhotoActivity;
+import com.autosos.yd.view.NewUploadPhotoActivity;
 import com.autosos.yd.viewpager.ContentViewPager;
 import com.autosos.yd.widget.RoundProgressBar;
 import com.iflytek.cloud.SpeechConstant;
@@ -192,8 +194,8 @@ public class FragmentForWork extends BasicFragment {
     private Boolean speakOnce = false;
 
     private NewOrder newOrder_bean = null;
-    private TextView order_type,address,address_tuoche1,address_tuoche2;
-    private View otherService,trailerService;
+    private TextView order_type, address, address_tuoche1, address_tuoche2;
+    private View otherService, trailerService;
 
 
     public static Fragment newInstance() {
@@ -222,77 +224,141 @@ public class FragmentForWork extends BasicFragment {
         mapViewForShow.onResume();
         init();
         setUpMap();
-        //mapView.setVisibility(View.VISIBLE);
-        SharedPreferences sp = getActivity().getSharedPreferences("online", Context.MODE_PRIVATE);
-        boolean online = sp.getBoolean("online", false);
-        SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
-        boolean newOrderComing = sp1.getBoolean("newOrderComing", false);
-        handler.sendEmptyMessage(1);
-        progressBar.setVisibility(View.VISIBLE);
-        if (newOrderComing) {
+        new HttpGetTask(getActivity().getApplication(), new OnHttpRequestListener() {
+            @Override
+            public void onRequestCompleted(Object obj) {
 
-            Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
-                    R.anim.show);
-            newOrder.setVisibility(View.VISIBLE);
-            newOrder.startAnimation(animation);
-            head_map.setVisibility(View.GONE);
-            getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
-            SharedPreferences sp3 = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
-            String s_order = sp3.getString("order", null);
-            JSONObject order;
-            if (s_order != null) {
+                JSONObject jsonObject;
                 try {
-                    order = new JSONObject(s_order);
-                    newOrder_bean = new NewOrder(order);
-                    double lat = newOrder_bean.getLatitude();
-                    double lon = newOrder_bean.getLongitude();
-                    String destination = newOrder_bean.getAddress();
-                    NaviLatLng naviLatLng = new NaviLatLng(lat, lon);
-                    mEndList.clear();
-                    mEndList.add(naviLatLng);
-                    s_destination = destination;
-                    int serviceType = newOrder_bean.getService_type();
-                    String s_type = null;
-                    if (serviceType == 4) {
-                        s_type = "搭电";
+                    jsonObject = new JSONObject(obj.toString());
+                    Log.d("onlineResult",jsonObject.getInt("result")+"");
+                    if (jsonObject.getInt("result") == 1) {//离线
 
-                    } else if (serviceType == 2) {
+                        handler.sendEmptyMessage(1);
+                        progressBar.setVisibility(View.VISIBLE);
 
-                        s_type = "换胎";
-                    } else if (serviceType == 1) {
+                    } else if (jsonObject.getInt("result") == 2) {//在线
 
-                        s_type = "拖车";
-                    } else if (serviceType == 9) {
+                        isOnline = true;
+                        switch_online.setText("在线");
+                        switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.on_line));
+                        SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
+                        boolean newOrderComing = sp1.getBoolean("newOrderComing", false);
+                        if (newOrderComing) {
 
-                        s_type = "快修";
+                            Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
+                                    R.anim.show);
+                            newOrder.setVisibility(View.VISIBLE);
+                            newOrder.startAnimation(animation);
+                            head_map.setVisibility(View.GONE);
+                            getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
+                            SharedPreferences sp3 = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
+                            String s_order = sp3.getString("order", null);
+                            JSONObject order;
+                            if (s_order != null) {
+                                try {
+                                    order = new JSONObject(s_order);
+                                    newOrder_bean = new NewOrder(order);
+                                    double lat = newOrder_bean.getLatitude();
+                                    double lon = newOrder_bean.getLongitude();
+                                    String destination = newOrder_bean.getAddress();
+                                    NaviLatLng naviLatLng = new NaviLatLng(lat, lon);
+                                    mEndList.clear();
+                                    mEndList.add(naviLatLng);
+                                    s_destination = destination;
+                                    int serviceType = newOrder_bean.getService_type();
+                                    String s_type = null;
+                                    if (serviceType == 4) {
+                                        s_type = "搭电";
+
+                                    } else if (serviceType == 2) {
+
+                                        s_type = "换胎";
+                                    } else if (serviceType == 1) {
+
+                                        s_type = "拖车";
+                                    } else if (serviceType == 9) {
+
+                                        s_type = "快修";
+
+                                    }
+                                    order_type.setText(s_type + "订单");
+                                    if (serviceType == 1) {
+
+                                        trailerService.setVisibility(View.VISIBLE);
+                                        otherService.setVisibility(View.GONE);
+                                        address_tuoche1.setText(s_destination);
+                                        String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                        address_tuoche2.setText(s_address_tuoche2);
+
+                                    } else {
+
+                                        trailerService.setVisibility(View.GONE);
+                                        otherService.setVisibility(View.VISIBLE);
+                                        address.setText(s_destination);
+                                    }
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+
+                            }
+
+                        }
+
+
+                    } else if (jsonObject.getInt("result") == 3) {//工作状态
+
+                         int orderId = jsonObject.getInt("orderId");
+                         new HttpGetTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {//获取订单详情
+                            @Override
+                            public void onRequestCompleted(Object obj) {
+
+                                JSONObject jsonObject;
+                                try {
+
+                                    jsonObject = new JSONObject(obj.toString());
+                                    OrderInfo info = new OrderInfo(jsonObject);
+                                    SharedPreferences sp2 = getActivity().getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+                                    sp2.edit().putString("orderInfo", info.toString()).commit();
+
+                                }catch (Exception e){
+
+
+                                }
+
+                            }
+
+                            @Override
+                            public void onRequestFailed(Object obj) {
+
+                            }
+
+                        }).execute(String.format(Constants.ORDER_INFO_URL,orderId));
+
+
+
+                    } else {
+
 
                     }
-                    order_type.setText(s_type+"订单");
-                    if(serviceType ==1){
 
-                        trailerService.setVisibility(View.VISIBLE);
-                        otherService.setVisibility(View.GONE);
-                        address_tuoche1.setText(s_destination);
-                        String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
-                        address_tuoche2.setText(s_address_tuoche2);
+                } catch (Exception e) {
 
-                    }else {
-
-                        trailerService.setVisibility(View.GONE);
-                        otherService.setVisibility(View.VISIBLE);
-                        address.setText(s_destination);
-                    }
-
-
-
-                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
 
             }
 
-        }
+            @Override
+            public void onRequestFailed(Object obj) {
+
+            }
+        }).execute(Constants.CHECK_IF_ONLINE_URL);
+
 
         if (mAMapNavi == null) {
 
@@ -462,9 +528,6 @@ public class FragmentForWork extends BasicFragment {
                                     isOnline = true;
                                     switch_online.setText("在线");
                                     switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.on_line));
-                                    SharedPreferences sp = getActivity().getSharedPreferences("online", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sp.edit();
-                                    editor.putBoolean("online", true).commit();
                                     progressBar.setVisibility(View.GONE);
                                     if (!speakOnce) {
 
@@ -504,9 +567,6 @@ public class FragmentForWork extends BasicFragment {
                                     isOnline = false;
                                     switch_online.setText("离线");
                                     switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.off_line));
-                                    SharedPreferences sp = getActivity().getSharedPreferences("online", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sp.edit();
-                                    editor.remove("online").commit();
                                     //menu.setVisibility(View.GONE);
                                     progressBar.setVisibility(View.GONE);
                                     mTts.startSpeaking("您已停止接单,再见", mSynListener);
@@ -543,14 +603,14 @@ public class FragmentForWork extends BasicFragment {
                         newOrder_bean = new NewOrder(data);
                         s_destination = newOrder_bean.getAddress();
                         String speak_destination = s_destination;
-                        speak_destination = speak_destination.replaceFirst("区","区,");
+                        speak_destination = speak_destination.replaceFirst("区", "区,");
                         int serviceType = newOrder_bean.getService_type();
                         int is_appointed = newOrder_bean.getIs_appointed();
                         double lat = newOrder_bean.getLatitude();
                         double lon = newOrder_bean.getLongitude();
                         double take_distance = newOrder_bean.getTake_distance();
                         NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
-                        LatLng latLng_accidentPlace= new LatLng(lat,lon);
+                        LatLng latLng_accidentPlace = new LatLng(lat, lon);
                         SharedPreferences sp2 = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
                         sp2.edit().putString("order", data.toString()).commit();
                         mEndList.clear();
@@ -570,8 +630,8 @@ public class FragmentForWork extends BasicFragment {
                             s_type = "快修";
 
                         }
-                        order_type.setText(s_type+"订单");
-                        if(serviceType ==1){
+                        order_type.setText(s_type + "订单");
+                        if (serviceType == 1) {
 
                             trailerService.setVisibility(View.VISIBLE);
                             otherService.setVisibility(View.GONE);
@@ -579,14 +639,14 @@ public class FragmentForWork extends BasicFragment {
                             String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
                             address_tuoche2.setText(s_address_tuoche2);
 
-                        }else {
+                        } else {
 
                             trailerService.setVisibility(View.GONE);
                             otherService.setVisibility(View.VISIBLE);
                             address.setText(s_destination);
                         }
 
-                        mTts.startSpeaking("您有新的" + s_type + "订单,地址" +speak_destination+",距离约为"+take_distance+"公里", mSynListener);
+                        mTts.startSpeaking("您有新的" + s_type + "订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
 //                        SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing",Context.MODE_PRIVATE);
 //                        sp1.edit().putBoolean("newOrderComing",true).commit();
 
@@ -627,7 +687,7 @@ public class FragmentForWork extends BasicFragment {
                     canGetNewOrder = true;
                     canCountGPSPoint = false;
                 } else if (msg.what == 8) {
-
+                    progressBar.setVisibility(View.GONE);
                     mTts.startSpeaking("到达救援现场,请按要求拍照", mSynListener);
                 }
             }
@@ -728,7 +788,7 @@ public class FragmentForWork extends BasicFragment {
 
     @Override
     public void onCalculateRouteSuccess() {
-
+        progressBar.setVisibility(View.GONE);
         timeStamp = new Date().getTime();
         AMapNaviPath naviPath = mAMapNavi.getNaviPath();
         if (naviPath == null) {
@@ -743,7 +803,7 @@ public class FragmentForWork extends BasicFragment {
         //deactivate();
         mapView.setVisibility(View.GONE);
         mAMapNaviView.setVisibility(View.VISIBLE);
-        mAMapNavi.startNavi(NaviType.GPS);
+        mAMapNavi.startNavi(NaviType.EMULATOR);
         handler.sendEmptyMessage(0);
         Log.d("distance", timeStamp + "");
 
@@ -754,6 +814,7 @@ public class FragmentForWork extends BasicFragment {
     private float dis_moved = 0;
     private float last_distance = 0;
     private String trace_data = "";
+
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
         long timeNow = new Date().getTime();
@@ -772,7 +833,7 @@ public class FragmentForWork extends BasicFragment {
             Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance);
             timeStamp = timeNow;
             latLngs.add(currentLatLng);
-            trace_data +=currentLatLng.longitude+","+currentLatLng.latitude+"|";
+            trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
 
         }
 
@@ -877,7 +938,7 @@ public class FragmentForWork extends BasicFragment {
                         public void onRequestFailed(Object obj) {
                         }
                     }).execute(Constants.USER_LOCATION_URL, map);
-                }catch (Exception e){
+                } catch (Exception e) {
 
                     e.printStackTrace();
                 }
@@ -1071,7 +1132,7 @@ public class FragmentForWork extends BasicFragment {
                             public void onRequestFailed(Object obj) {
 
                             }
-                        }).execute(String.format(Constants.CLOSE_ORDER_URL,newOrder_bean.getOrderId()));
+                        }).execute(String.format(Constants.CLOSE_ORDER_URL, newOrder_bean.getOrderId()));
 
 
                     }
@@ -1134,7 +1195,7 @@ public class FragmentForWork extends BasicFragment {
                     map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
                     map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
 
-                    new NewHttpPutTask(getActivity().getApplicationContext(),new OnHttpRequestListener(){
+                    new NewHttpPutTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
 
                         @Override
                         public void onRequestCompleted(Object obj) {
@@ -1143,7 +1204,7 @@ public class FragmentForWork extends BasicFragment {
                                 jsonObject = new JSONObject(obj.toString());
                                 if (jsonObject.getInt("result") == 1) {
 
-                                    progressBar.setVisibility(View.GONE);
+
                                     head_map.setVisibility(View.GONE);
                                     head_map_tel_navi.setVisibility(View.VISIBLE);
                                     menu.setVisibility(View.VISIBLE);
@@ -1156,9 +1217,9 @@ public class FragmentForWork extends BasicFragment {
                                     canCountGPSPoint = true;
                                     distance_moved.setText("已行驶:0.0km");
                                     destination.setText(s_destination);
-                                    mAMapNavi.calculateDriveRoute(mStartList,mEndList,mWayPointList,PathPlanningStrategy.DRIVING_DEFAULT);
+                                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
 
-                                }else{
+                                } else {
                                     progressBar.setVisibility(View.GONE);
                                     newOrder.clearAnimation();
                                     newOrder.setVisibility(View.GONE);
@@ -1184,7 +1245,7 @@ public class FragmentForWork extends BasicFragment {
                             mTts.startSpeaking("接单失败", mSynListener);
 
                         }
-                    }).execute(String.format(Constants.ACCEPT_ORDER_URL,newOrder_bean.getOrderId()), map);
+                    }).execute(String.format(Constants.ACCEPT_ORDER_URL, newOrder_bean.getOrderId()), map);
 
                 }
                 break;
@@ -1192,22 +1253,23 @@ public class FragmentForWork extends BasicFragment {
                 Map<String, Object> map = new HashMap<>();
                 map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
                 map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
-                map.put("distance",dis_moved);
-                map.put("trace_data",trace_data);
+                map.put("distance", dis_moved);
+                map.put("trace_data", trace_data);
+                progressBar.setVisibility(View.VISIBLE);
                 new NewHttpPutTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
                     @Override
                     public void onRequestCompleted(Object obj) {
-
+                        mAMapNavi.stopNavi();
                         handler.sendEmptyMessage(8);
-//                        Intent i = new Intent(getActivity(), NewTakePhotoActivity.class);
-//                        getActivity().startActivity(i);
+                        Intent intent = new Intent(getActivity().getApplicationContext(),NewTakePhotoActivity.class);
+                        startActivity(intent);
                     }
 
                     @Override
                     public void onRequestFailed(Object obj) {
 
                     }
-                }).execute(String.format(Constants.ARRIVE_SUBMIT_URL,newOrder_bean.getOrderId()),map);
+                }).execute(String.format(Constants.ARRIVE_SUBMIT_URL, newOrder_bean.getOrderId()), map);
 
                 break;
 

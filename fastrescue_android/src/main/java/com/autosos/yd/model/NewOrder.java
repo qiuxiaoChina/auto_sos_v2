@@ -20,6 +20,11 @@ public class NewOrder {
     private double plan_km;
     private int service_type;
     private double take_distance;
+    private String owner_moblie;
+
+    public String getOwner_moblie() {
+        return owner_moblie;
+    }
 
     public NewOrder(JSONObject jsonObject) {
         this.orderId = jsonObject.optInt("id");
@@ -33,6 +38,7 @@ public class NewOrder {
         this.plan_km = jsonObject.optDouble("plan_km",0);
         this.service_type = jsonObject.optInt("service_type",0);
         this.take_distance = jsonObject.optDouble("take_distance",0);
+        this.owner_moblie = JSONUtil.getString(jsonObject,"owner_mobile");
 
     }
 

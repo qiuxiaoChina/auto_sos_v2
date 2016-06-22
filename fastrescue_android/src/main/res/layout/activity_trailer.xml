@@ -1,361 +1,352 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    android:id="@+id/trailer_page"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffffff"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:background="#20b48b"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <!--<ImageView-->
-            <!--android:id="@+id/back_button"-->
-            <!--android:layout_width="50dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:src="@mipmap/back"/>-->
-
-            <!--<View-->
-            <!--android:layout_width="2dip"-->
-            <!--android:layout_height="26dp"-->
-            <!--android:background="#098865"-->
-            <!--android:layout_gravity="center"-->
-            <!--/>-->
-
-            <TextView
-
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="拖车信息录入"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-
-                />
-
-        </LinearLayout>
+        android:layout_height="54dp"
+        android:background="#20b48b"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="34dp"
-            android:background="#f7f7f7"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:text="准确填写车辆信息,享受高质量订单匹配"
-            android:textColor="#999999"
-            android:textSize="14sp" />
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拖车信息录入"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="54dp"
+        android:background="#f7f7f7"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="准确填写车辆信息,享受高质量订单匹配"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="88dp"
+        android:scrollbars="vertical">
 
         <LinearLayout
+            android:id="@+id/trailer_page"
             android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="车牌号"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/planeMenu"
+                    android:layout_width="47dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="26dp"
+                    android:background="@drawable/num_btn_bg"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="9dp"
+                    android:text="浙"
+                    android:textColor="#333333"
+                    android:textSize="16sp"></Button>
+
+                <EditText
+                    android:layout_width="117dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="34dp"
+                    android:background="@null"
+                    android:hint="输入6位车牌号"
+                    android:singleLine="true"
+                    android:textColor="#333333"
+                    android:textColorHint="#999999"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
                 android:layout_marginLeft="17dp"
-                android:text="车牌号"
-                android:textColor="#333333"
-                android:textSize="16dp" />
+                android:background="#EEEEEE" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="牵引吨位"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="75dp"
+                    android:text="14"
+                    android:textColor="#20b48b"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="56dp"
+                    android:text="吨"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:layout_width="12dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/icon_right" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="是否落地"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="56dp"
+                    android:text="是"
+                    android:textColor="#20b48b"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:layout_width="12dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/icon_right" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="辅助轮"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="56dp"
+                    android:text="是"
+                    android:textColor="#20b48b"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:layout_width="12dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/icon_right" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="是否有起吊功能"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="56dp"
+                    android:text="是"
+                    android:textColor="#20b48b"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:layout_width="12dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/icon_right" />
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="添加服务"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="41dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="180dp"
+                    android:background="@drawable/bg_service_type_nor"
+                    android:gravity="center"
+                    android:text="拖车"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="41dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="130dp"
+                    android:background="@drawable/bg_service_type_nor"
+                    android:gravity="center"
+                    android:text="搭电"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="41dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="80dp"
+                    android:background="@drawable/bg_service_type_nor"
+                    android:gravity="center"
+                    android:text="换胎"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:layout_width="41dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:background="@drawable/bg_service_type_nor"
+                    android:gravity="center"
+                    android:text="快修"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
 
             <Button
-                android:id="@+id/planeMenu"
-                android:layout_width="47dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="26dp"
-                android:background="@drawable/num_btn_bg"
-                android:text="浙"
-                android:textSize="16sp"
-                android:textColor="#333333"
-                android:gravity="left|center_vertical"
-                android:paddingLeft="9dp"></Button>
-
-            <EditText
-                android:layout_width="117dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="34dp"
-                android:background="@null"
-                android:hint="输入6位车牌号"
-                android:singleLine="true"
-                android:textColor="#333333"
-                android:textColorHint="#999999"
-                android:textCursorDrawable="@null"
+                android:id="@+id/detail_confirm"
+                android:layout_width="317dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/trailer_detail_confirm"
+                android:text="确认"
+                android:textColor="#ffffff"
                 android:textSize="16sp" />
 
+
         </LinearLayout>
-
-        <View
-            android:layout_width="344dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="17dp"
-            android:background="#EEEEEE" />
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="17dp"
-                android:text="牵引吨位"
-                android:textColor="#333333"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="75dp"
-                android:text="14"
-                android:textColor="#20b48b"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="56dp"
-                android:text="吨"
-                android:textColor="#333333"
-                android:textSize="16dp" />
-
-            <Button
-                android:layout_width="12dp"
-                android:layout_height="22dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/icon_right" />
-
-        </RelativeLayout>
-
-
-        <View
-            android:layout_width="344dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="17dp"
-            android:background="#EEEEEE" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="17dp"
-                android:text="是否落地"
-                android:textColor="#333333"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="56dp"
-                android:text="是"
-                android:textColor="#20b48b"
-                android:textSize="16dp" />
-
-            <Button
-                android:layout_width="12dp"
-                android:layout_height="22dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/icon_right" />
-
-
-        </RelativeLayout>
-
-
-        <View
-            android:layout_width="344dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="17dp"
-            android:background="#EEEEEE" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="17dp"
-                android:text="辅助轮"
-                android:textColor="#333333"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="56dp"
-                android:text="是"
-                android:textColor="#20b48b"
-                android:textSize="16dp" />
-
-            <Button
-                android:layout_width="12dp"
-                android:layout_height="22dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/icon_right" />
-
-        </RelativeLayout>
-
-
-        <View
-            android:layout_width="344dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="17dp"
-            android:background="#EEEEEE" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="17dp"
-                android:text="是否有起吊功能"
-                android:textColor="#333333"
-                android:textSize="16dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="56dp"
-                android:text="是"
-                android:textColor="#20b48b"
-                android:textSize="16dp" />
-
-            <Button
-                android:layout_width="12dp"
-                android:layout_height="22dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/icon_right" />
-
-        </RelativeLayout>
-
-
-        <View
-            android:layout_width="344dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="17dp"
-            android:background="#EEEEEE" />
-
-
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="51dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="17dp"
-                android:text="添加服务"
-                android:textColor="#333333"
-                android:textSize="16dp" />
-
-            <TextView
-                android:gravity="center"
-                android:layout_width="41dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="180dp"
-                android:text="拖车"
-                android:textColor="#333333"
-                android:textSize="16dp"
-                android:background="@drawable/bg_service_type_nor"/>
-
-            <TextView
-                android:gravity="center"
-                android:layout_width="41dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="130dp"
-                android:text="搭电"
-                android:textColor="#333333"
-                android:textSize="16dp"
-                android:background="@drawable/bg_service_type_nor"/>
-
-            <TextView
-                android:gravity="center"
-                android:layout_width="41dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="80dp"
-                android:text="换胎"
-                android:textColor="#333333"
-                android:textSize="16dp"
-                android:background="@drawable/bg_service_type_nor"/>
-
-            <TextView
-                android:gravity="center"
-                android:layout_width="41dp"
-                android:layout_height="24dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="30dp"
-                android:text="快修"
-                android:textColor="#333333"
-                android:textSize="16dp"
-                android:background="@drawable/bg_service_type_nor"/>
-
-
-
-        </RelativeLayout>
-
-
-        <View
-            android:layout_width="344dp"
-            android:layout_height="1dp"
-            android:layout_marginLeft="17dp"
-            android:background="#EEEEEE" />
-
-        <Button
-            android:id="@+id/detail_confirm"
-            android:layout_width="317dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/trailer_detail_confirm"
-            android:text="确认"
-            android:textColor="#ffffff"
-            android:textSize="16sp" />
-
-
-    </LinearLayout>
+    </ScrollView>
 
 
     <RelativeLayout
         android:id="@+id/countryName"
-        android:layout_marginTop="54dp"
-        android:layout_alignParentRight="true"
         android:layout_width="150dp"
         android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="54dp"
         android:background="#ffffff"
         android:visibility="gone">
 

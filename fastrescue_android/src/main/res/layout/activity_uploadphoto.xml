@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+
+    <TextView
+        android:id="@+id/photo_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="55dp"
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        android:text="拍摄结果"/>
+
+      <ImageView
+          android:id="@+id/photo_preview"
+        android:layout_width="512dp"
+        android:layout_height="288dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        />
+
+    <Button
+        android:id="@+id/rephoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="23dp"
+        android:background="#00000000"
+        android:text="重拍"
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        />
+
+    <Button
+        android:id="@+id/upload_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginRight="23dp"
+        android:background="#00000000"
+        android:text="上传"
+        android:textColor="#ffffff"
+        android:textSize="17sp"
+        />
+
+    <RelativeLayout
+        android:id="@+id/upload_layout"
+        android:background="#7d000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:gravity="center"
+        >
+
+        <com.autosos.yd.widget.MyProgress_QX
+            android:id="@+id/pgsBar"
+            android:max="100"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/progressbar_qx"
+            style="?android:attr/progressBarStyleHorizontal"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

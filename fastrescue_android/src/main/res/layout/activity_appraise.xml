@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center_horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#20b48b"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="救援评价"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+
+            />
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:layout_marginTop="54dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <RelativeLayout
+                android:layout_width="287dp"
+                android:layout_height="21dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="31dp"
+                android:gravity="center_vertical">
+
+                <View
+                    android:layout_width="84dp"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:background="#AAAAAA" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="18dp"
+                    android:text="评价救援师傅"
+                    android:textColor="#999999"
+                    android:textSize="14sp"
+
+                    />
+
+                <View
+                    android:layout_width="84dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="#AAAAAA" />
+
+            </RelativeLayout>
+
+
+            <RatingBar
+                android:id="@+id/rb_level"
+                style="@style/yellowRatingBar_new_way"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="74dp"
+                android:isIndicator="false"
+                android:numStars="5"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/appraise_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="15sp"
+                android:layout_below="@id/rb_level"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:text="请您评价我们的服务,默认评价为5星"
+                android:textColor="#999999"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="287dp"
+                android:layout_height="21dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="148dp"
+                android:gravity="center_vertical">
+
+                <View
+                    android:layout_width="84dp"
+                    android:layout_height="1dp"
+                    android:layout_centerVertical="true"
+                    android:background="#AAAAAA" />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="18dp"
+                    android:text="车主签名"
+                    android:textColor="#999999"
+                    android:textSize="14sp"
+
+                    />
+
+                <View
+                    android:layout_width="84dp"
+                    android:layout_height="1dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:background="#AAAAAA" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="287dp"
+                android:layout_height="300dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="191dp"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:id="@+id/sign_layout"
+                    android:layout_width="287dp"
+                    android:layout_height="201dp"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/sign_tablet">
+
+                    <View
+                        android:layout_width="287dp"
+                        android:layout_height="201dp"
+                        android:background="@color/color_white" />
+
+                    <com.autosos.yd.util.SignPaintView
+                        android:id="@+id/sign_tablet"
+                        android:layout_width="287dp"
+                        android:layout_height="201dp" />
+
+                    <TextView
+                        android:id="@+id/sign_hint"
+                        android:layout_width="287dp"
+                        android:layout_height="201dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="请车主签名"
+                        android:textColor="#eeeeee"
+                        android:textSize="50sp" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/sign_tablet" />
+
+                </FrameLayout>
+
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_width="287dp"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/bg_btn_selector_new_way"
+                    android:clickable="true"
+                    android:text="提交"
+                    android:textColor="#fff" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <include layout="@layout/progressbar_layout" />
+
+</RelativeLayout>

@@ -28,6 +28,8 @@ public class Constants {
     public static final Executor INFOTHEADPOOL = Executors.newFixedThreadPool(3);
 
     public static String CLOSE_ORDER_URL = HOST+"v1/orders/%s/close-order";//取消订单
+    public static String CHECK_ORDER_STATUS_URL = HOST+"v1/orders/%s/get-order-status";//获取订单状态。
+    public static String CHECK_IF_ONLINE_URL = HOST+"v1/orders/get-status";//检查用户是否上线
     public static String ACCESS_TOKEN_URL = HOST + "v1/auth/get-access-token";  //token获取
     public static  String GET_AUTH_NUMBER = HOST + "v1/auth/device-verify-code"; //验证手机号
     public static String PERSON_URL = HOST + "v1/user/info";    //个人信息
@@ -39,7 +41,7 @@ public class Constants {
     public static String USER_LOGOUT_URL = HOST +"v1/user/logout";              //登出状态
     public static String UPLOAD_PICS_URL = HOST + "v1/orders/%s/upload-pic";    //id号的图片上传接口
     public static String HISTORY_ORDERS_URL = HOST + "v1/orders/history-list?page=%s&per-page=%s";  //历史订单的某页及某分页的订单数量
-    public static String HISTORY_ORDER_INFO_URL = HOST + "v1/orders/%s/detail";   //id号的订单详情
+    public static String ORDER_INFO_URL = HOST + "v1/orders/%s/detail";   //id号的订单详情
     public static String PHOTOS_URL = HOST + "v1/orders/%s/pics";   //id号的订单图片
     public static String SUBMIT_FEE_URL = HOST + "v1/orders/%s/tuoche-distance-submit"; //id号订单的拖车距离提交接口
     public static String PAY_URL = HOST + "v1/orders/%s/get-pay-charge";    //id号订单的确认收费
@@ -108,7 +110,7 @@ public class Constants {
         USER_LOGOUT_URL = HOST +"v1/user/logout";
         UPLOAD_PICS_URL = HOST + "v1/orders/%s/upload-pic";
         HISTORY_ORDERS_URL = HOST + "v1/orders/history-list?page=%s&per-page=%s";
-        HISTORY_ORDER_INFO_URL = HOST + "v1/orders/%s/detail";
+        ORDER_INFO_URL = HOST + "v1/orders/%s/detail";
         PHOTOS_URL = HOST + "v1/orders/%s/pics";
         SUBMIT_FEE_URL = HOST + "v1/orders/%s/tuoche-distance-submit";
         PAY_URL = HOST + "v1/orders/%s/get-pay-charge";
