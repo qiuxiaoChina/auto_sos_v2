@@ -433,6 +433,10 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
     @Override
     protected void onResume() {
         super.onResume();
+        if(takeButton.getVisibility() == View.GONE){
+            takeButton.setClickable(true);
+            takeButton.setVisibility(View.VISIBLE);
+        }
         if (mHolder == null) {
 
             mHolder = mPreview.getHolder();

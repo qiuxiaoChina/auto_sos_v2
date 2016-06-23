@@ -241,7 +241,7 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
 
         switch (v.getId()) {
             case R.id.rephoto:
-
+                finish();
                 break;
 
             case R.id.upload_photo:

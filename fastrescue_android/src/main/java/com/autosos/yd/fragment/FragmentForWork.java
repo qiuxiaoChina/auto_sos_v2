@@ -759,7 +759,8 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onArriveDestination() {
 
-        latLngs.remove(latLngs.size() - 1);
+       // latLngs.remove(latLngs.size() - 1);
+        canCountGPSPoint = true;
         mAMapNavi.startAimlessMode(AimLessMode.NONE_DETECTED);
 //        AMapNaviViewOptions option = mAMapNaviView.getViewOptions();
 //        option.setZoom(13);
@@ -803,7 +804,7 @@ public class FragmentForWork extends BasicFragment {
         //deactivate();
         mapView.setVisibility(View.GONE);
         mAMapNaviView.setVisibility(View.VISIBLE);
-        mAMapNavi.startNavi(NaviType.EMULATOR);
+        mAMapNavi.startNavi(NaviType.GPS);
         handler.sendEmptyMessage(0);
         Log.d("distance", timeStamp + "");
 
@@ -842,25 +843,25 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
 
-//        if (canCountGPSPoint) {
-//            if (aMapNaviLocation.getAccuracy() <= 20) {
-//
-//                long timeNow = new Date().getTime();
-//                if (timeNow > timeStamp) {
-//                    LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
-//                    if (latLngs.size() > 2) {
-//                        LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
-//                        int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
-//                        float f_dis = DistanceUtil.checkDistance(distance / 1000f);
-//                        dis_moved += f_dis;
-//                        distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "公里");
-//                    }
-//                    latLngs.add(currentLatLng);
-//                    // Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
-//                    timeStamp = timeNow;
-//                }
-//            }
-//        }
+        if (canCountGPSPoint) {
+            if (aMapNaviLocation.getAccuracy() <= 20) {
+
+                long timeNow = new Date().getTime();
+                if (timeNow > timeStamp) {
+                    LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
+                    if (latLngs.size() > 2) {
+                        LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
+                        int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
+                        float f_dis = DistanceUtil.checkDistance(distance / 1000f);
+                        dis_moved += f_dis;
+                        distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "公里");
+                    }
+                    latLngs.add(currentLatLng);
+                    // Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
+                    timeStamp = timeNow;
+                }
+            }
+        }
     }
 
     private boolean isNavi = false;
@@ -1214,7 +1215,7 @@ public class FragmentForWork extends BasicFragment {
                                     SharedPreferences sp4 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                                     sp4.edit().remove("newOrderComing").commit();
                                     amap.clear(true);
-                                    canCountGPSPoint = true;
+
                                     distance_moved.setText("已行驶:0.0km");
                                     destination.setText(s_destination);
                                     mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
