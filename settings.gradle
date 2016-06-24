@@ -1,2 +1,2 @@
-include ':fastrescue_android'
+include ':autosos'
 //include ':com_handmark_pulltorefresh_li111brary'

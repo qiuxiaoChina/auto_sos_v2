@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#20b48b"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="拖车信息录入"
+            android:textColor="#ffffff"
+            android:textSize="18sp"
+
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="34dp"
+        android:layout_marginTop="54dp"
+        android:background="#f7f7f7"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:text="准确填写车辆信息,享受高质量订单匹配"
+        android:textColor="#999999"
+        android:textSize="14sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="88dp"
+        android:scrollbars="vertical"
+        android:background="#ffffff"
+        >
+        <LinearLayout
+            android:id="@+id/trailer_page"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="车牌号"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/planeMenu"
+                    android:layout_width="47dp"
+                    android:layout_height="35dp"
+                    android:layout_marginLeft="26dp"
+                    android:background="@drawable/num_btn_bg"
+                    android:gravity="left|center_vertical"
+                    android:paddingLeft="9dp"
+                    android:text="浙"
+                    android:textColor="#333333"
+                    android:textSize="16sp"></Button>
+
+                <EditText
+                    android:id="@+id/planeNum"
+                    android:layout_width="117dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="34dp"
+                    android:background="@null"
+                    android:hint="输入6位车牌号"
+                    android:singleLine="true"
+                    android:textColor="#333333"
+                    android:textColorHint="#999999"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="联系方式"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+
+                <EditText
+                    android:id="@+id/mobile"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="117dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:background="@null"
+                    android:hint="输入手机号码"
+                    android:singleLine="true"
+                    android:textColor="#333333"
+                    android:textColorHint="#999999"
+                    android:textCursorDrawable="@null"
+                    android:textSize="16sp" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="牵引吨位"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+               <LinearLayout
+                   android:id="@+id/showTonnage"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:orientation="horizontal"
+                   android:layout_alignParentRight="true"
+                   android:layout_marginRight="30dp">
+
+                <TextView
+                    android:id="@+id/tonnage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14吨"
+                    android:textColor="#333333"
+                    android:layout_marginRight="15dp"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:layout_width="12dp"
+                    android:layout_height="22dp"
+                    android:background="@drawable/icon_right" />
+
+               </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="是否落地"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <RadioGroup
+                    android:id="@+id/rg_ground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_ground_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:text="无"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:layout_marginRight="10dp"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rb_ground_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:text="有"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        />
+                </RadioGroup>
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="辅助轮"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+                <RadioGroup
+                    android:id="@+id/rg_aw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rb_aw_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:text="无"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:layout_marginRight="10dp"
+                    />
+
+                <RadioButton
+                    android:id="@+id/rb_aw_yes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:text="有"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                     />
+                </RadioGroup>
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="是否有起吊功能"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <RadioGroup
+                    android:id="@+id/rg_arm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_arm_no"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:text="无"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        android:layout_marginRight="10dp"
+                        />
+
+                    <RadioButton
+                        android:id="@+id/rb_arm_yes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:text="有"
+                        android:textSize="16sp"
+                        android:textColor="#333333"
+                        />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="服务类型"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+
+                <CheckBox
+                    android:id="@+id/tuoche"
+                    android:layout_width="70dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="100dp"
+                    android:gravity="center"
+                    android:text="拖车"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <CheckBox
+                    android:id="@+id/dadian"
+                    android:layout_width="70dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
+                    android:text="搭电"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+
+                <CheckBox
+                    android:id="@+id/huantai"
+                    android:layout_width="70dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="100dp"
+                    android:gravity="center"
+                    android:text="换胎"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <CheckBox
+                    android:id="@+id/kuaixiu"
+                    android:layout_width="70dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp"
+                    android:gravity="center"
+                    android:text="快修"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+            <Button
+                android:id="@+id/detail_confirm"
+                android:layout_width="317dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/trailer_detail_confirm"
+                android:text="确认"
+                android:textColor="#ffffff"
+                android:textSize="16sp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+    <RelativeLayout
+        android:id="@+id/tonnageMenu"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="54dp"
+        android:background="#ffffff"
+        android:visibility="gone">
+
+
+        <ListView
+            android:id="@+id/lv_tonnage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null">
+
+
+        </ListView>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/countryName"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="54dp"
+        android:background="#ffffff"
+        android:visibility="gone">
+
+
+        <ListView
+            android:id="@+id/lv_countryName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null">
+
+
+        </ListView>
+
+
+    </RelativeLayout>
+
+    <include layout="@layout/progressbar_layout" />
+
+</RelativeLayout>
