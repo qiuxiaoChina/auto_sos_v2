@@ -219,9 +219,9 @@ public class FragmentForWork extends BasicFragment {
     private boolean isNavi = false;
 
 
-
     private SharedPreferences sp = null;
     private Boolean firstResume = false;
+    private Boolean firstResume_tuoche = false;
     private Boolean shouldNotStartNavi = false;
 
     public static Fragment newInstance() {
@@ -250,6 +250,7 @@ public class FragmentForWork extends BasicFragment {
         super.onResume();
         mapView.onResume();
         mapViewForShow.onResume();
+        amap=null;
         init();
         setUpMap();
         if (oiUtil == null) {
@@ -419,10 +420,10 @@ public class FragmentForWork extends BasicFragment {
                                             List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
 
                                             startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(),info.getReal_longitude());
+                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
                                             startList.add(startPoint);
                                             endList.add(endPoint);
-                                            Log.d("real_info",info.toString());
+                                            Log.d("real_info", info.toString());
                                             head_map.setVisibility(View.GONE);
                                             head_map_tel_navi.setVisibility(View.VISIBLE);
                                             menu.setVisibility(View.VISIBLE);
@@ -449,10 +450,10 @@ public class FragmentForWork extends BasicFragment {
                                             List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
 
                                             startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(),info.getReal_longitude());
+                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
                                             startList.add(startPoint);
                                             endList.add(endPoint);
-                                            Log.d("real_info",obj.toString());
+                                            Log.d("real_info", obj.toString());
                                             head_map.setVisibility(View.GONE);
                                             head_map_tel_navi.setVisibility(View.VISIBLE);
                                             menu.setVisibility(View.VISIBLE);
@@ -469,7 +470,7 @@ public class FragmentForWork extends BasicFragment {
                                             shouldNotStartNavi = true;
                                             mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
 
-                                        }else if(info.getOrderStatus() == 11){
+                                        } else if (info.getOrderStatus() == 11) {
 
                                             NaviLatLng startPoint = null;
                                             NaviLatLng endPoint = null;
@@ -479,7 +480,7 @@ public class FragmentForWork extends BasicFragment {
                                             List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
 
                                             startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(),info.getReal_longitude());
+                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
                                             startList.add(startPoint);
                                             endList.add(endPoint);
 
@@ -501,7 +502,7 @@ public class FragmentForWork extends BasicFragment {
 
                                         } else if (info.getOrderStatus() == 6) {
                                             //将要开始拖车
-                                            if (!firstResume) {
+                                            if (!firstResume_tuoche) {
                                                 String trace = oiUtil.readJWD(oiUtil.path_drag);
                                                 NaviLatLng startPoint = null;
                                                 if (trace != null) {
@@ -534,7 +535,7 @@ public class FragmentForWork extends BasicFragment {
                                                     menu.setVisibility(View.VISIBLE);
                                                     startNavi.setVisibility(View.VISIBLE);
                                                     coursePreview.setVisibility(View.VISIBLE);
-                                                    mTts.startSpeaking("开始拖车", mSynListener);
+                                                    mTts.startSpeaking("开始拖车,预定目的地" + info.getDest(), mSynListener);
                                                     amap.clear(true);
                                                     float dis_moved_lastTime = sp.getFloat("dis_moved", 0.0f);
                                                     dis_moved = dis_moved_lastTime;
@@ -543,7 +544,7 @@ public class FragmentForWork extends BasicFragment {
                                                     tv_take_photo.setText("结束拖车,按要求拍照");
                                                     cancelOrder.setVisibility(View.GONE);
                                                     cancelOrder.setClickable(false);
-                                                    firstResume = true;
+                                                    firstResume_tuoche = true;
                                                     mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
 
                                                 }
@@ -553,7 +554,7 @@ public class FragmentForWork extends BasicFragment {
 
 
                                             }
-                                        }else if(info.getOrderStatus() == 21){
+                                        } else if (info.getOrderStatus() == 21) {
 
                                             NaviLatLng startPoint = null;
                                             NaviLatLng endPoint = null;
@@ -563,7 +564,7 @@ public class FragmentForWork extends BasicFragment {
                                             List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
 
                                             startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(),info.getReal_longitude());
+                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
                                             startList.add(startPoint);
                                             endList.add(endPoint);
 
@@ -585,11 +586,11 @@ public class FragmentForWork extends BasicFragment {
                                             shouldNotStartNavi = true;
                                             mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
 
-                                        }else if(info.getOrderStatus()==31){
+                                        } else if (info.getOrderStatus() == 31) {
 
-                                            Intent intent = new Intent(getActivity().getApplicationContext(),AppraiseActivity.class);
+                                            Intent intent = new Intent(getActivity().getApplicationContext(), AppraiseActivity.class);
                                             startActivity(intent);
-                                        }else if(info.getOrderStatus()==32){
+                                        } else if (info.getOrderStatus() == 32) {
 
                                             Intent intent = new Intent(getActivity().getApplicationContext(), PayActivity.class);
                                             startActivity(intent);
@@ -654,10 +655,10 @@ public class FragmentForWork extends BasicFragment {
                                             List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
                                             List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
                                             startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(),info.getReal_longitude());
+                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
                                             startList.add(startPoint);
                                             endList.add(endPoint);
-                                            Log.d("real_info",info.toString());
+                                            Log.d("real_info", info.toString());
                                             head_map.setVisibility(View.GONE);
                                             head_map_tel_navi.setVisibility(View.VISIBLE);
                                             menu.setVisibility(View.VISIBLE);
@@ -756,7 +757,7 @@ public class FragmentForWork extends BasicFragment {
         super.onPause();
         mapView.onPause();
         mapViewForShow.onPause();
-        amap = null;
+       // amap = null;
         //mapView.setVisibility(View.GONE);
         Log.d(TAG, "pause");
         //deactivate();
@@ -1060,7 +1061,7 @@ public class FragmentForWork extends BasicFragment {
                     progressBar.setVisibility(View.GONE);
                     oiUtil.deleteJWD(oiUtil.path_drag);
                     mTts.startSpeaking("到达救援现场,请按要求拍照", mSynListener);
-                }else  if(msg.what ==9){
+                } else if (msg.what == 9) {
 
                     progressBar.setVisibility(View.GONE);
                     oiUtil.deleteJWD(oiUtil.path_drag);
@@ -1169,7 +1170,7 @@ public class FragmentForWork extends BasicFragment {
         if (naviPath == null) {
             return;
         }
-        if(!shouldNotStartNavi){
+        if (!shouldNotStartNavi) {
 
             progressBar.setVisibility(View.GONE);
             timeStamp = new Date().getTime();
@@ -1178,10 +1179,10 @@ public class FragmentForWork extends BasicFragment {
             distance_route.setText("总路程：" + route_distance + "km");
             mapView.setVisibility(View.GONE);
             mAMapNaviView.setVisibility(View.VISIBLE);
-            mAMapNavi.startNavi(NaviType.EMULATOR);
+            mAMapNavi.startNavi(NaviType.GPS);
             handler.sendEmptyMessage(0);
 
-        }else{
+        } else {
 
             float route_distance = DistanceUtil.checkDistance(naviPath.getAllLength() / 1000f);
             distance_route.setText("总路程：" + route_distance + "km");
@@ -1213,6 +1214,27 @@ public class FragmentForWork extends BasicFragment {
 
             }
 
+            try {
+                Map<String, Object> map = new HashMap<>();
+                map.put("lat", String.valueOf(currentLatLng.latitude));
+                map.put("lng", String.valueOf(currentLatLng.longitude));
+                // map.put("status", String.valueOf(status));
+                new NewHttpPostTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+                    @Override
+                    public void onRequestCompleted(Object obj) {
+                        Log.e(TAG, "breaf !" + obj.toString());
+
+                    }
+
+                    @Override
+                    public void onRequestFailed(Object obj) {
+                    }
+                }).execute(Constants.USER_LOCATION_URL, map);
+            } catch (Exception e) {
+
+                e.printStackTrace();
+            }
+
             Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
                     + distance_moved.getText() + "---" + dis_moved);
             timeStamp = timeNow;
@@ -1229,7 +1251,7 @@ public class FragmentForWork extends BasicFragment {
 
         LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
 
-        Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
+        //  Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
 
         if (canCountGPSPoint) {
             // sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
@@ -1257,7 +1279,6 @@ public class FragmentForWork extends BasicFragment {
     }
 
 
-
     @Override
     public void onGetNavigationText(int arg0, String arg1) {
         // TODO Auto-generated method stub
@@ -1271,7 +1292,6 @@ public class FragmentForWork extends BasicFragment {
         }
 
     }
-
 
 
     /**
@@ -1329,7 +1349,23 @@ public class FragmentForWork extends BasicFragment {
 
                     e.printStackTrace();
                 }
-                //Toast.makeText(this.getActivity().getApplicationContext(), latLng.latitude+"--"+latLng.longitude, Toast.LENGTH_SHORT).show();
+                String type = "";
+                if (aMapLocation.getLocationType() == 1) {
+
+                    type = "GPS";
+                } else if (aMapLocation.getLocationType() == 2) {
+                    type = "前次定位";
+                } else if (aMapLocation.getLocationType() == 4) {
+                    type = "缓存定位";
+
+                } else if (aMapLocation.getLocationType() == 5) {
+                    type = "WIFI定位";
+
+                } else if (aMapLocation.getLocationType() == 6) {
+
+                    type = "基站定位";
+                }
+                Toast.makeText(this.getActivity().getApplicationContext(),type+":::"+latLng.latitude + "--" + latLng.longitude, Toast.LENGTH_SHORT).show();
                 // Log.d(TAG,latLng.latitude+"--"+latLng.longitude);
 
             } else {
@@ -1434,62 +1470,6 @@ public class FragmentForWork extends BasicFragment {
                 }
                 break;
 
-
-//            case R.id.stop_navi:
-//                canGetStartPoint = true;
-//                mAMapNavi.stopNavi();
-//                getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
-//                mAMapNaviView.setVisibility(View.GONE);
-//                mapView.setVisibility(View.VISIBLE);
-//                mapViewForShow.setVisibility(View.GONE);
-//                amap.clear(true);
-//                setUpMap();
-//                head_map.setVisibility(View.VISIBLE);
-//                head_map_tel_navi.setVisibility(View.GONE);
-//                isNavi = false;
-//                canGetNewOrder = true;
-//                canCountGPSPoint= false;
-//                break;
-//            case R.id.check_route:
-//                try {
-//                    amap.clear(true);
-//                    amapForShow.clear(true);
-//                    mapViewForShow.setVisibility(View.VISIBLE);
-//                    mapView.setVisibility(View.GONE);
-//
-//                    latLngs.remove(latLngs.size()-1);
-//
-//                    if (latLngs.size() % 2 == 0) {
-//                        //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
-//                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get(latLngs.size() / 2), 13));
-//
-//                    } else {
-//                        //amapForShow.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds,13));
-//                        amapForShow.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs.get((latLngs.size() - 1) / 2), 13));
-//
-//                    }
-//
-//                    for (int i = 0; i < latLngs.size(); i++) {
-//                        List<LatLng> l = new ArrayList<LatLng>();
-//                        if(i%4==0){
-//                            l.add(latLngs.get(i));
-//                            l.add(latLngs.get(i + 4));
-//                        }
-//                        Polyline polyLine = amapForShow.addPolyline((new PolylineOptions()).color(Color.BLUE).width(10));
-//                        polyLine.setPoints(l);
-//                    }
-//
-//
-//                } catch (Exception e) {
-//
-//                    Log.i(TAG, e.getMessage());
-//                } finally {
-//
-//                    dis_moved = 0;
-//                    latLngs.clear();
-//                }
-//
-//                break;
             case R.id.cancel_order:
                 mTts.startSpeaking("您真的要取消订单吗", mSynListener);
                 dialog = new Dialog(getActivity(), R.style.bubble_dialog);
@@ -1586,8 +1566,8 @@ public class FragmentForWork extends BasicFragment {
                             JSONObject jsonObject;
                             try {
                                 jsonObject = new JSONObject(obj.toString());
+                                Log.d("take_info", obj.toString());
                                 if (jsonObject.getInt("result") == 1) {
-
 
                                     head_map.setVisibility(View.GONE);
                                     head_map_tel_navi.setVisibility(View.VISIBLE);
@@ -1609,6 +1589,8 @@ public class FragmentForWork extends BasicFragment {
                                     head_map.setVisibility(View.VISIBLE);
                                     getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                                     mTts.startSpeaking("订单已被接走了", mSynListener);
+                                    SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
+                                    sp1.edit().remove("newOrderComing").commit();
 
                                 }
                             } catch (JSONException e) {
@@ -1657,7 +1639,7 @@ public class FragmentForWork extends BasicFragment {
                         @Override
                         public void onRequestCompleted(Object obj) {
 
-                          //  Log.d("start_tuoche",obj.toString());
+                            //  Log.d("start_tuoche",obj.toString());
 
                             JSONObject jsonObject;
                             try {
@@ -1688,15 +1670,14 @@ public class FragmentForWork extends BasicFragment {
                         @Override
                         public void onRequestFailed(Object obj) {
 
-                          //  Log.d("start_tuoche",obj.toString());
+                            //  Log.d("start_tuoche",obj.toString());
 
                         }
 
                     }).execute(String.format(Constants.DRAG_START, order_id), map);
 
 
-
-                }else if(info != null && info.getOrderStatus() == 11){
+                } else if (info != null && info.getOrderStatus() == 11) {
 
                     progressBar.setVisibility(View.VISIBLE);
                     new Handler().postDelayed(new Runnable() {
@@ -1710,7 +1691,7 @@ public class FragmentForWork extends BasicFragment {
                         }
                     }, 2000);
 
-                }else if(info != null && info.getOrderStatus() == 21){
+                } else if (info != null && info.getOrderStatus() == 21) {
 
 
                     progressBar.setVisibility(View.VISIBLE);
@@ -1726,7 +1707,7 @@ public class FragmentForWork extends BasicFragment {
                     }, 2000);
 
 
-                }else if(info != null && info.getOrderStatus() == 6) {//结束拖车，拍最后一张照片
+                } else if (info != null && info.getOrderStatus() == 6) {//结束拖车，拍最后一张照片
 
                     progressBar.setVisibility(View.VISIBLE);
                     String trace = oiUtil.readJWD(oiUtil.path_drag);
@@ -1774,7 +1755,7 @@ public class FragmentForWork extends BasicFragment {
                     }).execute(String.format(Constants.SUBMIT_TUOCHE_URL, order_id), map);
 
 
-                }else {
+                } else {
                     String trace = oiUtil.readJWD(oiUtil.path_drag);
                     Map<String, Object> map = new HashMap<>();
                     map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
