@@ -198,8 +198,9 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="23dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/photo"/>
+                android:src="@drawable/take_photo_selector"/>
             <TextView
+                android:id="@+id/tv_take_photo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
@@ -215,7 +216,7 @@
 
    </RelativeLayout>
 
-    <com.autosos.yd.Layout.MyRaletiveLayout
+    <com.autosos.rescue.Layout.MyRaletiveLayout
         android:id="@+id/newOrder"
         android:layout_width="333dp"
         android:layout_height="450dp"
@@ -396,7 +397,7 @@
             />
 
 
-    </com.autosos.yd.Layout.MyRaletiveLayout>
+    </com.autosos.rescue.Layout.MyRaletiveLayout>
 
 
     <include layout="@layout/progressbar_layout" />

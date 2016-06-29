@@ -134,7 +134,7 @@
                 android:layout_height="201dp"
                 android:background="@color/color_white" />
 
-            <com.autosos.yd.util.SignPaintView
+            <com.autosos.rescue.util.SignPaintView
                 android:id="@+id/sign_tablet"
                 android:layout_width="287dp"
                 android:layout_height="201dp" />
@@ -169,6 +169,27 @@
     </LinearLayout>
 
 
-    <include layout="@layout/progressbar_layout" />
+    <!--<include layout="@layout/progressbar_layout" />-->
+
+    <RelativeLayout
+        android:id="@+id/upload_layout"
+        android:background="#7d000000"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:gravity="center"
+        >
+
+        <com.autosos.rescue.widget.MyProgress_QX
+            android:id="@+id/pgsBar"
+            android:max="100"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/progressbar_qx"
+            style="?android:attr/progressBarStyleHorizontal"
+            />
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

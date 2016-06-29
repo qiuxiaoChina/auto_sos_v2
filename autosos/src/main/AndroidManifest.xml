@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.autosos.yd"
+    package="com.autosos.rescue"
     android:versionCode="129"
     android:versionName="1.1.12.9">
 
@@ -52,10 +52,10 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <permission
-        android:name="getui.permission.GetuiService.com.autosos.yd"
+        android:name="getui.permission.GetuiService.com.autosos.rescue"
         android:protectionLevel="normal" />
 
-    <uses-permission android:name="getui.permission.GetuiService.com.autosos.yd" />
+    <uses-permission android:name="getui.permission.GetuiService.com.autosos.rescue" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -68,7 +68,7 @@
         android:theme="@style/MyAppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="da1426dc2fe5219a6c7104f9d681eea0" />
+            android:value="09f4ccaf188c0883e96aac94ba66a2e9" />
 
         <service android:name="com.amap.api.location.APSService"></service>
 
@@ -76,15 +76,15 @@
         <!-- 配置的第三方参数属性 -->
         <meta-data
             android:name="PUSH_APPID"
-            android:value="3gcCKQHtdt9JMY0IQ4zQn" />
+            android:value="wAo9GFxnVy6rKAcErOc1i4" />
         <!-- 替换为第三方应用的APPID -->
         <meta-data
             android:name="PUSH_APPKEY"
-            android:value="rzRA7jHKOq5bkmeP1YiiL3" />
+            android:value="X0C4vJ4NeZ9s0FjANp7jd7" />
         <!-- 替换为第三方应用的APPKEY -->
         <meta-data
             android:name="PUSH_APPSECRET"
-            android:value="4nOGoqnh5u8c2S79RmFQ69" />
+            android:value="dJYox4akrm9hg8CGEGqbT8" />
         <!-- 替换为第三方应用的APPSECRET -->
         <!-- 配置SDK核心服务 -->
         <service
@@ -144,7 +144,7 @@
 
         <provider
             android:name="com.igexin.download.DownloadProvider"
-            android:authorities="downloads.com.autosos.yd"
+            android:authorities="downloads.com.autosos.rescue"
             android:exported="true"
             android:process=":pushservice" />
 
@@ -163,7 +163,7 @@
             <intent-filter>
                 <action android:name="com.igexin.sdk.action.7fjUl2Z3LH6xYy7NQK4ni4" />
                 <!-- 把"你的APPID"替换为第三方应用的APPID -->
-                <action android:name="com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn" />
+                <action android:name="com.igexin.sdk.action.wAo9GFxnVy6rKAcErOc1i4" />
             </intent-filter>
         </receiver>
 
@@ -176,7 +176,7 @@
             android:name=".util.GetuiSdkMsgReceiver"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.igexin.sdk.action.3gcCKQHtdt9JMY0IQ4zQn" />
+                <action android:name="com.igexin.sdk.action.wAo9GFxnVy6rKAcErOc1i4" />
             </intent-filter>
         </receiver>
         <!-- 个推SDK配置结束 -->
@@ -210,6 +210,7 @@
             android:name=".view.MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity
             android:name=".view.NewTakePhotoActivity"
@@ -228,6 +229,12 @@
             android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
         <activity
             android:name=".view.AppraiseActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+
+        <activity
+            android:name=".view.PayActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar"></activity>

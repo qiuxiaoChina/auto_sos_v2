@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.autosos.yd.fragment.FragmentForOrder">
+    tools:context="com.autosos.rescue.fragment.FragmentForOrder">
 
-   <com.autosos.yd.widget.OrderListView
+   <com.autosos.rescue.widget.OrderListView
        android:id="@+id/orderList"
        android:layout_width="match_parent"
        android:layout_height="match_parent"

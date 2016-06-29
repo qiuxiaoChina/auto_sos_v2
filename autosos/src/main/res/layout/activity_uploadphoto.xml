@@ -59,7 +59,7 @@
         android:gravity="center"
         >
 
-        <com.autosos.yd.widget.MyProgress_QX
+        <com.autosos.rescue.widget.MyProgress_QX
             android:id="@+id/pgsBar"
             android:max="100"
             android:layout_width="300dp"

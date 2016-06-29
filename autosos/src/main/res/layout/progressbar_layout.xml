@@ -9,4 +9,5 @@
     android:indeterminateDrawable="@drawable/progressbar_style"
     android:indeterminateDuration="1000"
     android:padding="25dp"
-    android:visibility="gone" />
+    android:visibility="gone"
+    />
