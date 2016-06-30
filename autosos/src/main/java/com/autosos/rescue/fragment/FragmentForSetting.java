@@ -8,8 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.autosos.rescue.Constants;
 import com.autosos.rescue.R;
+import com.autosos.rescue.task.NewHttpPostTask;
+import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.Session;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -54,8 +60,30 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
         switch (v.getId()){
 
             case R.id.logout:
-                Session.getInstance().logout(getActivity().getApplicationContext());
-                getActivity().finish();
+                new NewHttpPostTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+                    @Override
+                    public void onRequestCompleted(Object obj) {
+
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(obj.toString());
+                            int result = jsonObject.getInt("result");
+                            if(result ==1){
+
+                                Session.getInstance().logout(getActivity().getApplicationContext());
+                                getActivity().finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onRequestFailed(Object obj) {
+
+                    }
+                }
+                ).execute(Constants.USER_LOGOUT_URL);
                 break;
             default:
                 break;

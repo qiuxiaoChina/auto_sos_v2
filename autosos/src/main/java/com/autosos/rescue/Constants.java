@@ -27,6 +27,7 @@ public class Constants {
     public static final Executor THEADPOOL = Executors.newFixedThreadPool(10);
     public static final Executor INFOTHEADPOOL = Executors.newFixedThreadPool(3);
 
+    public static String CHECK_YOU_ARE_THE_ONLY_ONE = HOST+"v1/orders/get-device";//检查用户只被一个设备使用
     public static String TRAILER_INFO_URL = HOST+"v1/user/trail-detail";//获取车辆信息
     public static String SUBMIT_TRAILER_INFO_URL = HOST+"v1/user/trail";//提交车辆信息
     public static String CLOSE_ORDER_URL = HOST+"v1/orders/%s/close-order";//取消订单

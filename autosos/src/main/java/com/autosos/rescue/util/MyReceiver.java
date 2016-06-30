@@ -23,9 +23,8 @@ public class MyReceiver extends BroadcastReceiver {
         // TODO Auto-generated method stub
         Log.d("MyTag", "onclock......................");
         String msg = intent.getStringExtra("msg");
-        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
-        initSpeaker(context);
-        mTts.startSpeaking(msg,mSynListener);
+       // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+
     }
 
     //合成监听器

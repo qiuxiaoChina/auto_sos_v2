@@ -34,7 +34,7 @@ public class MyService_two extends Service {
         // TODO: Return the communication channel to the service.
 
         super.onCreate();
-        acquireWakeLock(MyService_two.this);
+        //acquireWakeLock(MyService_two.this);
         Log.d("MyTag", "onCreate");
 
     }
@@ -93,7 +93,7 @@ public class MyService_two extends Service {
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5*1000, pi);
 
 
-      //  new Thread(runnable).start();
+      // new Thread(runnable).start();
 
         return super.onStartCommand(intent, START_STICKY, startId);
     }

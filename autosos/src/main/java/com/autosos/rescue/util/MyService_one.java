@@ -34,7 +34,7 @@ public class MyService_one extends Service {
         // TODO: Return the communication channel to the service.
 
         super.onCreate();
-        acquireWakeLock(MyService_one.this);
+       // acquireWakeLock(MyService_one.this);
         Log.d("MyTag", "onCreate");
 
     }
@@ -90,7 +90,7 @@ public class MyService_one extends Service {
         //设置闹钟从当前时间开始，每隔5s执行一次PendingIntent对象pi，注意第一个参数与第二个参数的关系
         // 5秒后通过PendingIntent pi对象发送广播
         am.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), 5*1000, pi);
-       // new Thread(runnable).start();
+      //  new Thread(runnable).start();
         return super.onStartCommand(intent, START_STICKY, startId);
     }
 

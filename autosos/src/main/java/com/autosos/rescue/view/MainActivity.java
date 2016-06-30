@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -86,6 +87,11 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
                 | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         initView();
+//        Intent i1 = new Intent(MainActivity.this,MyService_one.class);
+//        startService(i1);
+//
+//        Intent i2= new Intent(MainActivity.this,MyService_two.class);
+//        startService(i2);
 
 
     }
@@ -232,6 +238,12 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
 //
 //    }
 
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+    }
 
     private long timeMillis;//自动初始化为0
 

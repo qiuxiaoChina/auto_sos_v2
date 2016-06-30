@@ -108,8 +108,10 @@ import com.autosos.rescue.util.DensityUtil;
 import com.autosos.rescue.util.DistanceUtil;
 import com.autosos.rescue.util.JSONUtil;
 import com.autosos.rescue.util.OiUtil;
+import com.autosos.rescue.util.Session;
 import com.autosos.rescue.util.Utils;
 import com.autosos.rescue.view.AppraiseActivity;
+import com.autosos.rescue.view.LoginActivity;
 import com.autosos.rescue.view.MainActivity;
 import com.autosos.rescue.view.NewTakePhotoActivity;
 import com.autosos.rescue.view.NewUploadPhotoActivity;
@@ -1066,6 +1068,17 @@ public class FragmentForWork extends BasicFragment {
                     progressBar.setVisibility(View.GONE);
                     oiUtil.deleteJWD(oiUtil.path_drag);
                     mTts.startSpeaking("结束拖车,请按要求拍照", mSynListener);
+                }else if(msg.what ==10){
+                    mTts.startSpeaking("另一个设备正在登陆这个账号,3秒后应用将被强制退出", mSynListener);
+                    try {
+                        Thread.sleep(7000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Session.getInstance().logout(getActivity().getApplicationContext());
+                    Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
                 }
             }
         };
@@ -1179,7 +1192,7 @@ public class FragmentForWork extends BasicFragment {
             distance_route.setText("总路程：" + route_distance + "km");
             mapView.setVisibility(View.GONE);
             mAMapNaviView.setVisibility(View.VISIBLE);
-            mAMapNavi.startNavi(NaviType.GPS);
+            mAMapNavi.startNavi(NaviType.EMULATOR);
             handler.sendEmptyMessage(0);
 
         } else {
@@ -1338,9 +1351,19 @@ public class FragmentForWork extends BasicFragment {
                         @Override
                         public void onRequestCompleted(Object obj) {
                             Log.e(TAG, "breaf !" + obj.toString());
+                            JSONObject jsonObject = null;
+                            try {
+                                jsonObject = new JSONObject(obj.toString());
+                                int result = jsonObject.getInt("result");
+                                Log.d("user_result",result+"---1");
+                                if(result == 2){
+                                    handler.sendEmptyMessage(10);
 
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
                         }
-
                         @Override
                         public void onRequestFailed(Object obj) {
                         }
@@ -1365,7 +1388,7 @@ public class FragmentForWork extends BasicFragment {
 
                     type = "基站定位";
                 }
-                Toast.makeText(this.getActivity().getApplicationContext(),type+":::"+latLng.latitude + "--" + latLng.longitude, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(this.getActivity().getApplicationContext(),type+":::"+latLng.latitude + "--" + latLng.longitude, Toast.LENGTH_SHORT).show();
                 // Log.d(TAG,latLng.latitude+"--"+latLng.longitude);
 
             } else {
@@ -1490,6 +1513,8 @@ public class FragmentForWork extends BasicFragment {
                             public void onRequestCompleted(Object obj) {
                                 progressBar.setVisibility(View.GONE);
                                 mAMapNavi.stopNavi();
+                                SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
+                                sp.edit().remove("newOrderComing").commit();
                                 handler.sendEmptyMessage(7);
                                 amap.clear(true);
                                 setUpMap();

@@ -234,10 +234,27 @@
             android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
 
         <activity
+            android:name=".view.BlankActivity"
+            android:theme="@android:style/Theme.Translucent"></activity>
+
+        <activity
             android:name=".view.PayActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+
+        <service android:name=".util.MyService_one">
+
+        </service>
+        <service android:name=".util.MyService_two">
+
+        </service>
+
+        <receiver android:name=".util.MyReceiver">
+            <intent-filter>
+                <action android:name="ELITOR_CLOCK"/>
+            </intent-filter>
+        </receiver>
 
 
     </application>

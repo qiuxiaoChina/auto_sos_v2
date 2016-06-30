@@ -205,6 +205,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                     }else{
                                         Toast.makeText(LoginActivity.this, "短信验证码不正确,60秒后重新登录", Toast.LENGTH_SHORT).show();
                                     }
+                                }else if(jsonObject.optInt("code") == 11){
+
+                                    Toast.makeText(LoginActivity.this, "此用户正在服务中,无法登陆", Toast.LENGTH_SHORT).show();
+
                                 } else {
                                     String msg = jsonObject.optString("msg");
                                     Toast.makeText(LoginActivity.this, msg, Toast.LENGTH_SHORT).show();
