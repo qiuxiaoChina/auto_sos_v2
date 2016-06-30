@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -34,11 +35,13 @@ import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.GetuiSdkMsgReceiver;
 import com.autosos.rescue.util.JSONUtil;
 import com.autosos.rescue.util.Session;
+import com.autosos.rescue.widget.CatchException;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -57,10 +60,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     private Button loginView;
     private String code;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         uname_enter = false;
         psw_enter = false;
         if (getIntent().getBooleanExtra("logout", false)) {

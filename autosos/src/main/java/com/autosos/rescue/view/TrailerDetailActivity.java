@@ -29,6 +29,7 @@ import com.autosos.rescue.task.NewHttpPostTask;
 import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.MyService_one;
 import com.autosos.rescue.util.MyService_two;
+import com.autosos.rescue.widget.CatchException;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +58,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trailer);
+
         detail_confirm = (Button) findViewById(R.id.detail_confirm);
         detail_confirm.setOnClickListener(this);
 

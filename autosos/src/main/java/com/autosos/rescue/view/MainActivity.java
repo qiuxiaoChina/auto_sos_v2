@@ -45,6 +45,7 @@ import com.autosos.rescue.fragment.FragmentForWork;
 import com.autosos.rescue.util.MyService_one;
 import com.autosos.rescue.util.MyService_two;
 import com.autosos.rescue.viewpager.ContentViewPager;
+import com.autosos.rescue.widget.CatchException;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;

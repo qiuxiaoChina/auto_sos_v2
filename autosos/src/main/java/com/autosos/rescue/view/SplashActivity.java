@@ -29,7 +29,14 @@ import android.widget.Toast;
 
 import com.autosos.rescue.Constants;
 import com.autosos.rescue.R;
+import com.autosos.rescue.task.NewHttpPostTask;
+import com.autosos.rescue.task.OnHttpRequestListener;
+import com.autosos.rescue.util.Session;
+import com.autosos.rescue.widget.CatchException;
 import com.igexin.sdk.PushManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,6 +54,7 @@ public class SplashActivity extends Activity {
     private TextView progress_textView;
     public static Activity splashActivity;
     //private boolean interceptFlag = true;
+    private String log;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +64,40 @@ public class SplashActivity extends Activity {
 //        SharedPreferences.Editor editor = sp.edit();
 //        editor.remove("online").commit();
 
+        CatchException catchException = CatchException.getInstance();//开启异常捕捉
+        catchException.init(getApplicationContext());
+
+        String fileName = "crash-" + "Exception" + ".log";
+        String path =  Environment.getExternalStorageDirectory()+"/com.autosos.rescue/log/";
+        File file = new File(path + fileName);
+        log = CatchException.readLog(path + fileName);
+        if(file.exists()) {
+            CatchException.sendtoServe(getApplicationContext(), log);
+            new NewHttpPostTask(getApplicationContext(), new OnHttpRequestListener() {
+                @Override
+                public void onRequestCompleted(Object obj) {
+
+                    JSONObject jsonObject = null;
+                    try {
+                        jsonObject = new JSONObject(obj.toString());
+                        int result = jsonObject.getInt("result");
+                        if(result ==1){
+                            Session.getInstance().logout(getApplicationContext());
+
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onRequestFailed(Object obj) {
+
+                }
+            }
+            ).execute(Constants.USER_LOGOUT_URL);
+
+        }
         SharedPreferences sp1 = getSharedPreferences("working",Context.MODE_PRIVATE);
         SharedPreferences.Editor editor1 = sp1.edit();
         editor1.remove("working").commit();
