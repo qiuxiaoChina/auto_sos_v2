@@ -81,6 +81,7 @@
            
         </RelativeLayout>
        <ImageView
+           android:id="@+id/tel_customer1"
            android:layout_width="45dp"
            android:layout_height="45dp"
            android:layout_centerVertical="true"
@@ -163,7 +164,7 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/tel_customer"
+                android:id="@+id/tel_customer2"
                 android:layout_width="48dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"

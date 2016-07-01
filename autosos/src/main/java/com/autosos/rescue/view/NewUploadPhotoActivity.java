@@ -204,10 +204,12 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
 
             oiUtil = new OiUtil();
         }
+        Log.d("orderId","resume_upload");
         SharedPreferences sp = getSharedPreferences("order", Context.MODE_PRIVATE);
         String s_order = sp.getString("order", null);
         JSONObject order;
         if (s_order != null) {
+            Log.d("orderId",s_order);
             try {
                 order = new JSONObject(s_order);
                 NewOrder od = new NewOrder(order);
@@ -223,6 +225,7 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
 
             SharedPreferences sp2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
             String s_orderInfo = sp2.getString("orderInfo", null);
+            Log.d("orderId",s_orderInfo);
             try {
                 order = new JSONObject(s_orderInfo);
                 OrderInfo od = new OrderInfo(order);

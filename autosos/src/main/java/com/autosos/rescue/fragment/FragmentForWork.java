@@ -225,6 +225,9 @@ public class FragmentForWork extends BasicFragment {
     private Boolean firstResume = false;
     private Boolean firstResume_tuoche = false;
     private Boolean shouldNotStartNavi = false;
+    private ImageView tel_customer1;
+    private Button tel_customer2;
+    private String owner_mobile;
 
     public static Fragment newInstance() {
         if (fragment == null) {
@@ -296,6 +299,7 @@ public class FragmentForWork extends BasicFragment {
                                     order = new JSONObject(s_order);
                                     newOrder_bean = new NewOrder(order);
                                     order_id = newOrder_bean.getOrderId();
+                                    owner_mobile = newOrder_bean.getOwner_moblie();
                                     double lat = newOrder_bean.getLatitude();
                                     double lon = newOrder_bean.getLongitude();
                                     String destination = newOrder_bean.getAddress();
@@ -364,8 +368,9 @@ public class FragmentForWork extends BasicFragment {
                                     jsonObject = new JSONObject(obj.toString());
                                     info = new OrderInfo(jsonObject);
                                     SharedPreferences sp2 = getActivity().getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
-                                    sp2.edit().putString("orderInfo", info.toString()).commit();
+                                    sp2.edit().putString("orderInfo", obj.toString()).commit();
                                     order_id = info.getOrderId();
+                                    owner_mobile = info.getOwnerMobile();
                                     Log.d("working_status", info.getServiceType() + "---" + info.getOrderStatus());
                                     if (info.getServiceType() == 1) {//拖车服务
 
@@ -408,10 +413,7 @@ public class FragmentForWork extends BasicFragment {
                                                     mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
 
                                                 }
-
-
                                             }
-
 
                                         } else if (info.getOrderStatus() == 4) {//到达救援现场 还未拍照
                                             NaviLatLng startPoint = null;
@@ -872,6 +874,12 @@ public class FragmentForWork extends BasicFragment {
 
         tv_take_photo = (TextView) view.findViewById(R.id.tv_take_photo);
 
+        tel_customer1 = (ImageView) view.findViewById(R.id.tel_customer1);
+        tel_customer2 = (Button) view.findViewById(R.id.tel_customer2);
+
+        tel_customer1.setOnClickListener(this);
+        tel_customer2.setOnClickListener(this);
+
         handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -970,6 +978,7 @@ public class FragmentForWork extends BasicFragment {
                         JSONObject data = (JSONObject) msg.obj;
                         newOrder_bean = new NewOrder(data);
                         order_id = newOrder_bean.getOrderId();
+                        owner_mobile = newOrder_bean.getOwner_moblie();
                         s_destination = newOrder_bean.getAddress();
                         String speak_destination = s_destination;
                         speak_destination = speak_destination.replaceFirst("区", "区,");
@@ -1116,7 +1125,12 @@ public class FragmentForWork extends BasicFragment {
         super.onCreate(savedInstanceState);
 
         // mTtsManager.startSpeaking();
+        SharedPreferences sp = getActivity().getSharedPreferences("order",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove("order").commit();
 
+        SharedPreferences sp2 = getActivity().getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+        sp2.edit().remove("orderInfo").commit();
         Log.d(TAG, "create");
 
     }
@@ -1825,6 +1839,18 @@ public class FragmentForWork extends BasicFragment {
                     }).execute(String.format(Constants.ARRIVE_SUBMIT_URL, order_id), map);
                 }
 
+                break;
+
+            case R.id.tel_customer1:
+                Log.d("mobile",owner_mobile);
+                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+owner_mobile));
+                startActivity(intent);
+                break;
+
+            case R.id.tel_customer2:
+                Log.d("mobile",owner_mobile);
+                Intent intent2 = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+owner_mobile));
+                startActivity(intent2);
                 break;
 
         }
