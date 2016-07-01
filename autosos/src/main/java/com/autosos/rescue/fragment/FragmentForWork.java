@@ -171,7 +171,7 @@ public class FragmentForWork extends BasicFragment {
     // 规划线路
     private RouteOverLay mRouteOverLay;
 
-    private static ArrayList<LatLng> latLngs = new ArrayList<LatLng>();
+    private  ArrayList<LatLng> latLngs = null;
     private UiSettings mUiSettings;
     private Marker marker;
     private Button startNavi, coursePreview, cancelOrder;
@@ -1088,12 +1088,16 @@ public class FragmentForWork extends BasicFragment {
                     Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     getActivity().finish();
+                }else if(msg.what==11){
+
+                    mTts.startSpeaking("订单已被后台取消", mSynListener);
                 }
             }
         };
         myBroadcastReciever = new MyBroadcastReciever();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("newOrder");
+        intentFilter.addAction("closeOrder");
         getActivity().registerReceiver(myBroadcastReciever, intentFilter);
 
 //        mAMapNavi.startGPS();
@@ -1208,6 +1212,7 @@ public class FragmentForWork extends BasicFragment {
             mAMapNaviView.setVisibility(View.VISIBLE);
             mAMapNavi.startNavi(NaviType.EMULATOR);
             handler.sendEmptyMessage(0);
+            latLngs = new ArrayList<LatLng>();
 
         } else {
 
@@ -1227,6 +1232,7 @@ public class FragmentForWork extends BasicFragment {
         long timeNow = new Date().getTime();
         LatLng currentLatLng = new LatLng(naviInfo.getCoord().getLatitude(), naviInfo.getCoord().getLongitude());
         sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+
         if (timeNow > timeStamp) {
 
             if (latLngs.size() >= 2) {
@@ -1516,32 +1522,69 @@ public class FragmentForWork extends BasicFragment {
                 Button tvCancel = (Button) view.findViewById(R.id.btn_notice_cancel);
                 TextView tvMsg = (TextView) view.findViewById(R.id.tv_notice_msg);
                 tvMsg.setText("是否取消订单");
+
                 tvConfirm.setOnClickListener(new View.OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
                         progressBar.setVisibility(View.VISIBLE);
-                        new HttpGetTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+                        String trace = oiUtil.readJWD(oiUtil.path_drag);
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
+                        map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
+                        map.put("distance", dis_moved);
+                        map.put("trace_data", trace);
+                        progressBar.setVisibility(View.VISIBLE);
+                        new NewHttpPutTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
                             @Override
                             public void onRequestCompleted(Object obj) {
-                                progressBar.setVisibility(View.GONE);
-                                mAMapNavi.stopNavi();
-                                SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
-                                sp.edit().remove("newOrderComing").commit();
-                                handler.sendEmptyMessage(7);
-                                amap.clear(true);
-                                setUpMap();
+
+                                JSONObject jsonObject;
+                                try {
+                                    jsonObject = new JSONObject(obj.toString());
+                                    if (jsonObject.getInt("result") == 1) {
+
+                                        new HttpGetTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+                                            @Override
+                                            public void onRequestCompleted(Object obj) {
+                                                progressBar.setVisibility(View.GONE);
+                                                mAMapNavi.stopNavi();
+                                                SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
+                                                sp.edit().remove("newOrderComing").commit();
+                                                // latLngs.clear();
+                                                dis_moved = 0;
+                                                handler.sendEmptyMessage(7);
+                                                amap.clear(true);
+                                                setUpMap();
+                                            }
+
+                                            @Override
+                                            public void onRequestFailed(Object obj) {
+
+                                            }
+                                        }).execute(String.format(Constants.CLOSE_ORDER_URL, order_id));
+
+                                    } else {
+                                        mAMapNavi.stopNavi();
+                                        progressBar.setVisibility(View.GONE);
+                                        Toast.makeText(getActivity().getApplicationContext(), "轨迹提交失败,请重新提交", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
+
+
+                                }
+
                             }
 
                             @Override
                             public void onRequestFailed(Object obj) {
 
                             }
-                        }).execute(String.format(Constants.CLOSE_ORDER_URL, order_id));
-
-
+                        }).execute(String.format(Constants.ARRIVE_SUBMIT_URL, order_id), map);
                     }
+
+
                 });
                 tvCancel.setOnClickListener(new View.OnClickListener() {
 
@@ -1616,6 +1659,10 @@ public class FragmentForWork extends BasicFragment {
                                     mTts.startSpeaking("开始任务", mSynListener);
                                     SharedPreferences sp4 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                                     sp4.edit().remove("newOrderComing").commit();
+                                    SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+                                    sp.edit().remove("dis_moved").commit();
+                                    //latLngs.clear();
+                                    dis_moved = 0;
                                     amap.clear(true);
                                     distance_moved.setText("已行驶:0.0km");
                                     destination.setText(s_destination);
@@ -1630,6 +1677,8 @@ public class FragmentForWork extends BasicFragment {
                                     mTts.startSpeaking("订单已被接走了", mSynListener);
                                     SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                                     sp1.edit().remove("newOrderComing").commit();
+                                    SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+                                    sp.edit().remove("dis_moved").commit();
 
                                 }
                             } catch (JSONException e) {
@@ -1688,6 +1737,7 @@ public class FragmentForWork extends BasicFragment {
                                     progressBar.setVisibility(View.GONE);
                                     SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
                                     sp.edit().remove("dis_moved").commit();
+                                   // latLngs.clear();
                                     Intent intent = new Intent(getActivity().getApplicationContext(), NewTakePhotoActivity.class);
                                     intent.putExtra("tuoche", "tuoche");
                                     startActivity(intent);
@@ -1770,6 +1820,7 @@ public class FragmentForWork extends BasicFragment {
                                     canCountGPSPoint = false;
                                     SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
                                     sp.edit().remove("dis_moved").commit();
+                                    //latLngs.clear();
                                     Intent intent = new Intent(getActivity().getApplicationContext(), NewTakePhotoActivity.class);
                                     intent.putExtra("tuoche2", "tuoche2");
                                     startActivity(intent);
@@ -1816,6 +1867,7 @@ public class FragmentForWork extends BasicFragment {
                                     canCountGPSPoint = false;
                                     SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
                                     sp.edit().remove("dis_moved").commit();
+                                   // latLngs.clear();
                                     Intent intent = new Intent(getActivity().getApplicationContext(), NewTakePhotoActivity.class);
                                     startActivity(intent);
 
@@ -1889,6 +1941,41 @@ public class FragmentForWork extends BasicFragment {
                     }
 
                 }
+
+            }else if("closeOrder".equals(intent.getAction())){
+                Log.e("getui_result","个推信息----"+"close");
+                progressBar.setVisibility(View.VISIBLE);
+              //
+                handler.sendEmptyMessage(11);
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressBar.setVisibility(View.GONE);
+                        mAMapNavi.stopNavi();
+                        SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
+                        sp.edit().remove("newOrderComing").commit();
+                        // latLngs.clear();
+                        dis_moved = 0;
+                        getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
+                        mAMapNaviView.setVisibility(View.GONE);
+                        mapView.setVisibility(View.VISIBLE);
+                        mapViewForShow.setVisibility(View.GONE);
+                        head_map.setVisibility(View.VISIBLE);
+                        head_map_tel_navi.setVisibility(View.GONE);
+                        menu.setVisibility(View.GONE);
+                        startNavi.setVisibility(View.GONE);
+                        coursePreview.setVisibility(View.GONE);
+                        isNavi = false;
+                        canGetNewOrder = true;
+                        canCountGPSPoint = false;
+                        oiUtil.deleteJWD(oiUtil.path_drag);
+                        SharedPreferences sp1 = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+                        sp1.edit().remove("dis_moved").commit();
+                        amap.clear(true);
+                        setUpMap();
+
+                    }
+                },3000);
 
             }
         }

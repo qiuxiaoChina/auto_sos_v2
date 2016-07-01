@@ -207,17 +207,17 @@
 
 
 
-        <Button
-            android:layout_centerHorizontal="true"
-            android:id="@+id/btn_weixin"
-            android:layout_width="287dp"
-            android:layout_height="44dp"
-            android:layout_marginBottom="120dp"
-            android:background="@drawable/bg_btn_selector_new_way"
-            android:clickable="true"
-            android:text="提交"
-            android:textColor="#fff"
-            android:layout_alignParentBottom="true" />
+        <!--<Button-->
+            <!--android:layout_centerHorizontal="true"-->
+            <!--android:id="@+id/btn_weixin"-->
+            <!--android:layout_width="287dp"-->
+            <!--android:layout_height="44dp"-->
+            <!--android:layout_marginBottom="120dp"-->
+            <!--android:background="@drawable/bg_btn_selector_new_way"-->
+            <!--android:clickable="true"-->
+            <!--android:text="提交"-->
+            <!--android:textColor="#fff"-->
+            <!--android:layout_alignParentBottom="true" />-->
 
     <Button
         android:layout_centerHorizontal="true"
@@ -227,7 +227,7 @@
         android:layout_marginBottom="60dp"
         android:background="@drawable/bg_btn_selector_new_way"
         android:clickable="true"
-        android:text="提交"
+        android:text="微信扫码支付"
         android:textColor="#fff"
         android:layout_alignParentBottom="true" />
 

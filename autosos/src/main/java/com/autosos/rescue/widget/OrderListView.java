@@ -140,7 +140,7 @@ public class OrderListView extends ListView implements AbsListView.OnScrollListe
         isRemark = false;
         refreshViewByState();
         TextView time  = (TextView) header.findViewById(R.id.lastUpdate_time);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd kk:mm:ss");
         Date date = new Date(System.currentTimeMillis());
         String s_time = sdf.format(date);
         time.setText("最后一次刷新时间:"+s_time);
