@@ -1,20 +1,79 @@
 package com.autosos.rescue.view;
 
 import android.app.Activity;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.autosos.rescue.Constants;
 import com.autosos.rescue.R;
+import com.autosos.rescue.application.MyApplication;
+import com.autosos.rescue.model.NewOrder;
+import com.autosos.rescue.model.OrderInfo;
+import com.autosos.rescue.task.HttpGetTask;
+import com.autosos.rescue.task.OnHttpRequestListener;
+import com.autosos.rescue.util.CreateQRImage;
+import com.iflytek.thridparty.G;
+import com.umeng.analytics.MobclickAgent;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Administrator on 2016/6/28.
  */
-public class PayActivity extends Activity {
+public class PayActivity extends Activity implements View.OnClickListener{
+
+    private Button btn_weixinpay;
+    private View erweima_layout;
+    private ImageView close_erweima;
+    private OrderInfo orderInfo;
+    private int orderId;
+    private ProgressBar progressBar;
+    private ImageView qr_image;
+    private TextView pay_amount,base_price,more_amount,total_dis,bonus,night_price,edit_price;
+    Timer time_clock = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+        btn_weixinpay = (Button) findViewById(R.id.btn_weixinpay);
+        btn_weixinpay.setOnClickListener(this);
+
+        erweima_layout = findViewById(R.id.erweima_layout);
+        close_erweima = (ImageView) findViewById(R.id.close_erweima);
+        close_erweima.setOnClickListener(this);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        qr_image = (ImageView) findViewById(R.id.qr_image);
+
+        pay_amount = (TextView) findViewById(R.id.pay_amount);
+        base_price = (TextView) findViewById(R.id.base_price);
+        more_amount = (TextView) findViewById(R.id.more_amount);
+        total_dis = (TextView) findViewById(R.id.total_dis);
+        bonus = (TextView) findViewById(R.id.bonus);
+        night_price = (TextView) findViewById(R.id.night_price);
+        edit_price = (TextView) findViewById(R.id.edit_price);
     }
 
     //按返回键 没有办法返回
@@ -26,4 +85,237 @@ public class PayActivity extends Activity {
         }
         return false;
     }
+
+    @Override
+    public void onClick(View v) {
+
+        switch (v.getId()){
+
+            case R.id.btn_weixinpay:
+                erweima_layout.setVisibility(View.VISIBLE);
+                Bitmap logo_weixin = BitmapFactory.decodeResource(PayActivity.this.getResources(), R.drawable.icon45_200x200);
+                CreateQRImage.createImage(orderInfo.getPay_ewm(), qr_image, logo_weixin);
+                if(time_clock == null){
+
+                    time_clock = new Timer();
+                }
+                TimerTask task_clock = new TimerTask() {
+                    public void run() {
+                        Message msg = new Message();
+                        mHandler.sendEmptyMessage(0);
+                    }
+                };
+
+                time_clock.schedule(task_clock, 0, 100);
+                break;
+            case R.id.close_erweima:
+                erweima_layout.setVisibility(View.GONE);
+                try {
+
+                    if (time_clock != null) {
+
+                        time_clock.cancel();
+                    }
+
+                } catch (Exception e) {
+
+                    time_clock = null;
+
+                }finally {
+
+                    time_clock = null;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        progressBar.setVisibility(View.VISIBLE);
+        SharedPreferences sp = getSharedPreferences("order", Context.MODE_PRIVATE);
+        String s_order = sp.getString("order", null);
+        final JSONObject order;
+        if (s_order != null) {
+            try {
+                order = new JSONObject(s_order);
+                NewOrder od = new NewOrder(order);
+                orderId = od.getOrderId();
+                Log.d("orderId",orderId+"");
+
+            } catch (Exception e) {
+
+
+            }
+
+        }else{
+
+            SharedPreferences sp2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+            String s_orderInfo = sp2.getString("orderInfo", null);
+            try {
+                order = new JSONObject(s_orderInfo);
+                OrderInfo od = new OrderInfo(order);
+                orderId = od.getOrderId();
+                Log.d("orderId",orderId+"");
+
+            } catch (Exception e) {
+
+
+            }
+        }
+
+        new HttpGetTask(getApplicationContext(), new OnHttpRequestListener() {
+
+
+            @Override
+            public void onRequestCompleted(Object obj) {
+
+                JSONObject jsonObject;
+                try {
+                    progressBar.setVisibility(View.GONE);
+                    Log.d("orderInfo_pay", obj.toString());
+                    jsonObject = new JSONObject(obj.toString());
+                    orderInfo = new OrderInfo(jsonObject);
+                    pay_amount.setText(orderInfo.getPay_amount()+"元");
+                    more_amount.setText("+"+orderInfo.getMore_amount()+"元");
+                    if(orderInfo.getIs_support_free()==1){
+
+                        base_price.setText("0.0元");
+
+                    }else{
+
+                        base_price.setText(orderInfo.getBase_price()+"元");
+                    }
+                    if(orderInfo.getBonus()==0){
+
+                        bonus.setText("+0.0元");
+
+                    }else{
+
+                        bonus.setText("+"+orderInfo.getBonus()+"元");
+                    }
+
+
+                    if(orderInfo.getNight_price()==0){
+
+                        night_price.setText("+0.0元");
+
+                    }else{
+
+                       night_price.setText("+"+orderInfo.getNight_price()+"元");
+                    }
+
+                    if(orderInfo.getEdit_price()  == 0){
+
+                        edit_price.setText("+0.0元");
+
+                    }else if(orderInfo.getEdit_price()>0){
+
+                        edit_price.setText("+"+orderInfo.getEdit_price()+"元");
+                    }else{
+
+                        edit_price.setText(orderInfo.getEdit_price()+"元");
+                    }
+                    if(orderInfo.getServiceType()==1){
+
+                        String dis = String.format("%.2f", orderInfo.getReal_tuoche_dis());
+                        total_dis.setText(dis+"km");
+
+
+                    }else {
+                        String dis = String.format("%.2f", orderInfo.getReal_dis());
+                        total_dis.setText(dis+"km");
+                    }
+
+
+                }catch (Exception e){
+
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onRequestFailed(Object obj) {
+
+
+            }
+
+        }).execute(String.format(Constants.ORDER_INFO_URL, orderId));
+
+        MobclickAgent.onResume(this);
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+
+            if (time_clock != null) {
+
+                time_clock.cancel();
+            }
+
+
+        } catch (Exception e) {
+
+            time_clock = null;
+            finish();
+        }
+    }
+
+    private Handler mHandler = new Handler() {
+
+        public void handleMessage(Message msg) {
+
+            if (msg.what == 0) {
+
+                new HttpGetTask(PayActivity.this, new OnHttpRequestListener() {
+                    @Override
+                    public void onRequestCompleted(Object obj) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(obj.toString());
+
+                            if (!jsonObject.isNull("result")) {
+
+                                int result = jsonObject.optInt("result");
+                                if (result == 1) {
+                                    time_clock.cancel();
+                                    //  Toast.makeText(NewWayActivity.this, "支付成功!", Toast.LENGTH_SHORT).show();
+                                    SharedPreferences sharedPreference = getSharedPreferences("order", Context.MODE_PRIVATE);
+                                    sharedPreference.edit().remove("order").commit();
+                                    SharedPreferences sharedPreference2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+                                    sharedPreference2.edit().remove("orderInfo").commit();
+                                    MyApplication.application.isAfterOrder = true;
+                                    finish();
+
+                                } else {
+
+                                    // Toast.makeText(NewWayActivity.this, "支付未完成!"+result, Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+
+                        } catch (JSONException e) {
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onRequestFailed(Object obj) {
+
+                        Toast.makeText(PayActivity.this, "网络环境不太好，支付没有成功", Toast.LENGTH_SHORT).show();
+                        PayActivity.this.recreate();
+                    }
+
+                }).execute(String.format(Constants.CHECK_IS_PAID, orderId));
+
+            }
+
+        }
+    };
 }

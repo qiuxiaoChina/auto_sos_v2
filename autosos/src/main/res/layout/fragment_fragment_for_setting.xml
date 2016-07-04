@@ -3,14 +3,255 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context="com.autosos.yd.fragment.FragmentForSetting">
+    tools:context="com.autosos.rescue.fragment.FragmentForSetting">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#20b48b"
+        android:gravity="center">
+
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设置"
+            android:textColor="#ffffff"
+            android:textSize="17sp"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="54dp"
+        android:scrollbars="vertical"
+        android:background="#ffffff"
+        >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        
+      
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/column_background">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="修改密码"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/column_background">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="版本更新"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/column_background2">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公告"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/column_background2">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="关于"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/column_background2">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系我们"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/column_background2">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="服务商操作手册"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/column_background">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="APP二维码"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/logout"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/column_background">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="退出"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+        
+        
+    </LinearLayout>
+
+    </ScrollView>
+
+    
 
     <!-- TODO: Update blank fragment layout -->
-    <Button
-        android:id="@+id/logout"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="退出登录"/>
+    <!--<Button-->
+        <!--android:id="@+id/logout"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="退出登录"-->
+        <!--android:visibility="gone"/>-->
 
 </RelativeLayout>

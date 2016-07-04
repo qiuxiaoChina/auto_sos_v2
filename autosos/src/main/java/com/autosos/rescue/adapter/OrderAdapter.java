@@ -1,14 +1,18 @@
 package com.autosos.rescue.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.autosos.rescue.R;
@@ -21,9 +25,13 @@ public class OrderAdapter extends BaseAdapter {
 
     private LayoutInflater layoutInflater;
     private List<OrderDetail> orderDetails;
+    private Context mContext;
+
+    ArrayList<String> list1 ;
+
 
     public OrderAdapter(Context context, List<OrderDetail> orderDetailList) {
-
+        mContext = context;
         layoutInflater = LayoutInflater.from(context);
         orderDetails = orderDetailList;
     }
@@ -69,6 +77,7 @@ public class OrderAdapter extends BaseAdapter {
 
         return convertView;
     }
+
 
     private class ViewHolder{
 

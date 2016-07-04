@@ -1,6 +1,7 @@
 package com.autosos.rescue.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import com.autosos.rescue.R;
 import com.autosos.rescue.task.NewHttpPostTask;
 import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.Session;
+import com.autosos.rescue.view.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,14 +44,14 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
         // Required empty public constructor
     }
 
-    private Button logout;
+    private View logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_for_setting, null);
-        logout = (Button) view.findViewById(R.id.logout);
+        logout =  view.findViewById(R.id.logout);
         logout.setOnClickListener(this);
         return view;
     }
@@ -71,6 +73,8 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
                             if(result ==1){
 
                                 Session.getInstance().logout(getActivity().getApplicationContext());
+                                Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+                                startActivity(intent);
                                 getActivity().finish();
                             }
                         } catch (JSONException e) {

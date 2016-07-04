@@ -98,6 +98,7 @@ import com.autosos.rescue.Constants;
 import com.autosos.rescue.Layout.MyButton;
 import com.autosos.rescue.Layout.MyRaletiveLayout;
 import com.autosos.rescue.R;
+import com.autosos.rescue.application.MyApplication;
 import com.autosos.rescue.model.NewOrder;
 import com.autosos.rescue.model.OrderInfo;
 import com.autosos.rescue.task.HttpGetTask;
@@ -258,6 +259,17 @@ public class FragmentForWork extends BasicFragment {
         amap=null;
         init();
         setUpMap();
+        if(MyApplication.application.isAfterOrder){
+            Log.d("afterOrder","ok");
+            getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
+            head_map.setVisibility(View.VISIBLE);
+            head_map_tel_navi.setVisibility(View.GONE);
+            mAMapNaviView.setVisibility(View.GONE);
+            mapView.setVisibility(View.VISIBLE);
+            menu.setVisibility(View.GONE);
+            MyApplication.application.isAfterOrder = false;
+
+        }
         if (oiUtil == null) {
 
             oiUtil = new OiUtil();
@@ -280,6 +292,7 @@ public class FragmentForWork extends BasicFragment {
                         isOnline = true;
                         switch_online.setText("在线");
                         switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.on_line));
+
                         SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                         boolean newOrderComing = sp1.getBoolean("newOrderComing", false);
                         firstResume = true;

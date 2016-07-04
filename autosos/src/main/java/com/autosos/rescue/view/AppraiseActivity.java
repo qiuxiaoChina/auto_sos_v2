@@ -125,10 +125,11 @@ public class AppraiseActivity extends Activity implements View.OnClickListener {
 
                                             Intent intent = new Intent(AppraiseActivity.this,PayActivity.class);
                                             startActivity(intent);
+                                            finish();
 
                                         }else{
-
-
+                                            AppraiseActivity.this.recreate();
+                                            Toast.makeText(AppraiseActivity.this,"提交失败,请重新提交",Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 } catch (Exception e) {
@@ -196,7 +197,7 @@ public class AppraiseActivity extends Activity implements View.OnClickListener {
                         new GetQiniuTokenTask().executeOnExecutor(Constants.THEADPOOL,
                                 Constants.QINIU_TOKEN_URL);
                         uploadLayout.setVisibility(View.VISIBLE);
-                        Toast.makeText(this,"提交成功,请稍等。",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,"正在提交,请稍等。",Toast.LENGTH_SHORT).show();
                         btn_submit.setClickable(false);
                         //isClicked =true;
                     }else{

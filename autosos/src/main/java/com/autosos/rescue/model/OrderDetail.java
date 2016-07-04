@@ -8,10 +8,15 @@ public class OrderDetail {
     private String title;
     private String desc;
 
+
+
     public OrderDetail(String title, String desc) {
         this.title = title;
         this.desc = desc;
+
     }
+
+
 
     public String getTitle() {
         return title;

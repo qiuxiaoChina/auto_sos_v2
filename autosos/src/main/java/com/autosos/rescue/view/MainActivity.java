@@ -38,6 +38,7 @@ import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.autonavi.tbt.TrafficFacilityInfo;
 import com.autosos.rescue.R;
+import com.autosos.rescue.application.MyApplication;
 import com.autosos.rescue.fragment.FragmentForMine;
 import com.autosos.rescue.fragment.FragmentForOrder;
 import com.autosos.rescue.fragment.FragmentForSetting;
@@ -56,7 +57,7 @@ import com.igexin.sdk.PushManager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends FragmentActivity implements TabHost.OnTabChangeListener{
+public class MainActivity extends FragmentActivity implements TabHost.OnTabChangeListener {
 
 //    private ContentViewPager contentViewPager;
 //    private RadioGroup contentradiogroup;
@@ -66,22 +67,23 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
 
     private FragmentTabHost mTabHost;
     private LayoutInflater layoutInflater;
-    private Class[] fragmentArray = {FragmentForWork.class,FragmentForOrder.class,FragmentForMine.class,FragmentForSetting.class};
+    private Class[] fragmentArray = {FragmentForWork.class, FragmentForOrder.class, FragmentForMine.class, FragmentForSetting.class};
 
-    private int mImageViewArray[] = {R.drawable.icon_main_menu1,R.drawable.icon_main_menu2,R.drawable.icon_main_menu3,
+    private int mImageViewArray[] = {R.drawable.icon_main_menu1, R.drawable.icon_main_menu2, R.drawable.icon_main_menu3,
             R.drawable.icon_main_menu4};
 
-    private String mTextviewArray[] = {"工作","订单","我的","设置"};
+    private String mTextviewArray[] = {"工作", "订单", "我的", "设置"};
 
-
+    public static MainActivity instance = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PushManager.getInstance().initialize(this.getApplicationContext());
-       // SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID +"=5754c9e7"+ SpeechConstant.FORCE_LOGIN +"=true");
-        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID +"=577077cd,"+SpeechConstant.FORCE_LOGIN +"=true");
+        // SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID +"=5754c9e7"+ SpeechConstant.FORCE_LOGIN +"=true");
+        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=577077cd," + SpeechConstant.FORCE_LOGIN + "=true");
         setContentView(R.layout.activity_main3);
+        instance = this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
                 | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
                 | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
@@ -98,31 +100,31 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
     }
 
 
-    private void initView(){
+    private void initView() {
 
 
         layoutInflater = LayoutInflater.from(this);
 
-        mTabHost = (FragmentTabHost)findViewById(android.R.id.tabhost);
+        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
         int count = fragmentArray.length;
         SharedPreferences sp = getSharedPreferences("work", Context.MODE_PRIVATE);
-        sp.edit().putBoolean("working",true).commit();
+        sp.edit().putBoolean("working", true).commit();
 
-        for(int i = 0; i < count; i++){
+        for (int i = 0; i < count; i++) {
 
             TabHost.TabSpec tabSpec = mTabHost.newTabSpec(mTextviewArray[i]).setIndicator(getTabItemView(i));
             mTabHost.addTab(tabSpec, fragmentArray[i], null);
-           // mTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.selector_tab_background);
+            // mTabHost.getTabWidget().getChildAt(i).setBackgroundResource(R.drawable.selector_tab_background);
             mTabHost.getTabWidget().getChildAt(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String tip = ((TextView)v.findViewById(R.id.tip)).getText().toString();
+                    String tip = ((TextView) v.findViewById(R.id.tip)).getText().toString();
                     SharedPreferences sp = getSharedPreferences("work", Context.MODE_PRIVATE);
-                    switch (tip){
+                    switch (tip) {
                         case "工作":
-                            sp.edit().putBoolean("working",true).commit();
+                            sp.edit().putBoolean("working", true).commit();
                             mTabHost.setCurrentTab(0);
                             break;
                         case "订单":
@@ -148,7 +150,15 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
 
     }
 
-    private View getTabItemView(int index){
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (MyApplication.application.isAfterOrder) {
+
+        }
+    }
+
+    private View getTabItemView(int index) {
         View view = layoutInflater.inflate(R.layout.tab_item_view, null);
 
         ImageView imageView = (ImageView) view.findViewById(R.id.icon);
@@ -159,7 +169,6 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
 
         return view;
     }
-
 
 
 //    private ArrayList<Fragment> content_list = null;

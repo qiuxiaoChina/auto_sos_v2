@@ -15,7 +15,6 @@ public class OrderInfo{
     private double longitude;
     private String ownerMobile;
     private String car_number;
-    private double base_price;
     private int start_km;
     private double km_price;
     private String remark;
@@ -37,6 +36,17 @@ public class OrderInfo{
     private double real_start_lng;
     private String real_dest;
     private double real_tuoche_dis;
+
+    private double base_price;//起步价
+    private double pay_amount;
+    private double bonus;
+    private double night_price;
+    private double edit_price;
+    private double more_amount;//超出里程费用
+    private String pay_ewm;
+    private int is_support_free;//是否有免拖
+    private int free_km;
+
 
 
     public OrderInfo(JSONObject json) {
@@ -73,8 +83,49 @@ public class OrderInfo{
             this.real_start_lng = json.optDouble("real_start_lng",0);
             this.real_tuoche_dis = json.optDouble("real_tuoche_distance",0);
 
+            this.pay_amount = json.optDouble("pay_amount",0);
+            this.bonus = json.optDouble("bonus",0);
+            this.night_price = json.optDouble("night_price",0);
+            this.edit_price = json.optDouble("edit_price",0);
+            this.more_amount = json.optDouble("more_amount",0);
+            this.pay_ewm = JSONUtil.getString(json,"pay_ewm");
+            this.is_support_free = json.optInt("is_support_free",0);
+            this.free_km = json.optInt("free_km",0);
+
 
         }
+    }
+
+    public double getPay_amount() {
+        return pay_amount;
+    }
+
+    public double getBonus() {
+        return bonus;
+    }
+
+    public double getNight_price() {
+        return night_price;
+    }
+
+    public double getEdit_price() {
+        return edit_price;
+    }
+
+    public double getMore_amount() {
+        return more_amount;
+    }
+
+    public String getPay_ewm() {
+        return pay_ewm;
+    }
+
+    public int getIs_support_free() {
+        return is_support_free;
+    }
+
+    public int getFree_km() {
+        return free_km;
     }
 
     public double getReal_take_latitude() {

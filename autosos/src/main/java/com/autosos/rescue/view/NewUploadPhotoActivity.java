@@ -122,6 +122,7 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
                                                                 //oiUtil.deleteJWD(oiUtil.path_drag);
                                                                 Intent intent = new Intent(NewUploadPhotoActivity.this,AppraiseActivity.class);
                                                                 startActivity(intent);
+                                                                NewTakePhotoActivity.instance.finish();
                                                                 finish();
 
                                                             }
@@ -133,6 +134,7 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
 
                                                                 Intent intent = new Intent(NewUploadPhotoActivity.this,MainActivity.class);
                                                                 startActivity(intent);
+                                                                NewTakePhotoActivity.instance.finish();
                                                                 finish();
 
 
@@ -140,6 +142,7 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
                                                               //  oiUtil.deleteJWD(oiUtil.path_drag);
                                                                 Intent intent = new Intent(NewUploadPhotoActivity.this,MainActivity.class);
                                                                 startActivity(intent);
+                                                                NewTakePhotoActivity.instance.finish();
                                                                 finish();
 
 
@@ -147,6 +150,7 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
                                                                // oiUtil.deleteJWD(oiUtil.path_drag);
                                                                 Intent intent = new Intent(NewUploadPhotoActivity.this,AppraiseActivity.class);
                                                                 startActivity(intent);
+                                                                NewTakePhotoActivity.instance.finish();
                                                                 finish();
                                                             }
 

@@ -42,6 +42,7 @@ import java.util.TimerTask;
 
 
 public class NewTakePhotoActivity extends Activity implements OnClickListener, SurfaceHolder.Callback {
+    public static NewTakePhotoActivity instance = null;
     private Button takeButton, button_flash, button_cancel, takeButton2;
     private SurfaceView mPreview = null;
     private ImageView iv_cla;
@@ -103,6 +104,7 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_newtakephoto);
+        instance = this;
         iv_cla = (ImageView) findViewById(R.id.cla);
 
         mPreview = (SurfaceView) findViewById(R.id.surfaceView);
