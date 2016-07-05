@@ -49,6 +49,14 @@ public class GetuiSdkMsgReceiver extends BroadcastReceiver {
                         intentFilter.setAction("closeOrder");
                         context.sendBroadcast(intentFilter);
 
+                    }else if(data.indexOf("你的订单被改价了")>-1){
+
+                        Log.d("editPrice","个推信息----"+"改价");
+                        Intent intentFilter = new Intent();
+                        intentFilter.setAction("editPrice");
+                        context.sendBroadcast(intentFilter);
+
+
                     }else {
                         String title = "e救援服务商";
                         String content = "您有新订单啦";

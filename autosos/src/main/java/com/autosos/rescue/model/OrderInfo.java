@@ -4,7 +4,7 @@ import com.autosos.rescue.util.JSONUtil;
 
 import org.json.JSONObject;
 
-public class OrderInfo{
+public class OrderInfo implements Identifiable {
 
     private static final long serialVersionUID = 4723889163553502490L;
     private int orderId;
@@ -47,53 +47,97 @@ public class OrderInfo{
     private int is_support_free;//是否有免拖
     private int free_km;
 
+    private String type;
+    private String service;
+    private String date;
+    private String car_dst_addr;
+    private String car_addr;
+    private String price;
+    private String status_desc;
 
 
     public OrderInfo(JSONObject json) {
         if (json != null) {
             this.orderId = json.optInt("id");
             this.orderStatus = json.optInt("status");
-            this.address = JSONUtil.getString(json,"address");
-            this.latitude = json.optDouble("latitude",0);
-            this.longitude = json.optDouble("longitude",0);
-            this.ownerMobile = JSONUtil.getString(json,"mobile");
-            this.car_number = JSONUtil.getString(json,"car_number");
-            this.base_price = json.optDouble("price",0);
-            this.start_km = json.optInt("starting_km",0);
-            this.km_price = json.optDouble("km_price",0);
-            this.remark = JSONUtil.getString(json,"remark");
-            this.to_uid = json.optInt("service_uid",0);
-            this.dest = JSONUtil.getString(json,"dest");
-            this.dest_lat = json.optDouble("dest_lat",0);
-            this.dest_lng = json.optDouble("dest_lng",0);
-            this.serviceType = json.optInt("service_type",0);
+            this.address = JSONUtil.getString(json, "address");
+            this.latitude = json.optDouble("latitude", 0);
+            this.longitude = json.optDouble("longitude", 0);
+            this.ownerMobile = JSONUtil.getString(json, "mobile");
+            this.car_number = JSONUtil.getString(json, "car_number");
+            this.base_price = json.optDouble("price", 0);
+            this.start_km = json.optInt("starting_km", 0);
+            this.km_price = json.optDouble("km_price", 0);
+            this.remark = JSONUtil.getString(json, "remark");
+            this.to_uid = json.optInt("service_uid", 0);
+            this.dest = JSONUtil.getString(json, "dest");
+            this.dest_lat = json.optDouble("dest_lat", 0);
+            this.dest_lng = json.optDouble("dest_lng", 0);
+            this.serviceType = json.optInt("service_type", 0);
 
 
-            this.real_address = JSONUtil.getString(json,"real_arrive_addr");
-            this.real_latitude = json.optDouble("real_arrive_lat",0);
-            this.real_longitude = json.optDouble("real_arrive_lng",0);
-            this.real_dis = json.optDouble("real_take_distance",0);
-            this.real_take_latitude = json.optDouble("real_take_lat",0);
-            this.real_take_longitude = json.optDouble("real_take_lng",0);
+            this.real_address = JSONUtil.getString(json, "real_arrive_addr");
+            this.real_latitude = json.optDouble("real_arrive_lat", 0);
+            this.real_longitude = json.optDouble("real_arrive_lng", 0);
+            this.real_dis = json.optDouble("real_take_distance", 0);
+            this.real_take_latitude = json.optDouble("real_take_lat", 0);
+            this.real_take_longitude = json.optDouble("real_take_lng", 0);
 
-            this.real_dest = JSONUtil.getString(json,"real_stop_addr");
-            this.real_dest_lat = json.optDouble("real_stop_lat",0);
-            this.real_dest_lng = json.optDouble("real_stop_lng",0);
-            this.real_start_lat = json.optDouble("real_start_lat",0);
-            this.real_start_lng = json.optDouble("real_start_lng",0);
-            this.real_tuoche_dis = json.optDouble("real_tuoche_distance",0);
+            this.real_dest = JSONUtil.getString(json, "real_stop_addr");
+            this.real_dest_lat = json.optDouble("real_stop_lat", 0);
+            this.real_dest_lng = json.optDouble("real_stop_lng", 0);
+            this.real_start_lat = json.optDouble("real_start_lat", 0);
+            this.real_start_lng = json.optDouble("real_start_lng", 0);
+            this.real_tuoche_dis = json.optDouble("real_tuoche_distance", 0);
 
-            this.pay_amount = json.optDouble("pay_amount",0);
-            this.bonus = json.optDouble("bonus",0);
-            this.night_price = json.optDouble("night_price",0);
-            this.edit_price = json.optDouble("edit_price",0);
-            this.more_amount = json.optDouble("more_amount",0);
-            this.pay_ewm = JSONUtil.getString(json,"pay_ewm");
-            this.is_support_free = json.optInt("is_support_free",0);
-            this.free_km = json.optInt("free_km",0);
+            this.pay_amount = json.optDouble("pay_amount", 0);
+            this.bonus = json.optDouble("bonus", 0);
+            this.night_price = json.optDouble("night_price", 0);
+            this.edit_price = json.optDouble("edit_price", 0);
+            this.more_amount = json.optDouble("more_amount", 0);
+            this.pay_ewm = JSONUtil.getString(json, "pay_ewm");
+            this.is_support_free = json.optInt("is_support_free", 0);
+            this.free_km = json.optInt("free_km", 0);
+
+
+            this.type = JSONUtil.getString(json, "type");//订单类型 抛单 派单
+            this.service = JSONUtil.getString(json, "service");
+            this.date = JSONUtil.getString(json, "date");
+            this.car_dst_addr = JSONUtil.getString(json, "car_dst_addr");
+            this.car_addr = JSONUtil.getString(json, "car_addr");
+            this.price = JSONUtil.getString(json, "price");
+            this.status_desc = JSONUtil.getString(json, "status_desc");
 
 
         }
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public String getService() {
+        return service;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getCar_dst_addr() {
+        return car_dst_addr;
+    }
+
+    public String getCar_addr() {
+        return car_addr;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getStatus_desc() {
+        return status_desc;
     }
 
     public double getPay_amount() {
@@ -244,5 +288,10 @@ public class OrderInfo{
 
     public int getOrderStatus() {
         return orderStatus;
+    }
+
+    @Override
+    public Integer getId() {
+        return orderId;
     }
 }

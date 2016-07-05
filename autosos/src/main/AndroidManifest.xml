@@ -43,7 +43,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <!-- 往SDCard写入数据权限 -->
 
-    <uses-permission android:name="android.permission.CALL_PHONE"></uses-permission>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <!-- 允许程序改变网络连接状态 -->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -64,16 +64,15 @@
     <application
         android:name=".application.MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/app_icon"
         android:label="@string/app_name"
         android:persistent="true"
-        android:theme="@style/MyAppTheme"
-        >
+        android:theme="@style/MyAppTheme">
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="09f4ccaf188c0883e96aac94ba66a2e9" />
 
-        <service android:name="com.amap.api.location.APSService"></service>
+        <service android:name="com.amap.api.location.APSService" />
 
         <!-- 个推SDK配置开始 -->
         <!-- 配置的第三方参数属性 -->
@@ -198,68 +197,65 @@
             android:name=".view.LoginActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".view.CheckActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".view.FillCodeActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".view.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
             android:launchMode="singleTask"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".view.NewTakePhotoActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"></activity>
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
         <activity
             android:name=".view.TrailerDetailActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".view.NewUploadPhotoActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".view.AppraiseActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
-
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
         <activity
             android:name=".view.BlankActivity"
-            android:theme="@android:style/Theme.Translucent"></activity>
-
+            android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name=".view.PayActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar" />
 
-        <service android:name=".util.MyService_one">
-
-        </service>
-        <service android:name=".util.MyService_two">
-
-        </service>
+        <service android:name=".util.MyService_one"></service>
+        <service android:name=".util.MyService_two"></service>
 
         <receiver android:name=".util.MyReceiver">
             <intent-filter>
-                <action android:name="ELITOR_CLOCK"/>
+                <action android:name="ELITOR_CLOCK" />
             </intent-filter>
         </receiver>
 
-
+        <activity android:name=".view.OrderInfoActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.NoActionBar"></activity>
     </application>
 
 </manifest>

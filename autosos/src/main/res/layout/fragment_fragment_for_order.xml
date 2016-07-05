@@ -1,16 +1,32 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context="com.autosos.rescue.fragment.FragmentForOrder">
+   
+   <TextView
+       android:gravity="center"
+       android:layout_width="match_parent"
+       android:layout_height="54dp"
+       android:background="#20b48b"
+       android:text="已接订单"
+       android:textSize="18sp"
+       android:textColor="#ffffff"/>
 
-   <com.autosos.rescue.widget.OrderListView
-       android:id="@+id/orderList"
+   <com.handmark.pulltorefresh.library.PullToRefreshListView
+       android:id="@+id/lv_order"
        android:layout_width="match_parent"
        android:layout_height="match_parent"
-       android:scrollbars="none"
-      />
+       android:descendantFocusability="blocksDescendants"
+       android:divider="@null"
+       android:footerDividersEnabled="false"
+       android:headerDividersEnabled="false"
+       android:listSelector="@android:color/transparent"
+       android:scrollbars="none" />
+
+   <include layout="@layout/progressbar_layout" />
 
 
-</RelativeLayout>
+</LinearLayout>

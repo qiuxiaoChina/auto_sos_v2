@@ -266,4 +266,9 @@
         <item name="android:progressDrawable">@drawable/bg_web_progress</item>
     </style>
 
+    <style name="runcar" parent="@android:style/Widget.ProgressBar.Large">
+        <item name="android:indeterminateDrawable">@drawable/run_car</item>
+    </style>
+
+
 </resources>

@@ -153,9 +153,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
     @Override
     protected void onResume() {
         super.onResume();
-        if (MyApplication.application.isAfterOrder) {
 
-        }
     }
 
     private View getTabItemView(int index) {

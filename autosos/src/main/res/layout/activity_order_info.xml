@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.autosos.rescue.view.OrderInfoActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#20b48b">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="订单详情"
+            android:textColor="#ffffff"
+            android:textSize="18dp"/>
+
+    </RelativeLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="74dp"
+        android:layout_marginTop="67dp"
+        android:orientation="vertical">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            >
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="13dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/order_start"/>
+
+            <HorizontalScrollView
+                android:layout_centerVertical="true"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="44dp"
+                android:scrollbars="none">
+                <TextView
+                    android:id="@+id/destination1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鄞州科技信息孵化园"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:singleLine="true"
+                    />
+
+            </HorizontalScrollView>
+
+
+            
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="13dp"
+                android:layout_height="18dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/order_end"/>
+
+            <HorizontalScrollView
+                android:layout_centerVertical="true"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="44dp"
+                android:scrollbars="none">
+                <TextView
+                    android:id="@+id/destination2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鄞州科技信息孵化园"
+                    android:textSize="16sp"
+                    android:textColor="#333333"
+                    android:singleLine="true"
+                    />
+
+            </HorizontalScrollView>
+
+        </RelativeLayout>
+
+        <View
+            android:layout_marginTop="13dp"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dcdcdc"/>
+
+
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="180dp">
+
+    <RelativeLayout
+        android:id="@+id/hint_pay_detail"
+        android:layout_width="287dp"
+        android:layout_height="21dp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_vertical">
+
+        <View
+            android:layout_width="84dp"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:background="#AAAAAA" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="18dp"
+            android:text="已支付"
+            android:textColor="#999999"
+            android:textSize="14sp"
+
+            />
+
+        <View
+            android:layout_width="84dp"
+            android:layout_height="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="#AAAAAA" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/pay_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:text="0.0元"
+        android:textSize="35sp"
+        android:layout_marginTop="30dp"
+        />
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/check_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#666666"
+        android:text="查看明细"
+        android:textSize="14sp"
+        android:layout_marginTop="80dp"
+        />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="120dp">
+    <RelativeLayout
+        android:layout_width="287dp"
+        android:layout_height="21dp">
+
+        <View
+            android:layout_width="84dp"
+            android:layout_height="1dp"
+            android:layout_centerVertical="true"
+            android:background="#AAAAAA" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="18dp"
+            android:text="行驶里程"
+            android:textColor="#999999"
+            android:textSize="14sp"
+
+            />
+
+        <View
+            android:layout_width="84dp"
+            android:layout_height="1dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="#AAAAAA" />
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="20dp">
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#333333"
+        android:text="0.0km"
+        android:textSize="35sp"
+        />
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="287dp"
+            android:layout_height="21dp"
+            android:layout_marginTop="20dp">
+
+            <View
+                android:layout_width="84dp"
+                android:layout_height="1dp"
+                android:layout_centerVertical="true"
+                android:background="#AAAAAA" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="18dp"
+                android:text="客户评价"
+                android:textColor="#999999"
+                android:textSize="14sp"
+
+                />
+
+            <View
+                android:layout_width="84dp"
+                android:layout_height="1dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="#AAAAAA" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp">
+
+
+            <RatingBar
+                style="@style/yellowRatingBar_new_way"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:stepSize="1"
+                android:rating="5"
+                android:clickable="false"/>
+
+
+        </RelativeLayout>
+
+
+
+
+
+    </LinearLayout>
+</RelativeLayout>
+</RelativeLayout>

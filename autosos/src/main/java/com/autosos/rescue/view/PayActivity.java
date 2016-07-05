@@ -2,11 +2,15 @@ package com.autosos.rescue.view;
 
 import android.app.Activity;
 import android.app.Application;
+import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
 import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +18,8 @@ import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -23,17 +29,22 @@ import android.widget.Toast;
 import com.autosos.rescue.Constants;
 import com.autosos.rescue.R;
 import com.autosos.rescue.application.MyApplication;
+import com.autosos.rescue.fragment.FragmentForWork;
 import com.autosos.rescue.model.NewOrder;
 import com.autosos.rescue.model.OrderInfo;
 import com.autosos.rescue.task.HttpGetTask;
+import com.autosos.rescue.task.NewHttpPutTask;
 import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.CreateQRImage;
+import com.autosos.rescue.util.JSONUtil;
 import com.iflytek.thridparty.G;
 import com.umeng.analytics.MobclickAgent;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,6 +62,8 @@ public class PayActivity extends Activity implements View.OnClickListener{
     private ImageView qr_image;
     private TextView pay_amount,base_price,more_amount,total_dis,bonus,night_price,edit_price;
     Timer time_clock = new Timer();
+    private MyBroadcastReciever  myBroadcastReciever;
+    private Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +87,11 @@ public class PayActivity extends Activity implements View.OnClickListener{
         bonus = (TextView) findViewById(R.id.bonus);
         night_price = (TextView) findViewById(R.id.night_price);
         edit_price = (TextView) findViewById(R.id.edit_price);
+
+        myBroadcastReciever = new MyBroadcastReciever();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("editPrice");
+        registerReceiver(myBroadcastReciever, intentFilter);
     }
 
     //按返回键 没有办法返回
@@ -106,7 +124,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     }
                 };
 
-                time_clock.schedule(task_clock, 0, 100);
+                time_clock.schedule(task_clock, 0, 500);
                 break;
             case R.id.close_erweima:
                 erweima_layout.setVisibility(View.GONE);
@@ -225,6 +243,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
 
 
                     }else {
+                        Log.d("orderInfo_pay", orderInfo.getReal_dis()+"");
                         String dis = String.format("%.2f", orderInfo.getReal_dis());
                         total_dis.setText(dis+"km");
                     }
@@ -252,6 +271,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        unregisterReceiver(myBroadcastReciever);
         try {
 
             if (time_clock != null) {
@@ -318,4 +338,77 @@ public class PayActivity extends Activity implements View.OnClickListener{
 
         }
     };
-}
+
+
+    public class MyBroadcastReciever extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if("editPrice".equals(intent.getAction())){
+                Log.d("editPrice","ok");
+                dialog = new Dialog(PayActivity.this, R.style.bubble_dialog);
+                View view = getLayoutInflater().inflate(R.layout.dialog_msg_content,
+                        null);
+                Button tvConfirm = (Button) view.findViewById(R.id.btn_notice_confirm);
+                TextView tvMsg = (TextView) view.findViewById(R.id.tv_notice_msg);
+                tvMsg.setText("订单被后台改价了,请刷新");
+
+                tvConfirm.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        if(erweima_layout.getVisibility()==View.VISIBLE){
+
+                            erweima_layout.setVisibility(View.GONE);
+                            try {
+
+                                if (time_clock != null) {
+
+                                    time_clock.cancel();
+                                }
+
+                            } catch (Exception e) {
+
+                                time_clock = null;
+
+                            }finally {
+
+                                time_clock = null;
+                            }
+                        }
+                        progressBar.setVisibility(View.VISIBLE);
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                progressBar.setVisibility(View.GONE);
+                                PayActivity.this.recreate();
+                            }
+                        },1000);
+                    }
+
+
+                });
+
+                dialog.setContentView(view);
+                dialog.setCanceledOnTouchOutside(false);
+                Window window = dialog.getWindow();
+                WindowManager.LayoutParams params = window.getAttributes();
+                Point point = JSONUtil.getDeviceSize(getApplicationContext());
+                params.width = Math.round(point.x * 5 / 7);
+                window.setAttributes(params);
+                try {
+                    dialog.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
+
+      }
+
+    }

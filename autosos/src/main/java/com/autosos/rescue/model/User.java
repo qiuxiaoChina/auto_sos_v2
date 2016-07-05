@@ -5,7 +5,7 @@ import com.autosos.rescue.util.JSONUtil;
 
 import org.json.JSONObject;
 
-public class User implements Identifiable {
+public class User{
 
     private static final long serialVersionUID = 4723889163553502490L;
     private long id;

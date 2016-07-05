@@ -267,7 +267,10 @@ public class FragmentForWork extends BasicFragment {
             mAMapNaviView.setVisibility(View.GONE);
             mapView.setVisibility(View.VISIBLE);
             menu.setVisibility(View.GONE);
+            startNavi.setVisibility(View.GONE);
+            coursePreview.setVisibility(View.GONE);
             MyApplication.application.isAfterOrder = false;
+            handler.sendEmptyMessage(12);
 
         }
         if (oiUtil == null) {
@@ -1104,6 +1107,10 @@ public class FragmentForWork extends BasicFragment {
                 }else if(msg.what==11){
 
                     mTts.startSpeaking("订单已被后台取消", mSynListener);
+                }else if(msg.what ==12){
+
+                    mTts.startSpeaking("订单完成，请继续接单", mSynListener);
+
                 }
             }
         };
