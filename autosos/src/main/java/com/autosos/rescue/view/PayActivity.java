@@ -15,9 +15,11 @@ import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -64,6 +66,9 @@ public class PayActivity extends Activity implements View.OnClickListener{
     Timer time_clock = new Timer();
     private MyBroadcastReciever  myBroadcastReciever;
     private Dialog dialog;
+    private TextView check_detail;
+    private Boolean isClicked = false;
+    private View price_detail,bottomPart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +92,11 @@ public class PayActivity extends Activity implements View.OnClickListener{
         bonus = (TextView) findViewById(R.id.bonus);
         night_price = (TextView) findViewById(R.id.night_price);
         edit_price = (TextView) findViewById(R.id.edit_price);
+        check_detail = (TextView) findViewById(R.id.check_detail);
+        check_detail.setOnClickListener(this);
+
+        price_detail = findViewById(R.id.price_detail);
+        bottomPart = findViewById(R.id.bottomPart);
 
         myBroadcastReciever = new MyBroadcastReciever();
         IntentFilter intentFilter = new IntentFilter();
@@ -142,6 +152,25 @@ public class PayActivity extends Activity implements View.OnClickListener{
                 }finally {
 
                     time_clock = null;
+                }
+                break;
+            case R.id.check_detail:
+                DisplayMetrics dm =getResources().getDisplayMetrics();
+                float density = dm.density;
+                if(!isClicked){
+                    check_detail.setText("-点击收起收费明细");
+                    price_detail.setVisibility(View.VISIBLE);
+                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) bottomPart.getLayoutParams();
+                    layoutParam.topMargin =(int)(350*density);
+                    bottomPart.setLayoutParams(layoutParam);
+                    isClicked = true;
+                }else {
+                    check_detail.setText("+点击查看收费明细");
+                    price_detail.setVisibility(View.GONE);
+                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) bottomPart.getLayoutParams();
+                    layoutParam.topMargin =(int)(150*density);
+                    bottomPart.setLayoutParams(layoutParam);
+                    isClicked = false;
                 }
                 break;
             default:

@@ -55,6 +55,8 @@ public class OrderInfo implements Identifiable {
     private String price;
     private String status_desc;
 
+    private String commentRate;
+
 
     public OrderInfo(JSONObject json) {
         if (json != null) {
@@ -98,6 +100,7 @@ public class OrderInfo implements Identifiable {
             this.pay_ewm = JSONUtil.getString(json, "pay_ewm");
             this.is_support_free = json.optInt("is_support_free", 0);
             this.free_km = json.optInt("free_km", 0);
+            this.commentRate =  JSONUtil.getString(json, "comment");
 
 
             this.type = JSONUtil.getString(json, "type");//订单类型 抛单 派单
@@ -110,6 +113,10 @@ public class OrderInfo implements Identifiable {
 
 
         }
+    }
+
+    public String getCommentRate() {
+        return commentRate;
     }
 
     public String getType() {

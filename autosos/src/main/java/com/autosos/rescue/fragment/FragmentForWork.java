@@ -1230,7 +1230,7 @@ public class FragmentForWork extends BasicFragment {
             distance_route.setText("总路程：" + route_distance + "km");
             mapView.setVisibility(View.GONE);
             mAMapNaviView.setVisibility(View.VISIBLE);
-            mAMapNavi.startNavi(NaviType.EMULATOR);
+            mAMapNavi.startNavi(NaviType.GPS);
             handler.sendEmptyMessage(0);
             latLngs = new ArrayList<LatLng>();
 

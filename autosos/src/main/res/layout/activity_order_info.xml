@@ -31,7 +31,8 @@
         android:layout_width="match_parent"
         android:layout_height="74dp"
         android:layout_marginTop="67dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#ffffff">
         
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,7 +55,7 @@
                     android:id="@+id/destination1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="鄞州科技信息孵化园"
+                    android:text=""
                     android:textSize="16sp"
                     android:textColor="#333333"
                     android:singleLine="true"
@@ -87,7 +88,7 @@
                     android:id="@+id/destination2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="鄞州科技信息孵化园"
+                    android:text=""
                     android:textSize="16sp"
                     android:textColor="#333333"
                     android:singleLine="true"
@@ -105,17 +106,27 @@
 
 
     </LinearLayout>
-    <RelativeLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="180dp">
+        android:layout_marginTop="140dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
 
     <RelativeLayout
         android:id="@+id/hint_pay_detail"
         android:layout_width="287dp"
-        android:layout_height="21dp"
+        android:layout_height="71dp"
         android:layout_centerHorizontal="true"
         android:gravity="center_vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"/>
 
         <View
             android:layout_width="84dp"
@@ -152,7 +163,7 @@
         android:textColor="#333333"
         android:text="0.0元"
         android:textSize="35sp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="70dp"
         />
 
     <TextView
@@ -161,17 +172,157 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#666666"
-        android:text="查看明细"
+        android:text="+点击查看明细"
         android:textSize="14sp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="120dp"
         />
 
+        <LinearLayout
+            android:id="@+id/amount_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:visibility="gone">
+
+
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:text="起步价(15km)"
+                    android:textSize="12sp"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:id="@+id/base_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#333333"
+                    android:text="0.00元"
+                    android:textSize="12sp"
+                    android:layout_alignParentRight="true"
+
+                    />
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="超出里程费用"
+                    android:textSize="12sp"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:id="@+id/more_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="+0.0元"
+                    android:textSize="12sp"
+                    android:layout_alignParentRight="true"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="红包"
+                    android:textSize="12sp"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:id="@+id/bonus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="+0.0元"
+                    android:textSize="12sp"
+                    android:layout_alignParentRight="true"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="夜间提价"
+                    android:textSize="12sp"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:id="@+id/night_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="+0.0元"
+                    android:textSize="12sp"
+                    android:layout_alignParentRight="true"
+
+                    />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="200dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="后台改价"
+                    android:textSize="12sp"
+                    android:layout_alignParentLeft="true"
+                    />
+                <TextView
+                    android:id="@+id/edit_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#20b48b"
+                    android:text="+0.0元"
+                    android:textSize="12sp"
+                    android:layout_alignParentRight="true"
+
+                    />
+            </RelativeLayout>
+
+            </LinearLayout>
+
     <LinearLayout
+        android:id="@+id/afterPart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp">
+        android:layout_marginTop="160dp">
     <RelativeLayout
         android:layout_width="287dp"
         android:layout_height="21dp">
@@ -252,11 +403,12 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp">
 
 
             <RatingBar
+                android:id="@+id/rating"
                 style="@style/yellowRatingBar_new_way"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -267,6 +419,10 @@
                 android:rating="5"
                 android:clickable="false"/>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="60dp"/>
+
 
         </RelativeLayout>
 
@@ -275,5 +431,8 @@
 
 
     </LinearLayout>
-</RelativeLayout>
+       </RelativeLayout>
+    </ScrollView>
+
+    <include layout="@layout/progressbar_layout" />
 </RelativeLayout>

@@ -80,6 +80,7 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
     private boolean noMore;
     private int currentPage;
     int last_order_id;
+    private int guester;//1为上拉，2为下拉
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,7 +100,7 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
         isLoad = false;
         noMore = false;
         last_order_id = 0;
-        lv_order.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+        //lv_order.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
         lv_order.getRefreshableView().addFooterView(footView);
         lv_order.setOnScrollListener(this);
         lv_order.setOnItemClickListener(this);
@@ -154,7 +155,7 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
                 r = new OrderInfo(result.optJSONObject(result.length() - 1));
             }
 
-            if(((last_order_id  == r.getOrderId()) && url == 1)) {
+            if(((last_order_id  == r.getOrderId()) && url == 1&&(guester==2))) {
                 Log.d("info_fresh", "error"+"---"+r.getOrderId());
                 if (url == 1) {
                     noMore = true;
@@ -249,6 +250,8 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
         holder.car_number.setText(orderInfo.getCar_number());
         holder.order_type.setText(orderInfo.getType());
         holder.service_type.setText(orderInfo.getService());
+        holder.destination1.setText("");
+        holder.destination2.setText("");
         if (orderInfo.getCar_dst_addr() != null) {
             holder.destination1.setText(orderInfo.getCar_addr());
             holder.destination2.setText(orderInfo.getCar_dst_addr());
@@ -304,6 +307,9 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
     @Override
     public void onRefresh(PullToRefreshBase<ListView> refreshView) {
         if (!isLoad) {
+            Log.d("action_refresh","onRefresh");
+            currentPage =1;
+            guester =1 ;
             new GetRecordsTask(1).executeOnExecutor(Constants.LISTTHEADPOOL,
                     String.format(Constants.HISTORY_ORDERS_URL, currentPage, 10));
         }
@@ -316,10 +322,12 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
             case AbsListView.OnScrollListener.SCROLL_STATE_IDLE:
                 if (view.getLastVisiblePosition() >= (view.getCount() - 5)) {
                     if (!noMore && !isLoad) {
+                        Log.d("action_refresh","onScrollStateChanged");
                         lv_order.getRefreshableView().removeFooterView(footView);
                         lv_order.getRefreshableView().addFooterView(footView);
                         noMoreView.setVisibility(View.GONE);
                         currentPage++;
+                        guester = 2;
                         new GetRecordsTask(1).executeOnExecutor(Constants.LISTTHEADPOOL,
                                 String.format(Constants.HISTORY_ORDERS_URL, currentPage, 10));
                     }
