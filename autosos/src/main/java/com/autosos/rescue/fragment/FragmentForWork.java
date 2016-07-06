@@ -207,9 +207,9 @@ public class FragmentForWork extends BasicFragment {
 
 
     //根据时间排轨迹点 通过onLocationChange实时补充
-    private long timeStamp = 0;
-    private float dis_moved = 0;
-    private float last_distance = 0;
+    private long timeStamp ;
+    private float dis_moved;
+    private float last_distance;
     private String trace_data = "";
 
     private AMapLocationClient locationClient = null;
@@ -1155,6 +1155,10 @@ public class FragmentForWork extends BasicFragment {
 
         SharedPreferences sp2 = getActivity().getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
         sp2.edit().remove("orderInfo").commit();
+
+        timeStamp = 0l;
+        dis_moved = 0.0f;
+        last_distance = 0.0f;
         Log.d(TAG, "create");
 
     }
@@ -1263,10 +1267,7 @@ public class FragmentForWork extends BasicFragment {
                 dis_moved += f_dis;
                 sp.edit().putFloat("dis_moved", dis_moved).commit();
                 distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "km");
-
-
             }
-
             try {
                 Map<String, Object> map = new HashMap<>();
                 map.put("lat", String.valueOf(currentLatLng.latitude));
@@ -1290,6 +1291,8 @@ public class FragmentForWork extends BasicFragment {
 
             Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
                     + distance_moved.getText() + "---" + dis_moved);
+            Toast.makeText(getActivity(),timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
             timeStamp = timeNow;
             latLngs.add(currentLatLng);
             trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
@@ -1428,7 +1431,7 @@ public class FragmentForWork extends BasicFragment {
 
                     type = "基站定位";
                 }
-               // Toast.makeText(this.getActivity().getApplicationContext(),type+":::"+latLng.latitude + "--" + latLng.longitude, Toast.LENGTH_SHORT).show();
+               //Toast.makeText(this.getActivity().getApplicationContext(),type+":::"+latLng.latitude + "--" + latLng.longitude, Toast.LENGTH_SHORT).show();
                 // Log.d(TAG,latLng.latitude+"--"+latLng.longitude);
 
             } else {
@@ -1449,7 +1452,7 @@ public class FragmentForWork extends BasicFragment {
             locationClient.setLocationListener(this);
             //设置为高精度定位模式
             locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-
+            locationOption.setLocationCacheEnable(false);
             //  locationOption.setGpsFirst(true);
             //设置定位参数
             locationClient.setLocationOption(locationOption);
