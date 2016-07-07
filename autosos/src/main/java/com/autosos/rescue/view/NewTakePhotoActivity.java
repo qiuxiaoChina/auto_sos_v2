@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -73,6 +75,23 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
             }
         }
     };
+
+   MediaPlayer shootMP;
+    /**
+     *   播放系统拍照声音
+     */
+    public void shootSound()
+    {
+        AudioManager meng = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        int volume = meng.getStreamVolume( AudioManager.STREAM_NOTIFICATION);
+        if (volume != 0)
+        {
+            if (shootMP == null)
+                shootMP = MediaPlayer.create(getApplicationContext(), Uri.parse("file:///system/media/audio/ui/camera_click.ogg"));
+            if (shootMP != null)
+                shootMP.start();
+        }
+    }
 
     //将拍下来的照片存放在SD卡中
     @SuppressLint("SimpleDateFormat")
@@ -316,7 +335,7 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
                             @Override
                             public void onAutoFocus(boolean success, Camera camera) {
                                 if (success) {
-
+                                    shootSound();
                                     mCamera.takePicture(null, null, mPictureCallback);
                                 }
                             }

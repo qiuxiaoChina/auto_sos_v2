@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -120,6 +121,14 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
 
                                                             if(result == 31 ){//拍完照片跳到评价页面
                                                                 //oiUtil.deleteJWD(oiUtil.path_drag);
+                                                                String path =  Environment.getExternalStorageDirectory()+"/com.autosos.rescue/img_v2/";
+                                                                File file = new File(path);
+                                                                if (file.isDirectory()) {//否则如果它是一个目录
+                                                                    File[] files = file.listFiles();//声明目录下所有的文件 files[];
+                                                                    for (int i = 0;i < files.length;i ++) {//遍历目录下所有的文件
+                                                                        files[i].delete();//把每个文件用这个方法进行迭代
+                                                                    }
+                                                                }
                                                                 Intent intent = new Intent(NewUploadPhotoActivity.this,AppraiseActivity.class);
                                                                 startActivity(intent);
                                                                 NewTakePhotoActivity.instance.finish();
@@ -148,6 +157,14 @@ public class NewUploadPhotoActivity extends Activity implements View.OnClickList
 
                                                             }else  if(result == 31){
                                                                // oiUtil.deleteJWD(oiUtil.path_drag);
+                                                                String path =  Environment.getExternalStorageDirectory()+"/com.autosos.rescue/img_v2/";
+                                                                File file = new File(path);
+                                                                if (file.isDirectory()) {//否则如果它是一个目录
+                                                                    File[] files = file.listFiles();//声明目录下所有的文件 files[];
+                                                                    for (int i = 0;i < files.length;i ++) {//遍历目录下所有的文件
+                                                                        files[i].delete();//把每个文件用这个方法进行迭代
+                                                                    }
+                                                                }
                                                                 Intent intent = new Intent(NewUploadPhotoActivity.this,AppraiseActivity.class);
                                                                 startActivity(intent);
                                                                 NewTakePhotoActivity.instance.finish();

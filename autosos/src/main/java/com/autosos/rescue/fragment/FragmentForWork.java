@@ -261,6 +261,7 @@ public class FragmentForWork extends BasicFragment {
         setUpMap();
         if(MyApplication.application.isAfterOrder){
             Log.d("afterOrder","ok");
+            canGetNewOrder = true;
             getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
             head_map.setVisibility(View.VISIBLE);
             head_map_tel_navi.setVisibility(View.GONE);
@@ -1939,6 +1940,7 @@ public class FragmentForWork extends BasicFragment {
         public void onReceive(Context context, Intent intent) {
 
             if ("newOrder".equals(intent.getAction())) {
+
                 if (isOnline) {
 
                     if (canGetNewOrder) {
