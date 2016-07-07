@@ -173,7 +173,7 @@
     <string name="msg_distance_error">（请刷新）</string>
     <string name="msg_nofinish">当前有订单未完成！</string>
     <string name="msg_reloction">经纬度定位失败，是否重新定位？</string>
-    <string name="msg_noInterner">网络连接错误，请检查你的网络！</string>
+    <string name="msg_noInterner">没有网络连接,请打开WIFI和移动数据网络！</string>
     <string name="msg_enter_psd">请输入原始密码！</string>
     <string name="msg_enter_cash">请输入金额！</string>
     <string name="msg_enter_cash_success">提现申请提交成功！</string>
