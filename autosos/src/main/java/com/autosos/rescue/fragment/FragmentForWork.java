@@ -271,6 +271,8 @@ public class FragmentForWork extends BasicFragment {
             startNavi.setVisibility(View.GONE);
             coursePreview.setVisibility(View.GONE);
             MyApplication.application.isAfterOrder = false;
+            info = null;
+            firstResume_tuoche = false;
             handler.sendEmptyMessage(12);
 
         }
@@ -1235,7 +1237,7 @@ public class FragmentForWork extends BasicFragment {
             distance_route.setText("总路程：" + route_distance + "km");
             mapView.setVisibility(View.GONE);
             mAMapNaviView.setVisibility(View.VISIBLE);
-            mAMapNavi.startNavi(NaviType.GPS);
+            mAMapNavi.startNavi(NaviType.EMULATOR);
             handler.sendEmptyMessage(0);
             latLngs = new ArrayList<LatLng>();
 
@@ -1292,7 +1294,7 @@ public class FragmentForWork extends BasicFragment {
 
             Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
                     + distance_moved.getText() + "---" + dis_moved);
-            Toast.makeText(getActivity(),timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+            Toast.makeText(getActivity(),timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
                             + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
             timeStamp = timeNow;
             latLngs.add(currentLatLng);
@@ -1306,32 +1308,51 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
 
-        LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
-
-        //  Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
-
         if (canCountGPSPoint) {
-            // sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
-//            if (aMapNaviLocation.getAccuracy() <= 20) {
-//
-//                long timeNow = new Date().getTime();
-//                if (timeNow > timeStamp) {
-//                    LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
-//                    if (latLngs.size() > 2) {
-//                        LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
-//                        int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
-//                        float f_dis = DistanceUtil.checkDistance(distance / 1000f);
-//                        dis_moved += f_dis;
-//                        //sp.edit().putFloat("dis_moved", dis_moved).commit();
-//                        distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "公里");
-//                    }
-//                    latLngs.add(currentLatLng);
-//                    // Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
-//                    timeStamp = timeNow;
-//                    trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
-//                    // oiUtil.writeJWD(currentLatLng.latitude,currentLatLng.longitude,oiUtil.path_drag,getActivity().getApplicationContext());
-//                }
-//            }
+            LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
+             sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+            if (aMapNaviLocation.getAccuracy() <= 20) {
+                long timeNow = new Date().getTime();
+                if (timeNow > timeStamp) {
+                   // LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
+                    if (latLngs.size() > 2) {
+                        LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
+                        int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
+                        float f_dis = DistanceUtil.checkDistance(distance / 1000f);
+                        dis_moved += f_dis;
+                        sp.edit().putFloat("dis_moved", dis_moved).commit();
+                        distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "公里");
+                    }
+                    try {
+                        Map<String, Object> map = new HashMap<>();
+                        map.put("lat", String.valueOf(currentLatLng.latitude));
+                        map.put("lng", String.valueOf(currentLatLng.longitude));
+                        // map.put("status", String.valueOf(status));
+                        new NewHttpPostTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+                            @Override
+                            public void onRequestCompleted(Object obj) {
+                                Log.e(TAG, "breaf !" + obj.toString());
+
+                            }
+
+                            @Override
+                            public void onRequestFailed(Object obj) {
+                            }
+                        }).execute(Constants.USER_LOCATION_URL, map);
+                    } catch (Exception e) {
+
+                        e.printStackTrace();
+                    }
+
+                    latLngs.add(currentLatLng);
+                    // Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"GPS"+"---"+timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
+                    timeStamp = timeNow;
+                    trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
+                    oiUtil.writeJWD(currentLatLng.latitude,currentLatLng.longitude,oiUtil.path_drag);
+                }
+            }
         }
     }
 
@@ -1680,6 +1701,9 @@ public class FragmentForWork extends BasicFragment {
                                     menu.setVisibility(View.VISIBLE);
                                     startNavi.setVisibility(View.VISIBLE);
                                     coursePreview.setVisibility(View.VISIBLE);
+                                    cancelOrder.setVisibility(View.VISIBLE);
+                                    cancelOrder.setClickable(true);
+                                    tv_take_photo.setText("到达救援现场,并拍照");
                                     mTts.startSpeaking("开始任务", mSynListener);
                                     SharedPreferences sp4 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                                     sp4.edit().remove("newOrderComing").commit();
@@ -1727,6 +1751,35 @@ public class FragmentForWork extends BasicFragment {
                 }
                 break;
             case R.id.take_photo:
+                Log.d("liuchen",order_id+"");
+                if(info==null){
+                    new HttpGetTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+
+                        @Override
+                        public void onRequestCompleted(Object obj) {
+
+                            JSONObject jsonObject;
+                            try {
+                                Log.d("orderInfo_activity", obj.toString());
+                                jsonObject = new JSONObject(obj.toString());
+                                info = new OrderInfo(jsonObject);
+                                Log.d("liuchen",order_id+"--"+info.getId()+"--"+info.getOrderStatus());
+
+                            }catch (Exception e){
+
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onRequestFailed(Object obj) {
+
+
+                        }
+
+                    }).execute(String.format(Constants.ORDER_INFO_URL, order_id));
+
+                }
                 if (info != null && info.getOrderStatus() == 4) {
 
                     progressBar.setVisibility(View.VISIBLE);
@@ -1822,52 +1875,89 @@ public class FragmentForWork extends BasicFragment {
 
                 } else if (info != null && info.getOrderStatus() == 6) {//结束拖车，拍最后一张照片
 
-                    progressBar.setVisibility(View.VISIBLE);
-                    String trace = oiUtil.readJWD(oiUtil.path_drag);
-                    Map<String, Object> map = new HashMap<>();
-                    map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
-                    map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
-                    map.put("distance", dis_moved);
-                    map.put("trace_data", trace);
-                    progressBar.setVisibility(View.VISIBLE);
-                    new NewHttpPutTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+
+                    dialog = new Dialog(getActivity(), R.style.bubble_dialog);
+                    View view1 = getActivity().getLayoutInflater().inflate(R.layout.dialog_msg_notice,
+                            null);
+                    Button tvConfirm1 = (Button) view1.findViewById(R.id.btn_notice_confirm);
+                    Button tvCancel1 = (Button) view1.findViewById(R.id.btn_notice_cancel);
+                    TextView tvMsg1 = (TextView) view1.findViewById(R.id.tv_notice_msg);
+                    tvMsg1.setText("是否结束拖车");
+                    tvConfirm1.setOnClickListener(new View.OnClickListener() {
+
                         @Override
-                        public void onRequestCompleted(Object obj) {
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                            progressBar.setVisibility(View.VISIBLE);
+                            String trace = oiUtil.readJWD(oiUtil.path_drag);
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
+                            map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
+                            map.put("distance", dis_moved);
+                            map.put("trace_data", trace);
+                            progressBar.setVisibility(View.VISIBLE);
+                            new NewHttpPutTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
+                                @Override
+                                public void onRequestCompleted(Object obj) {
 
-                            JSONObject jsonObject;
-                            try {
-                                jsonObject = new JSONObject(obj.toString());
-                                if (jsonObject.getInt("result") == 1) {
+                                    JSONObject jsonObject;
+                                    try {
+                                        jsonObject = new JSONObject(obj.toString());
+                                        if (jsonObject.getInt("result") == 1) {
 
-                                    mAMapNavi.stopNavi();
-                                    handler.sendEmptyMessage(9);
-                                    canCountGPSPoint = false;
-                                    SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
-                                    sp.edit().remove("dis_moved").commit();
-                                    //latLngs.clear();
-                                    Intent intent = new Intent(getActivity().getApplicationContext(), NewTakePhotoActivity.class);
-                                    intent.putExtra("tuoche2", "tuoche2");
-                                    startActivity(intent);
+                                            mAMapNavi.stopNavi();
+                                            handler.sendEmptyMessage(9);
+                                            canCountGPSPoint = false;
+                                            SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+                                            sp.edit().remove("dis_moved").commit();
+                                            //latLngs.clear();
+                                            Intent intent = new Intent(getActivity().getApplicationContext(), NewTakePhotoActivity.class);
+                                            intent.putExtra("tuoche2", "tuoche2");
+                                            startActivity(intent);
 
 
-                                } else {
-                                    mAMapNavi.stopNavi();
-                                    progressBar.setVisibility(View.GONE);
-                                    Toast.makeText(getActivity().getApplicationContext(), "轨迹提交失败,请重新提交", Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            mAMapNavi.stopNavi();
+                                            progressBar.setVisibility(View.GONE);
+                                            Toast.makeText(getActivity().getApplicationContext(), "轨迹提交失败,请重新提交", Toast.LENGTH_SHORT).show();
+                                        }
+                                    } catch (Exception e) {
+
+
+                                    }
+
                                 }
-                            } catch (Exception e) {
 
+                                @Override
+                                public void onRequestFailed(Object obj) {
 
-                            }
+                                }
+                            }).execute(String.format(Constants.SUBMIT_TUOCHE_URL, order_id), map);
 
                         }
+
+
+                    });
+                    tvCancel1.setOnClickListener(new View.OnClickListener() {
 
                         @Override
-                        public void onRequestFailed(Object obj) {
-
+                        public void onClick(View v) {
+                            dialog.dismiss();
                         }
-                    }).execute(String.format(Constants.SUBMIT_TUOCHE_URL, order_id), map);
+                    });
 
+                    dialog.setContentView(view1);
+                    dialog.setCanceledOnTouchOutside(false);
+                    Window window1 = dialog.getWindow();
+                    WindowManager.LayoutParams params1 = window1.getAttributes();
+                    Point point1 = JSONUtil.getDeviceSize(getActivity());
+                    params1.width = Math.round(point1.x * 5 / 7);
+                    window1.setAttributes(params1);
+                    try {
+                        dialog.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 } else {
                     String trace = oiUtil.readJWD(oiUtil.path_drag);

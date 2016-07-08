@@ -120,21 +120,66 @@ public class PayActivity extends Activity implements View.OnClickListener{
         switch (v.getId()){
 
             case R.id.btn_weixinpay:
-                erweima_layout.setVisibility(View.VISIBLE);
-                Bitmap logo_weixin = BitmapFactory.decodeResource(PayActivity.this.getResources(), R.drawable.icon45_200x200);
-                CreateQRImage.createImage(orderInfo.getPay_ewm(), qr_image, logo_weixin);
-                if(time_clock == null){
 
-                    time_clock = new Timer();
-                }
-                TimerTask task_clock = new TimerTask() {
-                    public void run() {
-                        Message msg = new Message();
-                        mHandler.sendEmptyMessage(0);
+                if(orderInfo.getPay_amount()==0){
+
+                    new HttpGetTask(PayActivity.this, new OnHttpRequestListener() {
+                        @Override
+                        public void onRequestCompleted(Object obj) {
+                            try {
+                                JSONObject jsonObject = new JSONObject(obj.toString());
+
+                                if (!jsonObject.isNull("result")) {
+
+                                    int result = jsonObject.optInt("result");
+                                    Log.d("nopay",obj.toString());
+                                    if (result == 1) {
+                                        //  Toast.makeText(NewWayActivity.this, "支付成功!", Toast.LENGTH_SHORT).show();
+                                        SharedPreferences sharedPreference = getSharedPreferences("order", Context.MODE_PRIVATE);
+                                        sharedPreference.edit().remove("order").commit();
+                                        SharedPreferences sharedPreference2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+                                        sharedPreference2.edit().remove("orderInfo").commit();
+                                        MyApplication.application.isAfterOrder = true;
+                                        finish();
+                                    } else {
+
+                                    }
+
+                                }
+
+                            } catch (JSONException e) {
+
+                            }
+
+                        }
+                        @Override
+                        public void onRequestFailed(Object obj) {
+
+                            Toast.makeText(PayActivity.this, "网络环境不太好,请重新点击", Toast.LENGTH_SHORT).show();
+                            PayActivity.this.recreate();
+                        }
+
+                    }).execute(String.format(Constants.NO_NEED_PAY, orderId));
+
+                }else {
+
+                    erweima_layout.setVisibility(View.VISIBLE);
+                    Bitmap logo_weixin = BitmapFactory.decodeResource(PayActivity.this.getResources(), R.drawable.icon45_200x200);
+                    CreateQRImage.createImage(orderInfo.getPay_ewm(), qr_image, logo_weixin);
+                    if(time_clock == null){
+
+                        time_clock = new Timer();
                     }
-                };
+                    TimerTask task_clock = new TimerTask() {
+                        public void run() {
+                            Message msg = new Message();
+                            mHandler.sendEmptyMessage(0);
+                        }
+                    };
 
-                time_clock.schedule(task_clock, 0, 500);
+                    time_clock.schedule(task_clock, 0, 500);
+                }
+
                 break;
             case R.id.close_erweima:
                 erweima_layout.setVisibility(View.GONE);
@@ -227,6 +272,14 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     orderInfo = new OrderInfo(jsonObject);
                     pay_amount.setText(orderInfo.getPay_amount()+"元");
                     more_amount.setText("+"+orderInfo.getMore_amount()+"元");
+                    if(orderInfo.getPay_amount()==0){
+
+                        btn_weixinpay.setText("无需收款,继续接单");
+
+                    }else{
+
+                        btn_weixinpay.setText("微信扫码支付");
+                    }
                     if(orderInfo.getIs_support_free()==1){
 
                         base_price.setText("0.0元");
@@ -357,7 +410,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     @Override
                     public void onRequestFailed(Object obj) {
 
-                        Toast.makeText(PayActivity.this, "网络环境不太好，支付没有成功", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PayActivity.this, "网络环境不太好,支付没有成功", Toast.LENGTH_SHORT).show();
                         PayActivity.this.recreate();
                     }
 
