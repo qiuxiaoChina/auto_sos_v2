@@ -367,6 +367,11 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
 
                     }else if(result ==0){
 
+
+                        jsonObject = jsonObject1.getJSONObject("data");
+                        TrailerInfo ti = new TrailerInfo(jsonObject);
+                        String s_mobile = ti.getMobile();
+                        moblie.setText(s_mobile);
                         Toast.makeText(getApplicationContext(),"请把下列车辆信息填写完整",Toast.LENGTH_SHORT).show();
                     }
 
