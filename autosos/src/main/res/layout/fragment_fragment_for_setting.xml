@@ -38,7 +38,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/column_background">
+            android:background="@drawable/column_background"
+            android:visibility="gone">
 
             <TextView
                 android:layout_marginLeft="17dp"
@@ -63,14 +64,14 @@
             android:id="@+id/checkVersion"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:background="@drawable/column_background">
 
             <TextView
                 android:layout_marginLeft="17dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="版本更新"
+                android:text="版本管理"
                 android:textColor="#333333"
                 android:textSize="16dp"
                 android:layout_centerVertical="true"/>
@@ -136,8 +137,34 @@
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/feedBack"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/column_background2">
+
+            <TextView
+                android:layout_marginLeft="17dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="意见反馈"
+                android:textColor="#333333"
+                android:textSize="16dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:layout_centerVertical="true"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="17dp"
+                android:background="@drawable/icon_right"/>
+
+        </RelativeLayout>
+
 
         <RelativeLayout
+            android:id="@+id/contact_us"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/column_background2">

@@ -1,11 +1,18 @@
 package com.autosos.rescue.fragment;
 
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +29,17 @@ import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.CherkVersion;
 import com.autosos.rescue.util.JSONUtil;
 import com.autosos.rescue.util.Session;
+import com.autosos.rescue.util.XmlParse;
+import com.autosos.rescue.view.FeedBackActivity;
 import com.autosos.rescue.view.LoginActivity;
+import com.autosos.rescue.view.SplashActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 
 /**
@@ -52,7 +66,8 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
         // Required empty public constructor
     }
 
-    private View logout, checkVersion;
+    private View logout, checkVersion,feedBack,contact_us;
+    private Handler handler;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,8 +78,81 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
         logout.setOnClickListener(this);
         checkVersion = view.findViewById(R.id.checkVersion);
         checkVersion.setOnClickListener(this);
+        feedBack = view.findViewById(R.id.feedBack);
+        feedBack.setOnClickListener(this);
+        contact_us = view.findViewById(R.id.contact_us);
+        contact_us.setOnClickListener(this);
+        handler = new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+
+                if (msg.what == 0) {
+                    CherkVersion cherkVersion = new CherkVersion();
+                    //updateMessage = getContent(getActivity().getApplicationContext());
+                    new Thread(runnable).start();
+                    Log.d("new_version",updateMessage);
+                   // version = cherkVersion.getVersion();
+                    if(updateMessage.equals(CherkVersion.Must_Update) || updateMessage.equals(CherkVersion.Can_Update)){
+                        showDialog("Install");
+                    }else {
+
+                        showDialog("NoUpdate");
+                    }
+                }
+
+            }
+        };
         return view;
     }
+
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+
+          updateMessage = getContent(getActivity().getApplicationContext());
+        }
+    };
+
+    private String getContent(Context context){
+        long time = System.currentTimeMillis() / 1000;
+        String path = "https://dn-autosos.qbox.me/autosos_v2.xml"+"?v="+time;
+        Version v = new Version();
+        int now_verCode=0;
+        try {
+            now_verCode = context.getPackageManager().getPackageInfo("com.autosos.rescue", 0).versionCode;
+        }catch (PackageManager.NameNotFoundException e) {
+
+        }
+        String UpdateMessage="";
+        try {
+            URL url = new URL(path);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setReadTimeout(6 * 1000);
+            if (conn.getResponseCode() == 200) {
+                InputStream is = conn.getInputStream();
+                v = XmlParse.parseXml(is);
+                if((v.getVerCode() > now_verCode&&!Constants.DEBUG) ||(v.getDebug_versioncode() > now_verCode && Constants.DEBUG)){
+                    UpdateMessage = "Must_Update";
+                }
+                else if(v.getCanUpdateVersion() > now_verCode){
+                    UpdateMessage = "Can_Update";
+                }
+                else{
+                    UpdateMessage = "No_Update";
+                }
+
+            }
+        }catch (Exception e){
+            Log.d("new_version",e.toString());
+            UpdateMessage = "No_Update";
+            return UpdateMessage;
+        }
+
+        return UpdateMessage;
+    }
+
 
     String updateMessage = "";
     private Version version;
@@ -102,15 +190,16 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
                 ).execute(Constants.USER_LOGOUT_URL);
                 break;
             case R.id.checkVersion:
-                CherkVersion cherkVersion = new CherkVersion();
-                updateMessage = cherkVersion.cherkVersion(getActivity().getApplicationContext());
-                version = cherkVersion.getVersion();
-                if(updateMessage.equals(CherkVersion.Must_Update) || updateMessage.equals(CherkVersion.Can_Update)){
-                    showDialog("Install");
-                }else {
+                handler.sendEmptyMessage(0);
 
-                    showDialog("NoUpdate");
-                }
+                break;
+            case R.id.feedBack:
+                Intent i = new Intent(getActivity().getApplicationContext(), FeedBackActivity.class);
+                startActivity(i);
+                break;
+            case R.id.contact_us:
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+"4008820019"));
+                startActivity(intent);
                 break;
             default:
                 break;
@@ -144,6 +233,8 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
+                        Intent i = new Intent(getActivity().getApplicationContext(),SplashActivity.class);
+                        startActivity(i);
                         getActivity().finish();
 
                     }

@@ -176,8 +176,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     Context.MODE_PRIVATE).getString("cid", null);
             map.put("getui_cid", clientId);
             Log.e("code", "cid === " + clientId);
-
-
             new NewHttpPostTask(this, new OnHttpRequestListener() {
                 @Override
                 public void onRequestCompleted(Object obj) {
@@ -229,7 +227,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 @Override
                 public void onRequestFailed(Object obj) {
-
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(LoginActivity.this, "出错啦", Toast.LENGTH_SHORT).show();
                 }
             }).execute(Constants.ACCESS_TOKEN_URL, map);
         }

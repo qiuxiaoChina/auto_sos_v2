@@ -6,8 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.TextWatcher;
+import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +58,11 @@ public class FillCodeActivity extends Activity implements View.OnClickListener{
         username = getIntent().getStringExtra("username");
         password = getIntent().getStringExtra("password");
         Edit_code = (EditText) findViewById(R.id.Edit_code);
+        SpannableString ss = new SpannableString("此处填写验证码");//定义hint的值
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(16,true);//设置字体大小 true表示单位是sp
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Edit_code.setHint(new SpannedString(ss));
+        Edit_code.setGravity(Gravity.CENTER);
         Button_modification = (Button) findViewById(R.id.Button_modification);
         TextView_mobile = (TextView) findViewById(R.id.TextView_mobile);
         back_button = (ImageView)findViewById(R.id.back_button);

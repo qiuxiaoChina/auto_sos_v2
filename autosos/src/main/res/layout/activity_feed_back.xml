@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    tools:context="com.autosos.rescue.view.FeedBackActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:background="#20b48b">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/back"/>
+
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="意见反馈"
+            android:textColor="#ffffff"
+            android:textSize="18dp"/>
+
+    </RelativeLayout>
+
+
+    <EditText
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:enabled="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:gravity="top"
+        android:hint="请输入您的意见或建议..."
+        android:textColorHint="@color/color_gray"
+        android:inputType="textMultiLine"
+        android:minLines="8"
+        android:maxLines="10"
+        android:scrollbars="vertical"
+        android:textColor="#333333"
+        android:textSize="14sp"
+        android:background="@drawable/bg_edittext"
+        android:textCursorDrawable="@null"/>
+
+    <Button
+        android:layout_centerHorizontal="true"
+        android:id="@+id/btn_feedback"
+        android:layout_width="287dp"
+        android:layout_height="44dp"
+        android:background="@drawable/bg_btn_selector_new_way"
+        android:text="反馈提交"
+        android:textColor="#fff"
+        android:layout_marginTop="340dp"
+        />
+
+</RelativeLayout>

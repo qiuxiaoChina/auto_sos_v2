@@ -1237,7 +1237,7 @@ public class FragmentForWork extends BasicFragment {
             distance_route.setText("总路程：" + route_distance + "km");
             mapView.setVisibility(View.GONE);
             mAMapNaviView.setVisibility(View.VISIBLE);
-            mAMapNavi.startNavi(NaviType.EMULATOR);
+            mAMapNavi.startNavi(NaviType.GPS);
             handler.sendEmptyMessage(0);
             latLngs = new ArrayList<LatLng>();
 
@@ -1294,8 +1294,8 @@ public class FragmentForWork extends BasicFragment {
 
             Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
                     + distance_moved.getText() + "---" + dis_moved);
-//            Toast.makeText(getActivity(),timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
-//                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(),timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
             timeStamp = timeNow;
             latLngs.add(currentLatLng);
             trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
@@ -1346,8 +1346,8 @@ public class FragmentForWork extends BasicFragment {
 
                     latLngs.add(currentLatLng);
                     // Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
-//                    Toast.makeText(getActivity(),"GPS"+"---"+timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
-//                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"GPS"+"---"+timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
                     timeStamp = timeNow;
                     trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
                     oiUtil.writeJWD(currentLatLng.latitude,currentLatLng.longitude,oiUtil.path_drag);

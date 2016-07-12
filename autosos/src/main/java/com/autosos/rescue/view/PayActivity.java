@@ -102,6 +102,19 @@ public class PayActivity extends Activity implements View.OnClickListener{
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("editPrice");
         registerReceiver(myBroadcastReciever, intentFilter);
+
+        if (time_clock == null) {
+
+            time_clock = new Timer();
+        }
+        TimerTask task_clock = new TimerTask() {
+            public void run() {
+                Message msg = new Message();
+                mHandler.sendEmptyMessage(0);
+            }
+        };
+
+        time_clock.schedule(task_clock, 0, 500);
     }
 
     //按返回键 没有办法返回
@@ -166,38 +179,38 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     erweima_layout.setVisibility(View.VISIBLE);
                     Bitmap logo_weixin = BitmapFactory.decodeResource(PayActivity.this.getResources(), R.drawable.icon45_200x200);
                     CreateQRImage.createImage(orderInfo.getPay_ewm(), qr_image, logo_weixin);
-                    if(time_clock == null){
-
-                        time_clock = new Timer();
-                    }
-                    TimerTask task_clock = new TimerTask() {
-                        public void run() {
-                            Message msg = new Message();
-                            mHandler.sendEmptyMessage(0);
-                        }
-                    };
-
-                    time_clock.schedule(task_clock, 0, 500);
+//                    if(time_clock == null){
+//
+//                        time_clock = new Timer();
+//                    }
+//                    TimerTask task_clock = new TimerTask() {
+//                        public void run() {
+//                            Message msg = new Message();
+//                            mHandler.sendEmptyMessage(0);
+//                        }
+//                    };
+//
+//                    time_clock.schedule(task_clock, 0, 500);
                 }
 
                 break;
             case R.id.close_erweima:
                 erweima_layout.setVisibility(View.GONE);
-                try {
-
-                    if (time_clock != null) {
-
-                        time_clock.cancel();
-                    }
-
-                } catch (Exception e) {
-
-                    time_clock = null;
-
-                }finally {
-
-                    time_clock = null;
-                }
+//                try {
+//
+//                    if (time_clock != null) {
+//
+//                        time_clock.cancel();
+//                    }
+//
+//                } catch (Exception e) {
+//
+//                    time_clock = null;
+//
+//                }finally {
+//
+//                    time_clock = null;
+//                }
                 break;
             case R.id.check_detail:
                 DisplayMetrics dm =getResources().getDisplayMetrics();

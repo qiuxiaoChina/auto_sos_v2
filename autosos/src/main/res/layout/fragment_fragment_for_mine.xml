@@ -1,10 +1,15 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
     tools:context="com.autosos.rescue.fragment.FragmentForMine"
-    android:orientation="vertical">
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,16 +23,18 @@
             android:layout_marginTop="25dp">
 
             <TextView
+                android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
-                android:text="裘啸"
+                android:text="用户名"
                 android:textColor="#ffffff"
                 android:textSize="23sp" />
 
             <TextView
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -46,6 +53,7 @@
 
 
             <RatingBar
+                android:id="@+id/ratingBar"
                 style="@style/yellowRatingBar_new_way"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -66,13 +74,14 @@
 
 
           <TextView
+              android:id="@+id/companyName"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:textColor="#ffffff"
               android:textSize="16sp"
               android:layout_centerInParent="true"
               android:gravity="center"
-              android:text="宁波易久汽车俱乐部"/>
+              android:text="公司名称"/>
 
 
         </RelativeLayout>
@@ -96,12 +105,13 @@
             android:layout_centerVertical="true"/>
 
         <TextView
+            android:id="@+id/orderNum"
             android:layout_centerVertical="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="17dp"
-            android:text="16"
+            android:text="0"
             android:textColor="#a7a7a7"
             android:textSize="14sp"/>
 
@@ -109,13 +119,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/column_background2">
+        android:background="@drawable/column_background2"
+        android:visibility="gone">
 
         <TextView
             android:layout_marginLeft="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="结算报表"
+            android:text="修改密码"
             android:textColor="#333333"
             android:textSize="16dp"
             android:layout_centerVertical="true"/>
@@ -132,7 +143,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/column_background2">
+        android:background="@drawable/column_background2"
+        android:visibility="gone">
 
         <TextView
             android:layout_marginLeft="17dp"
@@ -153,6 +165,7 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/changePwd"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/column_background">
@@ -161,7 +174,7 @@
             android:layout_marginLeft="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="清空数据"
+            android:text="修改密码"
             android:textColor="#333333"
             android:textSize="16dp"
             android:layout_centerVertical="true"/>
@@ -176,4 +189,8 @@
 
     </RelativeLayout>
 
-</LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/progressbar_layout" />
+
+</RelativeLayout>
