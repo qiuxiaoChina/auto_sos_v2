@@ -447,6 +447,11 @@ public class FragmentForWork extends BasicFragment {
                                                 mStartList.clear();
                                                 if (startPoint != null) {
                                                     mStartList.add(startPoint);
+                                                }else{
+                                                    if(mStartLatlng!=null){
+
+                                                        mStartList.add(mStartLatlng);
+                                                    }
                                                 }
                                                 double lat = info.getLatitude();
                                                 double lon = info.getLongitude();
@@ -1480,12 +1485,15 @@ public class FragmentForWork extends BasicFragment {
 
     }
 
+    private Boolean isGPSReady = false;
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
 
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
+
+                isGPSReady = true;
 
                 Log.d("location", aMapLocation.getLocationType() + "");
                 mStartLatlng = new NaviLatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
@@ -1545,6 +1553,8 @@ public class FragmentForWork extends BasicFragment {
                 // Log.d(TAG,latLng.latitude+"--"+latLng.longitude);
 
             } else {
+
+                isGPSReady = false;
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.d("location", errText);
                 //Toast.makeText(this.getActivity().getApplicationContext(), errText, Toast.LENGTH_SHORT).show();
@@ -2128,23 +2138,27 @@ public class FragmentForWork extends BasicFragment {
 
                 if (isOnline) {
 
-                    if (canGetNewOrder) {
+                    if(isGPSReady) {
 
-                        Log.i("newOrder", "有新的订单过来啦----" + intent.getStringExtra("order"));
+                        if (canGetNewOrder) {
 
-                        try {
-                            JSONObject jsonObject1 = new JSONObject(intent.getStringExtra("order"));
-                            JSONObject jsonObject = jsonObject1.optJSONObject("data");
-                            Message msg = new Message();
-                            SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
-                            sp.edit().putBoolean("newOrderComing", true).commit();
-                            canGetNewOrder = false;
-                            msg.what = 5;
-                            msg.obj = jsonObject;
-                            handler.sendMessage(msg);
+                            Log.i("newOrder", "有新的订单过来啦----" + intent.getStringExtra("order"));
 
-                        } catch (Exception e) {
+                            try {
+                                JSONObject jsonObject1 = new JSONObject(intent.getStringExtra("order"));
+                                JSONObject jsonObject = jsonObject1.optJSONObject("data");
+                                Message msg = new Message();
+                                SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
+                                sp.edit().putBoolean("newOrderComing", true).commit();
+                                canGetNewOrder = false;
+                                msg.what = 5;
+                                msg.obj = jsonObject;
+                                handler.sendMessage(msg);
 
+                            } catch (Exception e) {
+
+
+                            }
 
                         }
 
