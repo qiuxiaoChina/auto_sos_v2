@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.autosos.rescue.Constants;
 import com.autosos.rescue.R;
+import com.autosos.rescue.application.MyApplication;
 import com.autosos.rescue.model.TrailerInfo;
 import com.autosos.rescue.task.HttpGetTask;
 import com.autosos.rescue.task.NewHttpPostTask;
@@ -224,6 +225,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                         try {
                             jsonObject = new JSONObject(obj.toString());
                             if (jsonObject.getInt("result") == 1) {
+                                MyApplication.canGetNeworder = true;
                                 Intent intent = new Intent(TrailerDetailActivity.this, MainActivity.class);
                                 startActivity(intent);
                                 finish();

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.autosos.rescue.R;
+import com.autosos.rescue.application.MyApplication;
 import com.autosos.rescue.view.MainActivity;
 import com.igexin.sdk.PushConsts;
 
@@ -58,39 +59,41 @@ public class GetuiSdkMsgReceiver extends BroadcastReceiver {
 
 
                     }else {
-                        String title = "e救援服务商";
-                        String content = "您有新订单啦";
-                        NotificationManager manager = (NotificationManager) context
-                                .getSystemService(Context.NOTIFICATION_SERVICE);
-                        Intent i = new Intent(context, MainActivity.class);
-                        i.putExtra("fromMsgReceiver", true);
-                        i.putExtra("message", data);
+                        if(MyApplication.canGetNeworder) {
+                            String title = "e救援服务商";
+                            String content = "您有新订单啦";
+                            NotificationManager manager = (NotificationManager) context
+                                    .getSystemService(Context.NOTIFICATION_SERVICE);
+                            Intent i = new Intent(context, MainActivity.class);
+                            i.putExtra("fromMsgReceiver", true);
+                            i.putExtra("message", data);
 
-                        PendingIntent pendingIntent = PendingIntent
-                                .getActivity(context, 0, i,
-                                        PendingIntent.FLAG_UPDATE_CURRENT);
-                        Notification notification;
-                        Notification.Builder builder = new Notification.Builder(context);
-                        builder.setContentIntent(pendingIntent)
-                                .setSmallIcon(R.drawable.icon_logo)
-                                .setTicker(content).setContentTitle(title)
-                                .setContentText(content);
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                            notification = builder.build();
-                        } else {
-                            notification = builder.getNotification();
+                            PendingIntent pendingIntent = PendingIntent
+                                    .getActivity(context, 0, i,
+                                            PendingIntent.FLAG_UPDATE_CURRENT);
+                            Notification notification;
+                            Notification.Builder builder = new Notification.Builder(context);
+                            builder.setContentIntent(pendingIntent)
+                                    .setSmallIcon(R.drawable.icon_logo)
+                                    .setTicker(content).setContentTitle(title)
+                                    .setContentText(content);
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                notification = builder.build();
+                            } else {
+                                notification = builder.getNotification();
+                            }
+
+                            notification.defaults = Notification.DEFAULT_LIGHTS;
+                            notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification
+                                    .FLAG_ONGOING_EVENT;
+
+                            manager.notify(0, notification);
+
+                            Intent intentFilter = new Intent();
+                            intentFilter.setAction("newOrder");
+                            intentFilter.putExtra("order", data);
+                            context.sendBroadcast(intentFilter);
                         }
-
-                        notification.defaults = Notification.DEFAULT_LIGHTS;
-                        notification.flags |= Notification.FLAG_AUTO_CANCEL | Notification
-                                .FLAG_ONGOING_EVENT;
-
-                        manager.notify(0, notification);
-
-                        Intent intentFilter = new Intent();
-                        intentFilter.setAction("newOrder");
-                        intentFilter.putExtra("order", data);
-                        context.sendBroadcast(intentFilter);
                     }
 
                 }

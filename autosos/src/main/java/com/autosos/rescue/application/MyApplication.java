@@ -7,6 +7,7 @@ public class MyApplication extends android.app.Application {
 
     public static MyApplication application = null;
     public static boolean isAfterOrder = false;
+    public static boolean canGetNeworder = false;
     @Override
     public void onCreate() {
         super.onCreate();

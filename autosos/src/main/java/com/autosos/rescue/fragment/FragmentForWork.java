@@ -204,6 +204,8 @@ public class FragmentForWork extends BasicFragment {
     private int order_id = 0;
     private TextView order_type, address, address_tuoche1, address_tuoche2, tv_take_photo;
     private View otherService, trailerService;
+    private View throw_price;
+    private TextView tv_throw_price;
 
 
     //根据时间排轨迹点 通过onLocationChange实时补充
@@ -247,6 +249,7 @@ public class FragmentForWork extends BasicFragment {
     }
 
     private static OiUtil oiUtil = null;
+    private boolean isPaodn = false;
 
     /**
      * 方法必须重写
@@ -298,22 +301,23 @@ public class FragmentForWork extends BasicFragment {
                         isOnline = true;
                         switch_online.setText("在线");
                         switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.on_line));
-
+                        newOrder.setVisibility(View.GONE);
                         SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                         boolean newOrderComing = sp1.getBoolean("newOrderComing", false);
                         firstResume = true;
                         if (newOrderComing) {
-
-                            Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
-                                    R.anim.show);
-                            newOrder.setVisibility(View.VISIBLE);
-                            newOrder.startAnimation(animation);
-                            head_map.setVisibility(View.GONE);
-                            getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
+                            Log.d("working_status","1");
                             SharedPreferences sp3 = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
                             String s_order = sp3.getString("order", null);
                             JSONObject order;
                             if (s_order != null) {
+                                Log.d("working_status","2");
+                                Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
+                                        R.anim.show);
+                                newOrder.setVisibility(View.VISIBLE);
+                                newOrder.startAnimation(animation);
+                                head_map.setVisibility(View.GONE);
+                                getActivity().findViewById(android.R.id.tabhost).setVisibility(View.GONE);
                                 try {
                                     order = new JSONObject(s_order);
                                     newOrder_bean = new NewOrder(order);
@@ -342,20 +346,56 @@ public class FragmentForWork extends BasicFragment {
                                         s_type = "快修";
 
                                     }
-                                    order_type.setText(s_type + "订单");
-                                    if (serviceType == 1) {
 
-                                        trailerService.setVisibility(View.VISIBLE);
-                                        otherService.setVisibility(View.GONE);
-                                        address_tuoche1.setText(s_destination);
-                                        String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
-                                        address_tuoche2.setText(s_address_tuoche2);
+                                    if(newOrder_bean.getIsPaodan()==0){
+                                        isPaodn = false;
+                                        throw_price.setVisibility(View.GONE);
+                                        order_type.setText(s_type + "订单");
+                                        if (serviceType == 1) {
 
-                                    } else {
+                                            trailerService.setVisibility(View.VISIBLE);
+                                            otherService.setVisibility(View.GONE);
+                                            address_tuoche1.setText(s_destination);
+                                            String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                            address_tuoche2.setText(s_address_tuoche2);
 
-                                        trailerService.setVisibility(View.GONE);
-                                        otherService.setVisibility(View.VISIBLE);
-                                        address.setText(s_destination);
+                                        } else {
+
+                                            trailerService.setVisibility(View.GONE);
+                                            otherService.setVisibility(View.VISIBLE);
+                                            address.setText(s_destination);
+                                        }
+
+
+                                    }else{
+                                        isPaodn = true;
+                                        order_type.setText(s_type + "抛单");
+                                        throw_price.setVisibility(View.VISIBLE);
+                                        tv_throw_price.setText(newOrder_bean.getOnePrice()+"");
+                                        DisplayMetrics dm =getResources().getDisplayMetrics();
+                                        float density = dm.density;
+
+                                        if (serviceType == 1) {
+
+                                            ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
+                                            layoutParam.topMargin =(int)(170*density);
+                                            trailerService.setLayoutParams(layoutParam);
+                                            trailerService.setVisibility(View.VISIBLE);
+                                            otherService.setVisibility(View.GONE);
+                                            address_tuoche1.setText(s_destination);
+                                            String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                            address_tuoche2.setText(s_address_tuoche2);
+
+                                        } else {
+
+                                            ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
+                                            layoutParam.topMargin =(int)(170*density);
+                                            otherService.setLayoutParams(layoutParam);
+                                            trailerService.setVisibility(View.GONE);
+                                            otherService.setVisibility(View.VISIBLE);
+                                            address.setText(s_destination);
+                                        }
+
                                     }
 
 
@@ -391,7 +431,8 @@ public class FragmentForWork extends BasicFragment {
                                     order_id = info.getOrderId();
                                     owner_mobile = info.getOwnerMobile();
                                     Log.d("working_status", info.getServiceType() + "---" + info.getOrderStatus());
-                                    if (info.getServiceType() == 1) {//拖车服务
+                                    if (info.getServiceType() == 1) {
+                                        //拖车服务
 
                                         if (info.getOrderStatus() == 3) {
                                             //已经接单
@@ -621,7 +662,8 @@ public class FragmentForWork extends BasicFragment {
                                         }
 
 
-                                    } else {//非拖车
+                                    } else {
+                                        //非拖车
 
                                         if (info.getOrderStatus() == 3) {
                                             //已经接单
@@ -709,6 +751,12 @@ public class FragmentForWork extends BasicFragment {
                                             startActivity(intent);
                                         }
 
+                                    }
+
+                                    if(info.getIsPaodan()==1){
+
+                                        cancelOrder.setVisibility(View.GONE);
+                                        cancelOrder.setClickable(false);
                                     }
 
 
@@ -802,6 +850,8 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+//        SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
+//        sp.edit().remove("newOrderComing").commit();
         getActivity().unregisterReceiver(myBroadcastReciever);
         Log.i(TAG, "destroy");
         deactivate();
@@ -898,6 +948,9 @@ public class FragmentForWork extends BasicFragment {
 
         tel_customer1.setOnClickListener(this);
         tel_customer2.setOnClickListener(this);
+
+        throw_price = view.findViewById(R.id.throw_price);
+        tv_throw_price = (TextView) view.findViewById(R.id.tv_throw_price);
 
         handler = new Handler() {
             @Override
@@ -1027,25 +1080,60 @@ public class FragmentForWork extends BasicFragment {
                             s_type = "快修";
 
                         }
-                        order_type.setText(s_type + "订单");
-                        if (serviceType == 1) {
 
-                            trailerService.setVisibility(View.VISIBLE);
-                            otherService.setVisibility(View.GONE);
-                            address_tuoche1.setText(s_destination);
-                            String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
-                            address_tuoche2.setText(s_address_tuoche2);
+                        if(newOrder_bean.getIsPaodan()==0){
+                            isPaodn= false;
+                            throw_price.setVisibility(View.GONE);
+                            order_type.setText(s_type + "订单");
+                            if (serviceType == 1) {
 
-                        } else {
+                                trailerService.setVisibility(View.VISIBLE);
+                                otherService.setVisibility(View.GONE);
+                                address_tuoche1.setText(s_destination);
+                                String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                address_tuoche2.setText(s_address_tuoche2);
 
-                            trailerService.setVisibility(View.GONE);
-                            otherService.setVisibility(View.VISIBLE);
-                            address.setText(s_destination);
+                            } else {
+
+                                trailerService.setVisibility(View.GONE);
+                                otherService.setVisibility(View.VISIBLE);
+                                address.setText(s_destination);
+                            }
+
+                            mTts.startSpeaking("您有新的" + s_type + "订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+
+                        }else{
+                            isPaodn=true;
+                            order_type.setText(s_type + "抛单");
+                            throw_price.setVisibility(View.VISIBLE);
+                            tv_throw_price.setText(newOrder_bean.getOnePrice()+"");
+                            DisplayMetrics dm =getResources().getDisplayMetrics();
+                            float density = dm.density;
+
+                            if (serviceType == 1) {
+
+                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
+                                layoutParam.topMargin =(int)(170*density);
+                                trailerService.setLayoutParams(layoutParam);
+                                trailerService.setVisibility(View.VISIBLE);
+                                otherService.setVisibility(View.GONE);
+                                address_tuoche1.setText(s_destination);
+                                String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                address_tuoche2.setText(s_address_tuoche2);
+
+                            } else {
+
+                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
+                                layoutParam.topMargin =(int)(170*density);
+                                otherService.setLayoutParams(layoutParam);
+                                trailerService.setVisibility(View.GONE);
+                                otherService.setVisibility(View.VISIBLE);
+                                address.setText(s_destination);
+                            }
+
+                            mTts.startSpeaking("您有新的" + s_type + "抛单,一口价"+newOrder_bean.getOnePrice()+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+
                         }
-
-                        mTts.startSpeaking("您有新的" + s_type + "订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
-//                        SharedPreferences sp1 = getActivity().getSharedPreferences("newOrderComing",Context.MODE_PRIVATE);
-//                        sp1.edit().putBoolean("newOrderComing",true).commit();
 
                     } catch (Exception e) {
 
@@ -1701,8 +1789,15 @@ public class FragmentForWork extends BasicFragment {
                                     menu.setVisibility(View.VISIBLE);
                                     startNavi.setVisibility(View.VISIBLE);
                                     coursePreview.setVisibility(View.VISIBLE);
-                                    cancelOrder.setVisibility(View.VISIBLE);
-                                    cancelOrder.setClickable(true);
+                                    if(isPaodn){
+
+                                        cancelOrder.setVisibility(View.GONE);
+                                        cancelOrder.setClickable(false);
+                                    }else{
+                                        cancelOrder.setVisibility(View.VISIBLE);
+                                        cancelOrder.setClickable(true);
+                                    }
+
                                     tv_take_photo.setText("到达救援现场,并拍照");
                                     mTts.startSpeaking("开始任务", mSynListener);
                                     SharedPreferences sp4 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);

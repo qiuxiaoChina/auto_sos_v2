@@ -245,6 +245,7 @@
             />
 
         <LinearLayout
+            android:id="@+id/throw_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -259,9 +260,10 @@
                 android:textSize="16sp"
                 android:textColor="#20b48b"/>
             <TextView
+                android:id="@+id/tv_throw_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="355.00"
+                android:text="0.0"
                 android:textSize="26sp"
                 android:textColor="#20b48b"/>
 

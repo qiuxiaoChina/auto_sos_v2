@@ -22,6 +22,9 @@ public class NewOrder {
     private double take_distance;
     private String owner_moblie;
 
+    private int isPaodan;//是否是抛单
+    private double onePrice;//抛单一口价
+
     public String getOwner_moblie() {
         return owner_moblie;
     }
@@ -40,6 +43,17 @@ public class NewOrder {
         this.take_distance = jsonObject.optDouble("take_distance",0);
         this.owner_moblie = JSONUtil.getString(jsonObject,"owner_mobile");
 
+        this.isPaodan = jsonObject.optInt("is_throw",0);
+        this.onePrice = jsonObject.optDouble("throw_price",0.0);
+
+    }
+
+    public int getIsPaodan() {
+        return isPaodan;
+    }
+
+    public double getOnePrice() {
+        return onePrice;
     }
 
     public double getTake_distance() {

@@ -57,6 +57,9 @@ public class OrderInfo implements Identifiable {
 
     private String commentRate;
 
+    private int isPaodan;
+    private double onePrice;
+
 
     public OrderInfo(JSONObject json) {
         if (json != null) {
@@ -112,7 +115,19 @@ public class OrderInfo implements Identifiable {
             this.status_desc = JSONUtil.getString(json, "status_desc");
 
 
+            this.isPaodan = json.optInt("is_throw",0);
+            this.onePrice = json.optDouble("throw_price",0.0);
+
+
         }
+    }
+
+    public int getIsPaodan() {
+        return isPaodan;
+    }
+
+    public double getOnePrice() {
+        return onePrice;
     }
 
     public String getCommentRate() {
