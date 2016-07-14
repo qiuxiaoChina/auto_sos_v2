@@ -69,6 +69,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
     private TextView check_detail;
     private Boolean isClicked = false;
     private View price_detail,bottomPart;
+    private TextView tv_price_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,8 @@ public class PayActivity extends Activity implements View.OnClickListener{
 
         price_detail = findViewById(R.id.price_detail);
         bottomPart = findViewById(R.id.bottomPart);
+
+        tv_price_title = (TextView) findViewById(R.id.tv_price_title);
 
         myBroadcastReciever = new MyBroadcastReciever();
         IntentFilter intentFilter = new IntentFilter();
@@ -283,6 +286,14 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     Log.d("orderInfo_pay", obj.toString());
                     jsonObject = new JSONObject(obj.toString());
                     orderInfo = new OrderInfo(jsonObject);
+                    if(orderInfo.getIsPaodan()==1||orderInfo.getIs_one_price()==1){
+
+                        tv_price_title.setText("一口价");
+
+                    }else{
+
+                        tv_price_title.setText("起步价(15km)");
+                    }
                     pay_amount.setText(orderInfo.getPay_amount()+"元");
                     more_amount.setText("+"+orderInfo.getMore_amount()+"元");
                     if(orderInfo.getPay_amount()==0){

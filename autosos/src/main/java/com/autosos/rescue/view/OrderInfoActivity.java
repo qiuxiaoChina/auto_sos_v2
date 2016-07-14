@@ -35,6 +35,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private int orderId;
     private OrderInfo orderInfo;
     private ProgressBar progressBar;
+    private TextView tv_price_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +63,8 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
         rating = (RatingBar) findViewById(R.id.rating);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+
+        tv_price_title = (TextView) findViewById(R.id.price_title);
     }
 
 
@@ -80,6 +83,14 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     Log.d("orderInfo_activity", obj.toString());
                     jsonObject = new JSONObject(obj.toString());
                     orderInfo = new OrderInfo(jsonObject);
+                    if(orderInfo.getIsPaodan()==1||orderInfo.getIs_one_price()==1){
+
+                        tv_price_title.setText("一口价");
+
+                    }else{
+
+                        tv_price_title.setText("起步价(15km)");
+                    }
                     pay_amount.setText(orderInfo.getPay_amount()+"元");
                     more_amount.setText("+"+orderInfo.getMore_amount()+"元");
                     if (orderInfo.getDest() != null) {

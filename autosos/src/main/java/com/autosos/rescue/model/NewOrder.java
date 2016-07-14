@@ -24,6 +24,9 @@ public class NewOrder {
 
     private int isPaodan;//是否是抛单
     private double onePrice;//抛单一口价
+    private int is_one_price;//是否有一口价
+
+    private double base_price;//起步价
 
     public String getOwner_moblie() {
         return owner_moblie;
@@ -46,6 +49,18 @@ public class NewOrder {
         this.isPaodan = jsonObject.optInt("is_throw",0);
         this.onePrice = jsonObject.optDouble("throw_price",0.0);
 
+        this.is_one_price = jsonObject.optInt("charge_type",2);//2为起步价模式 1为一口价模式
+        this.base_price = jsonObject.optDouble("price", 0);//一口价的情况下为一口价，其他情况为起步价
+
+
+    }
+
+    public double getBase_price() {
+        return base_price;
+    }
+
+    public int getIs_one_price() {
+        return is_one_price;
     }
 
     public int getIsPaodan() {

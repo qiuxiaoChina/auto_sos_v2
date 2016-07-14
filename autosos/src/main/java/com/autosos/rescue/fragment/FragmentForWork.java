@@ -351,20 +351,56 @@ public class FragmentForWork extends BasicFragment {
                                         isPaodn = false;
                                         throw_price.setVisibility(View.GONE);
                                         order_type.setText(s_type + "订单");
-                                        if (serviceType == 1) {
+                                        if(newOrder_bean.getIs_one_price()==2){
 
-                                            trailerService.setVisibility(View.VISIBLE);
-                                            otherService.setVisibility(View.GONE);
-                                            address_tuoche1.setText(s_destination);
-                                            String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
-                                            address_tuoche2.setText(s_address_tuoche2);
+                                            //起步价模式
 
-                                        } else {
+                                            if (serviceType == 1) {
 
-                                            trailerService.setVisibility(View.GONE);
-                                            otherService.setVisibility(View.VISIBLE);
-                                            address.setText(s_destination);
+                                                trailerService.setVisibility(View.VISIBLE);
+                                                otherService.setVisibility(View.GONE);
+                                                address_tuoche1.setText(s_destination);
+                                                String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                                address_tuoche2.setText(s_address_tuoche2);
+
+                                            } else {
+
+                                                trailerService.setVisibility(View.GONE);
+                                                otherService.setVisibility(View.VISIBLE);
+                                                address.setText(s_destination);
+                                            }
+                                        }else{
+                                           //一口价模式
+                                            throw_price.setVisibility(View.VISIBLE);
+                                            tv_throw_price.setText(newOrder_bean.getBase_price()+"");
+                                            DisplayMetrics dm =getResources().getDisplayMetrics();
+                                            float density = dm.density;
+
+                                            if (serviceType == 1) {
+
+                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
+                                                layoutParam.topMargin =(int)(170*density);
+                                                trailerService.setLayoutParams(layoutParam);
+                                                trailerService.setVisibility(View.VISIBLE);
+                                                otherService.setVisibility(View.GONE);
+                                                address_tuoche1.setText(s_destination);
+                                                String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                                address_tuoche2.setText(s_address_tuoche2);
+
+                                            } else {
+
+                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
+                                                layoutParam.topMargin =(int)(170*density);
+                                                otherService.setLayoutParams(layoutParam);
+                                                trailerService.setVisibility(View.GONE);
+                                                otherService.setVisibility(View.VISIBLE);
+                                                address.setText(s_destination);
+                                            }
+
+
+
                                         }
+
 
 
                                     }else{
@@ -1090,22 +1126,59 @@ public class FragmentForWork extends BasicFragment {
                             isPaodn= false;
                             throw_price.setVisibility(View.GONE);
                             order_type.setText(s_type + "订单");
-                            if (serviceType == 1) {
+                            if(newOrder_bean.getIs_one_price()==2){
 
-                                trailerService.setVisibility(View.VISIBLE);
-                                otherService.setVisibility(View.GONE);
-                                address_tuoche1.setText(s_destination);
-                                String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
-                                address_tuoche2.setText(s_address_tuoche2);
+                                //起步价模式
+                                if (serviceType == 1) {
 
-                            } else {
+                                    trailerService.setVisibility(View.VISIBLE);
+                                    otherService.setVisibility(View.GONE);
+                                    address_tuoche1.setText(s_destination);
+                                    String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                    address_tuoche2.setText(s_address_tuoche2);
 
-                                trailerService.setVisibility(View.GONE);
-                                otherService.setVisibility(View.VISIBLE);
-                                address.setText(s_destination);
+                                } else {
+
+                                    trailerService.setVisibility(View.GONE);
+                                    otherService.setVisibility(View.VISIBLE);
+                                    address.setText(s_destination);
+                                }
+
+                                mTts.startSpeaking("您有新的" + s_type + "订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+
+                            }else{
+                                //一口价模式
+                                throw_price.setVisibility(View.VISIBLE);
+                                tv_throw_price.setText(newOrder_bean.getBase_price()+"");
+                                DisplayMetrics dm =getResources().getDisplayMetrics();
+                                float density = dm.density;
+
+                                if (serviceType == 1) {
+
+                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
+                                    layoutParam.topMargin =(int)(170*density);
+                                    trailerService.setLayoutParams(layoutParam);
+                                    trailerService.setVisibility(View.VISIBLE);
+                                    otherService.setVisibility(View.GONE);
+                                    address_tuoche1.setText(s_destination);
+                                    String s_address_tuoche2 = newOrder_bean.getAddress_tuoche();
+                                    address_tuoche2.setText(s_address_tuoche2);
+
+                                } else {
+
+                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
+                                    layoutParam.topMargin =(int)(170*density);
+                                    otherService.setLayoutParams(layoutParam);
+                                    trailerService.setVisibility(View.GONE);
+                                    otherService.setVisibility(View.VISIBLE);
+                                    address.setText(s_destination);
+                                }
+
+                                mTts.startSpeaking("您有新的" + s_type + "订单,一口价"+newOrder_bean.getBase_price()+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+
                             }
 
-                            mTts.startSpeaking("您有新的" + s_type + "订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+
 
                         }else{
                             isPaodn=true;
@@ -1557,7 +1630,7 @@ public class FragmentForWork extends BasicFragment {
                 isGPSReady = false;
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.d("location", errText);
-                //Toast.makeText(this.getActivity().getApplicationContext(), errText, Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(this.getActivity().getApplicationContext(), "定位失败无法接单,请到开阔地带继续接单", Toast.LENGTH_SHORT).show();
             }
         }
 

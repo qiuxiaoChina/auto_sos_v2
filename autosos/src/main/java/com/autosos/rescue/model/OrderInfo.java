@@ -59,6 +59,7 @@ public class OrderInfo implements Identifiable {
 
     private int isPaodan;
     private double onePrice;
+    private int is_one_price;//是否有一口价
 
 
     public OrderInfo(JSONObject json) {
@@ -70,7 +71,7 @@ public class OrderInfo implements Identifiable {
             this.longitude = json.optDouble("longitude", 0);
             this.ownerMobile = JSONUtil.getString(json, "mobile");
             this.car_number = JSONUtil.getString(json, "car_number");
-            this.base_price = json.optDouble("price", 0);
+            this.base_price = json.optDouble("price", 0);//一口价的情况下为一口价，其他情况为起步价
             this.start_km = json.optInt("starting_km", 0);
             this.km_price = json.optDouble("km_price", 0);
             this.remark = JSONUtil.getString(json, "remark");
@@ -119,7 +120,13 @@ public class OrderInfo implements Identifiable {
             this.onePrice = json.optDouble("throw_price",0.0);
 
 
+            this.is_one_price = json.optInt("charge_type",2);
+
         }
+    }
+
+    public int getIs_one_price() {
+        return is_one_price;
     }
 
     public int getIsPaodan() {

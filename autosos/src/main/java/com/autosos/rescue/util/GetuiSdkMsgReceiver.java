@@ -74,7 +74,7 @@ public class GetuiSdkMsgReceiver extends BroadcastReceiver {
                             Notification notification;
                             Notification.Builder builder = new Notification.Builder(context);
                             builder.setContentIntent(pendingIntent)
-                                    .setSmallIcon(R.drawable.icon_logo)
+                                    .setSmallIcon(R.drawable.new_order_icon)
                                     .setTicker(content).setContentTitle(title)
                                     .setContentText(content);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
