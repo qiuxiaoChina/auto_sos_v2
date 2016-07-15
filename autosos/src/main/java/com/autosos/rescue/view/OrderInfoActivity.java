@@ -83,72 +83,95 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                     Log.d("orderInfo_activity", obj.toString());
                     jsonObject = new JSONObject(obj.toString());
                     orderInfo = new OrderInfo(jsonObject);
-                    if(orderInfo.getIsPaodan()==1||orderInfo.getIs_one_price()==1){
+                    if(orderInfo.getIsPaodan()==1){
 
-                        tv_price_title.setText("一口价");
+                        DisplayMetrics dm =getResources().getDisplayMetrics();
+                        float density = dm.density;
 
-                    }else{
+                        ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) pay_amount.getLayoutParams();
+                        layoutParam.topMargin =(int)(80*density);
+                        pay_amount.setLayoutParams(layoutParam);
+                        check_amount.setVisibility(View.GONE);
+                        pay_amount.setText("代收"+orderInfo.getPay_amount()+"元");
 
-                        tv_price_title.setText("起步价(15km)");
-                    }
-                    pay_amount.setText(orderInfo.getPay_amount()+"元");
-                    more_amount.setText("+"+orderInfo.getMore_amount()+"元");
-                    if (orderInfo.getDest() != null) {
-                        destination1.setText(orderInfo.getAddress());
-                        destination2.setText(orderInfo.getDest());
-                    } else {
+                        if (orderInfo.getDest() != null) {
+                            destination1.setText(orderInfo.getAddress());
+                            destination2.setText(orderInfo.getDest());
+                        } else {
 
-                        destination2.setText(orderInfo.getAddress());
-                    }
-                    if(orderInfo.getIs_support_free()==1){
-
-                        base_price.setText("0.0元");
+                            destination2.setText(orderInfo.getAddress());
+                        }
 
                     }else{
 
-                        base_price.setText(orderInfo.getBase_price()+"元");
+                        if(orderInfo.getIs_one_price()==1){
+
+                            tv_price_title.setText("一口价");
+
+                        }else{
+
+                            tv_price_title.setText("起步价(15km)");
+                        }
+                        pay_amount.setText(orderInfo.getPay_amount()+"元");
+                        more_amount.setText("+"+orderInfo.getMore_amount()+"元");
+                        if (orderInfo.getDest() != null) {
+                            destination1.setText(orderInfo.getAddress());
+                            destination2.setText(orderInfo.getDest());
+                        } else {
+
+                            destination2.setText(orderInfo.getAddress());
+                        }
+                        if(orderInfo.getIs_support_free()==1){
+
+                            base_price.setText("0.0元");
+
+                        }else{
+
+                            base_price.setText(orderInfo.getBase_price()+"元");
+                        }
+                        if(orderInfo.getBonus()==0){
+
+                            bonus.setText("+0.0元");
+
+                        }else{
+
+                            bonus.setText("+"+orderInfo.getBonus()+"元");
+                        }
+
+
+                        if(orderInfo.getNight_price()==0){
+
+                            night_price.setText("+0.0元");
+
+                        }else{
+
+                            night_price.setText("+"+orderInfo.getNight_price()+"元");
+                        }
+
+                        if(orderInfo.getEdit_price()  == 0){
+
+                            edit_price.setText("+0.0元");
+
+                        }else if(orderInfo.getEdit_price()>0){
+
+                            edit_price.setText("+"+orderInfo.getEdit_price()+"元");
+                        }else{
+
+                            edit_price.setText(orderInfo.getEdit_price()+"元");
+                        }
+                        if(orderInfo.getServiceType()==1){
+
+                            String dis = String.format("%.2f", orderInfo.getReal_tuoche_dis());
+                            total_dis.setText(dis+"km");
+
+
+                        }else {
+                            Log.d("orderInfo_pay", orderInfo.getReal_dis()+"");
+                            String dis = String.format("%.2f", orderInfo.getReal_dis());
+                            total_dis.setText(dis+"km");
+                        }
                     }
-                    if(orderInfo.getBonus()==0){
 
-                        bonus.setText("+0.0元");
-
-                    }else{
-
-                        bonus.setText("+"+orderInfo.getBonus()+"元");
-                    }
-
-
-                    if(orderInfo.getNight_price()==0){
-
-                        night_price.setText("+0.0元");
-
-                    }else{
-
-                        night_price.setText("+"+orderInfo.getNight_price()+"元");
-                    }
-
-                    if(orderInfo.getEdit_price()  == 0){
-
-                        edit_price.setText("+0.0元");
-
-                    }else if(orderInfo.getEdit_price()>0){
-
-                        edit_price.setText("+"+orderInfo.getEdit_price()+"元");
-                    }else{
-
-                        edit_price.setText(orderInfo.getEdit_price()+"元");
-                    }
-                    if(orderInfo.getServiceType()==1){
-
-                        String dis = String.format("%.2f", orderInfo.getReal_tuoche_dis());
-                        total_dis.setText(dis+"km");
-
-
-                    }else {
-                        Log.d("orderInfo_pay", orderInfo.getReal_dis()+"");
-                        String dis = String.format("%.2f", orderInfo.getReal_dis());
-                        total_dis.setText(dis+"km");
-                    }
 
                     rating.setRating(Float.parseFloat(orderInfo.getCommentRate()));
 

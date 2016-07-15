@@ -70,6 +70,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
     private Boolean isClicked = false;
     private View price_detail,bottomPart;
     private TextView tv_price_title;
+    private View hint_pay_detail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +101,8 @@ public class PayActivity extends Activity implements View.OnClickListener{
         bottomPart = findViewById(R.id.bottomPart);
 
         tv_price_title = (TextView) findViewById(R.id.tv_price_title);
+
+        hint_pay_detail = findViewById(R.id.hint_pay_detail);
 
         myBroadcastReciever = new MyBroadcastReciever();
         IntentFilter intentFilter = new IntentFilter();
@@ -286,73 +289,91 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     Log.d("orderInfo_pay", obj.toString());
                     jsonObject = new JSONObject(obj.toString());
                     orderInfo = new OrderInfo(jsonObject);
-                    if(orderInfo.getIsPaodan()==1||orderInfo.getIs_one_price()==1){
+                    if(orderInfo.getIsPaodan() ==1){
 
-                        tv_price_title.setText("一口价");
+                        DisplayMetrics dm =getResources().getDisplayMetrics();
+                        float density = dm.density;
 
-                    }else{
-
-                        tv_price_title.setText("起步价(15km)");
-                    }
-                    pay_amount.setText(orderInfo.getPay_amount()+"元");
-                    more_amount.setText("+"+orderInfo.getMore_amount()+"元");
-                    if(orderInfo.getPay_amount()==0){
-
-                        btn_weixinpay.setText("无需收款,继续接单");
+                        ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) hint_pay_detail.getLayoutParams();
+                        layoutParam.topMargin =(int)(30*density);
+                        hint_pay_detail.setLayoutParams(layoutParam);
+                        check_detail.setVisibility(View.GONE);
+                        pay_amount.setText("代收"+orderInfo.getPay_amount()+"元");
 
                     }else{
 
-                        btn_weixinpay.setText("微信扫码支付");
+                        check_detail.setVisibility(View.VISIBLE);
+
+                        if(orderInfo.getIs_one_price()==1){
+
+                            tv_price_title.setText("一口价");
+
+                        }else{
+
+                            tv_price_title.setText("起步价(15km)");
+                        }
+                        pay_amount.setText(orderInfo.getPay_amount()+"元");
+                        more_amount.setText("+"+orderInfo.getMore_amount()+"元");
+                        if(orderInfo.getPay_amount()==0){
+
+                            btn_weixinpay.setText("无需收款,继续接单");
+
+                        }else{
+
+                            btn_weixinpay.setText("微信扫码支付");
+                        }
+                        if(orderInfo.getIs_support_free()==1){
+
+                            base_price.setText("0.0元");
+
+                        }else{
+
+                            base_price.setText(orderInfo.getBase_price()+"元");
+                        }
+                        if(orderInfo.getBonus()==0){
+
+                            bonus.setText("+0.0元");
+
+                        }else{
+
+                            bonus.setText("+"+orderInfo.getBonus()+"元");
+                        }
+
+
+                        if(orderInfo.getNight_price()==0){
+
+                            night_price.setText("+0.0元");
+
+                        }else{
+
+                            night_price.setText("+"+orderInfo.getNight_price()+"元");
+                        }
+
+                        if(orderInfo.getEdit_price()  == 0){
+
+                            edit_price.setText("+0.0元");
+
+                        }else if(orderInfo.getEdit_price()>0){
+
+                            edit_price.setText("+"+orderInfo.getEdit_price()+"元");
+                        }else{
+
+                            edit_price.setText(orderInfo.getEdit_price()+"元");
+                        }
+                        if(orderInfo.getServiceType()==1){
+
+                            String dis = String.format("%.2f", orderInfo.getReal_tuoche_dis());
+                            total_dis.setText(dis+"km");
+
+
+                        }else {
+                            Log.d("orderInfo_pay", orderInfo.getReal_dis()+"");
+                            String dis = String.format("%.2f", orderInfo.getReal_dis());
+                            total_dis.setText(dis+"km");
+                        }
+
                     }
-                    if(orderInfo.getIs_support_free()==1){
 
-                        base_price.setText("0.0元");
-
-                    }else{
-
-                        base_price.setText(orderInfo.getBase_price()+"元");
-                    }
-                    if(orderInfo.getBonus()==0){
-
-                        bonus.setText("+0.0元");
-
-                    }else{
-
-                        bonus.setText("+"+orderInfo.getBonus()+"元");
-                    }
-
-
-                    if(orderInfo.getNight_price()==0){
-
-                        night_price.setText("+0.0元");
-
-                    }else{
-
-                       night_price.setText("+"+orderInfo.getNight_price()+"元");
-                    }
-
-                    if(orderInfo.getEdit_price()  == 0){
-
-                        edit_price.setText("+0.0元");
-
-                    }else if(orderInfo.getEdit_price()>0){
-
-                        edit_price.setText("+"+orderInfo.getEdit_price()+"元");
-                    }else{
-
-                        edit_price.setText(orderInfo.getEdit_price()+"元");
-                    }
-                    if(orderInfo.getServiceType()==1){
-
-                        String dis = String.format("%.2f", orderInfo.getReal_tuoche_dis());
-                        total_dis.setText(dis+"km");
-
-
-                    }else {
-                        Log.d("orderInfo_pay", orderInfo.getReal_dis()+"");
-                        String dis = String.format("%.2f", orderInfo.getReal_dis());
-                        total_dis.setText(dis+"km");
-                    }
 
 
                 }catch (Exception e){
