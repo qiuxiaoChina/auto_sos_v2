@@ -250,6 +250,7 @@ public class FragmentForWork extends BasicFragment {
 
     private static OiUtil oiUtil = null;
     private boolean isPaodn = false;
+    private boolean isAfterOrder = false;
 
     /**
      * 方法必须重写
@@ -262,8 +263,13 @@ public class FragmentForWork extends BasicFragment {
         amap=null;
         init();
         setUpMap();
-        if(MyApplication.application.isAfterOrder){
+//        SharedPreferences sharedPreference3 = getActivity().getSharedPreferences("isAfterOrder", Context.MODE_PRIVATE);
+//        isAfterOrder =  sharedPreference3.getBoolean("isAfterOrder",false);
+//        sharedPreference3.edit().remove("isAfterOrder").commit();
+        Log.d("afterOrder",MyApplication.application.isAfterOrder+"");
+        if( MyApplication.application.isAfterOrder){
             Log.d("afterOrder","ok");
+            MyApplication.application.isAfterOrder = false;
             canGetNewOrder = true;
             getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
             head_map.setVisibility(View.VISIBLE);
@@ -273,10 +279,12 @@ public class FragmentForWork extends BasicFragment {
             menu.setVisibility(View.GONE);
             startNavi.setVisibility(View.GONE);
             coursePreview.setVisibility(View.GONE);
-            MyApplication.application.isAfterOrder = false;
             info = null;
             firstResume_tuoche = false;
             handler.sendEmptyMessage(12);
+
+        }else {
+
 
         }
         if (oiUtil == null) {
@@ -499,6 +507,7 @@ public class FragmentForWork extends BasicFragment {
                                                 } else if (mEndList.isEmpty()) {
                                                     Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
                                                 } else {
+                                                    progressBar.setVisibility(View.VISIBLE);
                                                     head_map.setVisibility(View.GONE);
                                                     head_map_tel_navi.setVisibility(View.VISIBLE);
                                                     menu.setVisibility(View.VISIBLE);
@@ -608,6 +617,7 @@ public class FragmentForWork extends BasicFragment {
                                         } else if (info.getOrderStatus() == 6) {
                                             //将要开始拖车
                                             if (!firstResume_tuoche) {
+                                                progressBar.setVisibility(View.VISIBLE);
                                                 String trace = oiUtil.readJWD(oiUtil.path_drag);
                                                 NaviLatLng startPoint = null;
                                                 if (trace != null) {
@@ -1277,7 +1287,7 @@ public class FragmentForWork extends BasicFragment {
 
                     mTts.startSpeaking("订单已被后台取消", mSynListener);
                 }else if(msg.what ==12){
-
+                    MyApplication.application.isAfterOrder = false;
                     mTts.startSpeaking("订单完成，请继续接单", mSynListener);
 
                 }
@@ -2100,7 +2110,7 @@ public class FragmentForWork extends BasicFragment {
                                             Toast.makeText(getActivity().getApplicationContext(), "轨迹提交失败,请重新提交", Toast.LENGTH_SHORT).show();
                                         }
                                     } catch (Exception e) {
-
+                                        e.printStackTrace();
 
                                     }
 

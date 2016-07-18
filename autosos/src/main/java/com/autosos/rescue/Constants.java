@@ -28,6 +28,7 @@ public class Constants {
     public static final Executor INFOTHEADPOOL = Executors.newFixedThreadPool(3);
 
 
+    public static String PAY_CASH_URL = HOST +"v1/orders/%s/pay-for-another";
     public static String USER_INFO = HOST +"v1/user/user-detail";              //登出状态
     public static String CHECK_YOU_ARE_THE_ONLY_ONE = HOST+"v1/orders/get-device";//检查用户只被一个设备使用
     public static String NO_NEED_PAY = HOST+"v1/orders/%s/get-support-free";//提交车主评价

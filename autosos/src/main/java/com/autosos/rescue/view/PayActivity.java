@@ -71,6 +71,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
     private View price_detail,bottomPart;
     private TextView tv_price_title;
     private View hint_pay_detail;
+    private  Button btn_payCash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,9 @@ public class PayActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_pay);
         btn_weixinpay = (Button) findViewById(R.id.btn_weixinpay);
         btn_weixinpay.setOnClickListener(this);
+
+        btn_payCash = (Button) findViewById(R.id.btn_payCash);
+        btn_payCash.setOnClickListener(this);
 
         erweima_layout = findViewById(R.id.erweima_layout);
         close_erweima = (ImageView) findViewById(R.id.close_erweima);
@@ -154,10 +158,13 @@ public class PayActivity extends Activity implements View.OnClickListener{
                                     Log.d("nopay",obj.toString());
                                     if (result == 1) {
                                         //  Toast.makeText(NewWayActivity.this, "支付成功!", Toast.LENGTH_SHORT).show();
+                                        time_clock.cancel();
                                         SharedPreferences sharedPreference = getSharedPreferences("order", Context.MODE_PRIVATE);
                                         sharedPreference.edit().remove("order").commit();
                                         SharedPreferences sharedPreference2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
                                         sharedPreference2.edit().remove("orderInfo").commit();
+//                                        SharedPreferences sharedPreference3 = getSharedPreferences("isAfterOrder", Context.MODE_PRIVATE);
+//                                        sharedPreference3.edit().putBoolean("isAfterOrder",true).commit();
                                         MyApplication.application.isAfterOrder = true;
                                         finish();
                                     } else {
@@ -235,6 +242,75 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     layoutParam.topMargin =(int)(150*density);
                     bottomPart.setLayoutParams(layoutParam);
                     isClicked = false;
+                }
+                break;
+            case  R.id.btn_payCash:
+                dialog = new Dialog(this, R.style.bubble_dialog);
+                View view1 = getLayoutInflater().inflate(R.layout.dialog_msg_notice,
+                        null);
+                Button tvConfirm1 = (Button) view1.findViewById(R.id.btn_notice_confirm);
+                Button tvCancel1 = (Button) view1.findViewById(R.id.btn_notice_cancel);
+                TextView tvMsg1 = (TextView) view1.findViewById(R.id.tv_notice_msg);
+                tvMsg1.setText("是否代收现金");
+                tvConfirm1.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        new HttpGetTask(getApplicationContext(), new OnHttpRequestListener() {
+                            @Override
+                            public void onRequestCompleted(Object obj) {
+
+                                JSONObject jsonObject;
+                                try {
+                                    jsonObject = new JSONObject(obj.toString());
+                                    Log.d("cash",obj.toString());
+                                    if (jsonObject.getInt("result") == 1) {
+                                        time_clock.cancel();
+                                        SharedPreferences sharedPreference = getSharedPreferences("order", Context.MODE_PRIVATE);
+                                        sharedPreference.edit().remove("order").commit();
+                                        SharedPreferences sharedPreference2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
+                                        sharedPreference2.edit().remove("orderInfo").commit();
+                                        MyApplication.application.isAfterOrder = true;
+                                        finish();
+                                    }else{
+
+                                       Toast.makeText(getApplicationContext(),"您的余额不足,请后台充值或扫码支付",Toast.LENGTH_SHORT).show();
+
+                                    }
+
+                                }catch(Exception e){
+
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            @Override
+                            public void onRequestFailed(Object obj) {
+
+                            }
+                        }).execute(String.format(Constants.PAY_CASH_URL, orderId));
+                    }
+                });
+                tvCancel1.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.setContentView(view1);
+                dialog.setCanceledOnTouchOutside(false);
+                Window window1 = dialog.getWindow();
+                WindowManager.LayoutParams params1 = window1.getAttributes();
+                Point point1 = JSONUtil.getDeviceSize(this);
+                params1.width = Math.round(point1.x * 5 / 7);
+                window1.setAttributes(params1);
+                try {
+                    dialog.show();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
                 break;
             default:
@@ -317,10 +393,13 @@ public class PayActivity extends Activity implements View.OnClickListener{
                         if(orderInfo.getPay_amount()==0){
 
                             btn_weixinpay.setText("无需收款,继续接单");
+                            btn_payCash.setVisibility(View.GONE);
+                            btn_payCash.setClickable(false);
 
                         }else{
-
                             btn_weixinpay.setText("微信扫码支付");
+                            btn_payCash.setVisibility(View.VISIBLE);
+                            btn_payCash.setClickable(true);
                         }
                         if(orderInfo.getIs_support_free()==1){
 
