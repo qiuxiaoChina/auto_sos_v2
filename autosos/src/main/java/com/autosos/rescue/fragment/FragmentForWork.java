@@ -170,7 +170,7 @@ public class FragmentForWork extends BasicFragment {
     TextureMapView mapView, mapViewForShow;
     private AMap amap, amapForShow;
     // 规划线路
-    private RouteOverLay mRouteOverLay;
+    //private RouteOverLay mRouteOverLay;
 
     private  ArrayList<LatLng> latLngs = null;
     private UiSettings mUiSettings;
@@ -269,7 +269,6 @@ public class FragmentForWork extends BasicFragment {
         Log.d("afterOrder",MyApplication.application.isAfterOrder+"");
         if( MyApplication.application.isAfterOrder){
             Log.d("afterOrder","ok");
-            MyApplication.application.isAfterOrder = false;
             canGetNewOrder = true;
             getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
             head_map.setVisibility(View.VISIBLE);
@@ -281,7 +280,13 @@ public class FragmentForWork extends BasicFragment {
             coursePreview.setVisibility(View.GONE);
             info = null;
             firstResume_tuoche = false;
-            handler.sendEmptyMessage(12);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    MyApplication.application.isAfterOrder = false;
+                }
+            }).start();
+          //  handler.sendEmptyMessage(12);
 
         }else {
 
@@ -464,7 +469,7 @@ public class FragmentForWork extends BasicFragment {
                         new HttpGetTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {//获取订单详情
                             @Override
                             public void onRequestCompleted(Object obj) {
-
+                                info =null;
                                 JSONObject jsonObject;
                                 try {
                                     Log.d("working_status", obj.toString());
@@ -475,345 +480,351 @@ public class FragmentForWork extends BasicFragment {
                                     order_id = info.getOrderId();
                                     owner_mobile = info.getOwnerMobile();
                                     Log.d("working_status", info.getServiceType() + "---" + info.getOrderStatus());
-                                    if (info.getServiceType() == 1) {
-                                        //拖车服务
+                                    if(info!=null) {
+                                        if (info.getServiceType() == 1) {
+                                            //拖车服务
 
-                                        if (info.getOrderStatus() == 3) {
-                                            //已经接单
-                                            if (!firstResume) {
-                                                String trace = oiUtil.readJWD(oiUtil.path_drag);
-                                                NaviLatLng startPoint = null;
-                                                if (trace != null) {
-                                                    String[] array_trace = trace.trim().split("\\|");
-                                                    String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
-                                                    startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
-                                                }
-                                                mStartList.clear();
-                                                if (startPoint != null) {
-                                                    mStartList.add(startPoint);
-                                                }else{
-                                                    if(mStartLatlng!=null){
+                                            if (info.getOrderStatus() == 3) {
+                                                //已经接单
+                                                if (!firstResume) {
+                                                    String trace = oiUtil.readJWD(oiUtil.path_drag);
+                                                    NaviLatLng startPoint = null;
+                                                    if (trace != null) {
+                                                        String[] array_trace = trace.trim().split("\\|");
+                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
+                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
+                                                    }
+                                                    mStartList.clear();
+                                                    if (startPoint != null) {
+                                                        mStartList.add(startPoint);
+                                                    } else {
+                                                        if (mStartLatlng != null) {
 
-                                                        mStartList.add(mStartLatlng);
+                                                            mStartList.add(mStartLatlng);
+                                                        }
+                                                    }
+                                                    double lat = info.getLatitude();
+                                                    double lon = info.getLongitude();
+                                                    NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
+                                                    mEndList.clear();
+                                                    mEndList.add(accidentPlace);
+                                                    if (mStartList.isEmpty()) {
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                                                    } else if (mEndList.isEmpty()) {
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        progressBar.setVisibility(View.VISIBLE);
+                                                        head_map.setVisibility(View.GONE);
+                                                        head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                        menu.setVisibility(View.VISIBLE);
+                                                        startNavi.setVisibility(View.VISIBLE);
+                                                        coursePreview.setVisibility(View.VISIBLE);
+                                                        mTts.startSpeaking("继续任务", mSynListener);
+                                                        amap.clear(true);
+                                                        float dis_moved_lastTime = sp.getFloat("dis_moved", 0.0f);
+                                                        dis_moved = dis_moved_lastTime;
+                                                        distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                        destination.setText(info.getAddress());
+                                                        firstResume = true;
+                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+
                                                     }
                                                 }
-                                                double lat = info.getLatitude();
-                                                double lon = info.getLongitude();
-                                                NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
-                                                mEndList.clear();
-                                                mEndList.add(accidentPlace);
-                                                if (mStartList.isEmpty()) {
-                                                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
-                                                } else if (mEndList.isEmpty()) {
-                                                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
-                                                } else {
+
+                                            } else if (info.getOrderStatus() == 4) {//到达救援现场 还未拍照
+                                                NaviLatLng startPoint = null;
+                                                NaviLatLng endPoint = null;
+                                                NaviLatLng wayPoint = null;
+                                                List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
+
+                                                startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
+                                                endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
+                                                startList.add(startPoint);
+                                                endList.add(endPoint);
+                                                Log.d("real_info", info.toString());
+                                                head_map.setVisibility(View.GONE);
+                                                head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                menu.setVisibility(View.VISIBLE);
+                                                startNavi.setVisibility(View.GONE);
+                                                coursePreview.setVisibility(View.GONE);
+                                                mTts.startSpeaking("到达救援现场，请按要求拍摄照片", mSynListener);
+                                                amap.clear(true);
+                                                float dis_moved_lastTime = (float) info.getReal_dis();
+                                                distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                destination.setText(info.getReal_address());
+                                                mapView.setVisibility(View.GONE);
+                                                mAMapNaviView.setVisibility(View.VISIBLE);
+                                                shouldNotStartNavi = true;
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+
+
+                                            } else if (info.getOrderStatus() == 5) {
+
+                                                NaviLatLng startPoint = null;
+                                                NaviLatLng endPoint = null;
+                                                NaviLatLng wayPoint = null;
+                                                List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
+
+                                                startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
+                                                endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
+                                                startList.add(startPoint);
+                                                endList.add(endPoint);
+                                                Log.d("real_info", obj.toString());
+                                                head_map.setVisibility(View.GONE);
+                                                head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                menu.setVisibility(View.VISIBLE);
+                                                startNavi.setVisibility(View.GONE);
+                                                coursePreview.setVisibility(View.GONE);
+                                                mTts.startSpeaking("请按要求拍摄照片,并开始拖车", mSynListener);
+                                                amap.clear(true);
+                                                float dis_moved_lastTime = (float) info.getReal_dis();
+                                                distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                destination.setText(info.getReal_address());
+                                                mapView.setVisibility(View.GONE);
+                                                mAMapNaviView.setVisibility(View.VISIBLE);
+                                                tv_take_photo.setText("拍摄照片,开始拖车");
+                                                shouldNotStartNavi = true;
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+
+                                            } else if (info.getOrderStatus() == 11) {
+
+                                                NaviLatLng startPoint = null;
+                                                NaviLatLng endPoint = null;
+                                                NaviLatLng wayPoint = null;
+                                                List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
+
+                                                startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
+                                                endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
+                                                startList.add(startPoint);
+                                                endList.add(endPoint);
+
+                                                head_map.setVisibility(View.GONE);
+                                                head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                menu.setVisibility(View.VISIBLE);
+                                                startNavi.setVisibility(View.GONE);
+                                                coursePreview.setVisibility(View.GONE);
+                                                mTts.startSpeaking("请按要求拍摄照片,并开始拖车", mSynListener);
+                                                amap.clear(true);
+                                                float dis_moved_lastTime = (float) info.getReal_dis();
+                                                distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                destination.setText(info.getReal_address());
+                                                mapView.setVisibility(View.GONE);
+                                                mAMapNaviView.setVisibility(View.VISIBLE);
+                                                tv_take_photo.setText("拍摄照片,开始拖车");
+                                                shouldNotStartNavi = true;
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+
+                                            } else if (info.getOrderStatus() == 6) {
+                                                //将要开始拖车
+                                                if (!firstResume_tuoche) {
                                                     progressBar.setVisibility(View.VISIBLE);
-                                                    head_map.setVisibility(View.GONE);
-                                                    head_map_tel_navi.setVisibility(View.VISIBLE);
-                                                    menu.setVisibility(View.VISIBLE);
-                                                    startNavi.setVisibility(View.VISIBLE);
-                                                    coursePreview.setVisibility(View.VISIBLE);
-                                                    mTts.startSpeaking("继续任务", mSynListener);
-                                                    amap.clear(true);
-                                                    float dis_moved_lastTime = sp.getFloat("dis_moved", 0.0f);
-                                                    dis_moved = dis_moved_lastTime;
-                                                    distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                                    destination.setText(info.getAddress());
-                                                    firstResume = true;
-                                                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                    String trace = oiUtil.readJWD(oiUtil.path_drag);
+                                                    NaviLatLng startPoint = null;
+                                                    if (trace != null) {
+                                                        String[] array_trace = trace.trim().split("\\|");
+                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
+                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
+                                                        mStartList.clear();
+                                                        if (startPoint != null) {
+                                                            mStartList.add(startPoint);
+                                                        }
+                                                    } else {
+                                                        mStartList.clear();
+                                                        if (mStartLatlng != null) {
+                                                            mStartList.add(mStartLatlng);
+                                                        }
+                                                    }
+
+                                                    double lat = info.getDest_lat();
+                                                    double lon = info.getDest_lng();
+                                                    NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
+                                                    mEndList.clear();
+                                                    mEndList.add(accidentPlace);
+                                                    if (mStartList.isEmpty()) {
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                                                    } else if (mEndList.isEmpty()) {
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        head_map.setVisibility(View.GONE);
+                                                        head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                        menu.setVisibility(View.VISIBLE);
+                                                        startNavi.setVisibility(View.VISIBLE);
+                                                        coursePreview.setVisibility(View.VISIBLE);
+                                                        mTts.startSpeaking("开始拖车,预定目的地" + info.getDest(), mSynListener);
+                                                        amap.clear(true);
+                                                        float dis_moved_lastTime = sp.getFloat("dis_moved", 0.0f);
+                                                        dis_moved = dis_moved_lastTime;
+                                                        distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                        destination.setText(info.getDest());
+                                                        tv_take_photo.setText("结束拖车,按要求拍照");
+                                                        cancelOrder.setVisibility(View.GONE);
+                                                        cancelOrder.setClickable(false);
+                                                        firstResume_tuoche = true;
+                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+
+                                                    }
+
+
+                                                } else {
+
 
                                                 }
+                                            } else if (info.getOrderStatus() == 21) {
+
+                                                NaviLatLng startPoint = null;
+                                                NaviLatLng endPoint = null;
+                                                NaviLatLng wayPoint = null;
+                                                List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
+
+                                                startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
+                                                endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
+                                                startList.add(startPoint);
+                                                endList.add(endPoint);
+
+                                                head_map.setVisibility(View.GONE);
+                                                head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                menu.setVisibility(View.VISIBLE);
+                                                startNavi.setVisibility(View.GONE);
+                                                coursePreview.setVisibility(View.GONE);
+                                                mTts.startSpeaking("请按要求拍摄照片,结束拖车", mSynListener);
+                                                amap.clear(true);
+                                                float dis_moved_lastTime = (float) info.getReal_tuoche_dis();
+                                                distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                destination.setText(info.getReal_dest());
+                                                mapView.setVisibility(View.GONE);
+                                                mAMapNaviView.setVisibility(View.VISIBLE);
+                                                tv_take_photo.setText("拍摄照片,结束拖车");
+                                                cancelOrder.setVisibility(View.GONE);
+                                                cancelOrder.setClickable(false);
+                                                shouldNotStartNavi = true;
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+
+                                            } else if (info.getOrderStatus() == 31) {
+
+                                                Intent intent = new Intent(getActivity().getApplicationContext(), AppraiseActivity.class);
+                                                startActivity(intent);
+                                            } else if (info.getOrderStatus() == 32) {
+
+                                                Intent intent = new Intent(getActivity().getApplicationContext(), PayActivity.class);
+                                                startActivity(intent);
+
                                             }
 
-                                        } else if (info.getOrderStatus() == 4) {//到达救援现场 还未拍照
-                                            NaviLatLng startPoint = null;
-                                            NaviLatLng endPoint = null;
-                                            NaviLatLng wayPoint = null;
-                                            List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
 
-                                            startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
-                                            startList.add(startPoint);
-                                            endList.add(endPoint);
-                                            Log.d("real_info", info.toString());
-                                            head_map.setVisibility(View.GONE);
-                                            head_map_tel_navi.setVisibility(View.VISIBLE);
-                                            menu.setVisibility(View.VISIBLE);
-                                            startNavi.setVisibility(View.GONE);
-                                            coursePreview.setVisibility(View.GONE);
-                                            mTts.startSpeaking("到达救援现场，请按要求拍摄照片", mSynListener);
-                                            amap.clear(true);
-                                            float dis_moved_lastTime = (float) info.getReal_dis();
-                                            distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                            destination.setText(info.getReal_address());
-                                            mapView.setVisibility(View.GONE);
-                                            mAMapNaviView.setVisibility(View.VISIBLE);
-                                            shouldNotStartNavi = true;
-                                            mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                        } else {
+                                            //非拖车
 
-
-                                        } else if (info.getOrderStatus() == 5) {
-
-                                            NaviLatLng startPoint = null;
-                                            NaviLatLng endPoint = null;
-                                            NaviLatLng wayPoint = null;
-                                            List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
-
-                                            startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
-                                            startList.add(startPoint);
-                                            endList.add(endPoint);
-                                            Log.d("real_info", obj.toString());
-                                            head_map.setVisibility(View.GONE);
-                                            head_map_tel_navi.setVisibility(View.VISIBLE);
-                                            menu.setVisibility(View.VISIBLE);
-                                            startNavi.setVisibility(View.GONE);
-                                            coursePreview.setVisibility(View.GONE);
-                                            mTts.startSpeaking("请按要求拍摄照片,并开始拖车", mSynListener);
-                                            amap.clear(true);
-                                            float dis_moved_lastTime = (float) info.getReal_dis();
-                                            distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                            destination.setText(info.getReal_address());
-                                            mapView.setVisibility(View.GONE);
-                                            mAMapNaviView.setVisibility(View.VISIBLE);
-                                            tv_take_photo.setText("拍摄照片,开始拖车");
-                                            shouldNotStartNavi = true;
-                                            mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
-
-                                        } else if (info.getOrderStatus() == 11) {
-
-                                            NaviLatLng startPoint = null;
-                                            NaviLatLng endPoint = null;
-                                            NaviLatLng wayPoint = null;
-                                            List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
-
-                                            startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
-                                            startList.add(startPoint);
-                                            endList.add(endPoint);
-
-                                            head_map.setVisibility(View.GONE);
-                                            head_map_tel_navi.setVisibility(View.VISIBLE);
-                                            menu.setVisibility(View.VISIBLE);
-                                            startNavi.setVisibility(View.GONE);
-                                            coursePreview.setVisibility(View.GONE);
-                                            mTts.startSpeaking("请按要求拍摄照片,并开始拖车", mSynListener);
-                                            amap.clear(true);
-                                            float dis_moved_lastTime = (float) info.getReal_dis();
-                                            distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                            destination.setText(info.getReal_address());
-                                            mapView.setVisibility(View.GONE);
-                                            mAMapNaviView.setVisibility(View.VISIBLE);
-                                            tv_take_photo.setText("拍摄照片,开始拖车");
-                                            shouldNotStartNavi = true;
-                                            mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
-
-                                        } else if (info.getOrderStatus() == 6) {
-                                            //将要开始拖车
-                                            if (!firstResume_tuoche) {
-                                                progressBar.setVisibility(View.VISIBLE);
-                                                String trace = oiUtil.readJWD(oiUtil.path_drag);
-                                                NaviLatLng startPoint = null;
-                                                if (trace != null) {
-                                                    String[] array_trace = trace.trim().split("\\|");
-                                                    String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
-                                                    startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
+                                            if (info.getOrderStatus() == 3) {
+                                                //已经接单
+                                                if (!firstResume) {
+                                                    String trace = oiUtil.readJWD(oiUtil.path_drag);
+                                                    NaviLatLng startPoint = null;
+                                                    if (trace != null) {
+                                                        String[] array_trace = trace.trim().split("\\|");
+                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
+                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
+                                                    }
                                                     mStartList.clear();
                                                     if (startPoint != null) {
                                                         mStartList.add(startPoint);
                                                     }
-                                                } else {
-                                                    mStartList.clear();
-                                                    if (mStartLatlng != null) {
-                                                        mStartList.add(mStartLatlng);
+                                                    double lat = info.getLatitude();
+                                                    double lon = info.getLongitude();
+                                                    NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
+                                                    mEndList.clear();
+                                                    mEndList.add(accidentPlace);
+                                                    if (mStartList.isEmpty()) {
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                                                    } else if (mEndList.isEmpty()) {
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
+                                                    } else {
+                                                        head_map.setVisibility(View.GONE);
+                                                        head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                        menu.setVisibility(View.VISIBLE);
+                                                        startNavi.setVisibility(View.VISIBLE);
+                                                        coursePreview.setVisibility(View.VISIBLE);
+                                                        mTts.startSpeaking("继续任务", mSynListener);
+                                                        amap.clear(true);
+                                                        float dis_moved_lastTime = sp.getFloat("dis_moved", 0.0f);
+                                                        dis_moved = dis_moved_lastTime;
+                                                        distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                        destination.setText(info.getAddress());
+
+                                                        firstResume = true;
+
+                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+
                                                     }
-                                                }
 
-                                                double lat = info.getDest_lat();
-                                                double lon = info.getDest_lng();
-                                                NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
-                                                mEndList.clear();
-                                                mEndList.add(accidentPlace);
-                                                if (mStartList.isEmpty()) {
-                                                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
-                                                } else if (mEndList.isEmpty()) {
-                                                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    head_map.setVisibility(View.GONE);
-                                                    head_map_tel_navi.setVisibility(View.VISIBLE);
-                                                    menu.setVisibility(View.VISIBLE);
-                                                    startNavi.setVisibility(View.VISIBLE);
-                                                    coursePreview.setVisibility(View.VISIBLE);
-                                                    mTts.startSpeaking("开始拖车,预定目的地" + info.getDest(), mSynListener);
-                                                    amap.clear(true);
-                                                    float dis_moved_lastTime = sp.getFloat("dis_moved", 0.0f);
-                                                    dis_moved = dis_moved_lastTime;
-                                                    distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                                    destination.setText(info.getDest());
-                                                    tv_take_photo.setText("结束拖车,按要求拍照");
-                                                    cancelOrder.setVisibility(View.GONE);
-                                                    cancelOrder.setClickable(false);
-                                                    firstResume_tuoche = true;
-                                                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
 
                                                 }
 
 
-                                            } else {
+                                            } else if (info.getOrderStatus() == 4) {//到达救援现场 还未拍照
+
+                                                NaviLatLng startPoint = null;
+                                                NaviLatLng endPoint = null;
+                                                NaviLatLng wayPoint = null;
+                                                List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
+                                                List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
+                                                startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
+                                                endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
+                                                startList.add(startPoint);
+                                                endList.add(endPoint);
+                                                Log.d("real_info", info.toString());
+                                                head_map.setVisibility(View.GONE);
+                                                head_map_tel_navi.setVisibility(View.VISIBLE);
+                                                menu.setVisibility(View.VISIBLE);
+                                                startNavi.setVisibility(View.GONE);
+                                                coursePreview.setVisibility(View.GONE);
+                                                mTts.startSpeaking("到达救援现场，请按要求拍摄照片", mSynListener);
+                                                amap.clear(true);
+                                                float dis_moved_lastTime = (float) info.getReal_dis();
+                                                distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
+                                                destination.setText(info.getReal_address());
+                                                mapView.setVisibility(View.GONE);
+                                                mAMapNaviView.setVisibility(View.VISIBLE);
+                                                shouldNotStartNavi = true;
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
 
 
+                                            } else if (info.getOrderStatus() == 31) {//已经拍照 上传照片 订单完成 未评价
+
+                                                Intent intent = new Intent(getActivity().getApplicationContext(), AppraiseActivity.class);
+                                                getActivity().startActivity(intent);
+
+                                            } else if (info.getOrderStatus() == 32) {//等待支付
+
+                                                Intent intent = new Intent(getActivity().getApplicationContext(), PayActivity.class);
+                                                startActivity(intent);
                                             }
-                                        } else if (info.getOrderStatus() == 21) {
 
-                                            NaviLatLng startPoint = null;
-                                            NaviLatLng endPoint = null;
-                                            NaviLatLng wayPoint = null;
-                                            List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
+                                        }
 
-                                            startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
-                                            startList.add(startPoint);
-                                            endList.add(endPoint);
+                                        if (info.getIsPaodan() == 1) {
 
-                                            head_map.setVisibility(View.GONE);
-                                            head_map_tel_navi.setVisibility(View.VISIBLE);
-                                            menu.setVisibility(View.VISIBLE);
-                                            startNavi.setVisibility(View.GONE);
-                                            coursePreview.setVisibility(View.GONE);
-                                            mTts.startSpeaking("请按要求拍摄照片,结束拖车", mSynListener);
-                                            amap.clear(true);
-                                            float dis_moved_lastTime = (float) info.getReal_tuoche_dis();
-                                            distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                            destination.setText(info.getReal_dest());
-                                            mapView.setVisibility(View.GONE);
-                                            mAMapNaviView.setVisibility(View.VISIBLE);
-                                            tv_take_photo.setText("拍摄照片,结束拖车");
                                             cancelOrder.setVisibility(View.GONE);
                                             cancelOrder.setClickable(false);
-                                            shouldNotStartNavi = true;
-                                            mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
-
-                                        } else if (info.getOrderStatus() == 31) {
-
-                                            Intent intent = new Intent(getActivity().getApplicationContext(), AppraiseActivity.class);
-                                            startActivity(intent);
-                                        } else if (info.getOrderStatus() == 32) {
-
-                                            Intent intent = new Intent(getActivity().getApplicationContext(), PayActivity.class);
-                                            startActivity(intent);
-
                                         }
 
+                                    }else{
 
-                                    } else {
-                                        //非拖车
-
-                                        if (info.getOrderStatus() == 3) {
-                                            //已经接单
-                                            if (!firstResume) {
-                                                String trace = oiUtil.readJWD(oiUtil.path_drag);
-                                                NaviLatLng startPoint = null;
-                                                if (trace != null) {
-                                                    String[] array_trace = trace.trim().split("\\|");
-                                                    String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
-                                                    startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
-                                                }
-                                                mStartList.clear();
-                                                if (startPoint != null) {
-                                                    mStartList.add(startPoint);
-                                                }
-                                                double lat = info.getLatitude();
-                                                double lon = info.getLongitude();
-                                                NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
-                                                mEndList.clear();
-                                                mEndList.add(accidentPlace);
-                                                if (mStartList.isEmpty()) {
-                                                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
-                                                } else if (mEndList.isEmpty()) {
-                                                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                    head_map.setVisibility(View.GONE);
-                                                    head_map_tel_navi.setVisibility(View.VISIBLE);
-                                                    menu.setVisibility(View.VISIBLE);
-                                                    startNavi.setVisibility(View.VISIBLE);
-                                                    coursePreview.setVisibility(View.VISIBLE);
-                                                    mTts.startSpeaking("继续任务", mSynListener);
-                                                    amap.clear(true);
-                                                    float dis_moved_lastTime = sp.getFloat("dis_moved", 0.0f);
-                                                    dis_moved = dis_moved_lastTime;
-                                                    distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                                    destination.setText(info.getAddress());
-
-                                                    firstResume = true;
-
-                                                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
-
-                                                }
-
-
-                                            }
-
-
-                                        } else if (info.getOrderStatus() == 4) {//到达救援现场 还未拍照
-
-                                            NaviLatLng startPoint = null;
-                                            NaviLatLng endPoint = null;
-                                            NaviLatLng wayPoint = null;
-                                            List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
-                                            List<NaviLatLng> wayPointList = new ArrayList<NaviLatLng>();
-                                            startPoint = new NaviLatLng(info.getReal_take_latitude(), info.getReal_take_longitude());
-                                            endPoint = new NaviLatLng(info.getReal_latitude(), info.getReal_longitude());
-                                            startList.add(startPoint);
-                                            endList.add(endPoint);
-                                            Log.d("real_info", info.toString());
-                                            head_map.setVisibility(View.GONE);
-                                            head_map_tel_navi.setVisibility(View.VISIBLE);
-                                            menu.setVisibility(View.VISIBLE);
-                                            startNavi.setVisibility(View.GONE);
-                                            coursePreview.setVisibility(View.GONE);
-                                            mTts.startSpeaking("到达救援现场，请按要求拍摄照片", mSynListener);
-                                            amap.clear(true);
-                                            float dis_moved_lastTime = (float) info.getReal_dis();
-                                            distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
-                                            destination.setText(info.getReal_address());
-                                            mapView.setVisibility(View.GONE);
-                                            mAMapNaviView.setVisibility(View.VISIBLE);
-                                            shouldNotStartNavi = true;
-                                            mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
-
-
-                                        } else if (info.getOrderStatus() == 31) {//已经拍照 上传照片 订单完成 未评价
-
-                                            Intent intent = new Intent(getActivity().getApplicationContext(), AppraiseActivity.class);
-                                            getActivity().startActivity(intent);
-
-                                        } else if (info.getOrderStatus() == 32) {//等待支付
-
-                                            Intent intent = new Intent(getActivity().getApplicationContext(), PayActivity.class);
-                                            startActivity(intent);
-                                        }
-
-                                    }
-
-                                    if(info.getIsPaodan()==1){
-
-                                        cancelOrder.setVisibility(View.GONE);
-                                        cancelOrder.setClickable(false);
+                                        Toast.makeText(getActivity().getApplicationContext(),"网络信号不好,相关信息获取失败,请重启APP",Toast.LENGTH_SHORT).show();
                                     }
 
 
                                 } catch (Exception e) {
 
-
+                                    Toast.makeText(getActivity().getApplicationContext(),"网络信号不好,相关信息获取失败,请重启APP",Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -933,6 +944,9 @@ public class FragmentForWork extends BasicFragment {
         options.setTilt(0);
         options.setLayoutVisible(false);
         options.setRouteListButtonShow(true);
+        options.setTrafficLine(false);
+        //options.setTrafficLayerEnabled(false);
+        options.setTrafficBarEnabled(false);
         //  options.setReCalculateRouteForYaw(false);//设置偏航时是否重新计算路径
         //options.setLayoutVisible(true);
         mAMapNaviView.setViewOptions(options);
@@ -963,7 +977,7 @@ public class FragmentForWork extends BasicFragment {
         mapViewForShow = (TextureMapView) view.findViewById(R.id.mapviewForShow);
         mapViewForShow.onCreate(savedInstanceState);// 此方法必须重写
 
-        mRouteOverLay = new RouteOverLay(amap, null);
+       // mRouteOverLay = new RouteOverLay(amap, null);
 
         mStartList.add(mStartLatlng);
 
@@ -1219,7 +1233,7 @@ public class FragmentForWork extends BasicFragment {
                                 address.setText(s_destination);
                             }
 
-                            mTts.startSpeaking("您有新的" + s_type + "抛单,一口价"+newOrder_bean.getOnePrice()+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+                           mTts.startSpeaking("您有新的" + s_type + "抛单,一口价"+newOrder_bean.getOnePrice()+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
 
                         }
 
@@ -1284,12 +1298,13 @@ public class FragmentForWork extends BasicFragment {
                     startActivity(intent);
                     getActivity().finish();
                 }else if(msg.what==11){
-
                     mTts.startSpeaking("订单已被后台取消", mSynListener);
                 }else if(msg.what ==12){
-                    MyApplication.application.isAfterOrder = false;
-                    mTts.startSpeaking("订单完成，请继续接单", mSynListener);
+                    //MyApplication.application.isAfterOrder = false;
 
+                    if(!canGetNewOrder){
+                       mTts.startSpeaking("订单完成，请继续接单", mSynListener);
+                    }
                 }
             }
         };
@@ -1470,8 +1485,8 @@ public class FragmentForWork extends BasicFragment {
 
             Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
                     + distance_moved.getText() + "---" + dis_moved);
-            Toast.makeText(getActivity(),timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
-                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(),timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+//                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
             timeStamp = timeNow;
             latLngs.add(currentLatLng);
             trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
@@ -1522,8 +1537,8 @@ public class FragmentForWork extends BasicFragment {
 
                     latLngs.add(currentLatLng);
                     // Toast.makeText(getActivity(), "navi listener ---" + currentLatLng.longitude + "---" + currentLatLng.latitude, Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(),"GPS"+"---"+timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
-                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(),"GPS"+"---"+timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+//                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
                     timeStamp = timeNow;
                     trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
                     oiUtil.writeJWD(currentLatLng.latitude,currentLatLng.longitude,oiUtil.path_drag);
@@ -1541,7 +1556,7 @@ public class FragmentForWork extends BasicFragment {
 
         } else {
 
-            mTts.startSpeaking(arg1, mSynListener);
+           mTts.startSpeaking(arg1, mSynListener);
 
         }
 

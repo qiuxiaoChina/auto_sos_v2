@@ -134,3 +134,20 @@ public static int e(...);
 
 
 }
+-keep class com.iflytek.**{*;}
+
+#高德相关混淆文件
+#3D 地图
+-keep class com.amap.api.maps.**{*;}
+-keep class com.autonavi.amap.mapcore.*{*;}
+#2D地图
+-keep class com.amap.api.maps2d.**{*;}
+-keep class com.amap.api.mapcore2d.**{*;}
+#Location
+-keep   class com.amap.api.location.**{*;}
+-keep   class com.aps.**{*;}
+#Service
+-keep class com.amap.api.services.**{*;}
+#导航
+-keep class com.amap.api.navi.**{*;}
+-keep class com.autonavi.**{*;}

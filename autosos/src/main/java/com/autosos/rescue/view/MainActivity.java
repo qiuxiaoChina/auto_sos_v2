@@ -81,7 +81,8 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         super.onCreate(savedInstanceState);
         PushManager.getInstance().initialize(this.getApplicationContext());
         // SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID +"=5754c9e7"+ SpeechConstant.FORCE_LOGIN +"=true");
-        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=577077cd," + SpeechConstant.FORCE_LOGIN + "=true");
+        //SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=577077cd," + SpeechConstant.FORCE_LOGIN + "=true");
+        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=577077cd");
         setContentView(R.layout.activity_main3);
         instance = this;
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED

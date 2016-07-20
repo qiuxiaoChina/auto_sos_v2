@@ -4,7 +4,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class Constants {
-    public static final boolean DEBUG = true; // 开发模式是 true 的时候可以动态修改服务器地址
+    public static final boolean DEBUG = false; // 开发模式是 true 的时候可以动态修改服务器地址
     public static final String APP_VERSION = "2.0.0.8";
     public static final int VERSION_CODE = 109;
     //public static String HOST = "http://api.auto-sos.com.cn/";

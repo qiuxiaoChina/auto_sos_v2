@@ -15,7 +15,7 @@
         android:gravity="center_horizontal"
         android:id="@+id/version"
         android:text="442425425"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="40dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
