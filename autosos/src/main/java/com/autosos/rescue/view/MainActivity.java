@@ -1,61 +1,27 @@
 package com.autosos.rescue.view;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTabHost;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.navi.AMapNaviListener;
-import com.amap.api.navi.model.AMapLaneInfo;
-import com.amap.api.navi.model.AMapNaviCross;
-import com.amap.api.navi.model.AMapNaviInfo;
-import com.amap.api.navi.model.AMapNaviLocation;
-import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
-import com.amap.api.navi.model.AimLessModeCongestionInfo;
-import com.amap.api.navi.model.AimLessModeStat;
-import com.amap.api.navi.model.NaviInfo;
-import com.autonavi.tbt.TrafficFacilityInfo;
 import com.autosos.rescue.R;
-import com.autosos.rescue.application.MyApplication;
 import com.autosos.rescue.fragment.FragmentForMine;
 import com.autosos.rescue.fragment.FragmentForOrder;
 import com.autosos.rescue.fragment.FragmentForSetting;
 import com.autosos.rescue.fragment.FragmentForWork;
-import com.autosos.rescue.util.MyService_one;
-import com.autosos.rescue.util.MyService_two;
-import com.autosos.rescue.viewpager.ContentViewPager;
-import com.autosos.rescue.widget.CatchException;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechUtility;
 import com.igexin.sdk.PushManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends FragmentActivity implements TabHost.OnTabChangeListener {
 
@@ -96,7 +62,7 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
 //
 //        Intent i2= new Intent(MainActivity.this,MyService_two.class);
 //        startService(i2);
-
+       //  Subprocess.create(this,MyProcess.class);
 
     }
 

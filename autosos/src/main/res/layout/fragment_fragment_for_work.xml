@@ -138,12 +138,12 @@
 
         />
 
-    <com.amap.api.maps.TextureMapView
-        android:id="@+id/mapviewForShow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/head_map"
-        android:visibility="gone" />
+    <!--<com.amap.api.maps.TextureMapView-->
+        <!--android:id="@+id/mapviewForShow"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@+id/head_map"-->
+        <!--android:visibility="gone" />-->
 
 
 

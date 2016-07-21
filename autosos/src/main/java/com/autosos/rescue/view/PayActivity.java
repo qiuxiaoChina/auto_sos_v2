@@ -39,6 +39,11 @@ import com.autosos.rescue.task.NewHttpPutTask;
 import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.CreateQRImage;
 import com.autosos.rescue.util.JSONUtil;
+import com.iflytek.cloud.SpeechConstant;
+import com.iflytek.cloud.SpeechError;
+import com.iflytek.cloud.SpeechSynthesizer;
+import com.iflytek.cloud.SpeechUtility;
+import com.iflytek.cloud.SynthesizerListener;
 import com.iflytek.thridparty.G;
 import com.umeng.analytics.MobclickAgent;
 
@@ -72,11 +77,12 @@ public class PayActivity extends Activity implements View.OnClickListener{
     private TextView tv_price_title;
     private View hint_pay_detail;
     private  Button btn_payCash;
-
+    private SpeechSynthesizer mTts = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+        SpeechUtility.createUtility(getApplicationContext(), SpeechConstant.APPID + "=577077cd");
         btn_weixinpay = (Button) findViewById(R.id.btn_weixinpay);
         btn_weixinpay.setOnClickListener(this);
 
@@ -125,6 +131,17 @@ public class PayActivity extends Activity implements View.OnClickListener{
         };
 
         time_clock.schedule(task_clock, 0, 500);
+
+        if (mTts == null) {
+            //1.创建SpeechSynthesizer对象, 第二个参数：本地合成时传InitListener
+            mTts = SpeechSynthesizer.createSynthesizer(getApplicationContext(), null);
+            //2.合成参数设置，详见《科大讯飞MSC API手册(Android)》SpeechSynthesizer 类
+            mTts.setParameter(SpeechConstant.VOICE_NAME, "xiaoqi");//设置发音人
+            mTts.setParameter(SpeechConstant.SPEED, "50");//设置语速
+            mTts.setParameter(SpeechConstant.VOLUME, "80");//设置音量，范围0~100
+            mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
+            // mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
+        }
     }
 
     //按返回键 没有办法返回
@@ -165,8 +182,10 @@ public class PayActivity extends Activity implements View.OnClickListener{
                                         sharedPreference2.edit().remove("orderInfo").commit();
 //                                        SharedPreferences sharedPreference3 = getSharedPreferences("isAfterOrder", Context.MODE_PRIVATE);
 //                                        sharedPreference3.edit().putBoolean("isAfterOrder",true).commit();
+                                        mHandler.sendEmptyMessage(12);
+
                                         MyApplication.application.isAfterOrder = true;
-                                        finish();
+                                       // finish();
                                     } else {
 
                                     }
@@ -192,38 +211,13 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     erweima_layout.setVisibility(View.VISIBLE);
                     Bitmap logo_weixin = BitmapFactory.decodeResource(PayActivity.this.getResources(), R.drawable.icon45_200x200);
                     CreateQRImage.createImage(orderInfo.getPay_ewm(), qr_image, logo_weixin);
-//                    if(time_clock == null){
-//
-//                        time_clock = new Timer();
-//                    }
-//                    TimerTask task_clock = new TimerTask() {
-//                        public void run() {
-//                            Message msg = new Message();
-//                            mHandler.sendEmptyMessage(0);
-//                        }
-//                    };
-//
-//                    time_clock.schedule(task_clock, 0, 500);
+
                 }
 
                 break;
             case R.id.close_erweima:
                 erweima_layout.setVisibility(View.GONE);
-//                try {
-//
-//                    if (time_clock != null) {
-//
-//                        time_clock.cancel();
-//                    }
-//
-//                } catch (Exception e) {
-//
-//                    time_clock = null;
-//
-//                }finally {
-//
-//                    time_clock = null;
-//                }
+
                 break;
             case R.id.check_detail:
                 DisplayMetrics dm =getResources().getDisplayMetrics();
@@ -272,7 +266,8 @@ public class PayActivity extends Activity implements View.OnClickListener{
                                         SharedPreferences sharedPreference2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
                                         sharedPreference2.edit().remove("orderInfo").commit();
                                         MyApplication.application.isAfterOrder = true;
-                                        finish();
+                                        mHandler.sendEmptyMessage(12);
+                                       // finish();
                                     }else{
 
                                        Toast.makeText(getApplicationContext(),"您的余额不足,请后台充值或扫码支付",Toast.LENGTH_SHORT).show();
@@ -477,6 +472,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mTts.destroy();
         unregisterReceiver(myBroadcastReciever);
         try {
 
@@ -516,7 +512,8 @@ public class PayActivity extends Activity implements View.OnClickListener{
                                     SharedPreferences sharedPreference2 = getSharedPreferences("orderInfo", Context.MODE_PRIVATE);
                                     sharedPreference2.edit().remove("orderInfo").commit();
                                     MyApplication.application.isAfterOrder = true;
-                                    finish();
+                                    mHandler.sendEmptyMessage(12);
+                                    //finish();
 
                                 } else {
 
@@ -539,6 +536,10 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     }
 
                 }).execute(String.format(Constants.CHECK_IS_PAID, orderId));
+
+            }else if(msg.what ==12){
+
+                mTts.startSpeaking("订单完成,请继续接单",mSynListener);
 
             }
 
@@ -616,5 +617,42 @@ public class PayActivity extends Activity implements View.OnClickListener{
 
 
       }
+
+
+    //合成监听器
+    private SynthesizerListener mSynListener = new SynthesizerListener() {
+
+        //会话结束回调接口，没有错误时，error为null
+        public void onCompleted(SpeechError error) {
+            finish();
+        }
+
+        //缓冲进度回调
+        //percent为缓冲进度0~100，beginPos为缓冲音频在文本中开始位置，endPos表示缓冲音频在文本中结束位置，info为附加信息。
+        public void onBufferProgress(int percent, int beginPos, int endPos, String info) {
+        }
+
+        //开始播放
+        public void onSpeakBegin() {
+        }
+
+        //暂停播放
+        public void onSpeakPaused() {
+        }
+
+        //播放进度回调
+        //percent为播放进度0~100,beginPos为播放音频在文本中开始位置，endPos表示播放音频在文本中结束位置.
+        public void onSpeakProgress(int percent, int beginPos, int endPos) {
+        }
+
+        //恢复播放回调接口
+        public void onSpeakResumed() {
+        }
+
+        //会话事件回调接口
+        public void onEvent(int arg0, int arg1, int arg2, Bundle arg3) {
+        }
+
+    };
 
     }

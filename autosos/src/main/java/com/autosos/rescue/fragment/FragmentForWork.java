@@ -1,39 +1,22 @@
 package com.autosos.rescue.fragment;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.os.Message;
-import android.os.RemoteException;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.TextViewCompat;
-import android.text.Layout;
-import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -41,61 +24,33 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
 import com.amap.api.maps.CameraUpdateFactory;
-import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
-import com.amap.api.maps.model.Circle;
-import com.amap.api.maps.model.CircleOptions;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
-import com.amap.api.maps.model.MarkerOptions;
-import com.amap.api.maps.model.MarkerOptionsCreator;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.PolygonOptions;
-import com.amap.api.maps.model.Polyline;
-import com.amap.api.maps.model.PolylineOptions;
-import com.amap.api.maps.overlay.DrivingRouteOverlay;
 import com.amap.api.navi.AMapNavi;
-import com.amap.api.navi.AMapNaviListener;
 import com.amap.api.navi.AMapNaviView;
-import com.amap.api.navi.AMapNaviViewListener;
 import com.amap.api.navi.AMapNaviViewOptions;
 import com.amap.api.navi.enums.AimLessMode;
 import com.amap.api.navi.enums.NaviType;
 import com.amap.api.navi.enums.PathPlanningStrategy;
-import com.amap.api.navi.model.AMapLaneInfo;
-import com.amap.api.navi.model.AMapNaviCross;
-import com.amap.api.navi.model.AMapNaviInfo;
 import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.navi.model.AMapNaviPath;
-import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
-import com.amap.api.navi.model.AimLessModeCongestionInfo;
-import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
-import com.amap.api.navi.view.RouteOverLay;
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.route.DrivePath;
-import com.autonavi.tbt.TrafficFacilityInfo;
 import com.autosos.rescue.Constants;
-import com.autosos.rescue.Layout.MyButton;
 import com.autosos.rescue.Layout.MyRaletiveLayout;
 import com.autosos.rescue.R;
 import com.autosos.rescue.application.MyApplication;
@@ -105,42 +60,29 @@ import com.autosos.rescue.task.HttpGetTask;
 import com.autosos.rescue.task.NewHttpPostTask;
 import com.autosos.rescue.task.NewHttpPutTask;
 import com.autosos.rescue.task.OnHttpRequestListener;
-import com.autosos.rescue.util.DensityUtil;
 import com.autosos.rescue.util.DistanceUtil;
 import com.autosos.rescue.util.JSONUtil;
 import com.autosos.rescue.util.OiUtil;
 import com.autosos.rescue.util.Session;
-import com.autosos.rescue.util.Utils;
 import com.autosos.rescue.view.AppraiseActivity;
 import com.autosos.rescue.view.LoginActivity;
-import com.autosos.rescue.view.MainActivity;
 import com.autosos.rescue.view.NewTakePhotoActivity;
-import com.autosos.rescue.view.NewUploadPhotoActivity;
 import com.autosos.rescue.view.PayActivity;
-import com.autosos.rescue.viewpager.ContentViewPager;
-import com.autosos.rescue.widget.RoundProgressBar;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
-import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
-import com.iflytek.thridparty.G;
 
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.util.logging.LogRecord;
 
 
 public class FragmentForWork extends BasicFragment {
@@ -167,7 +109,7 @@ public class FragmentForWork extends BasicFragment {
     private View menu;
     // private View startNavi;
     private View stopNavi, checkRoute;
-    TextureMapView mapView, mapViewForShow;
+    TextureMapView mapView;
     private AMap amap, amapForShow;
     // 规划线路
     //private RouteOverLay mRouteOverLay;
@@ -259,7 +201,7 @@ public class FragmentForWork extends BasicFragment {
     public void onResume() {
         super.onResume();
         mapView.onResume();
-        mapViewForShow.onResume();
+       // mapViewForShow.onResume();
         amap=null;
         init();
         setUpMap();
@@ -364,12 +306,25 @@ public class FragmentForWork extends BasicFragment {
                                         isPaodn = false;
                                         throw_price.setVisibility(View.GONE);
                                         order_type.setText(s_type + "订单");
+//                                        String s_appoint = "";
+//                                        if(newOrder_bean.getIs_appointed()==1){
+//                                            s_appoint ="指派";
+//                                        }else{
+//
+//                                            s_appoint ="内部";
+//                                        }
+
+                                        DisplayMetrics dm =getResources().getDisplayMetrics();
+                                        float density = dm.density;
                                         if(newOrder_bean.getIs_one_price()==2){
 
                                             //起步价模式
 
                                             if (serviceType == 1) {
 
+                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
+                                                layoutParam.topMargin =(int)(126*density);
+                                                trailerService.setLayoutParams(layoutParam);
                                                 trailerService.setVisibility(View.VISIBLE);
                                                 otherService.setVisibility(View.GONE);
                                                 address_tuoche1.setText(s_destination);
@@ -378,6 +333,9 @@ public class FragmentForWork extends BasicFragment {
 
                                             } else {
 
+                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
+                                                layoutParam.topMargin =(int)(126*density);
+                                                otherService.setLayoutParams(layoutParam);
                                                 trailerService.setVisibility(View.GONE);
                                                 otherService.setVisibility(View.VISIBLE);
                                                 address.setText(s_destination);
@@ -385,9 +343,7 @@ public class FragmentForWork extends BasicFragment {
                                         }else{
                                            //一口价模式
                                             throw_price.setVisibility(View.VISIBLE);
-                                            tv_throw_price.setText(newOrder_bean.getBase_price()+"");
-                                            DisplayMetrics dm =getResources().getDisplayMetrics();
-                                            float density = dm.density;
+                                            tv_throw_price.setText(((int)newOrder_bean.getBase_price())+"");
 
                                             if (serviceType == 1) {
 
@@ -420,7 +376,7 @@ public class FragmentForWork extends BasicFragment {
                                         isPaodn = true;
                                         order_type.setText(s_type + "抛单");
                                         throw_price.setVisibility(View.VISIBLE);
-                                        tv_throw_price.setText(newOrder_bean.getOnePrice()+"");
+                                        tv_throw_price.setText(((int)newOrder_bean.getOnePrice())+"");
                                         DisplayMetrics dm =getResources().getDisplayMetrics();
                                         float density = dm.density;
 
@@ -889,7 +845,7 @@ public class FragmentForWork extends BasicFragment {
     public void onPause() {
         super.onPause();
         mapView.onPause();
-        mapViewForShow.onPause();
+       // mapViewForShow.onPause();
        // amap = null;
         //mapView.setVisibility(View.GONE);
         Log.d(TAG, "pause");
@@ -903,7 +859,7 @@ public class FragmentForWork extends BasicFragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mapView.onSaveInstanceState(outState);
-        mapViewForShow.onSaveInstanceState(outState);
+        //mapViewForShow.onSaveInstanceState(outState);
     }
 
     /**
@@ -918,7 +874,7 @@ public class FragmentForWork extends BasicFragment {
         Log.i(TAG, "destroy");
         deactivate();
         mapView.onDestroy();
-        mapViewForShow.onDestroy();
+       // mapViewForShow.onDestroy();
         amap = null;
         amapForShow = null;
         mAMapNavi.stopNavi();
@@ -974,8 +930,8 @@ public class FragmentForWork extends BasicFragment {
         mapView = (TextureMapView) view.findViewById(R.id.mapview);
         mapView.onCreate(savedInstanceState);// 此方法必须重写
 
-        mapViewForShow = (TextureMapView) view.findViewById(R.id.mapviewForShow);
-        mapViewForShow.onCreate(savedInstanceState);// 此方法必须重写
+//        mapViewForShow = (TextureMapView) view.findViewById(R.id.mapviewForShow);
+//        mapViewForShow.onCreate(savedInstanceState);// 此方法必须重写
 
        // mRouteOverLay = new RouteOverLay(amap, null);
 
@@ -1150,11 +1106,23 @@ public class FragmentForWork extends BasicFragment {
                             isPaodn= false;
                             throw_price.setVisibility(View.GONE);
                             order_type.setText(s_type + "订单");
+                            String s_appoint = "";
+                            if(newOrder_bean.getIs_appointed()==1){
+
+                                s_appoint ="指派";
+                            }else{
+
+                                s_appoint ="内部";
+                            }
+                            DisplayMetrics dm =getResources().getDisplayMetrics();
+                            float density = dm.density;
                             if(newOrder_bean.getIs_one_price()==2){
 
                                 //起步价模式
                                 if (serviceType == 1) {
-
+                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
+                                    layoutParam.topMargin =(int)(126*density);
+                                    trailerService.setLayoutParams(layoutParam);
                                     trailerService.setVisibility(View.VISIBLE);
                                     otherService.setVisibility(View.GONE);
                                     address_tuoche1.setText(s_destination);
@@ -1162,20 +1130,21 @@ public class FragmentForWork extends BasicFragment {
                                     address_tuoche2.setText(s_address_tuoche2);
 
                                 } else {
-
+                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
+                                    layoutParam.topMargin =(int)(126*density);
+                                    otherService.setLayoutParams(layoutParam);
                                     trailerService.setVisibility(View.GONE);
                                     otherService.setVisibility(View.VISIBLE);
                                     address.setText(s_destination);
                                 }
 
-                                mTts.startSpeaking("您有新的" + s_type + "订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+                                mTts.startSpeaking("您有新的" +s_appoint+ s_type +"订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
 
                             }else{
                                 //一口价模式
                                 throw_price.setVisibility(View.VISIBLE);
-                                tv_throw_price.setText(newOrder_bean.getBase_price()+"");
-                                DisplayMetrics dm =getResources().getDisplayMetrics();
-                                float density = dm.density;
+                                tv_throw_price.setText(((int)newOrder_bean.getBase_price())+"");
+
 
                                 if (serviceType == 1) {
 
@@ -1198,7 +1167,7 @@ public class FragmentForWork extends BasicFragment {
                                     address.setText(s_destination);
                                 }
 
-                                mTts.startSpeaking("您有新的" + s_type + "订单,一口价"+newOrder_bean.getBase_price()+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+                                mTts.startSpeaking("您有新的" +s_appoint+ s_type + "订单,一口价,"+((int)newOrder_bean.getBase_price())+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
 
                             }
 
@@ -1208,7 +1177,7 @@ public class FragmentForWork extends BasicFragment {
                             isPaodn=true;
                             order_type.setText(s_type + "抛单");
                             throw_price.setVisibility(View.VISIBLE);
-                            tv_throw_price.setText(newOrder_bean.getOnePrice()+"");
+                            tv_throw_price.setText(((int)newOrder_bean.getOnePrice())+"");
                             DisplayMetrics dm =getResources().getDisplayMetrics();
                             float density = dm.density;
 
@@ -1233,7 +1202,7 @@ public class FragmentForWork extends BasicFragment {
                                 address.setText(s_destination);
                             }
 
-                           mTts.startSpeaking("您有新的" + s_type + "抛单,一口价"+newOrder_bean.getOnePrice()+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+                           mTts.startSpeaking("您有新的" + s_type + "抛单,一口价,"+((int)newOrder_bean.getOnePrice())+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
 
                         }
 
@@ -1264,7 +1233,7 @@ public class FragmentForWork extends BasicFragment {
                     getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                     mAMapNaviView.setVisibility(View.GONE);
                     mapView.setVisibility(View.VISIBLE);
-                    mapViewForShow.setVisibility(View.GONE);
+                    //mapViewForShow.setVisibility(View.GONE);
                     head_map.setVisibility(View.VISIBLE);
                     head_map_tel_navi.setVisibility(View.GONE);
                     menu.setVisibility(View.GONE);
@@ -1333,7 +1302,7 @@ public class FragmentForWork extends BasicFragment {
 
         if (amapForShow == null) {
             Log.d(TAG, "get AmapForShow");
-            amapForShow = mapViewForShow.getMap();
+           // amapForShow = mapViewForShow.getMap();
         }
     }
 
@@ -1353,6 +1322,7 @@ public class FragmentForWork extends BasicFragment {
         timeStamp = 0l;
         dis_moved = 0.0f;
         last_distance = 0.0f;
+       // Subprocess.create(getActivity().getApplicationContext(), Subpro.class);
         Log.d(TAG, "create");
 
     }
@@ -1856,7 +1826,7 @@ public class FragmentForWork extends BasicFragment {
                 newOrder.setVisibility(View.GONE);
                 head_map.setVisibility(View.VISIBLE);
                 getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
-                mTts.startSpeaking("您已放弃订单", mSynListener);
+                mTts.startSpeaking("您已拒绝这个订单", mSynListener);
                 SharedPreferences sp = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                 sp.edit().remove("newOrderComing").commit();
                 canGetNewOrder = true;
@@ -2281,7 +2251,7 @@ public class FragmentForWork extends BasicFragment {
                         getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                         mAMapNaviView.setVisibility(View.GONE);
                         mapView.setVisibility(View.VISIBLE);
-                        mapViewForShow.setVisibility(View.GONE);
+                       // mapViewForShow.setVisibility(View.GONE);
                         head_map.setVisibility(View.VISIBLE);
                         head_map_tel_navi.setVisibility(View.GONE);
                         menu.setVisibility(View.GONE);
