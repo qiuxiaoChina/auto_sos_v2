@@ -94,6 +94,9 @@
                 android:layout_marginLeft="17dp"
                 android:background="#EEEEEE" />
 
+
+
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
@@ -135,7 +138,91 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
+                android:orientation="horizontal"
                 android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="服务类型"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+              <LinearLayout
+                  android:layout_width="300dp"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal"
+                  android:gravity="center_horizontal">
+
+                <CheckBox
+                    android:id="@+id/tuoche"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:text="拖车"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <CheckBox
+                    android:id="@+id/dadian"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:text="搭电"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+
+                <CheckBox
+                    android:id="@+id/huantai"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:text="换胎"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <CheckBox
+                    android:id="@+id/kuaixiu"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="24dp"
+                    android:gravity="center"
+                    android:text="快修"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+              </LinearLayout>
+
+
+            </RelativeLayout>
+
+
+            <View
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE" />
+
+
+            <RelativeLayout
+                android:id="@+id/rl_tonage"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -173,15 +260,19 @@
 
 
             <View
+                android:id="@+id/line1"
                 android:layout_width="344dp"
                 android:layout_height="1dp"
                 android:layout_marginLeft="17dp"
-                android:background="#EEEEEE" />
+                android:background="#EEEEEE"
+                android:visibility="gone"/>
 
             <RelativeLayout
+                android:id="@+id/rl_ground"
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -224,15 +315,19 @@
 
 
             <View
+                android:id="@+id/line2"
                 android:layout_width="344dp"
                 android:layout_height="1dp"
                 android:layout_marginLeft="17dp"
-                android:background="#EEEEEE" />
+                android:background="#EEEEEE"
+                android:visibility="gone"/>
 
             <RelativeLayout
+                android:id="@+id/rl_run"
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -274,16 +369,20 @@
 
 
             <View
+                android:id="@+id/line3"
                 android:layout_width="344dp"
                 android:layout_height="1dp"
                 android:layout_marginLeft="17dp"
-                android:background="#EEEEEE" />
+                android:background="#EEEEEE"
+                android:visibility="gone"/>
 
             <RelativeLayout
+                android:id="@+id/rl_arm"
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -325,90 +424,15 @@
 
 
             <View
+                android:id="@+id/line4"
                 android:layout_width="344dp"
                 android:layout_height="1dp"
                 android:layout_marginLeft="17dp"
-                android:background="#EEEEEE" />
+                android:background="#EEEEEE"
+                android:visibility="gone"/>
 
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="51dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="17dp"
-                    android:text="服务类型"
-                    android:textColor="#333333"
-                    android:textSize="16dp" />
-
-
-                <CheckBox
-                    android:id="@+id/tuoche"
-                    android:layout_width="70dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="100dp"
-                    android:gravity="center"
-                    android:text="拖车"
-                    android:textColor="#333333"
-                    android:textSize="16dp" />
-
-                <CheckBox
-                    android:id="@+id/dadian"
-                    android:layout_width="70dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
-                    android:gravity="center"
-                    android:text="搭电"
-                    android:textColor="#333333"
-                    android:textSize="16dp" />
-
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="51dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-
-                <CheckBox
-                    android:id="@+id/huantai"
-                    android:layout_width="70dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="100dp"
-                    android:gravity="center"
-                    android:text="换胎"
-                    android:textColor="#333333"
-                    android:textSize="16dp" />
-
-                <CheckBox
-                    android:id="@+id/kuaixiu"
-                    android:layout_width="70dp"
-                    android:layout_height="24dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
-                    android:gravity="center"
-                    android:text="快修"
-                    android:textColor="#333333"
-                    android:textSize="16dp" />
-
-
-            </RelativeLayout>
-
-
-            <View
-                android:layout_width="344dp"
-                android:layout_height="1dp"
-                android:layout_marginLeft="17dp"
-                android:background="#EEEEEE" />
 
             <Button
                 android:id="@+id/detail_confirm"

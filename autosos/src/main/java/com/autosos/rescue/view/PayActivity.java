@@ -369,7 +369,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
                         layoutParam.topMargin =(int)(30*density);
                         hint_pay_detail.setLayoutParams(layoutParam);
                         check_detail.setVisibility(View.GONE);
-                        pay_amount.setText("代收"+orderInfo.getPay_amount()+"元");
+                        pay_amount.setText("代收"+((int)orderInfo.getPay_amount())+"元");
 
                     }else{
 
@@ -381,9 +381,9 @@ public class PayActivity extends Activity implements View.OnClickListener{
 
                         }else{
 
-                            tv_price_title.setText("起步价(15km)");
+                            tv_price_title.setText("起步价("+orderInfo.getStart_km()+"km)");
                         }
-                        pay_amount.setText(orderInfo.getPay_amount()+"元");
+                        pay_amount.setText(((int)orderInfo.getPay_amount())+"元");
                         more_amount.setText("+"+orderInfo.getMore_amount()+"元");
                         if(orderInfo.getPay_amount()==0){
 
@@ -538,7 +538,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
                 }).execute(String.format(Constants.CHECK_IS_PAID, orderId));
 
             }else if(msg.what ==12){
-
+                progressBar.setVisibility(View.VISIBLE);
                 mTts.startSpeaking("订单完成,请继续接单",mSynListener);
 
             }
@@ -624,6 +624,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
 
         //会话结束回调接口，没有错误时，error为null
         public void onCompleted(SpeechError error) {
+            progressBar.setVisibility(View.GONE);
             finish();
         }
 

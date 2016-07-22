@@ -262,7 +262,7 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
 
         if (orderInfo.getPrice() != null) {
 
-            holder.price.setText(orderInfo.getPrice() + "元");
+            holder.price.setText((int)(Double.parseDouble(orderInfo.getPrice())) + "元");
         }
 
         holder.date.setText(orderInfo.getDate());

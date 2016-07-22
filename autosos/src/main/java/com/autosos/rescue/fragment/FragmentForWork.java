@@ -306,13 +306,6 @@ public class FragmentForWork extends BasicFragment {
                                         isPaodn = false;
                                         throw_price.setVisibility(View.GONE);
                                         order_type.setText(s_type + "订单");
-//                                        String s_appoint = "";
-//                                        if(newOrder_bean.getIs_appointed()==1){
-//                                            s_appoint ="指派";
-//                                        }else{
-//
-//                                            s_appoint ="内部";
-//                                        }
 
                                         DisplayMetrics dm =getResources().getDisplayMetrics();
                                         float density = dm.density;

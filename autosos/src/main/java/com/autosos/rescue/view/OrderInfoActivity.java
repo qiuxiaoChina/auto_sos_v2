@@ -92,7 +92,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
                         layoutParam.topMargin =(int)(80*density);
                         pay_amount.setLayoutParams(layoutParam);
                         check_amount.setVisibility(View.GONE);
-                        pay_amount.setText("代收"+orderInfo.getPay_amount()+"元");
+                        pay_amount.setText("代收"+((int)orderInfo.getPay_amount())+"元");
 
                         if (orderInfo.getDest() != null) {
                             destination1.setText(orderInfo.getAddress());
@@ -110,9 +110,9 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
 
                         }else{
 
-                            tv_price_title.setText("起步价(15km)");
+                            tv_price_title.setText("起步价("+orderInfo.getStart_km()+"km)");
                         }
-                        pay_amount.setText(orderInfo.getPay_amount()+"元");
+                        pay_amount.setText(((int)orderInfo.getPay_amount())+"元");
                         more_amount.setText("+"+orderInfo.getMore_amount()+"元");
                         if (orderInfo.getDest() != null) {
                             destination1.setText(orderInfo.getAddress());
