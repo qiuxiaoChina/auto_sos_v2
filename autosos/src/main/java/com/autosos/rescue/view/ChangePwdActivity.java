@@ -28,7 +28,7 @@ public class ChangePwdActivity extends Activity implements View.OnClickListener{
     private ImageView back_button;
     private Button changePwd;
     private EditText password,newpassword,newpassword1;
-    private ProgressBar progressBar;
+    private View progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +43,7 @@ public class ChangePwdActivity extends Activity implements View.OnClickListener{
         newpassword = (EditText) findViewById(R.id.new_password);
         newpassword1 = (EditText) findViewById(R.id.new_password1);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar =  findViewById(R.id.progressBar);
     }
 
     @Override

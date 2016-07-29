@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.TouchDelegate;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.autosos.rescue.R;
 
@@ -34,6 +36,7 @@ public class FeedBackActivity extends Activity implements View.OnClickListener{
                 finish();
                 break;
             case R.id.btn_feedback:
+                Toast.makeText(this,"此功能正在开发,敬请期待",Toast.LENGTH_SHORT).show();
                 break;
 
         }

@@ -141,16 +141,16 @@
 
     </RelativeLayout>
     <RelativeLayout
+        android:id="@+id/service_info"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@drawable/column_background2"
-        android:visibility="gone">
+        android:background="@drawable/column_background2">
 
         <TextView
             android:layout_marginLeft="17dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="账户余额"
+            android:text="服务信息管理"
             android:textColor="#333333"
             android:textSize="16dp"
             android:layout_centerVertical="true"/>

@@ -50,6 +50,12 @@ import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.navi.model.AMapNaviPath;
 import com.amap.api.navi.model.NaviInfo;
 import com.amap.api.navi.model.NaviLatLng;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.route.DrivePath;
+import com.amap.api.services.route.DriveRouteResult;
+import com.amap.api.services.route.DriveStep;
+import com.amap.api.services.route.RouteSearch;
+import com.amap.api.services.share.ShareSearch;
 import com.autosos.rescue.Constants;
 import com.autosos.rescue.Layout.MyRaletiveLayout;
 import com.autosos.rescue.R;
@@ -60,6 +66,7 @@ import com.autosos.rescue.task.HttpGetTask;
 import com.autosos.rescue.task.NewHttpPostTask;
 import com.autosos.rescue.task.NewHttpPutTask;
 import com.autosos.rescue.task.OnHttpRequestListener;
+import com.autosos.rescue.util.AddPath;
 import com.autosos.rescue.util.DistanceUtil;
 import com.autosos.rescue.util.JSONUtil;
 import com.autosos.rescue.util.OiUtil;
@@ -72,8 +79,10 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 import com.iflytek.cloud.SynthesizerListener;
+import com.iflytek.thridparty.G;
 
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -83,6 +92,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class FragmentForWork extends BasicFragment {
@@ -114,7 +124,7 @@ public class FragmentForWork extends BasicFragment {
     // 规划线路
     //private RouteOverLay mRouteOverLay;
 
-    private  ArrayList<LatLng> latLngs = null;
+    private ArrayList<LatLng> latLngs = null;
     private UiSettings mUiSettings;
     private Marker marker;
     private Button startNavi, coursePreview, cancelOrder;
@@ -151,10 +161,10 @@ public class FragmentForWork extends BasicFragment {
 
 
     //根据时间排轨迹点 通过onLocationChange实时补充
-    private long timeStamp ;
+    private long timeStamp;
     private float dis_moved;
     private float last_distance;
-    private String trace_data = "";
+    //private String trace_data = "";
 
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
@@ -173,6 +183,7 @@ public class FragmentForWork extends BasicFragment {
     private ImageView tel_customer1;
     private Button tel_customer2;
     private String owner_mobile;
+    private Timer close_timer = null;
 
     public static Fragment newInstance() {
         if (fragment == null) {
@@ -201,16 +212,17 @@ public class FragmentForWork extends BasicFragment {
     public void onResume() {
         super.onResume();
         mapView.onResume();
-       // mapViewForShow.onResume();
-        amap=null;
+        // mapViewForShow.onResume();
+        amap = null;
         init();
         setUpMap();
 //        SharedPreferences sharedPreference3 = getActivity().getSharedPreferences("isAfterOrder", Context.MODE_PRIVATE);
 //        isAfterOrder =  sharedPreference3.getBoolean("isAfterOrder",false);
 //        sharedPreference3.edit().remove("isAfterOrder").commit();
-        Log.d("afterOrder",MyApplication.application.isAfterOrder+"");
-        if( MyApplication.application.isAfterOrder){
-            Log.d("afterOrder","ok");
+        Log.d("afterOrder", MyApplication.application.isAfterOrder + "");
+        if (MyApplication.application.isAfterOrder) {
+            Log.d("afterOrder", "ok");
+            MyApplication.application.canGetNeworder = true;
             canGetNewOrder = true;
             getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
             head_map.setVisibility(View.VISIBLE);
@@ -228,9 +240,9 @@ public class FragmentForWork extends BasicFragment {
                     MyApplication.application.isAfterOrder = false;
                 }
             }).start();
-          //  handler.sendEmptyMessage(12);
+            //  handler.sendEmptyMessage(12);
 
-        }else {
+        } else {
 
 
         }
@@ -251,7 +263,8 @@ public class FragmentForWork extends BasicFragment {
                         handler.sendEmptyMessage(1);
                         progressBar.setVisibility(View.VISIBLE);
 
-                    } else if (jsonObject.getInt("result") == 2) {//在线
+                    } else if (jsonObject.getInt("result") == 2) {
+                        //在线
 
                         isOnline = true;
                         switch_online.setText("在线");
@@ -261,12 +274,12 @@ public class FragmentForWork extends BasicFragment {
                         boolean newOrderComing = sp1.getBoolean("newOrderComing", false);
                         firstResume = true;
                         if (newOrderComing) {
-                            Log.d("working_status","1");
+                            Log.d("working_status", "1");
                             SharedPreferences sp3 = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
                             String s_order = sp3.getString("order", null);
                             JSONObject order;
                             if (s_order != null) {
-                                Log.d("working_status","2");
+                                Log.d("working_status", "2");
                                 Animation animation = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
                                         R.anim.show);
                                 newOrder.setVisibility(View.VISIBLE);
@@ -302,21 +315,21 @@ public class FragmentForWork extends BasicFragment {
 
                                     }
 
-                                    if(newOrder_bean.getIsPaodan()==0){
+                                    if (newOrder_bean.getIsPaodan() == 0) {
                                         isPaodn = false;
                                         throw_price.setVisibility(View.GONE);
                                         order_type.setText(s_type + "订单");
 
-                                        DisplayMetrics dm =getResources().getDisplayMetrics();
+                                        DisplayMetrics dm = getResources().getDisplayMetrics();
                                         float density = dm.density;
-                                        if(newOrder_bean.getIs_one_price()==2){
+                                        if (newOrder_bean.getIs_one_price() == 2) {
 
                                             //起步价模式
 
                                             if (serviceType == 1) {
 
                                                 ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
-                                                layoutParam.topMargin =(int)(126*density);
+                                                layoutParam.topMargin = (int) (126 * density);
                                                 trailerService.setLayoutParams(layoutParam);
                                                 trailerService.setVisibility(View.VISIBLE);
                                                 otherService.setVisibility(View.GONE);
@@ -326,22 +339,22 @@ public class FragmentForWork extends BasicFragment {
 
                                             } else {
 
-                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
-                                                layoutParam.topMargin =(int)(126*density);
+                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) otherService.getLayoutParams();
+                                                layoutParam.topMargin = (int) (126 * density);
                                                 otherService.setLayoutParams(layoutParam);
                                                 trailerService.setVisibility(View.GONE);
                                                 otherService.setVisibility(View.VISIBLE);
                                                 address.setText(s_destination);
                                             }
-                                        }else{
-                                           //一口价模式
+                                        } else {
+                                            //一口价模式
                                             throw_price.setVisibility(View.VISIBLE);
-                                            tv_throw_price.setText(((int)newOrder_bean.getBase_price())+"");
+                                            tv_throw_price.setText(((int) newOrder_bean.getBase_price()) + "");
 
                                             if (serviceType == 1) {
 
                                                 ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
-                                                layoutParam.topMargin =(int)(170*density);
+                                                layoutParam.topMargin = (int) (170 * density);
                                                 trailerService.setLayoutParams(layoutParam);
                                                 trailerService.setVisibility(View.VISIBLE);
                                                 otherService.setVisibility(View.GONE);
@@ -351,32 +364,30 @@ public class FragmentForWork extends BasicFragment {
 
                                             } else {
 
-                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
-                                                layoutParam.topMargin =(int)(170*density);
+                                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) otherService.getLayoutParams();
+                                                layoutParam.topMargin = (int) (170 * density);
                                                 otherService.setLayoutParams(layoutParam);
                                                 trailerService.setVisibility(View.GONE);
                                                 otherService.setVisibility(View.VISIBLE);
                                                 address.setText(s_destination);
                                             }
-
 
 
                                         }
 
 
-
-                                    }else{
+                                    } else {
                                         isPaodn = true;
                                         order_type.setText(s_type + "抛单");
                                         throw_price.setVisibility(View.VISIBLE);
-                                        tv_throw_price.setText(((int)newOrder_bean.getOnePrice())+"");
-                                        DisplayMetrics dm =getResources().getDisplayMetrics();
+                                        tv_throw_price.setText(((int) newOrder_bean.getOnePrice()) + "");
+                                        DisplayMetrics dm = getResources().getDisplayMetrics();
                                         float density = dm.density;
 
                                         if (serviceType == 1) {
 
                                             ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
-                                            layoutParam.topMargin =(int)(170*density);
+                                            layoutParam.topMargin = (int) (170 * density);
                                             trailerService.setLayoutParams(layoutParam);
                                             trailerService.setVisibility(View.VISIBLE);
                                             otherService.setVisibility(View.GONE);
@@ -386,8 +397,8 @@ public class FragmentForWork extends BasicFragment {
 
                                         } else {
 
-                                            ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
-                                            layoutParam.topMargin =(int)(170*density);
+                                            ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) otherService.getLayoutParams();
+                                            layoutParam.topMargin = (int) (170 * density);
                                             otherService.setLayoutParams(layoutParam);
                                             trailerService.setVisibility(View.GONE);
                                             otherService.setVisibility(View.VISIBLE);
@@ -408,6 +419,7 @@ public class FragmentForWork extends BasicFragment {
 
 
                     } else if (jsonObject.getInt("result") == 3) {//工作状态
+                        progressBar.setVisibility(View.VISIBLE);
                         isOnline = true;
                         switch_online.setText("在线");
                         switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.on_line));
@@ -418,7 +430,7 @@ public class FragmentForWork extends BasicFragment {
                         new HttpGetTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {//获取订单详情
                             @Override
                             public void onRequestCompleted(Object obj) {
-                                info =null;
+                                info = null;
                                 JSONObject jsonObject;
                                 try {
                                     Log.d("working_status", obj.toString());
@@ -429,7 +441,8 @@ public class FragmentForWork extends BasicFragment {
                                     order_id = info.getOrderId();
                                     owner_mobile = info.getOwnerMobile();
                                     Log.d("working_status", info.getServiceType() + "---" + info.getOrderStatus());
-                                    if(info!=null) {
+                                    progressBar.setVisibility(View.GONE);
+                                    if (info != null) {
                                         if (info.getServiceType() == 1) {
                                             //拖车服务
 
@@ -437,21 +450,21 @@ public class FragmentForWork extends BasicFragment {
                                                 //已经接单
                                                 if (!firstResume) {
                                                     String trace = oiUtil.readJWD(oiUtil.path_drag);
-                                                    NaviLatLng startPoint = null;
-                                                    if (trace != null) {
-                                                        String[] array_trace = trace.trim().split("\\|");
-                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
-                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
-                                                    }
-                                                    mStartList.clear();
-                                                    if (startPoint != null) {
-                                                        mStartList.add(startPoint);
-                                                    } else {
-                                                        if (mStartLatlng != null) {
+//                                                    NaviLatLng startPoint = null;
+//                                                    if (trace != null) {
+//                                                        String[] array_trace = trace.trim().split("\\|");
+//                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
+//                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
+//                                                    }
+//                                                    mStartList.clear();
+//                                                    if (startPoint != null) {
+//                                                        mStartList.add(startPoint);
+//                                                    } else {
+                                                    if (mStartLatlng != null) {
 
-                                                            mStartList.add(mStartLatlng);
-                                                        }
+                                                        mStartList.add(mStartLatlng);
                                                     }
+                                                    //  }
                                                     double lat = info.getLatitude();
                                                     double lon = info.getLongitude();
                                                     NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
@@ -475,7 +488,7 @@ public class FragmentForWork extends BasicFragment {
                                                         distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
                                                         destination.setText(info.getAddress());
                                                         firstResume = true;
-                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
                                                     }
                                                 }
@@ -506,7 +519,7 @@ public class FragmentForWork extends BasicFragment {
                                                 mapView.setVisibility(View.GONE);
                                                 mAMapNaviView.setVisibility(View.VISIBLE);
                                                 shouldNotStartNavi = true;
-                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
 
                                             } else if (info.getOrderStatus() == 5) {
@@ -528,16 +541,16 @@ public class FragmentForWork extends BasicFragment {
                                                 menu.setVisibility(View.VISIBLE);
                                                 startNavi.setVisibility(View.GONE);
                                                 coursePreview.setVisibility(View.GONE);
-                                                mTts.startSpeaking("请按要求拍摄照片,并开始拖车", mSynListener);
+                                                mTts.startSpeaking("请把事故车辆挪上拖车后,按要求拍摄照片", mSynListener);
                                                 amap.clear(true);
                                                 float dis_moved_lastTime = (float) info.getReal_dis();
                                                 distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
                                                 destination.setText(info.getReal_address());
                                                 mapView.setVisibility(View.GONE);
                                                 mAMapNaviView.setVisibility(View.VISIBLE);
-                                                tv_take_photo.setText("拍摄照片,开始拖车");
+                                                tv_take_photo.setText("拍摄照片");
                                                 shouldNotStartNavi = true;
-                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
                                             } else if (info.getOrderStatus() == 11) {
 
@@ -558,38 +571,39 @@ public class FragmentForWork extends BasicFragment {
                                                 menu.setVisibility(View.VISIBLE);
                                                 startNavi.setVisibility(View.GONE);
                                                 coursePreview.setVisibility(View.GONE);
-                                                mTts.startSpeaking("请按要求拍摄照片,并开始拖车", mSynListener);
+                                                mTts.startSpeaking("请把事故车辆挪上拖车后,按要求拍摄照片", mSynListener);
                                                 amap.clear(true);
                                                 float dis_moved_lastTime = (float) info.getReal_dis();
                                                 distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
                                                 destination.setText(info.getReal_address());
                                                 mapView.setVisibility(View.GONE);
                                                 mAMapNaviView.setVisibility(View.VISIBLE);
-                                                tv_take_photo.setText("拍摄照片,开始拖车");
+                                                cancelOrder.setVisibility(View.GONE);
+                                                cancelOrder.setClickable(false);
+                                                tv_take_photo.setText("拍摄照片");
                                                 shouldNotStartNavi = true;
-                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
                                             } else if (info.getOrderStatus() == 6) {
                                                 //将要开始拖车
                                                 if (!firstResume_tuoche) {
                                                     progressBar.setVisibility(View.VISIBLE);
-                                                    String trace = oiUtil.readJWD(oiUtil.path_drag);
-                                                    NaviLatLng startPoint = null;
-                                                    if (trace != null) {
-                                                        String[] array_trace = trace.trim().split("\\|");
-                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
-                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
-                                                        mStartList.clear();
-                                                        if (startPoint != null) {
-                                                            mStartList.add(startPoint);
-                                                        }
-                                                    } else {
-                                                        mStartList.clear();
-                                                        if (mStartLatlng != null) {
-                                                            mStartList.add(mStartLatlng);
-                                                        }
-                                                    }
+//                                                    String trace = oiUtil.readJWD(oiUtil.path_drag);
+//                                                    NaviLatLng startPoint = null;
+//                                                    if (trace != null) {
+//                                                        String[] array_trace = trace.trim().split("\\|");
+//                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
+//                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
+//                                                    }
+                                                    mStartList.clear();
+//                                                    if (startPoint != null) {
+//                                                        mStartList.add(startPoint);
+//                                                    } else {
+                                                    if (mStartLatlng != null) {
 
+                                                        mStartList.add(mStartLatlng);
+                                                    }
+                                                    //}
                                                     double lat = info.getDest_lat();
                                                     double lon = info.getDest_lng();
                                                     NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
@@ -611,11 +625,11 @@ public class FragmentForWork extends BasicFragment {
                                                         dis_moved = dis_moved_lastTime;
                                                         distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved_lastTime) + "km");
                                                         destination.setText(info.getDest());
-                                                        tv_take_photo.setText("结束拖车,按要求拍照");
+                                                        tv_take_photo.setText("卸车前,请按要求拍照");
                                                         cancelOrder.setVisibility(View.GONE);
                                                         cancelOrder.setClickable(false);
                                                         firstResume_tuoche = true;
-                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
                                                     }
 
@@ -650,11 +664,11 @@ public class FragmentForWork extends BasicFragment {
                                                 destination.setText(info.getReal_dest());
                                                 mapView.setVisibility(View.GONE);
                                                 mAMapNaviView.setVisibility(View.VISIBLE);
-                                                tv_take_photo.setText("拍摄照片,结束拖车");
+                                                tv_take_photo.setText("卸车前,请按要求拍照");
                                                 cancelOrder.setVisibility(View.GONE);
                                                 cancelOrder.setClickable(false);
                                                 shouldNotStartNavi = true;
-                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
                                             } else if (info.getOrderStatus() == 31) {
 
@@ -674,17 +688,22 @@ public class FragmentForWork extends BasicFragment {
                                             if (info.getOrderStatus() == 3) {
                                                 //已经接单
                                                 if (!firstResume) {
-                                                    String trace = oiUtil.readJWD(oiUtil.path_drag);
-                                                    NaviLatLng startPoint = null;
-                                                    if (trace != null) {
-                                                        String[] array_trace = trace.trim().split("\\|");
-                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
-                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
-                                                    }
+//                                                    String trace = oiUtil.readJWD(oiUtil.path_drag);
+//                                                    NaviLatLng startPoint = null;
+//                                                    if (trace != null) {
+//                                                        String[] array_trace = trace.trim().split("\\|");
+//                                                        String[] array_startPoint = (array_trace[array_trace.length - 1]).split(",");
+//                                                        startPoint = new NaviLatLng(Double.parseDouble(array_startPoint[1]), Double.parseDouble(array_startPoint[0]));
+//                                                    }
                                                     mStartList.clear();
-                                                    if (startPoint != null) {
-                                                        mStartList.add(startPoint);
+//                                                    if (startPoint != null) {
+//                                                        mStartList.add(startPoint);
+//                                                    } else {
+                                                    if (mStartLatlng != null) {
+
+                                                        mStartList.add(mStartLatlng);
                                                     }
+                                                    //}
                                                     double lat = info.getLatitude();
                                                     double lon = info.getLongitude();
                                                     NaviLatLng accidentPlace = new NaviLatLng(lat, lon);
@@ -709,7 +728,7 @@ public class FragmentForWork extends BasicFragment {
 
                                                         firstResume = true;
 
-                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                        mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
                                                     }
 
@@ -743,7 +762,7 @@ public class FragmentForWork extends BasicFragment {
                                                 mapView.setVisibility(View.GONE);
                                                 mAMapNaviView.setVisibility(View.VISIBLE);
                                                 shouldNotStartNavi = true;
-                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                                mAMapNavi.calculateDriveRoute(startList, endList, wayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
 
                                             } else if (info.getOrderStatus() == 31) {//已经拍照 上传照片 订单完成 未评价
@@ -765,15 +784,15 @@ public class FragmentForWork extends BasicFragment {
                                             cancelOrder.setClickable(false);
                                         }
 
-                                    }else{
+                                    } else {
 
-                                        Toast.makeText(getActivity().getApplicationContext(),"网络信号不好,相关信息获取失败,请重启APP",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getActivity().getApplicationContext(), "网络信号不好,相关信息获取失败,请重启APP", Toast.LENGTH_SHORT).show();
                                     }
 
 
                                 } catch (Exception e) {
 
-                                    Toast.makeText(getActivity().getApplicationContext(),"网络信号不好,相关信息获取失败,请重启APP",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity().getApplicationContext(), "网络信号不好,相关信息获取失败,请重启APP", Toast.LENGTH_SHORT).show();
                                 }
 
                             }
@@ -838,8 +857,8 @@ public class FragmentForWork extends BasicFragment {
     public void onPause() {
         super.onPause();
         mapView.onPause();
-       // mapViewForShow.onPause();
-       // amap = null;
+        // mapViewForShow.onPause();
+        // amap = null;
         //mapView.setVisibility(View.GONE);
         Log.d(TAG, "pause");
         //deactivate();
@@ -867,7 +886,7 @@ public class FragmentForWork extends BasicFragment {
         Log.i(TAG, "destroy");
         deactivate();
         mapView.onDestroy();
-       // mapViewForShow.onDestroy();
+        // mapViewForShow.onDestroy();
         amap = null;
         amapForShow = null;
         mAMapNavi.stopNavi();
@@ -926,7 +945,7 @@ public class FragmentForWork extends BasicFragment {
 //        mapViewForShow = (TextureMapView) view.findViewById(R.id.mapviewForShow);
 //        mapViewForShow.onCreate(savedInstanceState);// 此方法必须重写
 
-       // mRouteOverLay = new RouteOverLay(amap, null);
+        // mRouteOverLay = new RouteOverLay(amap, null);
 
         mStartList.add(mStartLatlng);
 
@@ -1077,6 +1096,13 @@ public class FragmentForWork extends BasicFragment {
                         LatLng latLng_accidentPlace = new LatLng(lat, lon);
                         SharedPreferences sp2 = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
                         sp2.edit().putString("order", data.toString()).commit();
+                        if(is_appointed ==1){
+
+                            if(close_timer != null){
+
+                                close_timer.cancel();
+                            }
+                        }
                         mEndList.clear();
                         mEndList.add(accidentPlace);
                         String s_type = null;
@@ -1094,27 +1120,37 @@ public class FragmentForWork extends BasicFragment {
                             s_type = "快修";
 
                         }
+                        String second_destination = null;
+                        if (newOrder_bean.getService_type() == 1) {
 
-                        if(newOrder_bean.getIsPaodan()==0){
-                            isPaodn= false;
+                            second_destination = newOrder_bean.getAddress_tuoche();
+                            second_destination = second_destination.replaceFirst("区", "区,");
+                            speak_destination += ",距离约为" + take_distance + "公里,拖往" + second_destination;
+
+                        } else {
+
+                            speak_destination += ",距离约为" + take_distance + "公里";
+                        }
+                        if (newOrder_bean.getIsPaodan() == 0) {
+                            isPaodn = false;
                             throw_price.setVisibility(View.GONE);
                             order_type.setText(s_type + "订单");
                             String s_appoint = "";
-                            if(newOrder_bean.getIs_appointed()==1){
+                            if (newOrder_bean.getIs_appointed() == 1) {
 
-                                s_appoint ="指派";
-                            }else{
+                                s_appoint = "指派";
+                            } else {
 
-                                s_appoint ="内部";
+                                s_appoint = "内部";
                             }
-                            DisplayMetrics dm =getResources().getDisplayMetrics();
+                            DisplayMetrics dm = getResources().getDisplayMetrics();
                             float density = dm.density;
-                            if(newOrder_bean.getIs_one_price()==2){
+                            if (newOrder_bean.getIs_one_price() == 2) {
 
                                 //起步价模式
                                 if (serviceType == 1) {
                                     ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
-                                    layoutParam.topMargin =(int)(126*density);
+                                    layoutParam.topMargin = (int) (126 * density);
                                     trailerService.setLayoutParams(layoutParam);
                                     trailerService.setVisibility(View.VISIBLE);
                                     otherService.setVisibility(View.GONE);
@@ -1123,26 +1159,26 @@ public class FragmentForWork extends BasicFragment {
                                     address_tuoche2.setText(s_address_tuoche2);
 
                                 } else {
-                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
-                                    layoutParam.topMargin =(int)(126*density);
+                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) otherService.getLayoutParams();
+                                    layoutParam.topMargin = (int) (126 * density);
                                     otherService.setLayoutParams(layoutParam);
                                     trailerService.setVisibility(View.GONE);
                                     otherService.setVisibility(View.VISIBLE);
                                     address.setText(s_destination);
                                 }
 
-                                mTts.startSpeaking("您有新的" +s_appoint+ s_type +"订单,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+                                mTts.startSpeaking("您有新的" + s_appoint + s_type + "订单,前往" + speak_destination, mSynListener);
 
-                            }else{
+                            } else {
                                 //一口价模式
                                 throw_price.setVisibility(View.VISIBLE);
-                                tv_throw_price.setText(((int)newOrder_bean.getBase_price())+"");
+                                tv_throw_price.setText(((int) newOrder_bean.getBase_price()) + "");
 
 
                                 if (serviceType == 1) {
 
                                     ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
-                                    layoutParam.topMargin =(int)(170*density);
+                                    layoutParam.topMargin = (int) (170 * density);
                                     trailerService.setLayoutParams(layoutParam);
                                     trailerService.setVisibility(View.VISIBLE);
                                     otherService.setVisibility(View.GONE);
@@ -1152,32 +1188,31 @@ public class FragmentForWork extends BasicFragment {
 
                                 } else {
 
-                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
-                                    layoutParam.topMargin =(int)(170*density);
+                                    ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) otherService.getLayoutParams();
+                                    layoutParam.topMargin = (int) (170 * density);
                                     otherService.setLayoutParams(layoutParam);
                                     trailerService.setVisibility(View.GONE);
                                     otherService.setVisibility(View.VISIBLE);
                                     address.setText(s_destination);
                                 }
 
-                                mTts.startSpeaking("您有新的" +s_appoint+ s_type + "订单,一口价,"+((int)newOrder_bean.getBase_price())+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+                                mTts.startSpeaking("您有新的" + s_appoint + s_type + "订单,一口价," + ((int) newOrder_bean.getBase_price()) + "元,前往" + speak_destination, mSynListener);
 
                             }
 
 
-
-                        }else{
-                            isPaodn=true;
+                        } else {
+                            isPaodn = true;
                             order_type.setText(s_type + "抛单");
                             throw_price.setVisibility(View.VISIBLE);
-                            tv_throw_price.setText(((int)newOrder_bean.getOnePrice())+"");
-                            DisplayMetrics dm =getResources().getDisplayMetrics();
+                            tv_throw_price.setText(((int) newOrder_bean.getOnePrice()) + "");
+                            DisplayMetrics dm = getResources().getDisplayMetrics();
                             float density = dm.density;
 
                             if (serviceType == 1) {
 
                                 ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) trailerService.getLayoutParams();
-                                layoutParam.topMargin =(int)(170*density);
+                                layoutParam.topMargin = (int) (170 * density);
                                 trailerService.setLayoutParams(layoutParam);
                                 trailerService.setVisibility(View.VISIBLE);
                                 otherService.setVisibility(View.GONE);
@@ -1187,15 +1222,15 @@ public class FragmentForWork extends BasicFragment {
 
                             } else {
 
-                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams)  otherService.getLayoutParams();
-                                layoutParam.topMargin =(int)(170*density);
+                                ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) otherService.getLayoutParams();
+                                layoutParam.topMargin = (int) (170 * density);
                                 otherService.setLayoutParams(layoutParam);
                                 trailerService.setVisibility(View.GONE);
                                 otherService.setVisibility(View.VISIBLE);
                                 address.setText(s_destination);
                             }
 
-                           mTts.startSpeaking("您有新的" + s_type + "抛单,一口价,"+((int)newOrder_bean.getOnePrice())+"元,地址" + speak_destination + ",距离约为" + take_distance + "公里", mSynListener);
+                            mTts.startSpeaking("您有新的" + s_type + "抛单,一口价," + ((int) newOrder_bean.getOnePrice()) + "元,前往" + speak_destination, mSynListener);
 
                         }
 
@@ -1236,19 +1271,25 @@ public class FragmentForWork extends BasicFragment {
                     canGetNewOrder = true;
                     canCountGPSPoint = false;
                     oiUtil.deleteJWD(oiUtil.path_drag);
+                    lastPoint = getActivity().getSharedPreferences("last_p", Context.MODE_PRIVATE);
+                    lastPoint.edit().clear().commit();
                     SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
                     sp.edit().remove("dis_moved").commit();
 
                 } else if (msg.what == 8) {
                     progressBar.setVisibility(View.GONE);
                     oiUtil.deleteJWD(oiUtil.path_drag);
+                    lastPoint = getActivity().getSharedPreferences("last_p", Context.MODE_PRIVATE);
+                    lastPoint.edit().clear().commit();
                     mTts.startSpeaking("到达救援现场,请按要求拍照", mSynListener);
                 } else if (msg.what == 9) {
 
                     progressBar.setVisibility(View.GONE);
                     oiUtil.deleteJWD(oiUtil.path_drag);
+                    lastPoint = getActivity().getSharedPreferences("last_p", Context.MODE_PRIVATE);
+                    lastPoint.edit().clear().commit();
                     mTts.startSpeaking("结束拖车,请按要求拍照", mSynListener);
-                }else if(msg.what ==10){
+                } else if (msg.what == 10) {
                     mTts.startSpeaking("另一个设备正在登陆这个账号,3秒后应用将被强制退出", mSynListener);
                     try {
                         Thread.sleep(7000);
@@ -1259,14 +1300,31 @@ public class FragmentForWork extends BasicFragment {
                     Intent intent = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
                     startActivity(intent);
                     getActivity().finish();
-                }else if(msg.what==11){
+                } else if (msg.what == 11) {
                     mTts.startSpeaking("订单已被后台取消", mSynListener);
-                }else if(msg.what ==12){
+                } else if (msg.what == 12) {
                     //MyApplication.application.isAfterOrder = false;
 
-                    if(!canGetNewOrder){
-                       mTts.startSpeaking("订单完成，请继续接单", mSynListener);
+                    if (!canGetNewOrder) {
+                        mTts.startSpeaking("订单完成，请继续接单", mSynListener);
                     }
+                } else if (msg.what == 13) {
+
+                    mTts.startSpeaking("20秒后,新订单将自动关闭,请尽快处理", mSynListener);
+
+
+                    close_timer = new Timer();
+                    TimerTask timerTask = new TimerTask() {
+                        @Override
+                        public void run() {
+                            handler.sendEmptyMessage(14);
+                        }
+                    };
+                    close_timer.schedule(timerTask, 20000);
+
+
+                } else if (msg.what == 14) {
+                    closeNewOrder.performClick();
                 }
             }
         };
@@ -1295,7 +1353,7 @@ public class FragmentForWork extends BasicFragment {
 
         if (amapForShow == null) {
             Log.d(TAG, "get AmapForShow");
-           // amapForShow = mapViewForShow.getMap();
+            // amapForShow = mapViewForShow.getMap();
         }
     }
 
@@ -1305,7 +1363,7 @@ public class FragmentForWork extends BasicFragment {
         super.onCreate(savedInstanceState);
 
         // mTtsManager.startSpeaking();
-        SharedPreferences sp = getActivity().getSharedPreferences("order",Context.MODE_PRIVATE);
+        SharedPreferences sp = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.remove("order").commit();
 
@@ -1315,7 +1373,7 @@ public class FragmentForWork extends BasicFragment {
         timeStamp = 0l;
         dis_moved = 0.0f;
         last_distance = 0.0f;
-       // Subprocess.create(getActivity().getApplicationContext(), Subpro.class);
+        // Subprocess.create(getActivity().getApplicationContext(), Subpro.class);
         Log.d(TAG, "create");
 
     }
@@ -1382,6 +1440,7 @@ public class FragmentForWork extends BasicFragment {
         if (naviPath == null) {
             return;
         }
+
         if (!shouldNotStartNavi) {
 
             progressBar.setVisibility(View.GONE);
@@ -1407,24 +1466,82 @@ public class FragmentForWork extends BasicFragment {
 
     }
 
+    private SharedPreferences lastPoint;
 
     @Override
     public void onNaviInfoUpdate(NaviInfo naviInfo) {
         long timeNow = new Date().getTime();
         LatLng currentLatLng = new LatLng(naviInfo.getCoord().getLatitude(), naviInfo.getCoord().getLongitude());
         sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+        lastPoint = getActivity().getSharedPreferences("last_p", Context.MODE_PRIVATE);
 
         if (timeNow > timeStamp) {
 
-            if (latLngs.size() >= 2) {
+            if (latLngs.size() <= 0) {
+                Log.d("path", "0");
+                String s_lat = lastPoint.getString("last_lat", null);
+                String s_lon = lastPoint.getString("last_lon", null);
+                if (s_lat != null && s_lon != null) {
+
+                    LatLng startPoint = new LatLng(Double.parseDouble(s_lat), Double.parseDouble(s_lon));
+                    int distance = (int) AMapUtils.calculateLineDistance(startPoint, currentLatLng);
+                    float f_dis = DistanceUtil.checkDistance(distance / 1000f);
+                    Log.d("path", "1--" + s_lat + "---" + s_lon + "---" + currentLatLng.latitude + "-----" + currentLatLng.longitude + "--" + f_dis);
+                    if (f_dis > 1) {
+                        Log.d("path", "2");
+                        //两点距离大于一公里的 把两点间的轨迹补充进去
+                        progressBar.setVisibility(View.VISIBLE);
+                        mAMapNavi.pauseNavi();
+                        routeSearch = new RouteSearch(getActivity().getApplicationContext());
+                        routeSearch.setRouteSearchListener(this);
+                        // fromAndTo包含路径规划的起点和终点，drivingMode表示驾车模式
+                        // 第三个参数表示途经点（最多支持16个），第四个参数表示避让区域（最多支持32个），第五个参数表示避让道路
+                        RouteSearch.DriveRouteQuery query = new RouteSearch.
+                                DriveRouteQuery(new RouteSearch.
+                                FromAndTo(new LatLonPoint(startPoint.latitude, startPoint.longitude),
+                                new LatLonPoint(currentLatLng.latitude, currentLatLng.longitude)),
+                                ShareSearch.DrivingShortDistance, null, null, "");
+                        routeSearch.calculateDriveRouteAsyn(query);
+
+                    }
+
+                }
+
+            } else if (latLngs.size() >= 2) {
+                Log.d("path", "3");
                 LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
                 int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
                 float f_dis = DistanceUtil.checkDistance(distance / 1000f);
                 last_distance = f_dis;
-                dis_moved += f_dis;
-                sp.edit().putFloat("dis_moved", dis_moved).commit();
-                distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "km");
+                if (f_dis > 1) {
+                    Log.d("path", "4");
+                    //两点距离大于一公里的 把两点间的轨迹补充进去
+                    progressBar.setVisibility(View.VISIBLE);
+                    mAMapNavi.pauseNavi();
+                    routeSearch = new RouteSearch(getActivity().getApplicationContext());
+                    routeSearch.setRouteSearchListener(this);
+                    RouteSearch.DriveRouteQuery query = new RouteSearch.
+                            DriveRouteQuery(new RouteSearch.
+                            FromAndTo(new LatLonPoint(positionLatLng.latitude, positionLatLng.longitude),
+                            new LatLonPoint(currentLatLng.latitude, currentLatLng.longitude)),
+                            ShareSearch.DrivingShortDistance, null, null, "");
+                    routeSearch.calculateDriveRouteAsyn(query);
+
+                } else {
+                    Log.d("path", "5");
+                    dis_moved += f_dis;
+                    sp.edit().putFloat("dis_moved", dis_moved).commit();
+                    distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "km");
+                    oiUtil.writeJWD(currentLatLng.latitude, currentLatLng.longitude, oiUtil.path_drag);
+                }
+
             }
+
+            timeStamp = timeNow;
+            latLngs.add(currentLatLng);
+            lastPoint.edit().putString("last_lat", String.valueOf(currentLatLng.latitude)).commit();
+            lastPoint.edit().putString("last_lon", String.valueOf(currentLatLng.longitude)).commit();
+
             try {
                 Map<String, Object> map = new HashMap<>();
                 map.put("lat", String.valueOf(currentLatLng.latitude));
@@ -1446,16 +1563,44 @@ public class FragmentForWork extends BasicFragment {
                 e.printStackTrace();
             }
 
-            Log.d("distance", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
+            Log.d("path", timeStamp + ":  " + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
                     + distance_moved.getText() + "---" + dis_moved);
 //            Toast.makeText(getActivity(),timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
 //                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
-            timeStamp = timeNow;
-            latLngs.add(currentLatLng);
-            trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
-            oiUtil.writeJWD(currentLatLng.latitude, currentLatLng.longitude, oiUtil.path_drag);
+
+            // oiUtil.writeJWD(currentLatLng.latitude, currentLatLng.longitude, oiUtil.path_drag);
+            //trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
+
 
         }
+    }
+
+    @Override
+    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
+
+        if (i == 1000) {
+            for (DrivePath dp : driveRouteResult.getPaths()) {
+
+                for (DriveStep ds : dp.getSteps()) {
+                    float dss = ds.getDistance() / 1000f;
+                    dis_moved += dss;
+                    distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "km");
+                    for (LatLonPoint llp : ds.getPolyline()) {
+
+                        Log.d("path", ds.getDistance() + "m-----" + llp.getLatitude() + "---" + llp.getLongitude() + "----" + ds.getInstruction());
+                        oiUtil.writeJWD(llp.getLatitude(), llp.getLongitude(), oiUtil.path_drag);
+                    }
+                }
+            }
+            progressBar.setVisibility(View.GONE);
+            // Toast.makeText(getActivity().getApplicationContext(), "断点填充成功,导航继续进行", Toast.LENGTH_SHORT).show();
+            mAMapNavi.resumeNavi();
+        } else {
+            progressBar.setVisibility(View.GONE);
+            // Toast.makeText(getActivity().getApplicationContext(), "断点填充失败,导航继续进行", Toast.LENGTH_SHORT).show();
+            mAMapNavi.resumeNavi();
+        }
+
     }
 
 
@@ -1464,11 +1609,11 @@ public class FragmentForWork extends BasicFragment {
 
         if (canCountGPSPoint) {
             LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
-             sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
+            sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
             if (aMapNaviLocation.getAccuracy() <= 20) {
                 long timeNow = new Date().getTime();
                 if (timeNow > timeStamp) {
-                   // LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
+                    // LatLng currentLatLng = new LatLng(aMapNaviLocation.getCoord().getLatitude(), aMapNaviLocation.getCoord().getLongitude());
                     if (latLngs.size() > 2) {
                         LatLng positionLatLng = latLngs.get(latLngs.size() - 1);
                         int distance = (int) AMapUtils.calculateLineDistance(currentLatLng, positionLatLng);
@@ -1503,8 +1648,8 @@ public class FragmentForWork extends BasicFragment {
 //                    Toast.makeText(getActivity(),"GPS"+"---"+timeStamp + ":" + currentLatLng.latitude + "---" + currentLatLng.longitude + "---" + last_distance + "---"
 //                            + distance_moved.getText() + "---" + dis_moved,Toast.LENGTH_SHORT).show();
                     timeStamp = timeNow;
-                    trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
-                    oiUtil.writeJWD(currentLatLng.latitude,currentLatLng.longitude,oiUtil.path_drag);
+                    //trace_data += currentLatLng.longitude + "," + currentLatLng.latitude + "|";
+                    oiUtil.writeJWD(currentLatLng.latitude, currentLatLng.longitude, oiUtil.path_drag);
                 }
             }
         }
@@ -1519,7 +1664,7 @@ public class FragmentForWork extends BasicFragment {
 
         } else {
 
-           mTts.startSpeaking(arg1, mSynListener);
+            mTts.startSpeaking(arg1, mSynListener);
 
         }
 
@@ -1546,7 +1691,10 @@ public class FragmentForWork extends BasicFragment {
 
     }
 
+
     private Boolean isGPSReady = false;
+    private RouteSearch routeSearch = null;
+
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
 
@@ -1555,6 +1703,14 @@ public class FragmentForWork extends BasicFragment {
                     && aMapLocation.getErrorCode() == 0) {
 
                 isGPSReady = true;
+//                routeSearch = new RouteSearch(getActivity().getApplicationContext());
+//                routeSearch.setRouteSearchListener(this);
+//                RouteSearch.DriveRouteQuery query = new RouteSearch.
+//                        DriveRouteQuery(new RouteSearch.
+//                        FromAndTo(new LatLonPoint(39.989643, 116.481028),
+//                        new LatLonPoint(40.004717, 114.465302)),
+//                        ShareSearch.DrivingDefault, null, null, "");
+//                routeSearch.calculateDriveRouteAsyn(query);
 
                 Log.d("location", aMapLocation.getLocationType() + "");
                 mStartLatlng = new NaviLatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude());
@@ -1577,8 +1733,8 @@ public class FragmentForWork extends BasicFragment {
                             try {
                                 jsonObject = new JSONObject(obj.toString());
                                 int result = jsonObject.getInt("result");
-                                Log.d("user_result",result+"---1");
-                                if(result == 2){
+                                Log.d("user_result", result + "---1");
+                                if (result == 2) {
                                     handler.sendEmptyMessage(10);
 
                                 }
@@ -1586,6 +1742,7 @@ public class FragmentForWork extends BasicFragment {
                                 e.printStackTrace();
                             }
                         }
+
                         @Override
                         public void onRequestFailed(Object obj) {
                         }
@@ -1610,7 +1767,7 @@ public class FragmentForWork extends BasicFragment {
 
                     type = "基站定位";
                 }
-               //Toast.makeText(this.getActivity().getApplicationContext(),type+":::"+latLng.latitude + "--" + latLng.longitude, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this.getActivity().getApplicationContext(),type+":::"+latLng.latitude + "--" + latLng.longitude, Toast.LENGTH_SHORT).show();
                 // Log.d(TAG,latLng.latitude+"--"+latLng.longitude);
 
             } else {
@@ -1618,7 +1775,7 @@ public class FragmentForWork extends BasicFragment {
                 isGPSReady = false;
                 String errText = "定位失败," + aMapLocation.getErrorCode() + ": " + aMapLocation.getErrorInfo();
                 Log.d("location", errText);
-              //  Toast.makeText(this.getActivity().getApplicationContext(), "定位失败无法接单,请到开阔地带继续接单", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(this.getActivity().getApplicationContext(), "定位失败无法接单,请到开阔地带继续接单", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -1734,6 +1891,9 @@ public class FragmentForWork extends BasicFragment {
                         dialog.dismiss();
                         progressBar.setVisibility(View.VISIBLE);
                         String trace = oiUtil.readJWD(oiUtil.path_drag);
+                        if (trace == null) {
+                            trace = mStartLatlng.getLongitude() + "," + mStartLatlng.getLatitude() + "|";
+                        }
                         Map<String, Object> map = new HashMap<>();
                         map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
                         map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
@@ -1815,6 +1975,9 @@ public class FragmentForWork extends BasicFragment {
                 mAMapNaviView.displayOverview();
                 break;
             case R.id.closeNewOrder:
+                if (close_timer != null) {
+                    close_timer.cancel();
+                }
                 newOrder.clearAnimation();
                 newOrder.setVisibility(View.GONE);
                 head_map.setVisibility(View.VISIBLE);
@@ -1825,6 +1988,10 @@ public class FragmentForWork extends BasicFragment {
                 canGetNewOrder = true;
                 break;
             case R.id.intoOrder:
+                if (close_timer != null) {
+
+                    close_timer.cancel();
+                }
                 newOrder.clearAnimation();
                 newOrder.setVisibility(View.GONE);
 
@@ -1860,17 +2027,17 @@ public class FragmentForWork extends BasicFragment {
                                     menu.setVisibility(View.VISIBLE);
                                     startNavi.setVisibility(View.VISIBLE);
                                     coursePreview.setVisibility(View.VISIBLE);
-                                    if(isPaodn){
+                                    if (isPaodn) {
 
                                         cancelOrder.setVisibility(View.GONE);
                                         cancelOrder.setClickable(false);
-                                    }else{
+                                    } else {
                                         cancelOrder.setVisibility(View.VISIBLE);
                                         cancelOrder.setClickable(true);
                                     }
 
                                     tv_take_photo.setText("到达救援现场,并拍照");
-                                    mTts.startSpeaking("开始任务", mSynListener);
+                                    mTts.startSpeaking("开始任务,到达救援现场后请拍照", mSynListener);
                                     SharedPreferences sp4 = getActivity().getSharedPreferences("newOrderComing", Context.MODE_PRIVATE);
                                     sp4.edit().remove("newOrderComing").commit();
                                     SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
@@ -1880,7 +2047,7 @@ public class FragmentForWork extends BasicFragment {
                                     amap.clear(true);
                                     distance_moved.setText("已行驶:0.0km");
                                     destination.setText(s_destination);
-                                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_DEFAULT);
+                                    mAMapNavi.calculateDriveRoute(mStartList, mEndList, mWayPointList, PathPlanningStrategy.DRIVING_SHORTEST_DISTANCE);
 
                                 } else {
                                     progressBar.setVisibility(View.GONE);
@@ -1917,8 +2084,8 @@ public class FragmentForWork extends BasicFragment {
                 }
                 break;
             case R.id.take_photo:
-                Log.d("liuchen",order_id+"");
-                if(info==null){
+                Log.d("liuchen", order_id + "");
+                if (info == null) {
                     new HttpGetTask(getActivity().getApplicationContext(), new OnHttpRequestListener() {
 
                         @Override
@@ -1929,9 +2096,9 @@ public class FragmentForWork extends BasicFragment {
                                 Log.d("orderInfo_activity", obj.toString());
                                 jsonObject = new JSONObject(obj.toString());
                                 info = new OrderInfo(jsonObject);
-                                Log.d("liuchen",order_id+"--"+info.getId()+"--"+info.getOrderStatus());
+                                Log.d("liuchen", order_id + "--" + info.getId() + "--" + info.getOrderStatus());
 
-                            }catch (Exception e){
+                            } catch (Exception e) {
 
                                 e.printStackTrace();
                             }
@@ -1980,7 +2147,7 @@ public class FragmentForWork extends BasicFragment {
                                     progressBar.setVisibility(View.GONE);
                                     SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
                                     sp.edit().remove("dis_moved").commit();
-                                   // latLngs.clear();
+                                    // latLngs.clear();
                                     Intent intent = new Intent(getActivity().getApplicationContext(), NewTakePhotoActivity.class);
                                     intent.putExtra("tuoche", "tuoche");
                                     startActivity(intent);
@@ -2048,7 +2215,7 @@ public class FragmentForWork extends BasicFragment {
                     Button tvConfirm1 = (Button) view1.findViewById(R.id.btn_notice_confirm);
                     Button tvCancel1 = (Button) view1.findViewById(R.id.btn_notice_cancel);
                     TextView tvMsg1 = (TextView) view1.findViewById(R.id.tv_notice_msg);
-                    tvMsg1.setText("是否结束拖车");
+                    tvMsg1.setText("是否到达目的地");
                     tvConfirm1.setOnClickListener(new View.OnClickListener() {
 
                         @Override
@@ -2056,6 +2223,10 @@ public class FragmentForWork extends BasicFragment {
                             dialog.dismiss();
                             progressBar.setVisibility(View.VISIBLE);
                             String trace = oiUtil.readJWD(oiUtil.path_drag);
+                            if (trace == null) {
+
+                                trace = mStartLatlng.getLongitude() + "," + mStartLatlng.getLatitude() + "|";
+                            }
                             Map<String, Object> map = new HashMap<>();
                             map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
                             map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
@@ -2127,6 +2298,9 @@ public class FragmentForWork extends BasicFragment {
 
                 } else {
                     String trace = oiUtil.readJWD(oiUtil.path_drag);
+                    if (trace == null) {
+                        trace = mStartLatlng.getLongitude() + "," + mStartLatlng.getLatitude() + "|";
+                    }
                     Map<String, Object> map = new HashMap<>();
                     map.put("lat", String.valueOf(mStartLatlng.getLatitude()));
                     map.put("lng", String.valueOf(mStartLatlng.getLongitude()));
@@ -2147,7 +2321,7 @@ public class FragmentForWork extends BasicFragment {
                                     canCountGPSPoint = false;
                                     SharedPreferences sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
                                     sp.edit().remove("dis_moved").commit();
-                                   // latLngs.clear();
+                                    // latLngs.clear();
                                     Intent intent = new Intent(getActivity().getApplicationContext(), NewTakePhotoActivity.class);
                                     startActivity(intent);
 
@@ -2174,14 +2348,14 @@ public class FragmentForWork extends BasicFragment {
                 break;
 
             case R.id.tel_customer1:
-                Log.d("mobile",owner_mobile);
-                Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+owner_mobile));
+                Log.d("mobile", owner_mobile);
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + owner_mobile));
                 startActivity(intent);
                 break;
 
             case R.id.tel_customer2:
-                Log.d("mobile",owner_mobile);
-                Intent intent2 = new Intent(Intent.ACTION_CALL,Uri.parse("tel:"+owner_mobile));
+                Log.d("mobile", owner_mobile);
+                Intent intent2 = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + owner_mobile));
                 startActivity(intent2);
                 break;
 
@@ -2199,7 +2373,7 @@ public class FragmentForWork extends BasicFragment {
 
                 if (isOnline) {
 
-                    if(isGPSReady) {
+                    if (isGPSReady) {
 
                         if (canGetNewOrder) {
 
@@ -2215,6 +2389,15 @@ public class FragmentForWork extends BasicFragment {
                                 msg.what = 5;
                                 msg.obj = jsonObject;
                                 handler.sendMessage(msg);
+                                close_timer = new Timer();
+                                TimerTask close_task = new TimerTask() {
+                                    @Override
+                                    public void run() {
+
+                                        handler.sendEmptyMessage(13);
+                                    }
+                                };
+                                close_timer.schedule(close_task, 20000);
 
                             } catch (Exception e) {
 
@@ -2227,10 +2410,10 @@ public class FragmentForWork extends BasicFragment {
 
                 }
 
-            }else if("closeOrder".equals(intent.getAction())){
-                Log.e("getui_result","个推信息----"+"close");
+            } else if ("closeOrder".equals(intent.getAction())) {
+                Log.e("getui_result", "个推信息----" + "close");
                 progressBar.setVisibility(View.VISIBLE);
-              //
+                //
                 handler.sendEmptyMessage(11);
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -2244,7 +2427,7 @@ public class FragmentForWork extends BasicFragment {
                         getActivity().findViewById(android.R.id.tabhost).setVisibility(View.VISIBLE);
                         mAMapNaviView.setVisibility(View.GONE);
                         mapView.setVisibility(View.VISIBLE);
-                       // mapViewForShow.setVisibility(View.GONE);
+                        // mapViewForShow.setVisibility(View.GONE);
                         head_map.setVisibility(View.VISIBLE);
                         head_map_tel_navi.setVisibility(View.GONE);
                         menu.setVisibility(View.GONE);
@@ -2254,13 +2437,15 @@ public class FragmentForWork extends BasicFragment {
                         canGetNewOrder = true;
                         canCountGPSPoint = false;
                         oiUtil.deleteJWD(oiUtil.path_drag);
+                        lastPoint = getActivity().getSharedPreferences("last_p", Context.MODE_PRIVATE);
+                        lastPoint.edit().clear().commit();
                         SharedPreferences sp1 = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
                         sp1.edit().remove("dis_moved").commit();
                         amap.clear(true);
                         setUpMap();
 
                     }
-                },3000);
+                }, 3000);
 
             }
         }

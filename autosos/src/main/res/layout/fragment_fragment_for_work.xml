@@ -403,7 +403,7 @@
     </com.autosos.rescue.Layout.MyRaletiveLayout>
 
 
-    <include layout="@layout/progressbar_layout" />
+
 
     <Button
         android:id="@+id/starNavi"
@@ -429,5 +429,5 @@
         android:visibility="gone"
         />
 
-
+    <include layout="@layout/progressbar_layout" />
 </RelativeLayout>

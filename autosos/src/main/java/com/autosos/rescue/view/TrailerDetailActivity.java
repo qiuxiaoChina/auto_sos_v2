@@ -52,7 +52,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
     private RadioButton rb_ground_no, rb_ground_yes, rb_aw_no, rb_aw_yes, rb_arm_yes, rb_arm_no;
     private CheckBox tuoche, huantai, kuaixiu, dadian;
     private int is_ground, is_aw, is_arm;
-    private ProgressBar progressBar;
+    private View progressBar;
     private View rl_tonage, rl_run, rl_arm, rl_ground;
     private View line1, line2, line3, line4;
 
@@ -106,7 +106,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
         line3 = findViewById(R.id.line3);
         line4 = findViewById(R.id.line4);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
         rg_ground.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override

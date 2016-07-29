@@ -75,7 +75,7 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
     private View footView;
     private View loadView;
     private View noMoreView;
-    private ProgressBar progressBar;
+    private View progressBar;
     private boolean isLoad;
     private boolean noMore;
     private int currentPage;
@@ -95,7 +95,7 @@ public class FragmentForOrder extends Fragment implements ObjectBindAdapter.View
         footView = getActivity().getLayoutInflater().inflate(R.layout.list_foot_no_more, null);
         loadView = footView.findViewById(R.id.loading);
         noMoreView = footView.findViewById(R.id.no_more_hint);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar =  view.findViewById(R.id.progressBar);
         currentPage = 1;
         isLoad = false;
         noMore = false;

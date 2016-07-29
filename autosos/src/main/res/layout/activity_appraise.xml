@@ -164,7 +164,7 @@
             android:layout_marginTop="40dp"
             android:background="@drawable/bg_btn_selector_new_way"
             android:clickable="true"
-            android:text="提交"
+            android:text="去结账"
             android:textColor="#fff" />
     </LinearLayout>
 

@@ -30,6 +30,7 @@ import com.autosos.rescue.util.CherkVersion;
 import com.autosos.rescue.util.JSONUtil;
 import com.autosos.rescue.util.Session;
 import com.autosos.rescue.util.XmlParse;
+import com.autosos.rescue.view.AboutUsActivity;
 import com.autosos.rescue.view.FeedBackActivity;
 import com.autosos.rescue.view.LoginActivity;
 import com.autosos.rescue.view.SplashActivity;
@@ -66,7 +67,7 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
         // Required empty public constructor
     }
 
-    private View logout, checkVersion,feedBack,contact_us;
+    private View logout, checkVersion,feedBack,contact_us,about_us;
     private Handler handler;
 
     @Override
@@ -82,6 +83,10 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
         feedBack.setOnClickListener(this);
         contact_us = view.findViewById(R.id.contact_us);
         contact_us.setOnClickListener(this);
+
+        about_us = view.findViewById(R.id.about_us);
+        about_us.setOnClickListener(this);
+
         handler = new Handler(){
 
             @Override
@@ -200,6 +205,10 @@ public class FragmentForSetting extends Fragment implements View.OnClickListener
             case R.id.contact_us:
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+"4008820019"));
                 startActivity(intent);
+                break;
+            case  R.id.about_us:
+                Intent ii = new Intent(getActivity().getApplicationContext(), AboutUsActivity.class);
+                startActivity(ii);
                 break;
             default:
                 break;

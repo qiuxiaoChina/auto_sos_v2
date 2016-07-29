@@ -45,7 +45,7 @@
         android:layout_marginBottom="50dp"
         android:layout_marginRight="23dp"
         android:background="#00000000"
-        android:text="上传"
+        android:text="下一步"
         android:textColor="#ffffff"
         android:textSize="17sp"
         />

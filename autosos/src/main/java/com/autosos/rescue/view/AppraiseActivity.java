@@ -67,7 +67,7 @@ public class AppraiseActivity extends Activity implements View.OnClickListener {
     private View uploadLayout;
     private MyProgress_QX pgsBar;
 
-    private ProgressBar progressBar;
+    private View progressBar;
 
     private SharedPreferences sp;
     private boolean isClicked = false;

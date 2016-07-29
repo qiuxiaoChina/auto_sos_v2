@@ -88,6 +88,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/about_us"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="16dp"
@@ -168,7 +169,7 @@
             android:id="@+id/contact_us"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/column_background2">
+            android:background="@drawable/column_background">
 
             <TextView
                 android:layout_marginLeft="17dp"
@@ -194,7 +195,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/column_background2">
+            android:background="@drawable/column_background2"
+            android:visibility="gone">
 
             <TextView
                 android:layout_marginLeft="17dp"
@@ -219,7 +221,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:background="@drawable/column_background">
+            android:background="@drawable/column_background"
+            android:visibility="gone">
 
             <TextView
                 android:layout_marginLeft="17dp"

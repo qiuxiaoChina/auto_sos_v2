@@ -65,7 +65,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
     private ImageView close_erweima;
     private OrderInfo orderInfo;
     private int orderId;
-    private ProgressBar progressBar;
+    private View progressBar;
     private ImageView qr_image;
     private TextView pay_amount,base_price,more_amount,total_dis,bonus,night_price,edit_price;
     Timer time_clock = new Timer();
@@ -93,7 +93,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
         close_erweima = (ImageView) findViewById(R.id.close_erweima);
         close_erweima.setOnClickListener(this);
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar = findViewById(R.id.progressBar);
 
         qr_image = (ImageView) findViewById(R.id.qr_image);
 
@@ -130,7 +130,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
             }
         };
 
-        time_clock.schedule(task_clock, 0, 500);
+        time_clock.schedule(task_clock, 0, 1000);
 
         if (mTts == null) {
             //1.创建SpeechSynthesizer对象, 第二个参数：本地合成时传InitListener
@@ -182,9 +182,11 @@ public class PayActivity extends Activity implements View.OnClickListener{
                                         sharedPreference2.edit().remove("orderInfo").commit();
 //                                        SharedPreferences sharedPreference3 = getSharedPreferences("isAfterOrder", Context.MODE_PRIVATE);
 //                                        sharedPreference3.edit().putBoolean("isAfterOrder",true).commit();
+                                        MyApplication.application.isAfterOrder = true;
+                                        MyApplication.application.canGetNeworder = false;
                                         mHandler.sendEmptyMessage(12);
 
-                                        MyApplication.application.isAfterOrder = true;
+
                                        // finish();
                                     } else {
 
@@ -245,7 +247,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
                 Button tvConfirm1 = (Button) view1.findViewById(R.id.btn_notice_confirm);
                 Button tvCancel1 = (Button) view1.findViewById(R.id.btn_notice_cancel);
                 TextView tvMsg1 = (TextView) view1.findViewById(R.id.tv_notice_msg);
-                tvMsg1.setText("是否代收现金");
+                tvMsg1.setText("是否已向车主收取到现金");
                 tvConfirm1.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -270,7 +272,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
                                        // finish();
                                     }else{
 
-                                       Toast.makeText(getApplicationContext(),"您的余额不足,请后台充值或扫码支付",Toast.LENGTH_SHORT).show();
+                                       Toast.makeText(getApplicationContext(),"余额不足,请自行扫码支付或联系公司充值",Toast.LENGTH_SHORT).show();
 
                                     }
 

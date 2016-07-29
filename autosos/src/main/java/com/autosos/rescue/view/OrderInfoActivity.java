@@ -34,7 +34,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
     private RatingBar rating;
     private int orderId;
     private OrderInfo orderInfo;
-    private ProgressBar progressBar;
+    private View progressBar;
     private TextView tv_price_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +62,7 @@ public class OrderInfoActivity extends Activity implements View.OnClickListener 
         destination2 = (TextView) findViewById(R.id.destination2);
 
         rating = (RatingBar) findViewById(R.id.rating);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        progressBar =  findViewById(R.id.progressBar);
 
         tv_price_title = (TextView) findViewById(R.id.price_title);
     }

@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="18dp"
-            android:text="支付详情"
+            android:text="车主需支付"
             android:textColor="#999999"
             android:textSize="14sp"
 

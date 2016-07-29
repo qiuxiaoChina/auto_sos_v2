@@ -65,7 +65,6 @@ public class SplashActivity extends Activity {
         PushManager.getInstance().initialize(this.getApplicationContext());
         setContentView(R.layout.activity_splash);
 
-
         CatchException catchException = CatchException.getInstance();//开启异常捕捉
         catchException.init(getApplicationContext());
 

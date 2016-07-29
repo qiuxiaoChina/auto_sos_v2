@@ -19,6 +19,7 @@ import com.autosos.rescue.task.OnHttpRequestListener;
 import com.autosos.rescue.util.JSONUtil;
 import com.autosos.rescue.view.ChangePwdActivity;
 import com.autosos.rescue.view.LoginActivity;
+import com.autosos.rescue.view.TrailerDetailActivity;
 import com.iflytek.thridparty.G;
 
 import org.json.JSONException;
@@ -46,16 +47,16 @@ public class FragmentForMine extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
-    private ProgressBar progressBar;
+    private View progressBar;
     private TextView username,companyName,rating,orderNum;
     private RatingBar ratingBar;
-    private View changePwd;
+    private View changePwd,service_info;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_fragment_for_mine, null);
-        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        progressBar = view.findViewById(R.id.progressBar);
 
         username = (TextView) view.findViewById(R.id.username);
         rating = (TextView) view.findViewById(R.id.rating);
@@ -65,6 +66,8 @@ public class FragmentForMine extends Fragment implements View.OnClickListener {
         ratingBar = (RatingBar) view.findViewById(R.id.ratingBar);
         changePwd = view.findViewById(R.id.changePwd);
         changePwd.setOnClickListener(this);
+        service_info = view.findViewById(R.id.service_info);
+        service_info.setOnClickListener(this);
         return  view;
     }
 
@@ -112,6 +115,10 @@ public class FragmentForMine extends Fragment implements View.OnClickListener {
             case R.id.changePwd:
                 Intent i = new Intent(getActivity().getApplicationContext(), ChangePwdActivity.class);
                 startActivity(i);
+                break;
+            case R.id.service_info:
+                Intent ii = new Intent(getActivity().getApplicationContext(), TrailerDetailActivity.class);
+                startActivity(ii);
                 break;
             default:
                 break;

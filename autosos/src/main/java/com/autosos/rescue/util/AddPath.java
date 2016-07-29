@@ -1,45 +1,50 @@
-package com.autosos.rescue.fragment;
+package com.autosos.rescue.util;
 
-
-import android.os.Bundle;
-import android.os.IBinder;
-import android.os.RemoteException;
-import android.support.v4.app.Fragment;
-import android.view.MotionEvent;
-import android.view.View;
-
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps.AMap;
-import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.navi.AMapNavi;
 import com.amap.api.navi.AMapNaviListener;
-import com.amap.api.navi.AMapNaviViewListener;
+import com.amap.api.navi.enums.PathPlanningStrategy;
 import com.amap.api.navi.model.AMapLaneInfo;
 import com.amap.api.navi.model.AMapNaviCross;
 import com.amap.api.navi.model.AMapNaviInfo;
 import com.amap.api.navi.model.AMapNaviLocation;
+import com.amap.api.navi.model.AMapNaviPath;
 import com.amap.api.navi.model.AMapNaviTrafficFacilityInfo;
 import com.amap.api.navi.model.AimLessModeCongestionInfo;
 import com.amap.api.navi.model.AimLessModeStat;
 import com.amap.api.navi.model.NaviInfo;
-import com.amap.api.services.route.BusRouteResult;
-import com.amap.api.services.route.DriveRouteResult;
-import com.amap.api.services.route.RouteSearch;
-import com.amap.api.services.route.WalkRouteResult;
+import com.amap.api.navi.model.NaviLatLng;
 import com.autonavi.tbt.TrafficFacilityInfo;
-import com.iflytek.speech.SynthesizerListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Administrator on 2016/5/10.
+ * Created by Administrator on 2016/7/25.
  */
-public class BasicFragment extends Fragment implements AMapNaviViewListener, AMapNaviListener,
-        AMapLocationListener, LocationSource, View.OnTouchListener, AMap.OnMapLoadedListener,View.OnClickListener ,AMap.OnMarkerClickListener,RouteSearch.OnRouteSearchListener {
+public class AddPath implements AMapNaviListener {
 
+    private LatLng latLng1;
+    private  LatLng latLng2;
+    private AMapNavi aMapNavi;
+    private OiUtil oiUtil = null;
+    public static float dis_added = 0;
 
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
+    public AddPath(LatLng latLng1 ,LatLng latLng2,AMapNavi aMapNavi) {
 
+        this.latLng1 = latLng1;
+        this.latLng2 = latLng2;
+        this.aMapNavi = aMapNavi;
+        List<NaviLatLng> startList = new ArrayList<NaviLatLng>();
+        startList.add(new NaviLatLng(latLng1.latitude,latLng1.longitude));
+        List<NaviLatLng> endList = new ArrayList<NaviLatLng>();
+        endList.add(new NaviLatLng(latLng2.latitude,latLng2.longitude));
+        List<NaviLatLng> wayList = new ArrayList<NaviLatLng>();
+        this.aMapNavi.calculateDriveRoute(startList,endList,wayList, PathPlanningStrategy.DRIVING_DEFAULT);
+        if (oiUtil == null) {
+
+            oiUtil = new OiUtil();
+        }
     }
 
     @Override
@@ -84,6 +89,19 @@ public class BasicFragment extends Fragment implements AMapNaviViewListener, AMa
 
     @Override
     public void onCalculateRouteSuccess() {
+
+        AMapNaviPath naviPath = aMapNavi.getNaviPath();
+        if (naviPath == null) {
+            return;
+        }
+        float route_distance = DistanceUtil.checkDistance(naviPath.getAllLength() / 1000f);
+        List<NaviLatLng> naviLatLngs  = naviPath.getCoordList();
+        for(NaviLatLng ll : naviLatLngs){
+
+            oiUtil.writeJWD(ll.getLatitude(), ll.getLongitude(), oiUtil.path_drag);
+        }
+
+        dis_added = route_distance;
 
     }
 
@@ -174,98 +192,6 @@ public class BasicFragment extends Fragment implements AMapNaviViewListener, AMa
 
     @Override
     public void updateAimlessModeCongestionInfo(AimLessModeCongestionInfo aimLessModeCongestionInfo) {
-
-    }
-
-    @Override
-    public void onNaviSetting() {
-
-    }
-
-    @Override
-    public void onNaviCancel() {
-
-    }
-
-    @Override
-    public boolean onNaviBackClick() {
-        return false;
-    }
-
-    @Override
-    public void onNaviMapMode(int i) {
-
-    }
-
-    @Override
-    public void onNaviTurnClick() {
-
-    }
-
-    @Override
-    public void onNextRoadClick() {
-
-    }
-
-    @Override
-    public void onScanViewButtonClick() {
-
-    }
-
-    @Override
-    public void onLockMap(boolean b) {
-
-    }
-
-    @Override
-    public void onNaviViewLoaded() {
-
-    }
-
-    @Override
-    public void activate(OnLocationChangedListener onLocationChangedListener) {
-
-    }
-
-    @Override
-    public void deactivate() {
-
-    }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
-    @Override
-    public void onMapLoaded() {
-
-    }
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        return false;
-    }
-
-
-    @Override
-    public boolean onMarkerClick(Marker marker) {
-        return false;
-    }
-
-
-    @Override
-    public void onBusRouteSearched(BusRouteResult busRouteResult, int i) {
-
-    }
-
-    @Override
-    public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
-
-    }
-
-    @Override
-    public void onWalkRouteSearched(WalkRouteResult walkRouteResult, int i) {
 
     }
 }
