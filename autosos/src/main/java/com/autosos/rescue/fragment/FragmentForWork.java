@@ -102,8 +102,8 @@ public class FragmentForWork extends BasicFragment {
     AMapNaviView mAMapNaviView;
     AMapNavi mAMapNavi;
     //TTSController mTtsManager;
-    NaviLatLng mEndLatlng = new NaviLatLng(29.825846, 121.432765);
-    NaviLatLng mStartLatlng = new NaviLatLng(29.808191, 121.556015);
+    NaviLatLng mEndLatlng = null;
+    NaviLatLng mStartLatlng = null;
     List<NaviLatLng> mStartList = new ArrayList<NaviLatLng>();
     List<NaviLatLng> mEndList = new ArrayList<NaviLatLng>();
     List<NaviLatLng> mWayPointList;
@@ -610,7 +610,7 @@ public class FragmentForWork extends BasicFragment {
                                                     mEndList.clear();
                                                     mEndList.add(accidentPlace);
                                                     if (mStartList.isEmpty()) {
-                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点,请到开阔地带重启app", Toast.LENGTH_SHORT).show();
                                                     } else if (mEndList.isEmpty()) {
                                                         Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
                                                     } else {
@@ -710,7 +710,7 @@ public class FragmentForWork extends BasicFragment {
                                                     mEndList.clear();
                                                     mEndList.add(accidentPlace);
                                                     if (mStartList.isEmpty()) {
-                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点,请到开阔地带重启app", Toast.LENGTH_SHORT).show();
                                                     } else if (mEndList.isEmpty()) {
                                                         Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
                                                     } else {
@@ -843,7 +843,6 @@ public class FragmentForWork extends BasicFragment {
             mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD); //设置云端
             // mTts.startSpeaking("科大讯飞，让世界聆听我们的声音", mSynListener);
         }
-        startLocation();
 
 
         Log.d(TAG, "resume");
@@ -993,7 +992,6 @@ public class FragmentForWork extends BasicFragment {
                     // mTtsManager.stopSpeaking();
 
                 } else if (msg.what == 1) {
-
 
                     Log.d("start", "尝试上线");
                     Map<String, Object> map = new HashMap<>();
@@ -1373,8 +1371,15 @@ public class FragmentForWork extends BasicFragment {
         timeStamp = 0l;
         dis_moved = 0.0f;
         last_distance = 0.0f;
+        double d_lat = getActivity().getIntent().getDoubleExtra("d_lat",0.0);
+        double d_lon = getActivity().getIntent().getDoubleExtra("d_lon",0.0);
+        if(d_lat!=0.0 && d_lon!=0.0){
+
+            mStartLatlng = new NaviLatLng(d_lat,d_lon);
+        }
+        startLocation();
         // Subprocess.create(getActivity().getApplicationContext(), Subpro.class);
-        Log.d(TAG, "create");
+        Log.d(TAG, "create---"+d_lat+"--"+d_lon);
 
     }
 
@@ -1577,13 +1582,14 @@ public class FragmentForWork extends BasicFragment {
 
     @Override
     public void onDriveRouteSearched(DriveRouteResult driveRouteResult, int i) {
-
+        sp = getActivity().getSharedPreferences("dis_moved", Context.MODE_PRIVATE);
         if (i == 1000) {
             for (DrivePath dp : driveRouteResult.getPaths()) {
 
                 for (DriveStep ds : dp.getSteps()) {
                     float dss = ds.getDistance() / 1000f;
                     dis_moved += dss;
+                    sp.edit().putFloat("dis_moved", dis_moved).commit();
                     distance_moved.setText("已行驶:" + DistanceUtil.checkDistance(dis_moved) + "km");
                     for (LatLonPoint llp : ds.getPolyline()) {
 
@@ -1701,7 +1707,7 @@ public class FragmentForWork extends BasicFragment {
         if (mListener != null && aMapLocation != null) {
             if (aMapLocation != null
                     && aMapLocation.getErrorCode() == 0) {
-
+                Log.d(TAG, "location");
                 isGPSReady = true;
 //                routeSearch = new RouteSearch(getActivity().getApplicationContext());
 //                routeSearch.setRouteSearchListener(this);

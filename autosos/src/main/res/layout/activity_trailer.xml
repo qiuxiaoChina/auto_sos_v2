@@ -245,7 +245,7 @@
                     android:id="@+id/tonnage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
+                    android:text="吨数"
                     android:textColor="#333333"
                     android:layout_marginRight="15dp"
                     android:textSize="16dp" />

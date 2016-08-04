@@ -85,7 +85,7 @@ public class FragmentForMine extends Fragment implements View.OnClickListener {
                 try {
                     jsonObject = new JSONObject(obj.toString());
                     String s_username = JSONUtil.getString(jsonObject,"username");
-                    if(s_username!=null){
+                    if(s_username!=null && !("".equals(s_username))){
                         username.setText(s_username);
                     }
                     float f_rate = (float) jsonObject.optDouble("average",0.0);

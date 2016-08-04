@@ -2,6 +2,7 @@ package com.autosos.rescue.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.LocationSource;
 import com.autosos.rescue.Constants;
 import com.autosos.rescue.R;
 import com.autosos.rescue.application.MyApplication;
@@ -38,7 +44,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TrailerDetailActivity extends Activity implements View.OnClickListener {
+public class TrailerDetailActivity extends Activity implements View.OnClickListener ,AMapLocationListener{
 
 
     private Button detail_confirm;
@@ -55,6 +61,10 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
     private View progressBar;
     private View rl_tonage, rl_run, rl_arm, rl_ground;
     private View line1, line2, line3, line4;
+    private AMapLocationClient locationClient = null;
+    private AMapLocationClientOption locationOption = null;
+    private double d_lon = 0.0;
+    private double d_lat = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +117,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
         line4 = findViewById(R.id.line4);
 
         progressBar = findViewById(R.id.progressBar);
-
+        startLocation();
         rg_ground.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -267,6 +277,8 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                             if (jsonObject.getInt("result") == 1) {
                                 MyApplication.canGetNeworder = true;
                                 Intent intent = new Intent(TrailerDetailActivity.this, MainActivity.class);
+                                intent.putExtra("d_lat",d_lat);
+                                intent.putExtra("d_lon",d_lon);
                                 startActivity(intent);
                                 finish();
                             } else if (jsonObject.getInt("result") == 0) {
@@ -445,5 +457,54 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
             }
 
         }).execute(Constants.TRAILER_INFO_URL);
+    }
+
+
+
+    private void startLocation() {
+
+        if (locationClient == null) {
+            locationClient = new AMapLocationClient(this);
+            locationOption = new AMapLocationClientOption();
+            //设置定位监听
+            locationClient.setLocationListener(this);
+            //设置为高精度定位模式
+            locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+            locationOption.setLocationCacheEnable(false);
+            //  locationOption.setGpsFirst(true);
+            //设置定位参数
+            locationClient.setLocationOption(locationOption);
+            // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
+            // 注意设置合适的定位时间的间隔（最小间隔支持为2000ms），并且在合适时间调用stopLocation()方法来取消定位请求
+            // 在定位结束后，在合适的生命周期调用onDestroy()方法
+            // 在单次定位情况下，定位无论成功与否，都无需调用stopLocation()方法移除请求，定位sdk内部会移除
+            locationClient.startLocation();
+        }
+
+    }
+
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+
+            if (aMapLocation != null
+                    && aMapLocation.getErrorCode() == 0) {
+
+                d_lat = aMapLocation.getLatitude();
+                d_lon = aMapLocation.getLongitude();
+                Log.d("t_location",d_lat+"----"+d_lon);
+            }
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (locationClient != null) {
+            locationClient.stopLocation();
+            locationClient.onDestroy();
+        }
+        locationClient = null;
     }
 }
