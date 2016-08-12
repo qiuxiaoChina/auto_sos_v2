@@ -518,8 +518,10 @@ public class PayActivity extends Activity implements View.OnClickListener{
                                     //finish();
 
                                 } else {
-
+                                    //time_clock.cancel();
                                     // Toast.makeText(NewWayActivity.this, "支付未完成!"+result, Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(PayActivity.this, "网络环境不太好,支付没有成功", Toast.LENGTH_SHORT).show();
+                                    //PayActivity.this.recreate();
                                 }
 
                             }
@@ -627,6 +629,8 @@ public class PayActivity extends Activity implements View.OnClickListener{
         //会话结束回调接口，没有错误时，error为null
         public void onCompleted(SpeechError error) {
             progressBar.setVisibility(View.GONE);
+            Intent i = new Intent(PayActivity.this,MainActivity.class);
+            startActivity(i);
             finish();
         }
 

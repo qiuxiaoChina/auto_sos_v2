@@ -211,6 +211,7 @@ public class FragmentForWork extends BasicFragment {
     @Override
     public void onResume() {
         super.onResume();
+        progressBar.setVisibility(View.VISIBLE);
         mapView.onResume();
         // mapViewForShow.onResume();
         amap = null;
@@ -265,7 +266,7 @@ public class FragmentForWork extends BasicFragment {
 
                     } else if (jsonObject.getInt("result") == 2) {
                         //在线
-
+                        progressBar.setVisibility(View.GONE);
                         isOnline = true;
                         switch_online.setText("在线");
                         switch_online.setBackground(getActivity().getResources().getDrawable(R.drawable.on_line));
@@ -471,7 +472,7 @@ public class FragmentForWork extends BasicFragment {
                                                     mEndList.clear();
                                                     mEndList.add(accidentPlace);
                                                     if (mStartList.isEmpty()) {
-                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点,请到开阔地带重启app", Toast.LENGTH_SHORT).show();
                                                     } else if (mEndList.isEmpty()) {
                                                         Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
                                                     } else {
@@ -1599,7 +1600,7 @@ public class FragmentForWork extends BasicFragment {
                 }
             }
             progressBar.setVisibility(View.GONE);
-            // Toast.makeText(getActivity().getApplicationContext(), "断点填充成功,导航继续进行", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getActivity().getApplicationContext(), "断点填充成功,导航继续进行", Toast.LENGTH_SHORT).show();
             mAMapNavi.resumeNavi();
         } else {
             progressBar.setVisibility(View.GONE);
@@ -2007,7 +2008,7 @@ public class FragmentForWork extends BasicFragment {
                 }
 
                 if (mStartList.isEmpty()) {
-                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity().getApplicationContext(), "没有定位到起点,请到开阔地带重启app", Toast.LENGTH_SHORT).show();
                 } else if (mEndList.isEmpty()) {
                     Toast.makeText(getActivity().getApplicationContext(), "没有定位到目的地", Toast.LENGTH_SHORT).show();
                 } else {
