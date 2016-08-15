@@ -155,7 +155,6 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
-                android:orientation="horizontal"
                 android:gravity="center">
 
               <LinearLayout
@@ -207,6 +206,117 @@
 
               </LinearLayout>
 
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <CheckBox
+                        android:id="@+id/butai"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="补胎"
+                        android:textColor="#333333"
+                        android:textSize="16dp" />
+
+                    <CheckBox
+                        android:id="@+id/songshui"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="送水"
+                        android:textColor="#333333"
+                        android:textSize="16dp" />
+
+
+                    <CheckBox
+                        android:id="@+id/songyou"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="送油"
+                        android:textColor="#333333"
+                        android:textSize="16dp" />
+
+                    <CheckBox
+                        android:id="@+id/diaoche"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="吊车"
+                        android:textColor="#333333"
+                        android:textSize="16dp" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center">
+
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_horizontal">
+
+                    <CheckBox
+                        android:id="@+id/kaisuo"
+                        android:layout_width="75dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="开锁"
+                        android:textColor="#333333"
+                        android:textSize="16dp" />
+
+                    <CheckBox
+                        android:id="@+id/kunjingjiuyuan"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="困境救援"
+                        android:lines="2"
+                        android:textColor="#333333"
+                        android:textSize="16dp" />
+
+
+                    <CheckBox
+                        android:layout_width="50dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="开锁"
+                        android:textColor="#333333"
+                        android:textSize="16dp"
+                        android:visibility="invisible"/>
+
+                    <CheckBox
+                        android:layout_width="70dp"
+                        android:layout_height="24dp"
+                        android:gravity="center"
+                        android:text="困境救援"
+                        android:textColor="#333333"
+                        android:textSize="16dp"
+                        android:visibility="invisible"/>
+
+
+
+                </LinearLayout>
 
             </RelativeLayout>
 
@@ -216,6 +326,56 @@
                 android:layout_height="1dp"
                 android:layout_marginLeft="17dp"
                 android:background="#EEEEEE" />
+
+            <RelativeLayout
+                android:id="@+id/rl_diaoche_tonage"
+                android:layout_width="match_parent"
+                android:layout_height="51dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="17dp"
+                    android:text="吊车吨位"
+                    android:textColor="#333333"
+                    android:textSize="16dp" />
+
+                <LinearLayout
+                    android:id="@+id/diaoche_showTonnage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dp">
+
+                    <TextView
+                        android:id="@+id/diaoche_tonnage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="吨位"
+                        android:textColor="#333333"
+                        android:layout_marginRight="15dp"
+                        android:textSize="16dp" />
+
+                    <Button
+                        android:layout_width="12dp"
+                        android:layout_height="22dp"
+                        android:background="@drawable/icon_right" />
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/line0"
+                android:layout_width="344dp"
+                android:layout_height="1dp"
+                android:layout_marginLeft="17dp"
+                android:background="#EEEEEE"
+                android:visibility="gone"/>
 
 
             <RelativeLayout
@@ -245,7 +405,7 @@
                     android:id="@+id/tonnage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="吨数"
+                    android:text="吨位"
                     android:textColor="#333333"
                     android:layout_marginRight="15dp"
                     android:textSize="16dp" />
@@ -454,6 +614,27 @@
         </LinearLayout>
     </ScrollView>
 
+    <RelativeLayout
+        android:id="@+id/diaoche_tonnageMenu"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="54dp"
+        android:background="#ffffff"
+        android:visibility="gone">
+
+
+        <ListView
+            android:id="@+id/lv_diaoche_tonnage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null">
+
+
+        </ListView>
+
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/tonnageMenu"

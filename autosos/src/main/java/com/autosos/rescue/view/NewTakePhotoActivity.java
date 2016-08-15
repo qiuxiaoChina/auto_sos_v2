@@ -337,6 +337,13 @@ public class NewTakePhotoActivity extends Activity implements OnClickListener, S
                                 if (success) {
                                     shootSound();
                                     mCamera.takePicture(null, null, mPictureCallback);
+
+                                }else{
+
+                                    Toast.makeText(NewTakePhotoActivity.this, "自动对焦失败,请重拍", Toast.LENGTH_SHORT).show();
+                                    takeButton.setClickable(true);
+                                    takeButton.setVisibility(View.VISIBLE);
+
                                 }
                             }
                         });

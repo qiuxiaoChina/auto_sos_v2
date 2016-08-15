@@ -49,18 +49,18 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
 
     private Button detail_confirm;
     private Button planeMenu;
-    private View countryName, tonnageMenu;
-    private ListView lv_countryName, lv_tonnage;
-    private View trailer_page, showTonnage;
+    private View countryName, tonnageMenu,diaoche_tonnageMenu;
+    private ListView lv_countryName, lv_tonnage,lv_diaoche_tonnage;
+    private View trailer_page, showTonnage,diaoche_showTonnage;
     private EditText planeNum, moblie;
-    private TextView tonnage;
+    private TextView tonnage,diaoche_tonnage;
     private RadioGroup rg_ground, rg_aw, rg_arm;
     private RadioButton rb_ground_no, rb_ground_yes, rb_aw_no, rb_aw_yes, rb_arm_yes, rb_arm_no;
-    private CheckBox tuoche, huantai, kuaixiu, dadian;
+    private CheckBox tuoche, huantai, kuaixiu, dadian,butai,songshui,songyou,kunjingjiuyuan,diaoche,kaisuo;
     private int is_ground, is_aw, is_arm;
     private View progressBar;
-    private View rl_tonage, rl_run, rl_arm, rl_ground;
-    private View line1, line2, line3, line4;
+    private View rl_tonage, rl_run, rl_arm, rl_ground,rl_diaoche_tonage;
+    private View line0,line1, line2, line3, line4;
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
     private double d_lon = 0.0;
@@ -84,6 +84,9 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
         showTonnage = findViewById(R.id.showTonnage);
         showTonnage.setOnClickListener(this);
 
+        diaoche_showTonnage = findViewById(R.id.diaoche_showTonnage);
+        diaoche_showTonnage.setOnClickListener(this);
+
         trailer_page = findViewById(R.id.trailer_page);
         trailer_page.setOnClickListener(this);
 
@@ -106,11 +109,22 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
         huantai = (CheckBox) findViewById(R.id.huantai);
         kuaixiu = (CheckBox) findViewById(R.id.kuaixiu);
 
+        butai = (CheckBox) findViewById(R.id.butai);//补胎
+        songshui = (CheckBox) findViewById(R.id.songshui);
+        songyou = (CheckBox) findViewById(R.id.songyou);
+        kunjingjiuyuan = (CheckBox) findViewById(R.id.kunjingjiuyuan);
+        kaisuo = (CheckBox) findViewById(R.id.kaisuo);
+        diaoche = (CheckBox) findViewById(R.id.diaoche);
+        diaoche.setOnClickListener(this);
+
+
         rl_tonage = findViewById(R.id.rl_tonage);
         rl_arm = findViewById(R.id.rl_arm);
         rl_ground = findViewById(R.id.rl_ground);
         rl_run = findViewById(R.id.rl_run);
+        rl_diaoche_tonage = findViewById(R.id.rl_diaoche_tonage);
 
+        line0 = findViewById(R.id.line0);
         line1 = findViewById(R.id.line1);
         line2 = findViewById(R.id.line2);
         line3 = findViewById(R.id.line3);
@@ -196,14 +210,47 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
             }
         });
 
+        diaoche_tonnage = (TextView) findViewById(R.id.diaoche_tonnage);
+        diaoche_tonnageMenu = findViewById(R.id.diaoche_tonnageMenu);
+        lv_diaoche_tonnage = (ListView) findViewById(R.id.lv_diaoche_tonnage);
+        String[] array2 = getResources().getStringArray(R.array.diaoche_tonnage);
+        ArrayAdapter<String> arrayAdapter2 = new ArrayAdapter<String>(this, R.layout.item_country_name, array2);
+        lv_diaoche_tonnage.setAdapter(arrayAdapter2);
+        lv_diaoche_tonnage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView textView = (TextView) view.findViewById(R.id.shengfenming);
+                diaoche_tonnage.setText(textView.getText());
+                Animation animation = AnimationUtils.loadAnimation(
+                        TrailerDetailActivity.this, R.anim.plane_menu_out);
+                diaoche_tonnageMenu.startAnimation(animation);
+                diaoche_tonnageMenu.setVisibility(View.GONE);
+
+            }
+        });
+
     }
 
     boolean isClicked = false;
     boolean isTuocheClicked = false;
+    boolean isDiaocheClicked = false;
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.diaoche:
+                if (!isDiaocheClicked) {
+
+                    rl_diaoche_tonage.setVisibility(View.VISIBLE);
+                    line0.setVisibility(View.VISIBLE);
+                    isDiaocheClicked = true;
+
+                } else {
+                    rl_diaoche_tonage.setVisibility(View.GONE);
+                    line0.setVisibility(View.GONE);
+                    isDiaocheClicked = false;
+                }
+                break;
             case R.id.tuoche:
                 if (!isTuocheClicked) {
 
@@ -228,6 +275,12 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                     line4.setVisibility(View.GONE);
                     isTuocheClicked = false;
                 }
+                break;
+            case R.id.diaoche_showTonnage:
+                Animation animation2 = AnimationUtils.loadAnimation(
+                        TrailerDetailActivity.this, R.anim.plane_menu_in);
+                diaoche_tonnageMenu.startAnimation(animation2);
+                diaoche_tonnageMenu.setVisibility(View.VISIBLE);
                 break;
             case R.id.showTonnage:
                 Animation animation1 = AnimationUtils.loadAnimation(
@@ -257,6 +310,30 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                 if (huantai.isChecked()) {
 
                     service_type += "2,";
+                }
+                if (butai.isChecked()) {
+
+                    service_type += "3,";
+                }
+                if (kunjingjiuyuan.isChecked()) {
+
+                    service_type += "7,";
+                }
+                if (songshui.isChecked()) {
+
+                    service_type += "5,";
+                }
+                if (songyou.isChecked()) {
+
+                    service_type += "6,";
+                }
+                if (kaisuo.isChecked()) {
+
+                    service_type += "10,";
+                }
+                if (diaoche.isChecked()) {
+
+                    service_type += "8,";
                 }
                 progressBar.setVisibility(View.VISIBLE);
                 Map map = new HashMap<String, Object>();
@@ -322,7 +399,8 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                 break;
 
             case R.id.trailer_page:
-                if (countryName.getVisibility() == View.VISIBLE || tonnageMenu.getVisibility() == View.VISIBLE) {
+                if (countryName.getVisibility() == View.VISIBLE || tonnageMenu.getVisibility() == View.VISIBLE
+                        || diaoche_tonnageMenu.getVisibility() == View.VISIBLE) {
 
                     Animation animation = AnimationUtils.loadAnimation(
                             TrailerDetailActivity.this, R.anim.plane_menu_out);
@@ -330,6 +408,8 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                     countryName.setVisibility(View.GONE);
                     tonnageMenu.startAnimation(animation);
                     tonnageMenu.setVisibility(View.GONE);
+                    diaoche_tonnageMenu.startAnimation(animation);
+                    diaoche_tonnageMenu.setVisibility(View.GONE);
                     isClicked = false;
                 }
 
@@ -429,6 +509,35 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                         if (service_type.indexOf("9") > -1) {
 
                             kuaixiu.setChecked(true);
+                        }
+
+                        if (service_type.indexOf("3") > -1) {
+
+                            butai.setChecked(true);
+                        }
+
+                        if (service_type.indexOf("5") > -1) {
+
+                            songshui.setChecked(true);
+                        }
+
+                        if (service_type.indexOf("6") > -1) {
+
+                            songyou.setChecked(true);
+                        }
+
+                        if (service_type.indexOf("7") > -1) {
+
+                            kunjingjiuyuan.setChecked(true);
+                        }
+
+                        if (service_type.indexOf("8") > -1) {
+
+                            diaoche.setChecked(true);
+                        }
+                        if (service_type.indexOf("10") > -1) {
+
+                            kaisuo.setChecked(true);
                         }
 
                     } else if (result == 0) {
