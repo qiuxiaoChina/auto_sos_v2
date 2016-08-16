@@ -314,6 +314,24 @@ public class FragmentForWork extends BasicFragment {
 
                                         s_type = "快修";
 
+                                    }else if(serviceType==3){
+
+                                        s_type = "补胎";
+                                    }else if(serviceType==5){
+
+                                        s_type = "送水";
+                                    }else if(serviceType==6){
+
+                                        s_type = "送油";
+                                    }else if(serviceType==7){
+
+                                        s_type = "困境救援";
+                                    }else if(serviceType==8){
+
+                                        s_type = "吊车";
+                                    }else if(serviceType==10){
+
+                                        s_type = "开锁";
                                     }
 
                                     if (newOrder_bean.getIsPaodan() == 0) {
@@ -1118,6 +1136,24 @@ public class FragmentForWork extends BasicFragment {
 
                             s_type = "快修";
 
+                        }else if(serviceType==3){
+
+                            s_type = "补胎";
+                        }else if(serviceType==5){
+
+                            s_type = "送水";
+                        }else if(serviceType==6){
+
+                            s_type = "送油";
+                        }else if(serviceType==7){
+
+                            s_type = "困境救援";
+                        }else if(serviceType==8){
+
+                            s_type = "吊车";
+                        }else if(serviceType==10){
+
+                            s_type = "开锁";
                         }
                         String second_destination = null;
                         if (newOrder_bean.getService_type() == 1) {

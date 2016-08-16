@@ -292,6 +292,18 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                 String plane = (planeMenu.getText().toString() + planeNum.getText().toString()).toUpperCase();
                 String mobile = moblie.getText().toString();
                 String s_tonnage = tonnage.getText().toString().replace("吨", "");
+                String s_diaoche_tonnage = diaoche_tonnage.getText().toString().replace("吨","");
+                if(s_tonnage.indexOf("位")>-1 || "0".equals(s_tonnage)){
+
+                    Toast.makeText(this,"请选择拖车吨位",Toast.LENGTH_SHORT).show();
+                    break;
+                }
+
+                if(s_diaoche_tonnage.indexOf("位")>-1 || "0".equals(s_diaoche_tonnage)){
+
+                    Toast.makeText(this,"请选择吊车吨位",Toast.LENGTH_SHORT).show();
+                    break;
+                }
                 service_type = "";
                 if (tuoche.isChecked()) {
 
@@ -340,6 +352,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                 map.put("license", plane);
                 map.put("mobile", mobile);
                 map.put("tonnage", s_tonnage);
+                map.put("diaoche_tonnage",s_diaoche_tonnage);
                 map.put("is_ground", is_ground);
                 map.put("is_aw", is_aw);
                 map.put("is_arm", is_arm);
@@ -452,6 +465,9 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                         int i_tonnage = (int) ti.getTonnage();
                         tonnage.setText(i_tonnage + "吨");
 
+                        int i_diaoche_tonnage = (int) ti.getDiaoche_tonnage();
+                        diaoche_tonnage.setText(i_diaoche_tonnage+"吨");
+
                         is_ground = ti.getIs_ground();
                         if (is_ground == 1) {
 
@@ -481,7 +497,18 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                         }
 
                         service_type = ti.getServiceType();
-                        if (service_type.indexOf("1") > -1) {
+                        Log.d("tuoche_t", service_type);
+                        String[] array_st = service_type.split(",");
+                        boolean isTuoche = false;
+                        for(String s : array_st){
+
+                            if("1".equals(s)){
+
+                                isTuoche = true;
+                            }
+
+                        }
+                        if (service_type.indexOf("1") > -1 && isTuoche) {
                             Log.d("tuoche_t", "tuoche");
                             tuoche.setChecked(true);
                             rl_run.setVisibility(View.VISIBLE);
@@ -533,6 +560,9 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
 
                         if (service_type.indexOf("8") > -1) {
 
+                            rl_diaoche_tonage.setVisibility(View.VISIBLE);
+                            line0.setVisibility(View.VISIBLE);
+                            isDiaocheClicked = true;
                             diaoche.setChecked(true);
                         }
                         if (service_type.indexOf("10") > -1) {

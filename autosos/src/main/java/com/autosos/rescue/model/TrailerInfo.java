@@ -16,6 +16,7 @@ public class TrailerInfo {
     private int is_ground;
     private int is_arm;
     private String serviceType;
+    private double diaoche_tonnage;
 
     public TrailerInfo(JSONObject jsonObject) {
         this.planeNum = JSONUtil.getString(jsonObject,"license");
@@ -25,6 +26,11 @@ public class TrailerInfo {
         this.is_ground = jsonObject.optInt("is_ground",0);
         this.is_arm = jsonObject.optInt("is_arm",0);
         this.serviceType = JSONUtil.getString(jsonObject,"service_type");
+        this.diaoche_tonnage = jsonObject.optDouble("diaoche_tonnage",0);
+    }
+
+    public double getDiaoche_tonnage() {
+        return diaoche_tonnage;
     }
 
     public String getPlaneNum() {
