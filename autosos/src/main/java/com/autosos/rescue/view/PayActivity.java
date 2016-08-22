@@ -389,7 +389,7 @@ public class PayActivity extends Activity implements View.OnClickListener{
                         more_amount.setText("+"+orderInfo.getMore_amount()+"元");
                         if(orderInfo.getPay_amount()==0){
 
-                            btn_weixinpay.setText("无需收款,继续接单");
+                            btn_weixinpay.setText("订单完成,继续接单");
                             btn_payCash.setVisibility(View.GONE);
                             btn_payCash.setClickable(false);
 
