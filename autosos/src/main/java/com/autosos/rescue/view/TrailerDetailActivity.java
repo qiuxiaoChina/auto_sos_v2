@@ -293,13 +293,12 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
                 String mobile = moblie.getText().toString();
                 String s_tonnage = tonnage.getText().toString().replace("吨", "");
                 String s_diaoche_tonnage = diaoche_tonnage.getText().toString().replace("吨","");
-                if(s_tonnage.indexOf("位")>-1 || "0".equals(s_tonnage)){
+                if(tuoche.isChecked() && (s_tonnage.indexOf("位")>-1 || "0".equals(s_tonnage))){
 
                     Toast.makeText(this,"请选择拖车吨位",Toast.LENGTH_SHORT).show();
                     break;
                 }
-
-                if(s_diaoche_tonnage.indexOf("位")>-1 || "0".equals(s_diaoche_tonnage)){
+                if(diaoche.isChecked() && (s_diaoche_tonnage.indexOf("位")>-1 || "0".equals(s_diaoche_tonnage))){
 
                     Toast.makeText(this,"请选择吊车吨位",Toast.LENGTH_SHORT).show();
                     break;
