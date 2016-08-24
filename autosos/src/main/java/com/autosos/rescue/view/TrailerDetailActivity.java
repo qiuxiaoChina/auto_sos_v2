@@ -47,7 +47,7 @@ import java.util.Map;
 public class TrailerDetailActivity extends Activity implements View.OnClickListener ,AMapLocationListener{
 
 
-    private Button detail_confirm;
+    private TextView detail_confirm;
     private Button planeMenu;
     private View countryName, tonnageMenu,diaoche_tonnageMenu;
     private ListView lv_countryName, lv_tonnage,lv_diaoche_tonnage;
@@ -72,7 +72,7 @@ public class TrailerDetailActivity extends Activity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trailer);
 
-        detail_confirm = (Button) findViewById(R.id.detail_confirm);
+        detail_confirm = (TextView) findViewById(R.id.detail_confirm);
         detail_confirm.setOnClickListener(this);
 
         planeMenu = (Button) findViewById(R.id.planeMenu);

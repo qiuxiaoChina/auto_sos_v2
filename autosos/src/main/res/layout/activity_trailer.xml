@@ -6,12 +6,10 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:background="#20b48b"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:background="#20b48b">
 
         <TextView
 
@@ -20,9 +18,32 @@
             android:text="服务信息录入"
             android:textColor="#ffffff"
             android:textSize="18sp"
-
+            android:layout_centerInParent="true"
             />
-    </LinearLayout>
+
+        <View
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="79dp"
+            android:layout_width="2dip"
+            android:layout_height="26dp"
+            android:background="#098865"
+            android:layout_marginTop="14dp"
+            />
+
+
+        <TextView
+            android:id="@+id/detail_confirm"
+            android:clickable="true"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="17dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="下一步"
+            android:textColor="#C7FFEF"
+            android:layout_marginLeft="17dp"/>
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -595,16 +616,16 @@
 
 
 
-            <Button
-                android:id="@+id/detail_confirm"
-                android:layout_width="317dp"
-                android:layout_height="44dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="50dp"
-                android:background="@drawable/trailer_detail_confirm"
-                android:text="确认"
-                android:textColor="#ffffff"
-                android:textSize="16sp" />
+            <!--<Button-->
+                <!--android:id="@+id/detail_confirm"-->
+                <!--android:layout_width="317dp"-->
+                <!--android:layout_height="44dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:layout_marginTop="50dp"-->
+                <!--android:background="@drawable/trailer_detail_confirm"-->
+                <!--android:text="确认"-->
+                <!--android:textColor="#ffffff"-->
+                <!--android:textSize="16sp" />-->
 
             <View
                 android:layout_width="match_parent"

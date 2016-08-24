@@ -1113,7 +1113,7 @@ public class FragmentForWork extends BasicFragment {
                         LatLng latLng_accidentPlace = new LatLng(lat, lon);
                         SharedPreferences sp2 = getActivity().getSharedPreferences("order", Context.MODE_PRIVATE);
                         sp2.edit().putString("order", data.toString()).commit();
-                        if(is_appointed ==1){
+                        if(is_appointed ==1){//如果是内派订单，新订单不会自动关闭
 
                             if(close_timer != null){
 
