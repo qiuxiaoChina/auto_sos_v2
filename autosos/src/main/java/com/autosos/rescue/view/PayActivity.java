@@ -364,14 +364,33 @@ public class PayActivity extends Activity implements View.OnClickListener{
                     orderInfo = new OrderInfo(jsonObject);
                     if(orderInfo.getIsPaodan() ==1){
 
-                        DisplayMetrics dm =getResources().getDisplayMetrics();
-                        float density = dm.density;
+                        if(orderInfo.getPay_amount()==0){
 
-                        ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) hint_pay_detail.getLayoutParams();
-                        layoutParam.topMargin =(int)(30*density);
-                        hint_pay_detail.setLayoutParams(layoutParam);
-                        check_detail.setVisibility(View.GONE);
-                        pay_amount.setText("代收"+((int)orderInfo.getPay_amount())+"元");
+                            DisplayMetrics dm =getResources().getDisplayMetrics();
+                            float density = dm.density;
+
+                            ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) hint_pay_detail.getLayoutParams();
+                            layoutParam.topMargin =(int)(30*density);
+                            hint_pay_detail.setLayoutParams(layoutParam);
+                            check_detail.setVisibility(View.GONE);
+                            pay_amount.setText(((int)orderInfo.getPay_amount())+"元");
+
+                            btn_weixinpay.setText("订单完成,继续接单");
+                            btn_payCash.setVisibility(View.GONE);
+                            btn_payCash.setClickable(false);
+
+                        }else{
+
+                            DisplayMetrics dm =getResources().getDisplayMetrics();
+                            float density = dm.density;
+
+                            ViewGroup.MarginLayoutParams layoutParam = (ViewGroup.MarginLayoutParams) hint_pay_detail.getLayoutParams();
+                            layoutParam.topMargin =(int)(30*density);
+                            hint_pay_detail.setLayoutParams(layoutParam);
+                            check_detail.setVisibility(View.GONE);
+                            pay_amount.setText("代收"+((int)orderInfo.getPay_amount())+"元");
+
+                        }
 
                     }else{
 
